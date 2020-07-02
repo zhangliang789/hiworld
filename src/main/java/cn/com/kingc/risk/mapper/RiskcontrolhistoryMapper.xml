@@ -1,0 +1,820 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.kingc.risk.dao.RiskcontrolhistoryDao">
+    <resultMap id="RiskcontrolhistoryMap" type="cn.com.kingc.risk.model.Riskcontrolhistory">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="riskSiteID" column="RiskSiteID" jdbcType="INTEGER"/>
+        <result property="riskSiteUUID" column="RiskSiteUUID" jdbcType="VARCHAR"/>
+        <result property="riskObjID" column="RiskObjID" jdbcType="INTEGER"/>
+        <result property="riskObjUUID" column="RiskObjUUID" jdbcType="VARCHAR"/>
+        <result property="riskHazardID" column="RiskHazardID" jdbcType="INTEGER"/>
+        <result property="riskHazardUUID" column="RiskHazardUUID" jdbcType="VARCHAR"/>
+        <result property="checkTime" column="CheckTime" jdbcType="VARCHAR"/>
+        <result property="riskControlLevel" column="RiskControlLevel" jdbcType="VARCHAR"/>
+        <result property="checkDepteID" column="CheckDepteID" jdbcType="VARCHAR"/>
+        <result property="checkDept" column="CheckDept" jdbcType="VARCHAR"/>
+        <result property="checkerName" column="CheckerName" jdbcType="VARCHAR"/>
+        <result property="checkerID" column="CheckerID" jdbcType="VARCHAR"/>
+        <result property="checkPeijianrenID" column="checkPeijianrenID" jdbcType="VARCHAR"/>
+        <result property="checkPeijianren" column="checkPeijianren" jdbcType="VARCHAR"/>
+        <result property="riskState" column="RiskState" jdbcType="BIT"/>
+        <result property="checkResult" column="CheckResult" jdbcType="VARCHAR"/>
+        <result property="hiddenTroubleID" column="HiddenTroubleID" jdbcType="INTEGER"/>
+        <result property="frameworkID" column="FrameworkID" jdbcType="VARCHAR"/>
+        <result property="operateTime" column="OperateTime" jdbcType="VARCHAR"/>
+        <result property="riskSiteName" column="RiskSiteName" jdbcType="VARCHAR"/>
+        <result property="riskObjName" column="RiskObjName" jdbcType="VARCHAR"/>
+        <result property="riskHazardName" column="RiskHazardName" jdbcType="VARCHAR"/>
+        <result property="majorType" column="MajorType" jdbcType="VARCHAR"/>
+        <result property="riskValue" column="RiskValue" jdbcType="VARCHAR"/>
+        <result property="fromApp" column="FromApp" jdbcType="BIT"/>
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id ,
+        RiskSiteID ,
+        RiskSiteUUID ,
+        RiskObjID ,
+        RiskObjUUID ,
+        RiskHazardID ,
+        RiskHazardUUID ,
+        CheckTime ,
+        RiskControlLevel ,
+        CheckDepteID ,
+        CheckDept ,
+        CheckerName ,
+        CheckerID ,
+        checkPeijianrenID,
+        checkPeijianren,
+        RiskState ,
+        CheckResult ,
+        HiddenTroubleID ,
+        FrameworkID ,
+        OperateTime ,
+        RiskSiteName,
+        RiskObjName,
+        RiskHazardName,
+        majorType,
+        RiskValue,
+        FromApp
+    </sql>
+
+    <!--获取共有多少条记录，带有查询条件-->
+    <select id="getRiskcontrolhistoryCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from riskcontrolhistory
+        where 1=1
+        <if test="riskcontrolhistory.riskSiteName!= null and riskcontrolhistory.riskSiteName!= ''">
+            AND
+            riskSiteName LIKE concat('%', #{riskcontrolhistory.riskSiteName}, '%')
+        </if>
+        <if test="riskcontrolhistory.riskObjName!= null and riskcontrolhistory.riskObjName!= ''">
+            AND
+            riskObjName LIKE concat('%', #{riskcontrolhistory.riskObjName}, '%')
+        </if>
+        <if test="riskcontrolhistory.riskHazardName!= null and riskcontrolhistory.riskHazardName!= ''">
+            AND
+            riskHazardName LIKE concat('%', #{riskcontrolhistory.riskHazardName}, '%')
+        </if>
+        <if test="riskcontrolhistory.riskHazardID!= null and riskcontrolhistory.riskHazardID != ''">
+            and RiskHazardID = #{riskcontrolhistory.riskHazardID, jdbcType=INTEGER}
+        </if>
+        <if test="riskcontrolhistory.riskValue!= null and riskcontrolhistory.riskValue!= ''">
+            AND
+            riskValue= #{riskcontrolhistory.riskValue, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.startCheckTime!= null and riskcontrolhistory.startCheckTime!= ''">
+            AND
+            checkTime <![CDATA[>=]]> #{riskcontrolhistory.startCheckTime, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.endCheckTime!= null and riskcontrolhistory.endCheckTime!= ''">
+            AND
+            checkTime <![CDATA[<=]]> #{riskcontrolhistory.endCheckTime, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.checkDept!= null and riskcontrolhistory.checkDept!= ''">
+            and checkDept LIKE concat('%', #{riskcontrolhistory.checkDept}, '%')
+        </if>
+        <if test="riskcontrolhistory.checkerName!= null and riskcontrolhistory.checkerName!= ''">
+            and checkerName LIKE concat('%', #{riskcontrolhistory.checkerName}, '%')
+        </if>
+        <if test="riskcontrolhistory.checkResult!= null and riskcontrolhistory.checkResult!= ''">
+            and checkResult LIKE concat('%', #{riskcontrolhistory.checkResult}, '%')
+        </if>
+        <if test="riskcontrolhistory.riskState!= null and riskcontrolhistory.riskState!= ''">
+            and riskState IN (
+            <foreach item="item" collection="riskcontrolhistory.riskStates" separator=",">
+                #{item, jdbcType=VARCHAR}
+            </foreach>
+            )
+        </if>
+        <if test="riskcontrolhistory.riskControlLevel!= null and riskcontrolhistory.riskControlLevel!= ''">
+            and riskControlLevel IN (
+            <foreach item="item" collection="riskcontrolhistory.riskControlLevels" separator=",">
+                #{item, jdbcType=VARCHAR}
+            </foreach>
+            )
+        </if>
+        <if test="riskcontrolhistory.fromApp!= null and riskcontrolhistory.fromApp!= ''">
+            and FromApp=#{riskcontrolhistory.fromApp}
+        </if>
+        <if test="riskcontrolhistory.frameworkID!= null and riskcontrolhistory.frameworkID!= ''">
+            and FrameworkID = #{riskcontrolhistory.frameworkID, jdbcType=VARCHAR}
+        </if>
+
+    </select>
+
+    <!--带时间段查询条件下获取共有多少条记录，带有查询条件-->
+    <select id="getRiskcontrolhistoryCountByTime" resultType="java.lang.Integer">
+        SELECT
+        COUNT(*)
+        FROM riskcontrolhistory
+        WHERE 1=1
+        <if test="riskcontrolhistory.checkTime!= null and riskcontrolhistory.checkTime!= ''">
+            AND
+            CheckTime <![CDATA[>=]]> #{riskcontrolhistory.checkTime, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.operateTime!= null and riskcontrolhistory.operateTime!= ''">
+            AND
+            CheckTime <![CDATA[<=]]> #{riskcontrolhistory.operateTime, jdbcType=VARCHAR}
+        </if>
+
+    </select>
+
+    <!--分页获取数据，带有查询条件-->
+    <select id="getRiskcontrolhistoryByPage" resultMap="RiskcontrolhistoryMap">
+        select
+        <include refid="Base_Column_List"/>
+        from riskcontrolhistory
+        where 1=1
+        <if test="riskcontrolhistory.riskSiteName!= null and riskcontrolhistory.riskSiteName!= '' ">
+            and RiskSiteName LIKE concat('%', #{riskcontrolhistory.riskSiteName}, '%')
+        </if>
+        <if test="riskcontrolhistory.riskObjName!= null and riskcontrolhistory.riskObjName!= ''">
+            and RiskObjName LIKE concat('%', #{riskcontrolhistory.riskObjName}, '%')
+        </if>
+        <if test="riskcontrolhistory.riskHazardName!= null and riskcontrolhistory.riskHazardName!= ''">
+            and RiskHazardName LIKE concat('%', #{riskcontrolhistory.riskHazardName}, '%')
+        </if>
+        <if test="riskcontrolhistory.riskHazardID!= null and riskcontrolhistory.riskHazardID != ''">
+            and RiskHazardID = #{riskcontrolhistory.riskHazardID, jdbcType=INTEGER}
+        </if>
+        <if test="riskcontrolhistory.startCheckTime!= null and riskcontrolhistory.startCheckTime!= ''">
+            AND
+            checkTime <![CDATA[>=]]> #{riskcontrolhistory.startCheckTime, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.endCheckTime!= null and riskcontrolhistory.endCheckTime!= ''">
+            AND
+            checkTime <![CDATA[<=]]> #{riskcontrolhistory.endCheckTime, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.majorType!= null and riskcontrolhistory.majorType!= ''">
+            and MajorType = #{riskcontrolhistory.majorType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.riskValue!= null and riskcontrolhistory.riskValue!= ''">
+            and RiskValue = #{riskcontrolhistory.riskValue, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.id!= null and riskcontrolhistory.id!= ''">
+            and id = #{riskcontrolhistory.id, jdbcType=INTEGER}
+        </if>
+        <if test="riskcontrolhistory.riskSiteID!= null and riskcontrolhistory.riskSiteID!= ''">
+            and RiskSiteID = #{riskcontrolhistory.riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="riskcontrolhistory.riskSiteUUID!= null and riskcontrolhistory.riskSiteUUID!= ''">
+            and RiskSiteUUID = #{riskcontrolhistory.riskSiteUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.riskObjID!= null and riskcontrolhistory.riskObjID!= ''">
+            and RiskObjID = #{riskcontrolhistory.riskObjID, jdbcType=INTEGER}
+        </if>
+        <if test="riskcontrolhistory.riskObjUUID!= null and riskcontrolhistory.riskObjUUID!= ''">
+            and RiskObjUUID = #{riskcontrolhistory.riskObjUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.riskHazardID!= null and riskcontrolhistory.riskHazardID!= ''">
+            and RiskHazardID = #{riskcontrolhistory.riskHazardID, jdbcType=INTEGER}
+        </if>
+        <if test="riskcontrolhistory.riskHazardUUID!= null and riskcontrolhistory.riskHazardUUID!= ''">
+            and RiskHazardUUID = #{riskcontrolhistory.riskHazardUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.checkTime!= null and riskcontrolhistory.checkTime!= ''">
+            and CheckTime = #{riskcontrolhistory.checkTime, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.riskControlLevel!= null and riskcontrolhistory.riskControlLevel!= ''">
+            and riskControlLevel IN (
+            <foreach item="item" collection="riskcontrolhistory.riskControlLevels" separator=",">
+                #{item, jdbcType=VARCHAR}
+            </foreach>
+            )
+        </if>
+        <if test="riskcontrolhistory.checkDepteID!= null and riskcontrolhistory.checkDepteID!= ''">
+            and CheckDepteID = #{riskcontrolhistory.checkDepteID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.checkDept!= null and riskcontrolhistory.checkDept!= ''">
+            and CheckDept LIKE concat('%', #{riskcontrolhistory.checkDept}, '%')
+        </if>
+        <if test="riskcontrolhistory.checkerName!= null and riskcontrolhistory.checkerName!= ''">
+            and CheckerName LIKE concat('%', #{riskcontrolhistory.checkerName}, '%')
+        </if>
+        <if test="riskcontrolhistory.checkerID!= null and riskcontrolhistory.checkerID!= ''">
+            and CheckerID = #{riskcontrolhistory.checkerID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.riskState!= null and riskcontrolhistory.riskState!= ''">
+            and riskState IN (
+            <foreach item="item" collection="riskcontrolhistory.riskStates" separator=",">
+                #{item, jdbcType=VARCHAR}
+            </foreach>
+            )
+        </if>
+        <if test="riskcontrolhistory.checkResult!= null and riskcontrolhistory.checkResult!= ''">
+            and CheckResult LIKE concat('%', #{riskcontrolhistory.checkResult}, '%')
+        </if>
+        <if test="riskcontrolhistory.hiddenTroubleID!= null and riskcontrolhistory.hiddenTroubleID!= '' ">
+            and HiddenTroubleID = #{riskcontrolhistory.hiddenTroubleID, jdbcType=INTEGER}
+        </if>
+        <if test="riskcontrolhistory.frameworkID!= null and riskcontrolhistory.frameworkID!= ''">
+            and FrameworkID = #{riskcontrolhistory.frameworkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.operateTime!= null and riskcontrolhistory.operateTime!= ''">
+            and OperateTime = #{riskcontrolhistory.operateTime, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.fromApp!= null and riskcontrolhistory.fromApp!= ''">
+            and FromApp=#{riskcontrolhistory.fromApp}
+        </if>
+        ORDER BY
+        CheckTime
+        DESC
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <!--带时间段查询条件下分页获取数据，带有查询条件-->
+    <select id="getRiskcontrolhistoryByPageByTime" resultMap="RiskcontrolhistoryMap">
+        select
+        <include refid="Base_Column_List"/>
+        from riskcontrolhistory
+        WHERE 1=1
+        <if test="riskcontrolhistory.checkTime!= null and riskcontrolhistory.checkTime!= ''">
+            AND
+            CheckTime <![CDATA[>=]]> #{riskcontrolhistory.checkTime, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.operateTime!= null and riskcontrolhistory.operateTime!= ''">
+            AND
+            CheckTime <![CDATA[<=]]> #{riskcontrolhistory.operateTime, jdbcType=VARCHAR}
+        </if>
+        ORDER BY
+        CheckTime
+        DESC
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <!--删除一条记录-->
+    <delete id="deleteRiskcontrolhistoryByID" parameterType="Integer">
+        DELETE FROM riskcontrolhistoryattachment
+        WHERE riskcontrolhistoryattachment.ControlHistoryID = #{id,jdbcType=INTEGER};
+
+        DELETE FROM riskcontrolhistory
+        WHERE riskcontrolhistory.id = #{id,jdbcType=INTEGER};
+    </delete>
+
+    <!--根据条件查询数据-->
+    <select id="getRiskcontrolhistoryList" resultMap="RiskcontrolhistoryMap">
+        select
+        <include refid="Base_Column_List"/>
+        from riskcontrolhistory
+        where 1=1
+        <if test="riskcontrolhistory.riskSiteName!= null and riskcontrolhistory.riskSiteName!= '' ">
+            and RiskSiteName LIKE concat('%', #{riskcontrolhistory.riskSiteName}, '%')
+        </if>
+        <if test="riskcontrolhistory.riskObjName!= null and riskcontrolhistory.riskObjName!= ''">
+            and RiskObjName LIKE concat('%', #{riskcontrolhistory.riskObjName}, '%')
+        </if>
+        <if test="riskcontrolhistory.riskHazardName!= null and riskcontrolhistory.riskHazardName!= ''">
+            and RiskHazardName LIKE concat('%', #{riskcontrolhistory.riskHazardName}, '%')
+        </if>
+        <if test="riskcontrolhistory.riskHazardID!= null and riskcontrolhistory.riskHazardID != ''">
+            and RiskHazardID = #{riskcontrolhistory.riskHazardID, jdbcType=INTEGER}
+        </if>
+        <if test="riskcontrolhistory.startCheckTime!= null and riskcontrolhistory.startCheckTime!= ''">
+            AND
+            checkTime <![CDATA[>=]]> #{riskcontrolhistory.startCheckTime, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.endCheckTime!= null and riskcontrolhistory.endCheckTime!= ''">
+            AND
+            checkTime <![CDATA[<=]]> #{riskcontrolhistory.endCheckTime, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.majorType!= null and riskcontrolhistory.majorType!= ''">
+            and MajorType = #{riskcontrolhistory.majorType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.riskValue!= null and riskcontrolhistory.riskValue!= ''">
+            and RiskValue = #{riskcontrolhistory.riskValue, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.id!= null and riskcontrolhistory.id!= ''">
+            and id = #{riskcontrolhistory.id, jdbcType=INTEGER}
+        </if>
+        <if test="riskcontrolhistory.riskSiteID!= null">
+            and RiskSiteID = #{riskcontrolhistory.riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="riskcontrolhistory.riskSiteUUID!= null and riskcontrolhistory.riskSiteUUID!= ''">
+            and RiskSiteUUID = #{riskcontrolhistory.riskSiteUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.riskObjID!= null ">
+            and RiskObjID = #{riskcontrolhistory.riskObjID, jdbcType=INTEGER}
+        </if>
+        <if test="riskcontrolhistory.riskObjUUID!= null and riskcontrolhistory.riskObjUUID!= ''">
+            and RiskObjUUID = #{riskcontrolhistory.riskObjUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.riskHazardID!= null ">
+            and RiskHazardID = #{riskcontrolhistory.riskHazardID, jdbcType=INTEGER}
+        </if>
+        <if test="riskcontrolhistory.riskHazardUUID!= null and riskcontrolhistory.riskHazardUUID!= ''">
+            and RiskHazardUUID = #{riskcontrolhistory.riskHazardUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.checkTime!= null and riskcontrolhistory.checkTime!= ''">
+            and CheckTime = #{riskcontrolhistory.checkTime, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.riskControlLevel!= null and riskcontrolhistory.riskControlLevel!= ''">
+            and riskControlLevel IN (
+            <foreach item="item" collection="riskcontrolhistory.riskControlLevels" separator=",">
+                #{item, jdbcType=VARCHAR}
+            </foreach>
+            )
+        </if>
+        <if test="riskcontrolhistory.checkDepteID!= null and riskcontrolhistory.checkDepteID!= ''">
+            and CheckDepteID = #{riskcontrolhistory.checkDepteID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.checkDept!= null and riskcontrolhistory.checkDept!= ''">
+            and CheckDept LIKE concat('%', #{riskcontrolhistory.checkDept}, '%')
+        </if>
+        <if test="riskcontrolhistory.checkerName!= null and riskcontrolhistory.checkerName!= ''">
+            and CheckerName LIKE concat('%', #{riskcontrolhistory.checkerName}, '%')
+        </if>
+        <if test="riskcontrolhistory.checkerID!= null and riskcontrolhistory.checkerID!= ''">
+            and CheckerID = #{riskcontrolhistory.checkerID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.riskState!= null and riskcontrolhistory.riskState!= ''">
+            and riskState IN (
+            <foreach item="item" collection="riskcontrolhistory.riskStates" separator=",">
+                #{item, jdbcType=VARCHAR}
+            </foreach>
+            )
+        </if>
+        <if test="riskcontrolhistory.checkResult!= null and riskcontrolhistory.checkResult!= ''">
+            and CheckResult = #{riskcontrolhistory.checkResult, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.hiddenTroubleID!= null ">
+            and HiddenTroubleID = #{riskcontrolhistory.hiddenTroubleID, jdbcType=INTEGER}
+        </if>
+        <if test="riskcontrolhistory.frameworkID!= null and riskcontrolhistory.frameworkID!= ''">
+            and FrameworkID = #{riskcontrolhistory.frameworkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.operateTime!= null and riskcontrolhistory.operateTime!= ''">
+            and OperateTime = #{riskcontrolhistory.operateTime, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.fromApp!= null and riskcontrolhistory.fromApp!= ''">
+            and FromApp=#{riskcontrolhistory.fromApp}
+        </if>
+        ORDER BY
+        CheckTime
+        DESC
+    </select>
+
+    <!--新增一条记录-->
+    <insert id="addRiskcontrolhistory" parameterType="cn.com.kingc.risk.model.Riskcontrolhistory"
+            useGeneratedKeys="true" keyProperty="item.id">
+        insert into riskcontrolhistory (
+        id,
+        RiskSiteName,
+        RiskSiteID,
+        RiskSiteUUID,
+        RiskObjName,
+        RiskObjID,
+        RiskObjUUID,
+        RiskHazardName,
+        RiskHazardID,
+        RiskHazardUUID,
+        CheckTime,
+        RiskControlLevel,
+        CheckDepteID,
+        CheckDept,
+        CheckerName,
+        CheckerID,
+        RiskState,
+        CheckResult,
+        HiddenTroubleID,
+        MajorType,
+        RiskValue,
+        FrameworkID,
+        OperateTime,
+        FromApp,
+        checkPeijianrenID,
+        checkPeijianren
+        )
+        values(
+        #{item.id, jdbcType=INTEGER}  ,
+        #{item.riskSiteName,jdbcType=VARCHAR},
+        #{item.riskSiteID, jdbcType=INTEGER}  ,
+        #{item.riskSiteUUID, jdbcType=VARCHAR}  ,
+        #{item.riskObjName,jdbcType=VARCHAR},
+        #{item.riskObjID, jdbcType=INTEGER}  ,
+        #{item.riskObjUUID, jdbcType=VARCHAR}  ,
+        #{item.riskHazardName,jdbcType=VARCHAR},
+        #{item.riskHazardID, jdbcType=INTEGER}  ,
+        #{item.riskHazardUUID, jdbcType=VARCHAR}  ,
+        #{item.checkTime, jdbcType=VARCHAR}  ,
+        #{item.riskControlLevel, jdbcType=VARCHAR}  ,
+        #{item.checkDepteID, jdbcType=VARCHAR}  ,
+        #{item.checkDept, jdbcType=VARCHAR}  ,
+        #{item.checkerName, jdbcType=VARCHAR}  ,
+        #{item.checkerID, jdbcType=VARCHAR}  ,
+        #{item.riskState, jdbcType=BIT}  ,
+        #{item.checkResult, jdbcType=VARCHAR}  ,
+        #{item.hiddenTroubleID, jdbcType=INTEGER}  ,
+        #{item.majorType, jdbcType=VARCHAR},
+        #{item.riskValue,jdbcType=VARCHAR},
+        #{item.frameworkID, jdbcType=VARCHAR}  ,
+        #{item.operateTime, jdbcType=VARCHAR},
+        #{item.fromApp, jdbcType=BIT},
+        #{item.checkPeijianrenID, jdbcType=VARCHAR}  ,
+        #{item.checkPeijianren, jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <!--批量新增记录-->
+    <insert id="addRiskcontrolhistoryList" parameterType="java.util.List">
+        insert into riskcontrolhistory(
+        id,
+        RiskSiteName,
+        RiskSiteID,
+        RiskSiteUUID,
+        RiskObjName,
+        RiskObjID,
+        RiskObjUUID,
+        RiskHazardName,
+        RiskHazardID,
+        RiskHazardUUID,
+        CheckTime,
+        RiskControlLevel,
+        CheckDepteID,
+        CheckDept,
+        CheckerName,
+        CheckerID,
+        RiskState,
+        CheckResult,
+        HiddenTroubleID,
+        MajorType,
+        RiskValue,
+        FrameworkID,
+        OperateTime,
+        FromApp
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.id, jdbcType=INTEGER} ,
+            #{item.riskSiteName,jdbcType=VARCHAR},
+            #{item.riskSiteID, jdbcType=INTEGER} ,
+            #{item.riskSiteUUID, jdbcType=VARCHAR} ,
+            #{item.riskObjName,jdbcType=VARCHAR},
+            #{item.riskObjID, jdbcType=INTEGER} ,
+            #{item.riskObjUUID, jdbcType=VARCHAR} ,
+            #{item.riskHazardName,jdbcType=VARCHAR},
+            #{item.riskHazardID, jdbcType=INTEGER} ,
+            #{item.riskHazardUUID, jdbcType=VARCHAR} ,
+            #{item.checkTime, jdbcType=VARCHAR} ,
+            #{item.riskControlLevel, jdbcType=VARCHAR} ,
+            #{item.checkDepteID, jdbcType=VARCHAR} ,
+            #{item.checkDept, jdbcType=VARCHAR} ,
+            #{item.checkerName, jdbcType=VARCHAR} ,
+            #{item.checkerID, jdbcType=VARCHAR} ,
+            #{item.riskState, jdbcType=BIT} ,
+            #{item.checkResult, jdbcType=VARCHAR} ,
+            #{item.hiddenTroubleID, jdbcType=INTEGER} ,
+            #{item.majorType, jdbcType=VARCHAR},
+            #{item.riskValue,jdbcType=VARCHAR},
+            #{item.frameworkID, jdbcType=VARCHAR} ,
+            #{item.operateTime, jdbcType=VARCHAR},
+            #{item.fromApp, jdbcType=BIT}
+            )
+        </foreach>
+    </insert>
+
+    <!--删除记录-->
+    <delete id="deleteRiskcontrolhistory" parameterType="cn.com.kingc.risk.model.Riskcontrolhistory">
+        DELETE FROM riskcontrolhistory
+        where 1=1
+        <if test="id!= null ">
+            and id = #{id, jdbcType=INTEGER}
+        </if>
+        <if test="riskSiteID!= null ">
+            and RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="riskSiteUUID!= null and riskSiteUUID!= ''">
+            and RiskSiteUUID = #{riskSiteUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskObjID!= null ">
+            and RiskObjID = #{riskObjID, jdbcType=INTEGER}
+        </if>
+        <if test="riskObjUUID!= null and riskObjUUID!= ''">
+            and RiskObjUUID = #{riskObjUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskHazardID!= null ">
+            and RiskHazardID = #{riskHazardID, jdbcType=INTEGER}
+        </if>
+        <if test="riskHazardUUID!= null and riskHazardUUID!= ''">
+            and RiskHazardUUID = #{riskHazardUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="checkTime!= null and checkTime!= ''">
+            and CheckTime = #{checkTime, jdbcType=VARCHAR}
+        </if>
+        <if test="riskControlLevel!= null and riskControlLevel!= ''">
+            and RiskControlLevel = #{riskControlLevel, jdbcType=VARCHAR}
+        </if>
+        <if test="checkDepteID!= null and checkDepteID!= ''">
+            and CheckDepteID = #{checkDepteID, jdbcType=VARCHAR}
+        </if>
+        <if test="checkDept!= null and checkDept!= ''">
+            and CheckDept = #{checkDept, jdbcType=VARCHAR}
+        </if>
+        <if test="checkerName!= null and checkerName!= ''">
+            and CheckerName = #{checkerName, jdbcType=VARCHAR}
+        </if>
+        <if test="checkerID!= null and checkerID!= ''">
+            and CheckerID = #{checkerID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskState!= null ">
+            and RiskState = #{riskState, jdbcType=BIT}
+        </if>
+        <if test="checkResult!= null and checkResult!= ''">
+            and CheckResult = #{checkResult, jdbcType=VARCHAR}
+        </if>
+        <if test="hiddenTroubleID!= null ">
+            and HiddenTroubleID = #{hiddenTroubleID, jdbcType=INTEGER}
+        </if>
+        <if test="frameworkID!= null and frameworkID!= ''">
+            and FrameworkID = #{frameworkID, jdbcType=VARCHAR}
+        </if>
+        <if test="operateTime!= null and operateTime!= ''">
+            and OperateTime = #{operateTime, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.riskSiteName!= null ">
+            and id = #{riskcontrolhistory.riskSiteName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.riskObjName!= null ">
+            and id = #{riskcontrolhistory.riskObjName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.riskHazardName!= null ">
+            and id = #{riskcontrolhistory.riskHazardName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.majorType!= null ">
+            and id = #{riskcontrolhistory.majorType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.riskValue!= null ">
+            and id = #{riskcontrolhistory.riskValue, jdbcType=VARCHAR}
+        </if>
+    </delete>
+
+    <!--批量删除记录-->
+    <insert id="deleteRiskcontrolhistoryList" parameterType="java.util.List">
+        DELETE FROM riskcontrolhistory
+        WHERE id IN
+        <foreach item="item" collection="list" separator=",">
+            (
+            #{item.id, jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+
+    <!--更新记录-->
+    <update id="updateRiskcontrolhistory" parameterType="cn.com.kingc.risk.model.Riskcontrolhistory">
+        UPDATE riskcontrolhistory
+        <set>
+            <if test="id!= null ">
+                id = #{id, jdbcType=INTEGER} ,
+            </if>
+            <if test="riskSiteID!= null ">
+                RiskSiteID = #{riskSiteID, jdbcType=INTEGER} ,
+            </if>
+            <if test="riskSiteUUID!= null ">
+                RiskSiteUUID = #{riskSiteUUID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskObjID!= null ">
+                RiskObjID = #{riskObjID, jdbcType=INTEGER} ,
+            </if>
+            <if test="riskObjUUID!= null ">
+                RiskObjUUID = #{riskObjUUID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskHazardID!= null ">
+                RiskHazardID = #{riskHazardID, jdbcType=INTEGER} ,
+            </if>
+            <if test="riskHazardUUID!= null ">
+                RiskHazardUUID = #{riskHazardUUID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="checkTime!= null ">
+                CheckTime = #{checkTime, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskControlLevel!= null ">
+                RiskControlLevel = #{riskControlLevel, jdbcType=VARCHAR} ,
+            </if>
+            <if test="checkDepteID!= null ">
+                CheckDepteID = #{checkDepteID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="checkDept!= null ">
+                CheckDept = #{checkDept, jdbcType=VARCHAR} ,
+            </if>
+            <if test="checkerName!= null ">
+                CheckerName = #{checkerName, jdbcType=VARCHAR} ,
+            </if>
+            <if test="checkerID!= null ">
+                CheckerID = #{checkerID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskState!= null ">
+                RiskState = #{riskState, jdbcType=BIT} ,
+            </if>
+            <if test="checkResult!= null ">
+                CheckResult = #{checkResult, jdbcType=VARCHAR} ,
+            </if>
+            <if test="hiddenTroubleID!= null ">
+                HiddenTroubleID = #{hiddenTroubleID, jdbcType=INTEGER} ,
+            </if>
+            <if test="frameworkID!= null ">
+                FrameworkID = #{frameworkID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="operateTime!= null ">
+                OperateTime = #{operateTime, jdbcType=VARCHAR}
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!--根据主键查询记录-->
+    <select id="getRiskcontrolhistory" resultMap="RiskcontrolhistoryMap"
+            parameterType="Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from riskcontrolhistory
+        WHERE id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <!--获取一个数据的不重复集合-->
+    <select id="getDistinctItemList" resultType="java.lang.String" statementType="STATEMENT">
+        select  DISTINCT ${attribute} FROM riskcontrolhistory
+    </select>
+
+    <!--判断对象是否已经存在-->
+    <select id="riskcontrolhistoryIsExist" resultType="java.lang.Integer"
+            parameterType="cn.com.kingc.risk.model.Riskcontrolhistory">
+        select count(*)
+        from riskcontrolhistory
+        where 1=1
+        <if test="id!= null and id!= ''">
+            and id = #{id, jdbcType=INTEGER}
+        </if>
+        <if test="riskSiteID!= null and riskSiteID!= ''">
+            and RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="riskSiteUUID!= null ">
+            and RiskSiteUUID = #{riskSiteUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskObjID!= null and riskObjID!= ''">
+            and RiskObjID = #{riskObjID, jdbcType=INTEGER}
+        </if>
+        <if test="riskObjUUID!= null ">
+            and RiskObjUUID = #{riskObjUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskHazardID!= null and riskHazardID!= ''">
+            and RiskHazardID = #{riskHazardID, jdbcType=INTEGER}
+        </if>
+        <if test="riskHazardUUID!= null ">
+            and RiskHazardUUID = #{riskHazardUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="checkTime!= null ">
+            and CheckTime = #{checkTime, jdbcType=VARCHAR}
+        </if>
+        <if test="riskControlLevel!= null ">
+            and RiskControlLevel = #{riskControlLevel, jdbcType=VARCHAR}
+        </if>
+        <if test="checkDepteID!= null ">
+            and CheckDepteID = #{checkDepteID, jdbcType=VARCHAR}
+        </if>
+        <if test="checkDept!= null ">
+            and CheckDept = #{checkDept, jdbcType=VARCHAR}
+        </if>
+        <if test="checkerName!= null ">
+            and CheckerName = #{checkerName, jdbcType=VARCHAR}
+        </if>
+        <if test="checkerID!= null ">
+            and CheckerID = #{checkerID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskState!= null and riskState!= ''">
+            and RiskState = #{riskState, jdbcType=BIT}
+        </if>
+        <if test="checkResult!= null ">
+            and CheckResult = #{checkResult, jdbcType=VARCHAR}
+        </if>
+        <if test="hiddenTroubleID!= null and hiddenTroubleID!= ''">
+            and HiddenTroubleID = #{hiddenTroubleID, jdbcType=INTEGER}
+        </if>
+        <if test="frameworkID!= null ">
+            and FrameworkID = #{frameworkID, jdbcType=VARCHAR}
+        </if>
+        <if test="operateTime!= null ">
+            and OperateTime = #{operateTime, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.riskSiteName!= null ">
+            and id = #{riskcontrolhistory.riskSiteName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.riskObjName!= null ">
+            and id = #{riskcontrolhistory.riskObjName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.riskHazardName!= null ">
+            and id = #{riskcontrolhistory.riskHazardName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.majorType!= null ">
+            and id = #{riskcontrolhistory.majorType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.riskValue!= null ">
+            and id = #{riskcontrolhistory.riskValue, jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <!--根据条件查询数据-->
+    <select id="getRiskcontrolhistoryUnique" resultMap="RiskcontrolhistoryMap">
+        select
+        <include refid="Base_Column_List"/>
+        from riskcontrolhistory
+        where 1=1
+        <if test="id!= null ">
+            and id = #{id, jdbcType=INTEGER}
+        </if>
+        <if test="riskSiteID!= null ">
+            and RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="riskSiteUUID!= null and riskSiteUUID!= ''">
+            and RiskSiteUUID = #{riskSiteUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskObjID!= null ">
+            and RiskObjID = #{riskObjID, jdbcType=INTEGER}
+        </if>
+        <if test="riskObjUUID!= null and riskObjUUID!= ''">
+            and RiskObjUUID = #{riskObjUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskHazardID!= null ">
+            and RiskHazardID = #{riskHazardID, jdbcType=INTEGER}
+        </if>
+        <if test="riskHazardUUID!= null and riskHazardUUID!= ''">
+            and RiskHazardUUID = #{riskHazardUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="checkTime!= null and checkTime!= ''">
+            and CheckTime = #{checkTime, jdbcType=VARCHAR}
+        </if>
+        <if test="riskControlLevel!= null and riskControlLevel!= ''">
+            and RiskControlLevel = #{riskControlLevel, jdbcType=VARCHAR}
+        </if>
+        <if test="checkDepteID!= null and checkDepteID!= ''">
+            and CheckDepteID = #{checkDepteID, jdbcType=VARCHAR}
+        </if>
+        <if test="checkDept!= null and checkDept!= ''">
+            and CheckDept = #{checkDept, jdbcType=VARCHAR}
+        </if>
+        <if test="checkerName!= null and checkerName!= ''">
+            and CheckerName = #{checkerName, jdbcType=VARCHAR}
+        </if>
+        <if test="checkerID!= null and checkerID!= ''">
+            and CheckerID = #{checkerID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskState!= null ">
+            and RiskState = #{riskState, jdbcType=BIT}
+        </if>
+        <if test="checkResult!= null and checkResult!= ''">
+            and CheckResult = #{checkResult, jdbcType=VARCHAR}
+        </if>
+        <if test="hiddenTroubleID!= null ">
+            and HiddenTroubleID = #{hiddenTroubleID, jdbcType=INTEGER}
+        </if>
+        <if test="frameworkID!= null and frameworkID!= ''">
+            and FrameworkID = #{frameworkID, jdbcType=VARCHAR}
+        </if>
+        <if test="operateTime!= null and operateTime!= ''">
+            and OperateTime = #{operateTime, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.riskSiteName!= null ">
+            and id = #{riskcontrolhistory.riskSiteName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.riskObjName!= null ">
+            and id = #{riskcontrolhistory.riskObjName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.riskHazardName!= null ">
+            and id = #{riskcontrolhistory.riskHazardName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.majorType!= null ">
+            and id = #{riskcontrolhistory.majorType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolhistory.riskValue!= null ">
+            and id = #{riskcontrolhistory.riskValue, jdbcType=VARCHAR}
+        </if>
+        ORDER BY
+        CheckTime
+        DESC
+    </select>
+
+</mapper>

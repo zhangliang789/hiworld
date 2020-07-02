@@ -1,0 +1,817 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.kingc.risk.dao.RiskControlSchemeDao">
+    <resultMap id="RiskControlSchemeMap" type="cn.com.kingc.risk.model.RiskControlScheme">
+            <id property="ID" column="ID"  jdbcType="VARCHAR"/>
+            <result property="frameWorkID" column="frameWorkID"  jdbcType="VARCHAR"/>
+            <result property="coalMineName" column="coalMineName"  jdbcType="VARCHAR"/>
+            <result property="riskControlSchemeName" column="riskControlSchemeName"  jdbcType="VARCHAR"/>
+            <result property="dutyUnitID" column="dutyUnitID"  jdbcType="VARCHAR"/>
+            <result property="dutyUnitName" column="dutyUnitName"  jdbcType="VARCHAR"/>
+            <result property="dutyPersonID" column="dutyPersonID"  jdbcType="VARCHAR"/>
+            <result property="dutyPersonName" column="dutyPersonName"  jdbcType="VARCHAR"/>
+            <result property="manageStartDate" column="manageStartDate"  jdbcType="DATE"/>
+            <result property="manageEndDate" column="manageEndDate"  jdbcType="DATE"/>
+            <result property="funds" column="funds"  jdbcType="VARCHAR"/>
+            <result property="material" column="material"  jdbcType="VARCHAR"/>
+            <result property="controlRequirements" column="controlRequirements"  jdbcType="VARCHAR"/>
+            <result property="securityArrangement" column="securityArrangement"  jdbcType="VARCHAR"/>
+            <result property="contingencyPlan" column="contingencyPlan"  jdbcType="VARCHAR"/>
+            <result property="riskSiteID" column="riskSiteID"  jdbcType="VARCHAR"/>
+            <result property="riskSiteName" column="riskSiteName"  jdbcType="VARCHAR"/>
+            <result property="controlObjectID" column="controlObjectID"  jdbcType="VARCHAR"/>
+            <result property="controlObjectName" column="controlObjectName"  jdbcType="VARCHAR"/>
+            <result property="riskID" column="riskID"  jdbcType="VARCHAR"/>
+            <result property="riskName" column="riskName"  jdbcType="VARCHAR"/>
+            <result property="controlMeasureIDs" column="controlMeasureIDs"  jdbcType="VARCHAR"/>
+            <result property="attachFileName" column="attachFileName"  jdbcType="VARCHAR"/>
+            <result property="attachID" column="attachID"  jdbcType="VARCHAR"/>
+            <result property="createDate" column="createDate"  jdbcType="TIMESTAMP"/>
+            <result property="createrID" column="createrID"  jdbcType="VARCHAR"/>
+            <result property="createrName" column="createrName"  jdbcType="VARCHAR"/>
+            <result property="delflag" column="delflag"  jdbcType="VARCHAR"/>
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID ,
+        frameWorkID,
+        coalMineName,
+        riskControlSchemeName ,
+        dutyUnitID ,
+        dutyUnitName ,
+        dutyPersonID ,
+        dutyPersonName ,
+        manageStartDate ,
+        manageEndDate ,
+        funds ,
+        material ,
+        controlRequirements ,
+        securityArrangement ,
+        contingencyPlan ,
+        riskSiteID,
+        riskSiteName,
+        controlObjectID,
+        controlObjectName,
+        riskID,
+        riskName,
+        controlMeasureIDs,
+        attachFileName,
+        attachID,
+        createDate ,
+        createrID ,
+        createrName ,
+        delflag 
+    </sql>
+
+
+    <!--新增一条记录-->
+    <insert id="addRiskControlScheme" parameterType="cn.com.kingc.risk.model.RiskControlScheme"  keyProperty="ID" >
+        insert into risk_control_scheme (
+            ID,
+            frameWorkID,
+            coalMineName,
+            riskControlSchemeName,
+            dutyUnitID,
+            dutyUnitName,
+            dutyPersonID,
+            dutyPersonName,
+            manageStartDate,
+            manageEndDate,
+            funds,
+            material,
+            controlRequirements,
+            securityArrangement,
+            contingencyPlan,
+            riskSiteID,
+            riskSiteName,
+            controlObjectID,
+            controlObjectName,
+            riskID,
+            riskName,
+            controlMeasureIDs,
+            attachFileName,
+            attachID,
+            createDate,
+            createrID,
+            createrName,
+            delflag
+        )
+        values(
+            #{ID, jdbcType=VARCHAR}  ,
+            #{frameWorkID, jdbcType=VARCHAR}  ,
+            #{coalMineName, jdbcType=VARCHAR}  ,
+            #{riskControlSchemeName, jdbcType=VARCHAR}  ,
+            #{dutyUnitID, jdbcType=VARCHAR}  ,
+            #{dutyUnitName, jdbcType=VARCHAR}  ,
+            #{dutyPersonID, jdbcType=VARCHAR}  ,
+            #{dutyPersonName, jdbcType=VARCHAR}  ,
+            #{manageStartDate, jdbcType=DATE}  ,
+            #{manageEndDate, jdbcType=DATE}  ,
+            #{funds, jdbcType=VARCHAR}  ,
+            #{material, jdbcType=VARCHAR}  ,
+            #{controlRequirements, jdbcType=VARCHAR}  ,
+            #{securityArrangement, jdbcType=VARCHAR}  ,
+            #{contingencyPlan, jdbcType=VARCHAR}  ,
+            #{riskSiteID, jdbcType=VARCHAR}  ,
+            #{riskSiteName, jdbcType=VARCHAR}  ,
+            #{controlObjectID, jdbcType=VARCHAR}  ,
+            #{controlObjectName, jdbcType=VARCHAR}  ,
+            #{riskID, jdbcType=VARCHAR}  ,
+            #{riskName, jdbcType=VARCHAR}  ,
+            #{controlMeasureIDs,jdbcType=VARCHAR},
+            #{attachFileName,jdbcType=VARCHAR},
+            #{attachID,jdbcType=VARCHAR},
+            #{createDate, jdbcType=TIMESTAMP}  ,
+            #{createrID, jdbcType=VARCHAR}  ,
+            #{createrName, jdbcType=VARCHAR}  ,
+            #{delflag, jdbcType=VARCHAR}  
+        )
+    </insert>
+
+    <!--批量新增记录-->
+    <insert id="addRiskControlSchemeList"  parameterType="java.util.List" >
+        insert into risk_control_scheme(
+            ID,
+            frameWorkID,
+            coalMineName,
+            riskControlSchemeName,
+            dutyUnitID,
+            dutyUnitName,
+            dutyPersonID,
+            dutyPersonName,
+            manageStartDate,
+            manageEndDate,
+            funds,
+            material,
+            controlRequirements,
+            securityArrangement,
+            contingencyPlan,
+            riskSiteID,
+            riskSiteName,
+            controlObjectID,
+            controlObjectName,
+            riskID,
+            riskName,
+            controlMeasureIDs,
+            attachFileName,
+            attachID,
+            createDate,
+            createrID,
+            createrName,
+            delflag
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+        (
+            #{item.ID, jdbcType=VARCHAR}  ,
+            #{frameWorkID, jdbcType=VARCHAR}  ,
+            #{coalMineName, jdbcType=VARCHAR}  ,
+            #{item.riskControlSchemeName, jdbcType=VARCHAR}  ,
+            #{item.dutyUnitID, jdbcType=VARCHAR}  ,
+            #{item.dutyUnitName, jdbcType=VARCHAR}  ,
+            #{item.dutyPersonID, jdbcType=VARCHAR}  ,
+            #{item.dutyPersonName, jdbcType=VARCHAR}  ,
+            #{item.manageStartDate, jdbcType=DATE}  ,
+            #{item.manageEndDate, jdbcType=DATE}  ,
+            #{item.funds, jdbcType=VARCHAR}  ,
+            #{item.material, jdbcType=VARCHAR}  ,
+            #{item.controlRequirements, jdbcType=VARCHAR}  ,
+            #{item.securityArrangement, jdbcType=VARCHAR}  ,
+            #{item.contingencyPlan, jdbcType=VARCHAR}  ,
+            #{item.riskSiteID, jdbcType=VARCHAR}  ,
+            #{item.riskSiteName, jdbcType=VARCHAR}  ,
+            #{item.controlObjectID, jdbcType=VARCHAR}  ,
+            #{item.controlObjectName, jdbcType=VARCHAR}  ,
+            #{item.riskID, jdbcType=VARCHAR}  ,
+            #{item.riskName, jdbcType=VARCHAR}  ,
+            #{item.controlMeasureIDs,jdbcType=VARCHAR}  ,
+            #{item.attachFileName,jdbcType=VARCHAR},
+            #{item.attachID,jdbcType=VARCHAR},
+            #{item.createDate, jdbcType=TIMESTAMP}  ,
+            #{item.createrID, jdbcType=VARCHAR}  ,
+            #{item.createrName, jdbcType=VARCHAR}  ,
+            #{item.delflag, jdbcType=VARCHAR}  
+        )
+        </foreach>
+    </insert>
+
+    <!--删除记录-->
+    <delete id="deleteRiskControlScheme" parameterType="cn.com.kingc.risk.model.RiskControlScheme" >
+        DELETE FROM risk_control_scheme
+        where 1=1
+                <if test="ID!= null and ID!= ''">
+                    and  ID = #{ID, jdbcType=VARCHAR}
+                </if>
+                <if test="frameWorkID!= null and frameWorkID!= ''">
+                    and  frameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+                </if>
+                <if test="coalMineName!= null and coalMineName!= ''">
+                    and  coalMineName = #{coalMineName, jdbcType=VARCHAR}
+                </if>
+                <if test="riskControlSchemeName!= null and riskControlSchemeName!= ''">
+                    and  riskControlSchemeName = #{riskControlSchemeName, jdbcType=VARCHAR}  
+                </if>
+                <if test="dutyUnitID!= null and dutyUnitID!= ''">
+                    and  dutyUnitID = #{dutyUnitID, jdbcType=VARCHAR}  
+                </if>
+                <if test="dutyUnitName!= null and dutyUnitName!= ''">
+                    and  dutyUnitName = #{dutyUnitName, jdbcType=VARCHAR}  
+                </if>
+                <if test="dutyPersonID!= null and dutyPersonID!= ''">
+                    and  dutyPersonID = #{dutyPersonID, jdbcType=VARCHAR}  
+                </if>
+                <if test="dutyPersonName!= null and dutyPersonName!= ''">
+                    and  dutyPersonName = #{dutyPersonName, jdbcType=VARCHAR}  
+                </if>
+                <if test="manageStartDate!= null ">
+                    and  manageStartDate = #{manageStartDate, jdbcType=DATE}  
+                </if>
+                <if test="manageEndDate!= null ">
+                    and  manageEndDate = #{manageEndDate, jdbcType=DATE}  
+                </if>
+                <if test="funds!= null and funds!= ''">
+                    and  funds = #{funds, jdbcType=VARCHAR}  
+                </if>
+                <if test="material!= null and material!= ''">
+                    and  material = #{material, jdbcType=VARCHAR}  
+                </if>
+                <if test="controlRequirements!= null and controlRequirements!= ''">
+                    and  controlRequirements = #{controlRequirements, jdbcType=VARCHAR}  
+                </if>
+                <if test="securityArrangement!= null and securityArrangement!= ''">
+                    and  securityArrangement = #{securityArrangement, jdbcType=VARCHAR}  
+                </if>
+                <if test="contingencyPlan!= null and contingencyPlan!= ''">
+                    and  contingencyPlan = #{contingencyPlan, jdbcType=VARCHAR}  
+                </if>
+                <if test="riskSiteID!= null and riskSiteID!= ''">
+                    and  riskSiteID = #{riskSiteID, jdbcType=VARCHAR}
+                </if>
+                <if test="riskSiteName!= null and riskSiteName!= ''">
+                    and  riskSiteName = #{riskSiteName, jdbcType=VARCHAR}
+                </if>
+                <if test="controlObjectID!= null and controlObjectID!= ''">
+                    and  controlObjectID = #{controlObjectID, jdbcType=VARCHAR}
+                </if>
+                <if test="controlObjectName!= null and controlObjectName!= ''">
+                    and  controlObjectName = #{controlObjectName, jdbcType=VARCHAR}
+                </if>
+                <if test="riskID!= null and riskID!= ''">
+                    and  riskID = #{riskID, jdbcType=VARCHAR}
+                </if>
+                <if test="riskName!= null and riskName!= ''">
+                    and  riskName = #{riskName, jdbcType=VARCHAR}
+                </if>
+                <if test="createDate!= null ">
+                    and  createDate = #{createDate, jdbcType=TIMESTAMP}
+                </if>
+                <if test="createrID!= null and createrID!= ''">
+                    and  createrID = #{createrID, jdbcType=VARCHAR}  
+                </if>
+                <if test="createrName!= null and createrName!= ''">
+                    and  createrName = #{createrName, jdbcType=VARCHAR}  
+                </if>
+                <if test="delflag!= null and delflag!= ''">
+                    and  delflag = #{delflag, jdbcType=VARCHAR} 
+                </if>
+    </delete>
+
+    <!--删除一条记录-->
+    <delete id="deleteRiskControlSchemeByID" parameterType="String" >
+        DELETE FROM risk_control_scheme
+        WHERE  ID = #{ID,jdbcType=VARCHAR}
+    </delete>
+
+    <!--批量删除记录-->
+    <insert id="deleteRiskControlSchemeList"  parameterType="java.util.List" >
+        DELETE FROM risk_control_scheme
+        WHERE ID IN
+        <foreach item="item" collection="list" separator=",">
+        (
+            #{item.ID, jdbcType=VARCHAR}
+        )
+        </foreach>
+    </insert>
+
+    <!--更新记录-->
+    <update id="updateRiskControlScheme" parameterType="cn.com.kingc.risk.model.RiskControlScheme" >
+        UPDATE  risk_control_scheme
+        <set>
+                <if test="frameWorkID!= null ">
+                    frameWorkID = #{frameWorkID, jdbcType=VARCHAR} ,
+                </if>
+                <if test="coalMineName!= null ">
+                    coalMineName = #{coalMineName, jdbcType=VARCHAR} ,
+                </if>
+                <if test="riskControlSchemeName!= null ">
+                riskControlSchemeName = #{riskControlSchemeName, jdbcType=VARCHAR} ,
+                </if>
+                <if test="dutyUnitID!= null ">
+                dutyUnitID = #{dutyUnitID, jdbcType=VARCHAR} ,
+                </if>
+                <if test="dutyUnitName!= null ">
+                dutyUnitName = #{dutyUnitName, jdbcType=VARCHAR} ,
+                </if>
+                <if test="dutyPersonID!= null ">
+                dutyPersonID = #{dutyPersonID, jdbcType=VARCHAR} ,
+                </if>
+                <if test="dutyPersonName!= null ">
+                dutyPersonName = #{dutyPersonName, jdbcType=VARCHAR} ,
+                </if>
+                <if test="manageStartDate!= null ">
+                manageStartDate = #{manageStartDate, jdbcType=DATE} ,
+                </if>
+                <if test="manageEndDate!= null ">
+                manageEndDate = #{manageEndDate, jdbcType=DATE} ,
+                </if>
+                <if test="funds!= null ">
+                funds = #{funds, jdbcType=VARCHAR} ,
+                </if>
+                <if test="material!= null ">
+                material = #{material, jdbcType=VARCHAR} ,
+                </if>
+                <if test="controlRequirements!= null ">
+                controlRequirements = #{controlRequirements, jdbcType=VARCHAR} ,
+                </if>
+                <if test="securityArrangement!= null ">
+                securityArrangement = #{securityArrangement, jdbcType=VARCHAR} ,
+                </if>
+                <if test="contingencyPlan!= null ">
+                contingencyPlan = #{contingencyPlan, jdbcType=VARCHAR} ,
+                </if>
+                <if test="riskSiteID!= null">
+                riskSiteID = #{riskSiteID, jdbcType=VARCHAR} ,
+                </if>
+                <if test="riskSiteName!= null">
+                riskSiteName = #{riskSiteName, jdbcType=VARCHAR} ,
+                </if>
+                <if test="controlObjectID!= null">
+                controlObjectID = #{controlObjectID, jdbcType=VARCHAR} ,
+                </if>
+                <if test="controlObjectName!= null">
+                controlObjectName = #{controlObjectName, jdbcType=VARCHAR} ,
+                </if>
+                <if test="riskID!= null">
+                riskID = #{riskID, jdbcType=VARCHAR} ,
+                </if>
+                <if test="riskName!= null">
+                riskName = #{riskName, jdbcType=VARCHAR} ,
+                </if>
+                <if test="controlMeasureIDs != null">
+                    controlMeasureIDs = #{controlMeasureIDs,jdbcType=VARCHAR} ,
+                </if>
+                <if test="attachFileName != null">
+                    attachFileName = #{attachFileName,jdbcType=VARCHAR},
+                </if>
+                <if test="attachID != null">
+                    attachID = #{attachID,jdbcType=VARCHAR},
+                </if>
+                <if test="createDate!= null ">
+                createDate = #{createDate, jdbcType=TIMESTAMP} ,
+                </if>
+                <if test="createrID!= null ">
+                createrID = #{createrID, jdbcType=VARCHAR} ,
+                </if>
+                <if test="createrName!= null ">
+                createrName = #{createrName, jdbcType=VARCHAR} ,
+                </if>
+                <if test="delflag!= null ">
+                delflag = #{delflag, jdbcType=VARCHAR} 
+                </if>
+        </set>
+        WHERE  ID = #{ID,jdbcType=VARCHAR}
+    </update>
+
+    <!--根据主键查询记录-->
+    <select id="getRiskControlScheme" resultMap="RiskControlSchemeMap" parameterType="String">
+        select
+        <include refid="Base_Column_List" />
+        from risk_control_scheme
+        WHERE  ID = #{ID,jdbcType=VARCHAR}
+    </select>
+
+
+    <!--获取共有多少条记录，带有查询条件-->
+    <select id="getRiskControlSchemeCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  risk_control_scheme
+        where 1=1
+            <if test="ID!= null and ID!= ''">
+                and  ID = #{ID, jdbcType=VARCHAR}
+            </if>
+            <if test="frameWorkID!= null and frameWorkID!= ''">
+                and  frameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+            </if>
+            <if test="coalMineName!= null and coalMineName!= ''">
+                and  coalMineName = #{coalMineName, jdbcType=VARCHAR}
+            </if>
+            <if test="riskControlSchemeName!= null and riskControlSchemeName!= ''">
+                and  riskControlSchemeName LIKE CONCAT('%',#{riskControlSchemeName, jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="dutyUnitID!= null and dutyUnitID!= ''">
+                and  dutyUnitID = #{dutyUnitID, jdbcType=VARCHAR}  
+            </if>
+            <if test="dutyUnitName!= null and dutyUnitName!= ''">
+                and  dutyUnitName = #{dutyUnitName, jdbcType=VARCHAR}  
+            </if>
+            <if test="dutyPersonID!= null and dutyPersonID!= ''">
+                and  dutyPersonID = #{dutyPersonID, jdbcType=VARCHAR}  
+            </if>
+            <if test="dutyPersonName!= null and dutyPersonName!= ''">
+                and  dutyPersonName = #{dutyPersonName, jdbcType=VARCHAR}  
+            </if>
+            <if test="manageStartDate!= null ">
+                and  manageStartDate = #{manageStartDate, jdbcType=DATE}  
+            </if>
+            <if test="manageEndDate!= null ">
+                and  manageEndDate = #{manageEndDate, jdbcType=DATE}  
+            </if>
+            <if test="funds!= null and funds!= ''">
+                and  funds = #{funds, jdbcType=VARCHAR}  
+            </if>
+            <if test="material!= null and material!= ''">
+                and  material = #{material, jdbcType=VARCHAR}  
+            </if>
+            <if test="controlRequirements!= null and controlRequirements!= ''">
+                and  controlRequirements = #{controlRequirements, jdbcType=VARCHAR}  
+            </if>
+            <if test="securityArrangement!= null and securityArrangement!= ''">
+                and  securityArrangement = #{securityArrangement, jdbcType=VARCHAR}  
+            </if>
+            <if test="contingencyPlan!= null and contingencyPlan!= ''">
+                and  contingencyPlan = #{contingencyPlan, jdbcType=VARCHAR}  
+            </if>
+            <if test="riskSiteID!= null and riskSiteID!= ''">
+                and  riskSiteID = #{riskSiteID, jdbcType=VARCHAR}
+            </if>
+            <if test="riskSiteName!= null and riskSiteName!= ''">
+                and  riskSiteName = #{riskSiteName, jdbcType=VARCHAR}
+            </if>
+            <if test="controlObjectID!= null and controlObjectID!= ''">
+                and  controlObjectID = #{controlObjectID, jdbcType=VARCHAR}
+            </if>
+            <if test="controlObjectName!= null and controlObjectName!= ''">
+                and  controlObjectName = #{controlObjectName, jdbcType=VARCHAR}
+            </if>
+            <if test="riskID!= null and riskID!= ''">
+                and  riskID = #{riskID, jdbcType=VARCHAR}
+            </if>
+            <if test="riskName!= null and riskName!= ''">
+                and  riskName = #{riskName, jdbcType=VARCHAR}
+            </if>
+            <if test="createDate!= null ">
+                and  createDate = #{createDate, jdbcType=TIMESTAMP}
+            </if>
+            <if test="createrID!= null and createrID!= ''">
+                and  createrID = #{createrID, jdbcType=VARCHAR}  
+            </if>
+            <if test="createrName!= null and createrName!= ''">
+                and  createrName = #{createrName, jdbcType=VARCHAR}  
+            </if>
+            <if test="delflag!= null and delflag!= ''">
+                and  delflag = #{delflag, jdbcType=VARCHAR} 
+            </if>
+    </select>
+
+    <!--分页获取数据，带有查询条件-->
+    <select id="getRiskControlSchemeByPage" resultMap="RiskControlSchemeMap">
+        select
+        <include refid="Base_Column_List" />
+        from risk_control_scheme
+        where 1=1
+
+            <if test="riskControlScheme.ID!= null and riskControlScheme.ID!= ''">
+                and  ID = #{riskControlScheme.ID, jdbcType=VARCHAR}
+            </if>
+            <if test="riskControlScheme.frameWorkID!= null and riskControlScheme.frameWorkID!= ''">
+                and  frameWorkID = #{riskControlScheme.frameWorkID, jdbcType=VARCHAR}
+            </if>
+            <if test="riskControlScheme.coalMineName!= null and riskControlScheme.coalMineName!= ''">
+                and  coalMineName = #{riskControlScheme.coalMineName, jdbcType=VARCHAR}
+            </if>
+            <if test="riskControlScheme.riskControlSchemeName!= null and riskControlScheme.riskControlSchemeName!= ''">
+                and  riskControlSchemeName LIKE CONCAT('%',#{riskControlScheme.riskControlSchemeName, jdbcType=VARCHAR}, '%')
+            </if>
+            <if test="riskControlScheme.dutyUnitID!= null and riskControlScheme.dutyUnitID!= ''">
+                and  dutyUnitID = #{riskControlScheme.dutyUnitID, jdbcType=VARCHAR}
+            </if>
+            <if test="riskControlScheme.dutyUnitName!= null and riskControlScheme.dutyUnitName!= ''">
+                and  dutyUnitName = #{riskControlScheme.dutyUnitName, jdbcType=VARCHAR}
+            </if>
+            <if test="riskControlScheme.dutyPersonID!= null and riskControlScheme.dutyPersonID!= ''">
+                and  dutyPersonID = #{riskControlScheme.dutyPersonID, jdbcType=VARCHAR}
+            </if>
+            <if test="riskControlScheme.dutyPersonName!= null and riskControlScheme.dutyPersonName!= ''">
+                and  dutyPersonName = #{riskControlScheme.dutyPersonName, jdbcType=VARCHAR}
+            </if>
+            <if test="riskControlScheme.manageStartDate!= null ">
+                and  manageStartDate = #{riskControlScheme.manageStartDate, jdbcType=DATE}
+            </if>
+            <if test="riskControlScheme.manageEndDate!= null ">
+                and  manageEndDate = #{riskControlScheme.manageEndDate, jdbcType=DATE}
+            </if>
+            <if test="riskControlScheme.funds!= null and riskControlScheme.funds!= ''">
+                and  funds = #{riskControlScheme.funds, jdbcType=VARCHAR}
+            </if>
+            <if test="riskControlScheme.material!= null and riskControlScheme.material!= ''">
+                and  material = #{riskControlScheme.material, jdbcType=VARCHAR}
+            </if>
+            <if test="riskControlScheme.controlRequirements!= null and riskControlScheme.controlRequirements!= ''">
+                and  controlRequirements = #{riskControlScheme.controlRequirements, jdbcType=VARCHAR}
+            </if>
+            <if test="riskControlScheme.securityArrangement!= null and riskControlScheme.securityArrangement!= ''">
+                and  securityArrangement = #{riskControlScheme.securityArrangement, jdbcType=VARCHAR}
+            </if>
+            <if test="riskControlScheme.contingencyPlan!= null and riskControlScheme.contingencyPlan!= ''">
+                and  contingencyPlan = #{riskControlScheme.contingencyPlan, jdbcType=VARCHAR}
+            </if>
+            <if test="riskControlScheme.riskSiteID!= null and riskControlScheme.riskSiteID!= ''">
+                and  riskSiteID = #{riskControlScheme.riskSiteID, jdbcType=VARCHAR}
+            </if>
+            <if test="riskControlScheme.riskSiteName!= null and riskControlScheme.riskSiteName!= ''">
+                and  riskSiteName = #{riskControlScheme.riskSiteName, jdbcType=VARCHAR}
+            </if>
+            <if test="riskControlScheme.controlObjectID!= null and riskControlScheme.controlObjectID!= ''">
+                and  controlObjectID = #{riskControlScheme.controlObjectID, jdbcType=VARCHAR}
+            </if>
+            <if test="riskControlScheme.controlObjectName!= null and riskControlScheme.controlObjectName!= ''">
+                and  controlObjectName = #{riskControlScheme.controlObjectName, jdbcType=VARCHAR}
+            </if>
+            <if test="riskControlScheme.riskID!= null and riskControlScheme.riskID!= ''">
+                and  riskID = #{riskControlScheme.riskID, jdbcType=VARCHAR}
+            </if>
+            <if test="riskControlScheme.riskName!= null and riskControlScheme.riskName!= ''">
+                and  riskName = #{riskControlScheme.riskName, jdbcType=VARCHAR}
+            </if>
+            <if test="riskControlScheme.createDate!= null ">
+                and  createDate = #{riskControlScheme.createDate, jdbcType=TIMESTAMP}
+            </if>
+            <if test="riskControlScheme.createrID!= null and riskControlScheme.createrID!= ''">
+                and  createrID = #{riskControlScheme.createrID, jdbcType=VARCHAR}
+            </if>
+            <if test="riskControlScheme.createrName!= null and riskControlScheme.createrName!= ''">
+                and  createrName = #{riskControlScheme.createrName, jdbcType=VARCHAR}
+            </if>
+            <if test="riskControlScheme.delflag!= null and riskControlScheme.delflag!= ''">
+                and  delflag = #{riskControlScheme.delflag, jdbcType=VARCHAR}
+            </if>
+        LIMIT
+    #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <!--根据条件查询数据-->
+    <select id="getRiskControlSchemeList" resultMap="RiskControlSchemeMap">
+        select
+        <include refid="Base_Column_List" />
+        from risk_control_scheme
+        where 1=1
+            <if test="ID!= null and ID!= ''">
+                and  ID = #{ID, jdbcType=VARCHAR}
+            </if>
+            <if test="frameWorkID!= null and frameWorkID!= ''">
+                and  frameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+            </if>
+            <if test="coalMineName!= null and coalMineName!= ''">
+                and  coalMineName = #{coalMineName, jdbcType=VARCHAR}
+            </if>
+            <if test="riskControlSchemeName!= null and riskControlSchemeName!= ''">
+                and  riskControlSchemeName = #{riskControlSchemeName, jdbcType=VARCHAR}  
+            </if>
+            <if test="dutyUnitID!= null and dutyUnitID!= ''">
+                and  dutyUnitID = #{dutyUnitID, jdbcType=VARCHAR}  
+            </if>
+            <if test="dutyUnitName!= null and dutyUnitName!= ''">
+                and  dutyUnitName = #{dutyUnitName, jdbcType=VARCHAR}  
+            </if>
+            <if test="dutyPersonID!= null and dutyPersonID!= ''">
+                and  dutyPersonID = #{dutyPersonID, jdbcType=VARCHAR}  
+            </if>
+            <if test="dutyPersonName!= null and dutyPersonName!= ''">
+                and  dutyPersonName = #{dutyPersonName, jdbcType=VARCHAR}  
+            </if>
+            <if test="manageStartDate!= null ">
+                and  manageStartDate = #{manageStartDate, jdbcType=DATE}  
+            </if>
+            <if test="manageEndDate!= null ">
+                and  manageEndDate = #{manageEndDate, jdbcType=DATE}  
+            </if>
+            <if test="funds!= null and funds!= ''">
+                and  funds = #{funds, jdbcType=VARCHAR}  
+            </if>
+            <if test="material!= null and material!= ''">
+                and  material = #{material, jdbcType=VARCHAR}  
+            </if>
+            <if test="controlRequirements!= null and controlRequirements!= ''">
+                and  controlRequirements = #{controlRequirements, jdbcType=VARCHAR}  
+            </if>
+            <if test="securityArrangement!= null and securityArrangement!= ''">
+                and  securityArrangement = #{securityArrangement, jdbcType=VARCHAR}  
+            </if>
+            <if test="contingencyPlan!= null and contingencyPlan!= ''">
+                and  contingencyPlan = #{contingencyPlan, jdbcType=VARCHAR}  
+            </if>
+            <if test="riskSiteID!= null and riskSiteID!= ''">
+                and  riskSiteID = #{riskSiteID, jdbcType=VARCHAR}
+            </if>
+            <if test="riskSiteName!= null and riskSiteName!= ''">
+                and  riskSiteName = #{riskSiteName, jdbcType=VARCHAR}
+            </if>
+            <if test="controlObjectID!= null and controlObjectID!= ''">
+                and  controlObjectID = #{controlObjectID, jdbcType=VARCHAR}
+            </if>
+            <if test="controlObjectName!= null and controlObjectName!= ''">
+                and  controlObjectName = #{controlObjectName, jdbcType=VARCHAR}
+            </if>
+            <if test="riskID!= null and riskID!= ''">
+                and  riskID = #{riskID, jdbcType=VARCHAR}
+            </if>
+            <if test="riskName!= null and riskName!= ''">
+                and  riskName = #{riskName, jdbcType=VARCHAR}
+            </if>
+            <if test="createDate!= null ">
+                and  createDate = #{createDate, jdbcType=TIMESTAMP}
+            </if>
+            <if test="createrID!= null and createrID!= ''">
+                and  createrID = #{createrID, jdbcType=VARCHAR}  
+            </if>
+            <if test="createrName!= null and createrName!= ''">
+                and  createrName = #{createrName, jdbcType=VARCHAR}  
+            </if>
+            <if test="delflag!= null and delflag!= ''">
+                and  delflag = #{delflag, jdbcType=VARCHAR} 
+            </if>
+    </select>
+
+    <!--获取一个数据的不重复集合-->
+    <select id="getDistinctItemList" resultType="java.lang.String" statementType="STATEMENT">
+        select  DISTINCT ${attribute} FROM risk_control_scheme
+    </select>
+
+    <!--判断对象是否已经存在-->
+    <select id="riskControlSchemeIsExist" resultType="java.lang.Integer" parameterType="cn.com.kingc.risk.model.RiskControlScheme">
+        select  count(*)
+        from risk_control_scheme
+        where 1=1
+            <if test="ID!= null ">
+                and  ID = #{ID, jdbcType=VARCHAR}
+            </if>
+            <if test="frameWorkID!= null">
+                and  frameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+            </if>
+            <if test="coalMineName!= null">
+                and  coalMineName = #{coalMineName, jdbcType=VARCHAR}
+            </if>
+            <if test="riskControlSchemeName!= null ">
+                and  riskControlSchemeName = #{riskControlSchemeName, jdbcType=VARCHAR}  
+            </if>
+            <if test="dutyUnitID!= null ">
+                and  dutyUnitID = #{dutyUnitID, jdbcType=VARCHAR}  
+            </if>
+            <if test="dutyUnitName!= null ">
+                and  dutyUnitName = #{dutyUnitName, jdbcType=VARCHAR}  
+            </if>
+            <if test="dutyPersonID!= null ">
+                and  dutyPersonID = #{dutyPersonID, jdbcType=VARCHAR}  
+            </if>
+            <if test="dutyPersonName!= null ">
+                and  dutyPersonName = #{dutyPersonName, jdbcType=VARCHAR}  
+            </if>
+            <if test="manageStartDate!= null and manageStartDate!= ''">
+                and  manageStartDate = #{manageStartDate, jdbcType=DATE}  
+            </if>
+            <if test="manageEndDate!= null and manageEndDate!= ''">
+                and  manageEndDate = #{manageEndDate, jdbcType=DATE}  
+            </if>
+            <if test="funds!= null ">
+                and  funds = #{funds, jdbcType=VARCHAR}  
+            </if>
+            <if test="material!= null ">
+                and  material = #{material, jdbcType=VARCHAR}  
+            </if>
+            <if test="controlRequirements!= null ">
+                and  controlRequirements = #{controlRequirements, jdbcType=VARCHAR}  
+            </if>
+            <if test="securityArrangement!= null ">
+                and  securityArrangement = #{securityArrangement, jdbcType=VARCHAR}  
+            </if>
+            <if test="contingencyPlan!= null ">
+                and  contingencyPlan = #{contingencyPlan, jdbcType=VARCHAR}  
+            </if>
+            <if test="riskSiteID!= null and riskSiteID!= ''">
+                and  riskSiteID = #{riskSiteID, jdbcType=VARCHAR}
+            </if>
+            <if test="riskSiteName!= null and riskSiteName!= ''">
+                and  riskSiteName = #{riskSiteName, jdbcType=VARCHAR}
+            </if>
+            <if test="controlObjectID!= null and controlObjectID!= ''">
+                and  controlObjectID = #{controlObjectID, jdbcType=VARCHAR}
+            </if>
+            <if test="controlObjectName!= null and controlObjectName!= ''">
+                and  controlObjectName = #{controlObjectName, jdbcType=VARCHAR}
+            </if>
+            <if test="riskID!= null and riskID!= ''">
+                and  riskID = #{riskID, jdbcType=VARCHAR}
+            </if>
+            <if test="riskName!= null and riskName!= ''">
+                and  riskName = #{riskName, jdbcType=VARCHAR}
+            </if>
+            <if test="createDate!= null ">
+                and  createDate = #{createDate, jdbcType=TIMESTAMP}
+            </if>
+            <if test="createrID!= null ">
+                and  createrID = #{createrID, jdbcType=VARCHAR}  
+            </if>
+            <if test="createrName!= null ">
+                and  createrName = #{createrName, jdbcType=VARCHAR}  
+            </if>
+            <if test="delflag!= null ">
+                and  delflag = #{delflag, jdbcType=VARCHAR} 
+            </if>
+    </select>
+
+    <!--根据条件查询数据-->
+    <select id="getRiskControlSchemeUnique" resultMap="RiskControlSchemeMap">
+        select
+        <include refid="Base_Column_List" />
+        from risk_control_scheme
+        where 1=1
+            <if test="ID!= null and ID!= ''">
+                and  ID = #{ID, jdbcType=VARCHAR}
+            </if>
+            <if test="frameWorkID!= null and frameWorkID!= ''">
+                and  frameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+            </if>
+            <if test="coalMineName!= null and coalMineName!= ''">
+                and  coalMineName = #{coalMineName, jdbcType=VARCHAR}
+            </if>
+            <if test="riskControlSchemeName!= null and riskControlSchemeName!= ''">
+                and  riskControlSchemeName = #{riskControlSchemeName, jdbcType=VARCHAR}  
+            </if>
+            <if test="dutyUnitID!= null and dutyUnitID!= ''">
+                and  dutyUnitID = #{dutyUnitID, jdbcType=VARCHAR}  
+            </if>
+            <if test="dutyUnitName!= null and dutyUnitName!= ''">
+                and  dutyUnitName = #{dutyUnitName, jdbcType=VARCHAR}  
+            </if>
+            <if test="dutyPersonID!= null and dutyPersonID!= ''">
+                and  dutyPersonID = #{dutyPersonID, jdbcType=VARCHAR}  
+            </if>
+            <if test="dutyPersonName!= null and dutyPersonName!= ''">
+                and  dutyPersonName = #{dutyPersonName, jdbcType=VARCHAR}  
+            </if>
+            <if test="manageStartDate!= null ">
+                and  manageStartDate = #{manageStartDate, jdbcType=DATE}  
+            </if>
+            <if test="manageEndDate!= null ">
+                and  manageEndDate = #{manageEndDate, jdbcType=DATE}  
+            </if>
+            <if test="funds!= null and funds!= ''">
+                and  funds = #{funds, jdbcType=VARCHAR}  
+            </if>
+            <if test="material!= null and material!= ''">
+                and  material = #{material, jdbcType=VARCHAR}  
+            </if>
+            <if test="controlRequirements!= null and controlRequirements!= ''">
+                and  controlRequirements = #{controlRequirements, jdbcType=VARCHAR}  
+            </if>
+            <if test="securityArrangement!= null and securityArrangement!= ''">
+                and  securityArrangement = #{securityArrangement, jdbcType=VARCHAR}  
+            </if>
+            <if test="contingencyPlan!= null and contingencyPlan!= ''">
+                and  contingencyPlan = #{contingencyPlan, jdbcType=VARCHAR}  
+            </if>
+            <if test="riskSiteID!= null and riskSiteID!= ''">
+                and  riskSiteID = #{riskSiteID, jdbcType=VARCHAR}
+            </if>
+            <if test="riskSiteName!= null and riskSiteName!= ''">
+                and  riskSiteName = #{riskSiteName, jdbcType=VARCHAR}
+            </if>
+            <if test="controlObjectID!= null and controlObjectID!= ''">
+                and  controlObjectID = #{controlObjectID, jdbcType=VARCHAR}
+            </if>
+            <if test="controlObjectName!= null and controlObjectName!= ''">
+                and  controlObjectName = #{controlObjectName, jdbcType=VARCHAR}
+            </if>
+            <if test="riskID!= null and riskID!= ''">
+                and  riskID = #{riskID, jdbcType=VARCHAR}
+            </if>
+            <if test="riskName!= null and riskName!= ''">
+                and  riskName = #{riskName, jdbcType=VARCHAR}
+            </if>
+            <if test="createDate!= null ">
+                and  createDate = #{createDate, jdbcType=TIMESTAMP}
+            </if>
+            <if test="createrID!= null and createrID!= ''">
+                and  createrID = #{createrID, jdbcType=VARCHAR}  
+            </if>
+            <if test="createrName!= null and createrName!= ''">
+                and  createrName = #{createrName, jdbcType=VARCHAR}  
+            </if>
+            <if test="delflag!= null and delflag!= ''">
+                and  delflag = #{delflag, jdbcType=VARCHAR} 
+            </if>
+    </select>
+
+</mapper>

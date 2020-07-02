@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.kingc.risk.dao.CustomerextendedclassDao">
+    <resultMap id="CustomerextendedclassMap" type="cn.com.kingc.risk.model.Customerextendedclass">
+        <result property="classID" column="ClassID" jdbcType="INTEGER"/>
+        <result property="className" column="ClassName" jdbcType="VARCHAR"/>
+        <result property="classFullName" column="ClassFullName" jdbcType="VARCHAR"/>
+        <result property="coalMineName" column="CoalMineName" jdbcType="VARCHAR"/>
+        <result property="frameWorkID" column="FrameWorkID" jdbcType="VARCHAR"/>
+        <result property="classDescription" column="ClassDescription" jdbcType="VARCHAR"/>
+        <collection property="mAttributes" column="{classID=ClassID,frameWorkID=FrameWorkID}"
+                    ofType="cn.com.kingc.risk.model.Customerextendedattributes"
+                    select="findAttributesByClassID"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+            ClassID,
+            ClassName,
+            ClassFullName,
+            CoalMineName,
+            FrameWorkID,
+            ClassDescription
+    </sql>
+
+    <select id="findAttributesByClassID" parameterType="java.util.Map" resultMap="cn.com.kingc.risk.dao.CustomerextendedattributesDao.CustomerextendedattributesMap">
+        select
+        <include refid="cn.com.kingc.risk.dao.CustomerextendedattributesDao.Base_Column_List"/>
+        from customerextendedattributes
+        where ClassID=#{classID,jdbcType=INTEGER} AND FrameWorkID=#{frameWorkID}
+    </select>
+
+    <insert id="addCustomerextendedclass" parameterType="cn.com.kingc.risk.model.Customerextendedclass"
+            useGeneratedKeys="true" keyProperty="classID">
+        insert into customerextendedclass (
+                ClassID,
+                ClassName,
+                ClassFullName,
+                CoalMineName,
+                FrameWorkID,
+                ClassDescription
+        )
+        values(
+                #{classID, jdbcType=INTEGER}  ,
+                #{className, jdbcType=VARCHAR}  ,
+                #{classFullName, jdbcType=VARCHAR}  ,
+                #{coalMineName, jdbcType=VARCHAR}  ,
+                #{frameWorkID, jdbcType=VARCHAR},
+                #{classDescription, jdbcType=VARCHAR}
+
+        )
+    </insert>
+
+    <delete id="deleteCustomerextendedclass" parameterType="cn.com.kingc.risk.model.Customerextendedclass">
+        DELETE FROM customerextendedclass
+        WHERE  ClassID = #{classID,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteCustomerextendedclassByID" parameterType="java.lang.Integer">
+        DELETE FROM customerextendedclass
+        WHERE  ClassID = #{classID,jdbcType=INTEGER}
+    </delete>
+
+    <update id="updateCustomerextendedclass" parameterType="cn.com.kingc.risk.model.Customerextendedclass">
+        UPDATE customerextendedclass
+        <set>
+            <if test="classID!= null ">
+                ClassID = #{classID, jdbcType=INTEGER} ,
+            </if>
+            <if test="className!= null ">
+                ClassName = #{className, jdbcType=VARCHAR} ,
+            </if>
+            <if test="classFullName!= null ">
+                ClassFullName = #{classFullName, jdbcType=VARCHAR} ,
+            </if>
+            <if test="coalMineName!= null ">
+                CoalMineName = #{coalMineName, jdbcType=VARCHAR} ,
+            </if>
+            <if test="frameWorkID!= null ">
+                FrameWorkID = #{frameWorkID, jdbcType=VARCHAR},
+            </if>
+            <if test="classDescription!= null ">
+                ClassDescription = #{classDescription, jdbcType=VARCHAR}
+            </if>
+
+        </set>
+        WHERE ClassID = #{classID,jdbcType=INTEGER}
+    </update>
+
+    <select id="getCustomerextendedclass" resultMap="CustomerextendedclassMap"
+            parameterType="INTEGER">
+        select
+        <include refid="Base_Column_List"/>
+        from customerextendedclass
+        WHERE ClassID = #{classID,jdbcType=INTEGER}
+    </select>
+
+    <select id="getCustomerextendedclassCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  customerextendedclass
+    </select>
+
+    <select id="getCustomerextendedclassByPage" resultMap="CustomerextendedclassMap"
+            parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from customerextendedclass
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <select id="getCustomerextendedclassCountByCustomerextendedclass" resultType="java.lang.Integer">
+        select
+        count(*)
+        from customerextendedclass
+        where 1=1
+        <if test="classID!= null ">
+            and ClassID = #{classID, jdbcType=INTEGER}
+        </if>
+        <if test="className!= null and className!=''">
+            and ClassName = #{className, jdbcType=VARCHAR}
+        </if>
+        <if test="classFullName!= null and classFullName!=''">
+            and ClassFullName = #{classFullName, jdbcType=VARCHAR}
+        </if>
+        <if test="coalMineName!= null and coalMineName!='' ">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!='' ">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="classDescription!= null and classDescription!=''">
+            and ClassDescription = #{classDescription, jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <select id="getCustomerextendedclassByPageAndCustomerextendedclass" resultMap="CustomerextendedclassMap">
+        select
+        <include refid="Base_Column_List"/>
+        from customerextendedclass
+        where 1=1
+        <if test="customerextendedclass.classID!= null ">
+            and ClassID = #{customerextendedclass.classID, jdbcType=INTEGER}
+        </if>
+        <if test="customerextendedclass.className!= null and customerextendedclass.className!=''">
+            and ClassName = #{customerextendedclass.className, jdbcType=VARCHAR}
+        </if>
+        <if test="customerextendedclass.classFullName!= null and customerextendedclass.classFullName!=''">
+            and ClassFullName = #{customerextendedclass.classFullName, jdbcType=VARCHAR}
+        </if>
+        <if test="customerextendedclass.coalMineName!= null and customerextendedclass.coalMineName!=''">
+            and CoalMineName = #{customerextendedclass.coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="customerextendedclass.frameWorkID!= null and customerextendedclass.frameWorkID!=''">
+            and FrameWorkID = #{customerextendedclass.frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="customerextendedclass.classDescription!= null and customerextendedclass.classDescription!=''">
+            and ClassDescription = #{customerextendedclass.classDescription, jdbcType=VARCHAR}
+        </if>
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <select id="getCustomerextendedclassData" resultMap="CustomerextendedclassMap">
+        select
+        <include refid="Base_Column_List"/>
+        from customerextendedclass
+        where 1=1
+        <if test="classID!= null ">
+            and ClassID = #{classID, jdbcType=INTEGER}
+        </if>
+        <if test="className!= null and className!= ''">
+            and ClassName = #{className, jdbcType=VARCHAR}
+        </if>
+        <if test="classFullName!= null and classFullName!=''">
+            and ClassFullName = #{classFullName, jdbcType=VARCHAR}
+        </if>
+        <if test="coalMineName!= null and coalMineName!=''">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!=''">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="classDescription!= null and classDescription!=''">
+            and ClassDescription = #{classDescription, jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <insert id="initializeaCustomerextendedclass">
+        DELETE FROM customerextendedclass WHERE FrameWorkID=#{frameWorkID, jdbcType=VARCHAR};
+        DELETE FROM customerextendedattributes WHERE FrameWorkID=#{frameWorkID, jdbcType=VARCHAR};
+
+        INSERT INTO  customerextendedclass
+        (ClassName,ClassFullName,CoalMineName,FrameWorkID,ClassDescription)
+        VALUES ('Risksite', 'cn.com.kingc.risk.model.Risksite', #{coalMineName, jdbcType=VARCHAR}, #{frameWorkID, jdbcType=VARCHAR}, '风险点');
+        INSERT INTO  customerextendedclass
+        (ClassName,ClassFullName,CoalMineName,FrameWorkID,ClassDescription)
+        VALUES ('Riskhazard', 'cn.com.kingc.risk.model.Riskhazard', #{coalMineName, jdbcType=VARCHAR}, #{frameWorkID, jdbcType=VARCHAR}, '风险');
+        INSERT INTO  customerextendedclass
+        (ClassName,ClassFullName,CoalMineName,FrameWorkID,ClassDescription)
+        VALUES ('Riskcontrolmeasure', 'cn.com.kingc.risk.model.Riskcontrolmeasure', #{coalMineName, jdbcType=VARCHAR}, #{frameWorkID, jdbcType=VARCHAR}, '风险管控措施');
+
+
+        INSERT INTO
+        customerextendedattributes(ClassID,ClassPropertyDataType,ClasspropertyName,ClassPropertyTitle,ClassPropertyValue,CoalMineName,FrameWorkID)
+        SELECT ClassID,  'varchar(200)', 'CoalMineName', '企业名称', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Risksite' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'varchar(200)', 'FrameWorkID', '企业编码', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Risksite' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'int', 'RiskSiteID', '风险点ID', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Risksite' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'varchar(200)', 'RiskSiteUUID', '风险点UUID', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Risksite' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'bit', 'Details', '是否明细', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Risksite' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'text', 'ExtendedAttributesJsonString', '扩展属性Jason字符串', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Risksite' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'varchar(500)', 'FullNumber', '全编码', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Risksite' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'int', 'ManagerID', '责任人ID', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Risksite' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'varchar(50)', 'ManagerName', '责任人', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Risksite' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'int', 'ManagerUnitID', '责任单位ID', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Risksite' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'varchar(50)', 'ManagerUnitName', '责任部门', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Risksite' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'varchar(500)', 'Name', '风险点', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Risksite' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'varchar(500)', 'Number', '风险点小编码', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Risksite' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'varchar(50)', 'ParentID', '父级风险点ID', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Risksite' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'varchar(50)', 'ParentNumber', '父级风险点全编码', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Risksite' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'varchar(50)', 'RiskAccident', '事故类型', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Risksite' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'varchar(50)', 'RiskColor', '危险程度', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Risksite' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'varchar(50)', 'RiskControlCycle', '管控期限', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Risksite' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'varchar(50)', 'RiskControlTier', '管控层次', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Risksite' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'varchar(50)', 'RiskDamageType', '灾害类型', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Risksite' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'varchar(50)', 'RiskDescription', '风险点描述', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Risksite' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'varchar(50)', 'RiskFrequency', '管控频次', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Risksite' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'varchar(50)', 'RiskLevel', '风险点等级', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Risksite' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'varchar(50)', 'RiskMajorType', '专业类型', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Risksite' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'varchar(50)', 'RiskSiteType', '风险点类型', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Risksite' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'varchar(200)', 'RiskSiteTypeContent', '风险点类型内容', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Risksite' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'varchar(50)', 'RiskSupervisor', '监管部门', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Risksite' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'int', 'RiskTemplateID', '模板ID', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Risksite' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'bit', 'Deleted', '是否删除', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Risksite' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'int', 'LimitPeopleCount', '风险点人数', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Risksite' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'bit', 'Status', '风险点状态', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Risksite' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR};
+
+
+        INSERT INTO
+        customerextendedattributes(ClassID,ClassPropertyDataType,ClasspropertyName,ClassPropertyTitle,ClassPropertyValue,CoalMineName,FrameWorkID)
+        SELECT ClassID, 'int', 'HazardID', '风险ID', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskhazard'AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID, 'varchar(50)', 'HazardUUID', '风险uuid', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskhazard'AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID, 'int', 'RiskSiteID', '父风险点ID', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskhazard'AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID, 'varbinary(200)', 'CoalMineName', '煤矿名称', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskhazard'AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID, 'varchar(200)', 'FrameWorkID', '煤矿UUID', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskhazard'AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID, 'varchar(50)', 'AccountabilityUnit', '责任单位', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskhazard'AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID, 'varchar(50)', 'Consequence', '导致后果', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskhazard'AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID, 'varchar(50)', 'DamageType', '灾害类型', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskhazard'AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+         UNION ALL
+        SELECT ClassID, 'varchar(50)', 'AccidentType', '事故类型', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskhazard'AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID, 'int', 'Expose', '暴露程度', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskhazard'AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID, 'int', 'RiskTemplateID', '风险点模板ID', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskhazard'AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID, 'varchar(50)', 'ExposeDegree', '暴露率', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskhazard'AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID, 'int', 'LossConsequence', '损失程度', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskhazard'AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID, 'varchar(50)', 'MajorType', '专业类型', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskhazard'AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID, 'varchar(50)', 'ManageUnit', '管控部门', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskhazard'AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID, 'varchar(200)', 'Name', '风险', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskhazard'AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID, 'varchar(50)', 'hazardDesc', '风险描述', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskhazard'AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID, 'varchar(50)', 'OperatingPost', '操作岗位', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskhazard'AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID, 'int', 'Possibility', '可能性', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskhazard'AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID, 'varchar(50)', 'RiskDegree', '风险等级', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskhazard'AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID, 'varchar(50)', 'RiskObject', '管控对象', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskhazard'AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID, 'varchar(50)', 'RiskPlace', '易发地点', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskhazard'AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID, 'varchar(50)', 'RiskType', '风险类型人机环管', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskhazard'AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID, 'varchar(50)', 'RiskValue', '风险值', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskhazard'AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID, 'bit', 'Status', '状态', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskhazard'AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID, 'int', 'Sseverity', '严重程度', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskhazard'AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID, 'varchar(50)', 'RiskColor', '风险颜色', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskhazard'AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID, 'int', 'RiskLevel', '风险等级', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskhazard'AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID, 'varchar(200)', 'RiskSiteFullNumber', '风险点全编码', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskhazard'AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID, 'varchar(200)', 'dutyRole', '管控岗位', '', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskhazard'AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR};
+
+        INSERT INTO
+        customerextendedattributes(ClassID,ClassPropertyDataType,ClasspropertyName,ClassPropertyTitle,ClassPropertyValue,CoalMineName,FrameWorkID)
+        SELECT ClassID,  'int', 'measureID', '管控措施ID', ' ', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskcontrolmeasure' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'varchar(50)', 'measureUUID', '管控措施UUID', ' ', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskcontrolmeasure' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'int', 'riskSiteID', '风险点ID', ' ', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskcontrolmeasure' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'int', 'hazardID', '风险ID', ' ', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskcontrolmeasure' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'varchar(200)', 'measureContent', '措施内容', ' ', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskcontrolmeasure' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'varchar(200)', 'measureName', '措施名称', ' ', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskcontrolmeasure' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'varchar(200)', 'measureType', '保存类型', ' ', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskcontrolmeasure' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'varchar(200)', 'measureURL', '附件保存服务UUID', ' ', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskcontrolmeasure' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'varchar(200)', 'frameWorkID', '企业编码', ' ', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskcontrolmeasure' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT ClassID,  'varchar(200)', 'coalMineName', '企业名称', ' ', CoalMineName,FrameWorkID  from customerextendedclass WHERE ClassName='Riskcontrolmeasure' AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR};
+
+
+    </insert>
+</mapper>

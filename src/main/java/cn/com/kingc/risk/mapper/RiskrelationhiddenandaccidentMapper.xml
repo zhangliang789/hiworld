@@ -1,0 +1,632 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.kingc.risk.dao.RiskrelationhiddenandaccidentDao">
+    <resultMap id="RiskrelationhiddenandaccidentMap" type="cn.com.kingc.risk.model.Riskrelationhiddenandaccident">
+        <result property="coalMineName" column="CoalMineName"  jdbcType="VARCHAR"/>
+        <result property="frameWorkID" column="FrameWorkID"  jdbcType="VARCHAR"/>
+        <result property="riskRelationHiddenAndAccidentID" column="RiskRelationHiddenAndAccidentID"  jdbcType="INTEGER"/>
+        <result property="riskSiteID" column="RiskSiteID"  jdbcType="INTEGER"/>
+        <result property="hazardID" column="HazardID"  jdbcType="INTEGER"/>
+        <result property="hazard_Name" column="Hazard_Name"  jdbcType="VARCHAR"/>
+        <result property="hazardDesc" column="HazardDesc"  jdbcType="VARCHAR"/>
+        <result property="damageType" column="DamageType"  jdbcType="VARCHAR"/>
+        <result property="riskLevelSettingID" column="RiskLevelSettingID"  jdbcType="INTEGER"/>
+        <result property="fHiddenTroubleID" column="FHiddenTroubleID"  jdbcType="INTEGER"/>
+        <result property="fDescription" column="FDescription"  jdbcType="VARCHAR"/>
+        <result property="fLocation" column="FLocation"  jdbcType="VARCHAR"/>
+        <result property="hiddentrouble_Level" column="Hiddentrouble_Level"  jdbcType="VARCHAR"/>
+        <result property="accidentID" column="AccidentID"  jdbcType="VARCHAR"/>
+        <result property="accident_Danger_RiskID" column="Accident_Danger_RiskID"  jdbcType="VARCHAR"/>
+        <result property="accident_Reasion" column="Accident_Reasion"  jdbcType="VARCHAR"/>
+        <result property="riskSiteUUID" column="RiskSiteUUID"  jdbcType="VARCHAR"/>
+        <result property="hazardUUID" column="HazardUUID"  jdbcType="VARCHAR"/>
+        <result property="fHiddenTroubleUUID" column="FHiddenTroubleUUID"  jdbcType="VARCHAR"/>
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        CoalMineName ,
+        FrameWorkID ,
+        RiskRelationHiddenAndAccidentID ,
+        RiskSiteID ,
+        HazardID ,
+        Hazard_Name ,
+        HazardDesc ,
+        DamageType ,
+        RiskLevelSettingID ,
+        FHiddenTroubleID ,
+        FDescription ,
+        FLocation ,
+        Hiddentrouble_Level ,
+        AccidentID ,
+        Accident_Danger_RiskID ,
+        Accident_Reasion ,
+        RiskSiteUUID ,
+        HazardUUID ,
+        FHiddenTroubleUUID
+    </sql>
+
+
+    <!--新增一条记录-->
+    <insert id="addRiskrelationhiddenandaccident" parameterType="cn.com.kingc.risk.model.Riskrelationhiddenandaccident"
+            useGeneratedKeys="true" keyProperty="riskRelationHiddenAndAccidentID" >
+        insert into riskrelationhiddenandaccident (
+        CoalMineName,
+        FrameWorkID,
+        RiskRelationHiddenAndAccidentID,
+        RiskSiteID,
+        HazardID,
+        Hazard_Name,
+        HazardDesc,
+        DamageType,
+        RiskLevelSettingID,
+        FHiddenTroubleID,
+        FDescription,
+        FLocation,
+        Hiddentrouble_Level,
+        AccidentID,
+        Accident_Danger_RiskID,
+        Accident_Reasion,
+        RiskSiteUUID,
+        HazardUUID,
+        FHiddenTroubleUUID
+        )
+        values(
+        #{coalMineName, jdbcType=VARCHAR}  ,
+        #{frameWorkID, jdbcType=VARCHAR}  ,
+        #{riskRelationHiddenAndAccidentID, jdbcType=INTEGER}  ,
+        #{riskSiteID, jdbcType=INTEGER}  ,
+        #{hazardID, jdbcType=INTEGER}  ,
+        #{hazard_Name, jdbcType=VARCHAR}  ,
+        #{hazardDesc, jdbcType=VARCHAR}  ,
+        #{damageType, jdbcType=VARCHAR}  ,
+        #{riskLevelSettingID, jdbcType=INTEGER}  ,
+        #{fHiddenTroubleID, jdbcType=INTEGER}  ,
+        #{fDescription, jdbcType=VARCHAR}  ,
+        #{fLocation, jdbcType=VARCHAR}  ,
+        #{hiddentrouble_Level, jdbcType=VARCHAR}  ,
+        #{accidentID, jdbcType=VARCHAR}  ,
+        #{accident_Danger_RiskID, jdbcType=VARCHAR}  ,
+        #{accident_Reasion, jdbcType=VARCHAR}  ,
+        #{riskSiteUUID, jdbcType=VARCHAR}  ,
+        #{hazardUUID, jdbcType=VARCHAR}  ,
+        #{fHiddenTroubleUUID, jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <!--批量新增记录-->
+    <insert id="addRiskrelationhiddenandaccidentList"  parameterType="java.util.List" >
+        insert into riskrelationhiddenandaccident(
+        CoalMineName,
+        FrameWorkID,
+        RiskRelationHiddenAndAccidentID,
+        RiskSiteID,
+        HazardID,
+        Hazard_Name,
+        HazardDesc,
+        DamageType,
+        RiskLevelSettingID,
+        FHiddenTroubleID,
+        FDescription,
+        FLocation,
+        Hiddentrouble_Level,
+        AccidentID,
+        Accident_Danger_RiskID,
+        Accident_Reasion,
+        RiskSiteUUID,
+        HazardUUID,
+        FHiddenTroubleUUID
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.coalMineName, jdbcType=VARCHAR}  ,
+            #{item.frameWorkID, jdbcType=VARCHAR}  ,
+            #{item.riskRelationHiddenAndAccidentID, jdbcType=INTEGER}  ,
+            #{item.riskSiteID, jdbcType=INTEGER}  ,
+            #{item.hazardID, jdbcType=INTEGER}  ,
+            #{item.hazard_Name, jdbcType=VARCHAR}  ,
+            #{item.hazardDesc, jdbcType=VARCHAR}  ,
+            #{item.damageType, jdbcType=VARCHAR}  ,
+            #{item.riskLevelSettingID, jdbcType=INTEGER}  ,
+            #{item.fHiddenTroubleID, jdbcType=INTEGER}  ,
+            #{item.fDescription, jdbcType=VARCHAR}  ,
+            #{item.fLocation, jdbcType=VARCHAR}  ,
+            #{item.hiddentrouble_Level, jdbcType=VARCHAR}  ,
+            #{item.accidentID, jdbcType=VARCHAR}  ,
+            #{item.accident_Danger_RiskID, jdbcType=VARCHAR}  ,
+            #{item.accident_Reasion, jdbcType=VARCHAR}  ,
+            #{item.riskSiteUUID, jdbcType=VARCHAR}  ,
+            #{item.hazardUUID, jdbcType=VARCHAR}  ,
+            #{item.fHiddenTroubleUUID, jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <!--删除记录-->
+    <delete id="deleteRiskrelationhiddenandaccident" parameterType="cn.com.kingc.risk.model.Riskrelationhiddenandaccident" >
+        DELETE FROM riskrelationhiddenandaccident
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!= ''">
+            and  CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!= ''">
+            and  FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskRelationHiddenAndAccidentID!= null ">
+            and  RiskRelationHiddenAndAccidentID = #{riskRelationHiddenAndAccidentID, jdbcType=INTEGER}
+        </if>
+        <if test="riskSiteID!= null ">
+            and  RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="hazardID!= null ">
+            and  HazardID = #{hazardID, jdbcType=INTEGER}
+        </if>
+        <if test="hazard_Name!= null and hazard_Name!= ''">
+            and  Hazard_Name = #{hazard_Name, jdbcType=VARCHAR}
+        </if>
+        <if test="hazardDesc!= null and hazardDesc!= ''">
+            and  HazardDesc = #{hazardDesc, jdbcType=VARCHAR}
+        </if>
+        <if test="damageType!= null and damageType!= ''">
+            and  DamageType = #{damageType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskLevelSettingID!= null ">
+            and  RiskLevelSettingID = #{riskLevelSettingID, jdbcType=INTEGER}
+        </if>
+        <if test="fHiddenTroubleID!= null ">
+            and  FHiddenTroubleID = #{fHiddenTroubleID, jdbcType=INTEGER}
+        </if>
+        <if test="fDescription!= null and fDescription!= ''">
+            and  FDescription = #{fDescription, jdbcType=VARCHAR}
+        </if>
+        <if test="fLocation!= null and fLocation!= ''">
+            and  FLocation = #{fLocation, jdbcType=VARCHAR}
+        </if>
+        <if test="hiddentrouble_Level!= null and hiddentrouble_Level!= ''">
+            and  Hiddentrouble_Level = #{hiddentrouble_Level, jdbcType=VARCHAR}
+        </if>
+        <if test="accidentID!= null and accidentID!= ''">
+            and  AccidentID = #{accidentID, jdbcType=VARCHAR}
+        </if>
+        <if test="accident_Danger_RiskID!= null and accident_Danger_RiskID!= ''">
+            and  Accident_Danger_RiskID = #{accident_Danger_RiskID, jdbcType=VARCHAR}
+        </if>
+        <if test="accident_Reasion!= null and accident_Reasion!= ''">
+            and  Accident_Reasion = #{accident_Reasion, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteUUID!= null and riskSiteUUID!= ''">
+            and  RiskSiteUUID = #{riskSiteUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="hazardUUID!= null and hazardUUID!= ''">
+            and  HazardUUID = #{hazardUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="fHiddenTroubleUUID!= null and fHiddenTroubleUUID!= ''">
+            and  FHiddenTroubleUUID = #{fHiddenTroubleUUID, jdbcType=VARCHAR}
+        </if>
+    </delete>
+
+    <!--删除一条记录-->
+    <delete id="deleteRiskrelationhiddenandaccidentByID" parameterType="Integer" >
+        DELETE FROM riskrelationhiddenandaccident
+        WHERE  RiskRelationHiddenAndAccidentID = #{riskRelationHiddenAndAccidentID,jdbcType=INTEGER}
+    </delete>
+
+    <!--批量删除记录-->
+    <insert id="deleteRiskrelationhiddenandaccidentList"  parameterType="java.util.List" >
+        DELETE FROM riskrelationhiddenandaccident
+        WHERE RiskRelationHiddenAndAccidentID IN
+        <foreach item="item" collection="list" separator=",">
+            (
+            #{item.riskRelationHiddenAndAccidentID, jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+
+    <!--更新记录-->
+    <update id="updateRiskrelationhiddenandaccident" parameterType="cn.com.kingc.risk.model.Riskrelationhiddenandaccident" >
+        UPDATE  riskrelationhiddenandaccident
+        <set>
+            <if test="coalMineName!= null ">
+                CoalMineName = #{coalMineName, jdbcType=VARCHAR} ,
+            </if>
+            <if test="frameWorkID!= null ">
+                FrameWorkID = #{frameWorkID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskRelationHiddenAndAccidentID!= null ">
+                RiskRelationHiddenAndAccidentID = #{riskRelationHiddenAndAccidentID, jdbcType=INTEGER} ,
+            </if>
+            <if test="riskSiteID!= null ">
+                RiskSiteID = #{riskSiteID, jdbcType=INTEGER} ,
+            </if>
+            <if test="hazardID!= null ">
+                HazardID = #{hazardID, jdbcType=INTEGER} ,
+            </if>
+            <if test="hazard_Name!= null ">
+                Hazard_Name = #{hazard_Name, jdbcType=VARCHAR} ,
+            </if>
+            <if test="hazardDesc!= null ">
+                HazardDesc = #{hazardDesc, jdbcType=VARCHAR} ,
+            </if>
+            <if test="damageType!= null ">
+                DamageType = #{damageType, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskLevelSettingID!= null ">
+                RiskLevelSettingID = #{riskLevelSettingID, jdbcType=INTEGER} ,
+            </if>
+            <if test="fHiddenTroubleID!= null ">
+                FHiddenTroubleID = #{fHiddenTroubleID, jdbcType=INTEGER} ,
+            </if>
+            <if test="fDescription!= null ">
+                FDescription = #{fDescription, jdbcType=VARCHAR} ,
+            </if>
+            <if test="fLocation!= null ">
+                FLocation = #{fLocation, jdbcType=VARCHAR} ,
+            </if>
+            <if test="hiddentrouble_Level!= null ">
+                Hiddentrouble_Level = #{hiddentrouble_Level, jdbcType=VARCHAR} ,
+            </if>
+            <if test="accidentID!= null ">
+                AccidentID = #{accidentID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="accident_Danger_RiskID!= null ">
+                Accident_Danger_RiskID = #{accident_Danger_RiskID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="accident_Reasion!= null ">
+                Accident_Reasion = #{accident_Reasion, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskSiteUUID!= null ">
+                RiskSiteUUID = #{riskSiteUUID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="hazardUUID!= null ">
+                HazardUUID = #{hazardUUID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="fHiddenTroubleUUID!= null ">
+                FHiddenTroubleUUID = #{fHiddenTroubleUUID, jdbcType=VARCHAR}
+            </if>
+        </set>
+        WHERE  RiskRelationHiddenAndAccidentID = #{riskRelationHiddenAndAccidentID,jdbcType=INTEGER}
+    </update>
+
+    <!--根据主键查询记录-->
+    <select id="getRiskrelationhiddenandaccident" resultMap="RiskrelationhiddenandaccidentMap"
+            parameterType="Integer">
+        select
+        <include refid="Base_Column_List" />
+        from riskrelationhiddenandaccident
+        WHERE  RiskRelationHiddenAndAccidentID = #{riskRelationHiddenAndAccidentID,jdbcType=INTEGER}
+    </select>
+
+
+    <!--获取共有多少条记录，带有查询条件-->
+    <select id="getRiskrelationhiddenandaccidentCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  riskrelationhiddenandaccident
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!= ''">
+            and  CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!= ''">
+            and  FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskRelationHiddenAndAccidentID!= null ">
+            and  RiskRelationHiddenAndAccidentID = #{riskRelationHiddenAndAccidentID, jdbcType=INTEGER}
+        </if>
+        <if test="riskSiteID!= null ">
+            and  RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="hazardID!= null ">
+            and  HazardID = #{hazardID, jdbcType=INTEGER}
+        </if>
+        <if test="hazard_Name!= null and hazard_Name!= ''">
+            and  Hazard_Name = #{hazard_Name, jdbcType=VARCHAR}
+        </if>
+        <if test="hazardDesc!= null and hazardDesc!= ''">
+            and  HazardDesc = #{hazardDesc, jdbcType=VARCHAR}
+        </if>
+        <if test="damageType!= null and damageType!= ''">
+            and  DamageType = #{damageType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskLevelSettingID!= null ">
+            and  RiskLevelSettingID = #{riskLevelSettingID, jdbcType=INTEGER}
+        </if>
+        <if test="fHiddenTroubleID!= null ">
+            and  FHiddenTroubleID = #{fHiddenTroubleID, jdbcType=INTEGER}
+        </if>
+        <if test="fDescription!= null and fDescription!= ''">
+            and  FDescription = #{fDescription, jdbcType=VARCHAR}
+        </if>
+        <if test="fLocation!= null and fLocation!= ''">
+            and  FLocation = #{fLocation, jdbcType=VARCHAR}
+        </if>
+        <if test="hiddentrouble_Level!= null and hiddentrouble_Level!= ''">
+            and  Hiddentrouble_Level = #{hiddentrouble_Level, jdbcType=VARCHAR}
+        </if>
+        <if test="accidentID!= null and accidentID!= ''">
+            and  AccidentID = #{accidentID, jdbcType=VARCHAR}
+        </if>
+        <if test="accident_Danger_RiskID!= null and accident_Danger_RiskID!= ''">
+            and  Accident_Danger_RiskID = #{accident_Danger_RiskID, jdbcType=VARCHAR}
+        </if>
+        <if test="accident_Reasion!= null and accident_Reasion!= ''">
+            and  Accident_Reasion = #{accident_Reasion, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteUUID!= null and riskSiteUUID!= ''">
+            and  RiskSiteUUID = #{riskSiteUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="hazardUUID!= null and hazardUUID!= ''">
+            and  HazardUUID = #{hazardUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="fHiddenTroubleUUID!= null and fHiddenTroubleUUID!= ''">
+            and  FHiddenTroubleUUID = #{fHiddenTroubleUUID, jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <!--分页获取数据，带有查询条件-->
+    <select id="getRiskrelationhiddenandaccidentByPage" resultMap="RiskrelationhiddenandaccidentMap">
+        select
+        <include refid="Base_Column_List" />
+        from riskrelationhiddenandaccident
+        where 1=1
+        <if test="riskrelationhiddenandaccident.coalMineName!= null and riskrelationhiddenandaccident.coalMineName!= ''">
+            and  CoalMineName = #{riskrelationhiddenandaccident.coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskrelationhiddenandaccident.frameWorkID!= null and riskrelationhiddenandaccident.frameWorkID!= ''">
+            and  FrameWorkID = #{riskrelationhiddenandaccident.frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskrelationhiddenandaccident.riskRelationHiddenAndAccidentID!= null ">
+            and  RiskRelationHiddenAndAccidentID = #{riskrelationhiddenandaccident.riskRelationHiddenAndAccidentID, jdbcType=INTEGER}
+        </if>
+        <if test="riskrelationhiddenandaccident.riskSiteID!= null ">
+            and  RiskSiteID = #{riskrelationhiddenandaccident.riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="riskrelationhiddenandaccident.hazardID!= null ">
+            and  HazardID = #{riskrelationhiddenandaccident.hazardID, jdbcType=INTEGER}
+        </if>
+        <if test="riskrelationhiddenandaccident.hazard_Name!= null and riskrelationhiddenandaccident.hazard_Name!= ''">
+            and  Hazard_Name = #{riskrelationhiddenandaccident.hazard_Name, jdbcType=VARCHAR}
+        </if>
+        <if test="riskrelationhiddenandaccident.hazardDesc!= null and riskrelationhiddenandaccident.hazardDesc!= ''">
+            and  HazardDesc = #{riskrelationhiddenandaccident.hazardDesc, jdbcType=VARCHAR}
+        </if>
+        <if test="riskrelationhiddenandaccident.damageType!= null and riskrelationhiddenandaccident.damageType!= ''">
+            and  DamageType = #{riskrelationhiddenandaccident.damageType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskrelationhiddenandaccident.riskLevelSettingID!= null ">
+            and  RiskLevelSettingID = #{riskrelationhiddenandaccident.riskLevelSettingID, jdbcType=INTEGER}
+        </if>
+        <if test="riskrelationhiddenandaccident.fHiddenTroubleID!= null ">
+            and  FHiddenTroubleID = #{riskrelationhiddenandaccident.fHiddenTroubleID, jdbcType=INTEGER}
+        </if>
+        <if test="riskrelationhiddenandaccident.fDescription!= null and riskrelationhiddenandaccident.fDescription!= ''">
+            and  FDescription = #{riskrelationhiddenandaccident.fDescription, jdbcType=VARCHAR}
+        </if>
+        <if test="riskrelationhiddenandaccident.fLocation!= null and riskrelationhiddenandaccident.fLocation!= ''">
+            and  FLocation = #{riskrelationhiddenandaccident.fLocation, jdbcType=VARCHAR}
+        </if>
+        <if test="riskrelationhiddenandaccident.hiddentrouble_Level!= null and riskrelationhiddenandaccident.hiddentrouble_Level!= ''">
+            and  Hiddentrouble_Level = #{riskrelationhiddenandaccident.hiddentrouble_Level, jdbcType=VARCHAR}
+        </if>
+        <if test="riskrelationhiddenandaccident.accidentID!= null and riskrelationhiddenandaccident.accidentID!= ''">
+            and  AccidentID = #{riskrelationhiddenandaccident.accidentID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskrelationhiddenandaccident.accident_Danger_RiskID!= null and riskrelationhiddenandaccident.accident_Danger_RiskID!= ''">
+            and  Accident_Danger_RiskID = #{riskrelationhiddenandaccident.accident_Danger_RiskID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskrelationhiddenandaccident.accident_Reasion!= null and riskrelationhiddenandaccident.accident_Reasion!= ''">
+            and  Accident_Reasion = #{riskrelationhiddenandaccident.accident_Reasion, jdbcType=VARCHAR}
+        </if>
+        <if test="riskrelationhiddenandaccident.riskSiteUUID!= null and riskrelationhiddenandaccident.riskSiteUUID!= ''">
+            and  RiskSiteUUID = #{riskrelationhiddenandaccident.riskSiteUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskrelationhiddenandaccident.hazardUUID!= null and riskrelationhiddenandaccident.hazardUUID!= ''">
+            and  HazardUUID = #{riskrelationhiddenandaccident.hazardUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskrelationhiddenandaccident.fHiddenTroubleUUID!= null and riskrelationhiddenandaccident.fHiddenTroubleUUID!= ''">
+            and  FHiddenTroubleUUID = #{riskrelationhiddenandaccident.fHiddenTroubleUUID, jdbcType=VARCHAR}
+        </if>
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <!--根据条件查询数据-->
+    <select id="getRiskrelationhiddenandaccidentList" resultMap="RiskrelationhiddenandaccidentMap">
+        select
+        <include refid="Base_Column_List" />
+        from riskrelationhiddenandaccident
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!= ''">
+            and  CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!= ''">
+            and  FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskRelationHiddenAndAccidentID!= null ">
+            and  RiskRelationHiddenAndAccidentID = #{riskRelationHiddenAndAccidentID, jdbcType=INTEGER}
+        </if>
+        <if test="riskSiteID!= null ">
+            and  RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="hazardID!= null ">
+            and  HazardID = #{hazardID, jdbcType=INTEGER}
+        </if>
+        <if test="hazard_Name!= null and hazard_Name!= ''">
+            and  Hazard_Name = #{hazard_Name, jdbcType=VARCHAR}
+        </if>
+        <if test="hazardDesc!= null and hazardDesc!= ''">
+            and  HazardDesc = #{hazardDesc, jdbcType=VARCHAR}
+        </if>
+        <if test="damageType!= null and damageType!= ''">
+            and  DamageType = #{damageType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskLevelSettingID!= null ">
+            and  RiskLevelSettingID = #{riskLevelSettingID, jdbcType=INTEGER}
+        </if>
+        <if test="fHiddenTroubleID!= null ">
+            and  FHiddenTroubleID = #{fHiddenTroubleID, jdbcType=INTEGER}
+        </if>
+        <if test="fDescription!= null and fDescription!= ''">
+            and  FDescription = #{fDescription, jdbcType=VARCHAR}
+        </if>
+        <if test="fLocation!= null and fLocation!= ''">
+            and  FLocation = #{fLocation, jdbcType=VARCHAR}
+        </if>
+        <if test="hiddentrouble_Level!= null and hiddentrouble_Level!= ''">
+            and  Hiddentrouble_Level = #{hiddentrouble_Level, jdbcType=VARCHAR}
+        </if>
+        <if test="accidentID!= null and accidentID!= ''">
+            and  AccidentID = #{accidentID, jdbcType=VARCHAR}
+        </if>
+        <if test="accident_Danger_RiskID!= null and accident_Danger_RiskID!= ''">
+            and  Accident_Danger_RiskID = #{accident_Danger_RiskID, jdbcType=VARCHAR}
+        </if>
+        <if test="accident_Reasion!= null and accident_Reasion!= ''">
+            and  Accident_Reasion = #{accident_Reasion, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteUUID!= null and riskSiteUUID!= ''">
+            and  RiskSiteUUID = #{riskSiteUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="hazardUUID!= null and hazardUUID!= ''">
+            and  HazardUUID = #{hazardUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="fHiddenTroubleUUID!= null and fHiddenTroubleUUID!= ''">
+            and  FHiddenTroubleUUID = #{fHiddenTroubleUUID, jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <!--获取一个数据的不重复集合-->
+    <select id="getDistinctItemList" resultType="java.lang.String" statementType="STATEMENT">
+        select  DISTINCT ${attribute} FROM riskrelationhiddenandaccident
+    </select>
+
+    <!--判断对象是否已经存在-->
+    <select id="riskrelationhiddenandaccidentIsExist" resultType="java.lang.Integer" parameterType="cn.com.kingc.risk.model.Riskrelationhiddenandaccident">
+        select  count(*)
+        from riskrelationhiddenandaccident
+        where 1=1
+        <if test="coalMineName!= null ">
+            and  CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null ">
+            and  FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskRelationHiddenAndAccidentID!= null and riskRelationHiddenAndAccidentID!= ''">
+            and  RiskRelationHiddenAndAccidentID = #{riskRelationHiddenAndAccidentID, jdbcType=INTEGER}
+        </if>
+        <if test="riskSiteID!= null and riskSiteID!= ''">
+            and  RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="hazardID!= null and hazardID!= ''">
+            and  HazardID = #{hazardID, jdbcType=INTEGER}
+        </if>
+        <if test="hazard_Name!= null ">
+            and  Hazard_Name = #{hazard_Name, jdbcType=VARCHAR}
+        </if>
+        <if test="hazardDesc!= null ">
+            and  HazardDesc = #{hazardDesc, jdbcType=VARCHAR}
+        </if>
+        <if test="damageType!= null ">
+            and  DamageType = #{damageType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskLevelSettingID!= null and riskLevelSettingID!= ''">
+            and  RiskLevelSettingID = #{riskLevelSettingID, jdbcType=INTEGER}
+        </if>
+        <if test="fHiddenTroubleID!= null and fHiddenTroubleID!= ''">
+            and  FHiddenTroubleID = #{fHiddenTroubleID, jdbcType=INTEGER}
+        </if>
+        <if test="fDescription!= null ">
+            and  FDescription = #{fDescription, jdbcType=VARCHAR}
+        </if>
+        <if test="fLocation!= null ">
+            and  FLocation = #{fLocation, jdbcType=VARCHAR}
+        </if>
+        <if test="hiddentrouble_Level!= null ">
+            and  Hiddentrouble_Level = #{hiddentrouble_Level, jdbcType=VARCHAR}
+        </if>
+        <if test="accidentID!= null ">
+            and  AccidentID = #{accidentID, jdbcType=VARCHAR}
+        </if>
+        <if test="accident_Danger_RiskID!= null ">
+            and  Accident_Danger_RiskID = #{accident_Danger_RiskID, jdbcType=VARCHAR}
+        </if>
+        <if test="accident_Reasion!= null ">
+            and  Accident_Reasion = #{accident_Reasion, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteUUID!= null ">
+            and  RiskSiteUUID = #{riskSiteUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="hazardUUID!= null ">
+            and  HazardUUID = #{hazardUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="fHiddenTroubleUUID!= null ">
+            and  FHiddenTroubleUUID = #{fHiddenTroubleUUID, jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <!--根据条件查询数据-->
+    <select id="getRiskrelationhiddenandaccidentUnique" resultMap="RiskrelationhiddenandaccidentMap">
+        select
+        <include refid="Base_Column_List" />
+        from riskrelationhiddenandaccident
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!= ''">
+            and  CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!= ''">
+            and  FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskRelationHiddenAndAccidentID!= null ">
+            and  RiskRelationHiddenAndAccidentID = #{riskRelationHiddenAndAccidentID, jdbcType=INTEGER}
+        </if>
+        <if test="riskSiteID!= null ">
+            and  RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="hazardID!= null ">
+            and  HazardID = #{hazardID, jdbcType=INTEGER}
+        </if>
+        <if test="hazard_Name!= null and hazard_Name!= ''">
+            and  Hazard_Name = #{hazard_Name, jdbcType=VARCHAR}
+        </if>
+        <if test="hazardDesc!= null and hazardDesc!= ''">
+            and  HazardDesc = #{hazardDesc, jdbcType=VARCHAR}
+        </if>
+        <if test="damageType!= null and damageType!= ''">
+            and  DamageType = #{damageType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskLevelSettingID!= null ">
+            and  RiskLevelSettingID = #{riskLevelSettingID, jdbcType=INTEGER}
+        </if>
+        <if test="fHiddenTroubleID!= null ">
+            and  FHiddenTroubleID = #{fHiddenTroubleID, jdbcType=INTEGER}
+        </if>
+        <if test="fDescription!= null and fDescription!= ''">
+            and  FDescription = #{fDescription, jdbcType=VARCHAR}
+        </if>
+        <if test="fLocation!= null and fLocation!= ''">
+            and  FLocation = #{fLocation, jdbcType=VARCHAR}
+        </if>
+        <if test="hiddentrouble_Level!= null and hiddentrouble_Level!= ''">
+            and  Hiddentrouble_Level = #{hiddentrouble_Level, jdbcType=VARCHAR}
+        </if>
+        <if test="accidentID!= null and accidentID!= ''">
+            and  AccidentID = #{accidentID, jdbcType=VARCHAR}
+        </if>
+        <if test="accident_Danger_RiskID!= null and accident_Danger_RiskID!= ''">
+            and  Accident_Danger_RiskID = #{accident_Danger_RiskID, jdbcType=VARCHAR}
+        </if>
+        <if test="accident_Reasion!= null and accident_Reasion!= ''">
+            and  Accident_Reasion = #{accident_Reasion, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteUUID!= null and riskSiteUUID!= ''">
+            and  RiskSiteUUID = #{riskSiteUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="hazardUUID!= null and hazardUUID!= ''">
+            and  HazardUUID = #{hazardUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="fHiddenTroubleUUID!= null and fHiddenTroubleUUID!= ''">
+            and  FHiddenTroubleUUID = #{fHiddenTroubleUUID, jdbcType=VARCHAR}
+        </if>
+    </select>
+
+</mapper>

@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.kingc.risk.dao.TemplaterisksiteDao">
+    <resultMap id="TemplaterisksiteMap" type="cn.com.kingc.risk.model.Templaterisksite">
+        <result property="coalMineName" column="CoalMineName" jdbcType="VARBINARY"/>
+        <result property="frameWorkID" column="FrameWorkID" jdbcType="VARCHAR"/>
+        <result property="riskTemplateID" column="RiskTemplateID" jdbcType="INTEGER"/>
+        <result property="riskTemplateUUID" column="RiskTemplateUUID" jdbcType="VARCHAR"/>
+        <result property="details" column="Details" jdbcType="BIT"/>
+        <result property="extendedAttributesJsonString" column="ExtendedAttributesJsonString" jdbcType="VARCHAR"/>
+        <result property="fullNumber" column="FullNumber" jdbcType="VARCHAR"/>
+        <result property="managerID" column="ManagerID" jdbcType="INTEGER"/>
+        <result property="managerName" column="ManagerName" jdbcType="VARCHAR"/>
+        <result property="managerUnitID" column="ManagerUnitID" jdbcType="INTEGER"/>
+        <result property="managerUnitName" column="ManagerUnitName" jdbcType="VARCHAR"/>
+        <result property="name" column="Name" jdbcType="VARCHAR"/>
+        <result property="number" column="Number" jdbcType="VARCHAR"/>
+        <result property="parentID" column="ParentID" jdbcType="VARCHAR"/>
+        <result property="parentNumber" column="ParentNumber" jdbcType="VARCHAR"/>
+        <result property="riskAccident" column="RiskAccident" jdbcType="VARCHAR"/>
+        <result property="riskColor" column="RiskColor" jdbcType="VARCHAR"/>
+        <result property="riskControlCycle" column="RiskControlCycle" jdbcType="VARCHAR"/>
+        <result property="riskControlTier" column="RiskControlTier" jdbcType="VARCHAR"/>
+        <result property="riskDamageType" column="RiskDamageType" jdbcType="VARCHAR"/>
+        <result property="riskDescription" column="RiskDescription" jdbcType="VARCHAR"/>
+        <result property="riskFrequency" column="RiskFrequency" jdbcType="VARCHAR"/>
+        <result property="riskLevel" column="RiskLevel" jdbcType="VARCHAR"/>
+        <result property="riskValue" column="RiskValue" jdbcType="INTEGER"/>
+        <result property="riskMajorType" column="RiskMajorType" jdbcType="VARCHAR"/>
+        <result property="riskSiteType" column="RiskSiteType" typeHandler="cn.com.kingc.risk.dao.RiskSiteTypeEnumHandle"/>
+        <result property="riskSiteTypeContent" column="RiskSiteTypeContent" jdbcType="VARCHAR"/>
+        <result property="riskSupervisor" column="RiskSupervisor" jdbcType="VARCHAR"/>
+        <collection property="mChildRiskSite" column="{riskTemplateID=RiskTemplateID,frameWorkID=FrameWorkID}"
+                    ofType="cn.com.kingc.risk.model.Templaterisksite"
+                    select="findRiskSiteByparentId"/>
+        <collection property="mHazards" column="{riskTemplateID=RiskTemplateID,frameWorkID=FrameWorkID}"
+                    ofType="cn.com.kingc.risk.model.Templatehazard"
+                    select="findHazardsByRiskSiteId"/>
+        <collection property="mRiskControlMeasure" column="{riskTemplateID=RiskTemplateID,frameWorkID=FrameWorkID}"
+                    ofType="cn.com.kingc.risk.model.Templateriskcontrolmeasure"
+                    select="findRiskControlMeasureByRiskSiteId"/>
+    </resultMap>
+
+    <select id="findRiskSiteByparentId" parameterType="java.util.Map" resultMap="TemplaterisksiteMap">
+        select
+        <include refid="Base_Column_List"/>
+        from templaterisksite
+        where ParentID=#{riskTemplateID,jdbcType=INTEGER} AND FrameWorkID=#{frameWorkID}
+    </select>
+
+    <select id="findHazardsByRiskSiteId" parameterType="java.util.Map"
+            resultMap="cn.com.kingc.risk.dao.TemplatehazardDao.TemplatehazardMap">
+        select
+        <include refid="cn.com.kingc.risk.dao.TemplatehazardDao.Base_Column_List"/>
+        from templatehazard
+        where RiskTemplateID=#{riskTemplateID,jdbcType=INTEGER} AND FrameWorkID=#{frameWorkID}
+
+    </select>
+
+    <select id="findRiskControlMeasureByRiskSiteId" parameterType="java.util.Map"
+            resultMap="cn.com.kingc.risk.dao.TemplateriskcontrolmeasureDao.TemplateriskcontrolmeasureMap">
+        select
+        <include refid="cn.com.kingc.risk.dao.TemplateriskcontrolmeasureDao.Base_Column_List"/>
+        from templateriskcontrolmeasure
+        where RiskTemplateID=#{riskTemplateID,jdbcType=INTEGER} AND FrameWorkID=#{frameWorkID}
+    </select>
+
+    <sql id="Base_Column_List">
+            CoalMineName,
+            FrameWorkID,
+            RiskTemplateID,
+            RiskTemplateUUID,
+            Details,
+            ExtendedAttributesJsonString,
+            FullNumber,
+            ManagerID,
+            ManagerName,
+            ManagerUnitID,
+            ManagerUnitName,
+            Name,
+            Number,
+            ParentID,
+            ParentNumber,
+            RiskAccident,
+            RiskColor,
+            RiskControlCycle,
+            RiskControlTier,
+            RiskDamageType,
+            RiskDescription,
+            RiskFrequency,
+            RiskLevel,
+            RiskValue,
+            RiskMajorType,
+            RiskSiteType,
+            RiskSiteTypeContent,
+            RiskSupervisor
+    </sql>
+
+    <insert id="addTemplaterisksite" parameterType="cn.com.kingc.risk.model.Templaterisksite"
+            useGeneratedKeys="true" keyProperty="riskTemplateID">
+        insert into templaterisksite (
+                CoalMineName,
+                FrameWorkID,
+                RiskTemplateID,
+                RiskTemplateUUID,
+                Details,
+                ExtendedAttributesJsonString,
+                FullNumber,
+                ManagerID,
+                ManagerName,
+                ManagerUnitID,
+                ManagerUnitName,
+                Name,
+                Number,
+                ParentID,
+                ParentNumber,
+                RiskAccident,
+                RiskColor,
+                RiskControlCycle,
+                RiskControlTier,
+                RiskDamageType,
+                RiskDescription,
+                RiskFrequency,
+                RiskLevel,
+                RiskValue,
+                RiskMajorType,
+                RiskSiteType,
+                RiskSiteTypeContent,
+                RiskSupervisor
+        )
+        values(
+                #{coalMineName, jdbcType=VARBINARY}  ,
+                #{frameWorkID, jdbcType=VARCHAR}  ,
+                #{riskTemplateID, jdbcType=INTEGER}  ,
+                #{riskTemplateUUID, jdbcType=VARCHAR}  ,
+                #{details, jdbcType=BIT}  ,
+                #{extendedAttributesJsonString, jdbcType=VARCHAR}  ,
+                #{fullNumber, jdbcType=VARCHAR}  ,
+                #{managerID, jdbcType=INTEGER}  ,
+                #{managerName, jdbcType=VARCHAR}  ,
+                #{managerUnitID, jdbcType=INTEGER}  ,
+                #{managerUnitName, jdbcType=VARCHAR}  ,
+                #{name, jdbcType=VARCHAR}  ,
+                #{number, jdbcType=VARCHAR}  ,
+                #{parentID, jdbcType=VARCHAR}  ,
+                #{parentNumber, jdbcType=VARCHAR}  ,
+                #{riskAccident, jdbcType=VARCHAR}  ,
+                #{riskColor, jdbcType=VARCHAR}  ,
+                #{riskControlCycle, jdbcType=VARCHAR}  ,
+                #{riskControlTier, jdbcType=VARCHAR}  ,
+                #{riskDamageType, jdbcType=VARCHAR}  ,
+                #{riskDescription, jdbcType=VARCHAR}  ,
+                #{riskFrequency, jdbcType=VARCHAR}  ,
+                #{riskLevel, jdbcType=VARCHAR}  ,
+                #{riskValue, jdbcType=INTEGER}  ,
+                #{riskMajorType, jdbcType=VARCHAR}  ,
+                #{riskSiteType.code, jdbcType=VARCHAR}  ,
+                #{riskSiteTypeContent, jdbcType=VARCHAR}  ,
+                #{riskSupervisor, jdbcType=VARCHAR}  
+        )
+    </insert>
+
+    <delete id="deleteTemplaterisksite" parameterType="cn.com.kingc.risk.model.Templaterisksite">
+        DELETE FROM templaterisksite
+        WHERE  RiskTemplateID = #{riskTemplateID,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteTemplaterisksiteByID" parameterType="java.lang.Integer">
+        DELETE FROM templaterisksite
+        WHERE  RiskTemplateID = #{riskTemplateID,jdbcType=INTEGER}
+    </delete>
+
+    <update id="updateTemplaterisksite" parameterType="cn.com.kingc.risk.model.Templaterisksite">
+        UPDATE templaterisksite
+        <set>
+            <if test="coalMineName!= null ">
+                CoalMineName = #{coalMineName, jdbcType=VARBINARY} ,
+            </if>
+            <if test="frameWorkID!= null ">
+                FrameWorkID = #{frameWorkID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskTemplateID!= null ">
+                RiskTemplateID = #{riskTemplateID, jdbcType=INTEGER} ,
+            </if>
+            <if test="riskTemplateUUID!= null ">
+                RiskTemplateUUID = #{riskTemplateUUID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="details!= null ">
+                Details = #{details, jdbcType=BIT} ,
+            </if>
+            <if test="extendedAttributesJsonString!= null ">
+                ExtendedAttributesJsonString = #{extendedAttributesJsonString, jdbcType=VARCHAR} ,
+            </if>
+            <if test="fullNumber!= null ">
+                FullNumber = #{fullNumber, jdbcType=VARCHAR} ,
+            </if>
+            <if test="managerID!= null ">
+                ManagerID = #{managerID, jdbcType=INTEGER} ,
+            </if>
+            <if test="managerName!= null ">
+                ManagerName = #{managerName, jdbcType=VARCHAR} ,
+            </if>
+            <if test="managerUnitID!= null ">
+                ManagerUnitID = #{managerUnitID, jdbcType=INTEGER} ,
+            </if>
+            <if test="managerUnitName!= null ">
+                ManagerUnitName = #{managerUnitName, jdbcType=VARCHAR} ,
+            </if>
+            <if test="name!= null ">
+                Name = #{name, jdbcType=VARCHAR} ,
+            </if>
+            <if test="number!= null ">
+                Number = #{number, jdbcType=VARCHAR} ,
+            </if>
+            <if test="parentID!= null ">
+                ParentID = #{parentID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="parentNumber!= null ">
+                ParentNumber = #{parentNumber, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskAccident!= null ">
+                RiskAccident = #{riskAccident, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskColor!= null ">
+                RiskColor = #{riskColor, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskControlCycle!= null ">
+                RiskControlCycle = #{riskControlCycle, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskControlTier!= null ">
+                RiskControlTier = #{riskControlTier, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskDamageType!= null ">
+                RiskDamageType = #{riskDamageType, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskDescription!= null ">
+                RiskDescription = #{riskDescription, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskFrequency!= null ">
+                RiskFrequency = #{riskFrequency, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskLevel!= null ">
+                RiskLevel = #{riskLevel, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskValue!= null ">
+                RiskValue = #{riskValue, jdbcType=INTEGER} ,
+            </if>
+            <if test="riskMajorType!= null ">
+                RiskMajorType = #{riskMajorType, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskSiteType!= null ">
+                RiskSiteType = #{riskSiteType.code, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskSiteTypeContent!= null ">
+                RiskSiteTypeContent = #{riskSiteTypeContent, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskSupervisor!= null ">
+                RiskSupervisor = #{riskSupervisor, jdbcType=VARCHAR}
+            </if>
+        </set>
+        WHERE RiskTemplateID = #{riskTemplateID,jdbcType=INTEGER}
+    </update>
+
+    <select id="getTemplaterisksite" resultMap="TemplaterisksiteMap"
+            parameterType="INTEGER">
+        select
+        <include refid="Base_Column_List"/>
+        from templaterisksite
+        WHERE RiskTemplateID = #{riskTemplateID,jdbcType=INTEGER}
+    </select>
+
+    <select id="getTemplaterisksiteByType" resultMap="TemplaterisksiteMap"
+            parameterType="String">
+        select
+        <include refid="Base_Column_List"/>
+        from templaterisksite
+        WHERE RiskSiteType = #{riskSiteType.code, jdbcType=VARCHAR}
+    </select>
+
+    <select id="getTemplaterisksiteCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  templaterisksite
+    </select>
+
+    <select id="getTemplaterisksiteByPage" resultMap="TemplaterisksiteMap"
+            parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from templaterisksite
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <select id="getTemplaterisksiteCountByTemplaterisksite" resultType="java.lang.Integer">
+        select
+        count(*)
+        from templaterisksite
+        where 1=1
+        <if test="coalMineName!= null  ">
+            and CoalMineName = #{coalMineName, jdbcType=VARBINARY}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!=''">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskTemplateID!= null ">
+            and RiskTemplateID = #{riskTemplateID, jdbcType=INTEGER}
+        </if>
+        <if test="riskTemplateUUID!= null and riskTemplateUUID!=''">
+            and RiskTemplateUUID = #{riskTemplateUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="details!= null ">
+            and Details = #{details, jdbcType=BIT}
+        </if>
+        <if test="extendedAttributesJsonString!= null and extendedAttributesJsonString!=''">
+            and ExtendedAttributesJsonString = #{extendedAttributesJsonString, jdbcType=VARCHAR}
+        </if>
+        <if test="fullNumber!= null and fullNumber!='' ">
+            and FullNumber = #{fullNumber, jdbcType=VARCHAR}
+        </if>
+        <if test="managerID!= null ">
+            and ManagerID = #{managerID, jdbcType=INTEGER}
+        </if>
+        <if test="managerName!= null and managerName!=''">
+            and ManagerName = #{managerName, jdbcType=VARCHAR}
+        </if>
+        <if test="managerUnitID!= null ">
+            and ManagerUnitID = #{managerUnitID, jdbcType=INTEGER}
+        </if>
+        <if test="managerUnitName!= null and managerUnitName!=''">
+            and ManagerUnitName = #{managerUnitName, jdbcType=VARCHAR}
+        </if>
+        <if test="name!= null and name!='' ">
+            and Name = #{name, jdbcType=VARCHAR}
+        </if>
+        <if test="number!= null and number!=''">
+            and Number = #{number, jdbcType=VARCHAR}
+        </if>
+        <if test="parentID!= null and parentID!=''">
+            and ParentID = #{parentID, jdbcType=VARCHAR}
+        </if>
+        <if test="parentNumber!= null and parentNumber!=''">
+            and ParentNumber = #{parentNumber, jdbcType=VARCHAR}
+        </if>
+        <if test="riskAccident!= null and riskAccident!=''">
+            and RiskAccident = #{riskAccident, jdbcType=VARCHAR}
+        </if>
+        <if test="riskColor!= null and riskColor!=''">
+            and RiskColor = #{riskColor, jdbcType=VARCHAR}
+        </if>
+        <if test="riskControlCycle!= null and riskControlCycle!=''">
+            and RiskControlCycle = #{riskControlCycle, jdbcType=VARCHAR}
+        </if>
+        <if test="riskControlTier!= null and riskControlTier!=''">
+            and RiskControlTier = #{riskControlTier, jdbcType=VARCHAR}
+        </if>
+        <if test="riskDamageType!= null and riskDamageType!=''">
+            and RiskDamageType = #{riskDamageType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskDescription!= null and riskDescription!=''">
+            and RiskDescription = #{riskDescription, jdbcType=VARCHAR}
+        </if>
+        <if test="riskFrequency!= null and riskFrequency!=''">
+            and RiskFrequency = #{riskFrequency, jdbcType=VARCHAR}
+        </if>
+        <if test="riskLevel!= null ">
+            and RiskLevel = #{riskLevel, jdbcType=VARCHAR}
+        </if>
+        <if test="riskValue!= null ">
+            RiskValue = #{riskValue, jdbcType=INTEGER} ,
+        </if>
+        <if test="riskMajorType!= null and riskMajorType!=''">
+            and RiskMajorType = #{riskMajorType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteType!= null and riskSiteType!=''">
+            and RiskSiteType = #{riskSiteType.code, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteTypeContent!= null and riskSiteTypeContent!=''">
+            and RiskSiteTypeContent = #{riskSiteTypeContent, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSupervisor!= null and riskSupervisor!=''">
+            and RiskSupervisor = #{riskSupervisor, jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <select id="getTemplaterisksiteByPageAndTemplaterisksite" resultMap="TemplaterisksiteMap">
+        select
+        <include refid="Base_Column_List"/>
+        from templaterisksite
+        where 1=1
+        <if test="templaterisksite.coalMineName!= null ">
+            and CoalMineName = #{templaterisksite.coalMineName, jdbcType=VARBINARY}
+        </if>
+        <if test="templaterisksite.frameWorkID!= null and templaterisksite.frameWorkID!= ''">
+            and FrameWorkID = #{templaterisksite.frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="templaterisksite.riskTemplateID!= null ">
+            and RiskTemplateID = #{templaterisksite.riskTemplateID, jdbcType=INTEGER}
+        </if>
+        <if test="templaterisksite.riskTemplateUUID!= null and templaterisksite.riskTemplateUUID!= ''">
+            and RiskTemplateUUID = #{templaterisksite.riskTemplateUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="templaterisksite.details!= null ">
+            and Details = #{templaterisksite.details, jdbcType=BIT}
+        </if>
+        <if test="templaterisksite.extendedAttributesJsonString!= null and templaterisksite.extendedAttributesJsonString!='' ">
+            and ExtendedAttributesJsonString = #{templaterisksite.extendedAttributesJsonString, jdbcType=VARCHAR}
+        </if>
+        <if test="templaterisksite.fullNumber!= null and templaterisksite.fullNumber!= ''">
+            and FullNumber = #{templaterisksite.fullNumber, jdbcType=VARCHAR}
+        </if>
+        <if test="templaterisksite.managerID!= null ">
+            and ManagerID = #{templaterisksite.managerID, jdbcType=INTEGER}
+        </if>
+        <if test="templaterisksite.managerName!= null and templaterisksite.managerName!='' ">
+            and ManagerName = #{templaterisksite.managerName, jdbcType=VARCHAR}
+        </if>
+        <if test="templaterisksite.managerUnitID!= null ">
+            and ManagerUnitID = #{templaterisksite.managerUnitID, jdbcType=INTEGER}
+        </if>
+        <if test="templaterisksite.managerUnitName!= null and templaterisksite.managerUnitName!= ''">
+            and ManagerUnitName = #{templaterisksite.managerUnitName, jdbcType=VARCHAR}
+        </if>
+        <if test="templaterisksite.name!= null and templaterisksite.name!=''">
+            and Name = #{templaterisksite.name, jdbcType=VARCHAR}
+        </if>
+        <if test="templaterisksite.number!= null and templaterisksite.number!=''">
+            and Number = #{templaterisksite.number, jdbcType=VARCHAR}
+        </if>
+        <if test="templaterisksite.parentID!= null and templaterisksite.parentID!=''">
+            and ParentID = #{templaterisksite.parentID, jdbcType=VARCHAR}
+        </if>
+        <if test="templaterisksite.parentNumber!= null and templaterisksite.parentNumber!=''">
+            and ParentNumber = #{templaterisksite.parentNumber, jdbcType=VARCHAR}
+        </if>
+        <if test="templaterisksite.riskAccident!= null and templaterisksite.riskAccident!=''">
+            and RiskAccident = #{templaterisksite.riskAccident, jdbcType=VARCHAR}
+        </if>
+        <if test="templaterisksite.riskColor!= null and templaterisksite.riskColor!= ''">
+            and RiskColor = #{templaterisksite.riskColor, jdbcType=VARCHAR}
+        </if>
+        <if test="templaterisksite.riskControlCycle!= null and templaterisksite.riskControlCycle!=''">
+            and RiskControlCycle = #{templaterisksite.riskControlCycle, jdbcType=VARCHAR}
+        </if>
+        <if test="templaterisksite.riskControlTier!= null and templaterisksite.riskControlTier!= ''">
+            and RiskControlTier = #{templaterisksite.riskControlTier, jdbcType=VARCHAR}
+        </if>
+        <if test="templaterisksite.riskDamageType!= null and templaterisksite.riskDamageType!='' ">
+            and RiskDamageType = #{templaterisksite.riskDamageType, jdbcType=VARCHAR}
+        </if>
+        <if test="templaterisksite.riskDescription!= null and templaterisksite.riskDescription!=''">
+            and RiskDescription = #{templaterisksite.riskDescription, jdbcType=VARCHAR}
+        </if>
+        <if test="templaterisksite.riskFrequency!= null and templaterisksite.riskFrequency!= ''">
+            and RiskFrequency = #{templaterisksite.riskFrequency, jdbcType=VARCHAR}
+        </if>
+        <if test="templaterisksite.riskLevel!= null ">
+            and RiskLevel = #{templaterisksite.riskLevel, jdbcType=VARCHAR}
+        </if>
+        <if test="templaterisksite.riskValue!= null ">
+            RiskValue = #{templaterisksite.riskValue, jdbcType=INTEGER} ,
+        </if>
+        <if test="templaterisksite.riskMajorType!= null and templaterisksite.riskMajorType!= ''">
+            and RiskMajorType = #{templaterisksite.riskMajorType, jdbcType=VARCHAR}
+        </if>
+        <if test="templaterisksite.riskSiteType!= null and templaterisksite.riskSiteType!=''">
+            and RiskSiteType = #{templaterisksite.riskSiteType.code, jdbcType=VARCHAR}
+        </if>
+        <if test="templaterisksite.riskSiteTypeContent!= null and templaterisksite.riskSiteTypeContent!=''">
+            and RiskSiteTypeContent = #{templaterisksite.riskSiteTypeContent, jdbcType=VARCHAR}
+        </if>
+        <if test="templaterisksite.riskSupervisor!= null and templaterisksite.riskSupervisor!=''">
+            and RiskSupervisor = #{templaterisksite.riskSupervisor, jdbcType=VARCHAR}
+        </if>
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <select id="getTemplaterisksiteData" resultMap="TemplaterisksiteMap">
+        select
+        <include refid="Base_Column_List"/>
+        from templaterisksite
+        where 1=1
+        <if test="coalMineName!= null">
+            and CoalMineName = #{coalMineName, jdbcType=VARBINARY}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!= ''">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskTemplateID!= null ">
+            and RiskTemplateID = #{riskTemplateID, jdbcType=INTEGER}
+        </if>
+        <if test="riskTemplateUUID!= null and riskTemplateUUID!=''">
+            and RiskTemplateUUID = #{riskTemplateUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="details!= null ">
+            and Details = #{details, jdbcType=BIT}
+        </if>
+        <if test="extendedAttributesJsonString!= null and extendedAttributesJsonString!=''">
+            and ExtendedAttributesJsonString = #{extendedAttributesJsonString, jdbcType=VARCHAR}
+        </if>
+        <if test="fullNumber!= null and fullNumber!=''">
+            and FullNumber = #{fullNumber, jdbcType=VARCHAR}
+        </if>
+        <if test="managerID!= null ">
+            and ManagerID = #{managerID, jdbcType=INTEGER}
+        </if>
+        <if test="managerName!= null and managerName!= ''">
+            and ManagerName = #{managerName, jdbcType=VARCHAR}
+        </if>
+        <if test="managerUnitID!= null ">
+            and ManagerUnitID = #{managerUnitID, jdbcType=INTEGER}
+        </if>
+        <if test="managerUnitName!= null and managerUnitName!=''">
+            and ManagerUnitName = #{managerUnitName, jdbcType=VARCHAR}
+        </if>
+        <if test="name!= null and name!= ''">
+            and Name = #{name, jdbcType=VARCHAR}
+        </if>
+        <if test="number!= null and number!= ''">
+            and Number = #{number, jdbcType=VARCHAR}
+        </if>
+        <if test="parentID!= null and parentID!= ''">
+            and ParentID = #{parentID, jdbcType=VARCHAR}
+        </if>
+        <if test="parentNumber!= null and parentNumber!=''">
+            and ParentNumber = #{parentNumber, jdbcType=VARCHAR}
+        </if>
+        <if test="riskAccident!= null and riskAccident!=''">
+            and RiskAccident = #{riskAccident, jdbcType=VARCHAR}
+        </if>
+        <if test="riskColor!= null  and riskColor!= ''">
+            and RiskColor = #{riskColor, jdbcType=VARCHAR}
+        </if>
+        <if test="riskControlCycle!= null and riskControlCycle!=''">
+            and RiskControlCycle = #{riskControlCycle, jdbcType=VARCHAR}
+        </if>
+        <if test="riskControlTier!= null and riskControlTier!= ''">
+            and RiskControlTier = #{riskControlTier, jdbcType=VARCHAR}
+        </if>
+        <if test="riskDamageType!= null and riskDamageType!=''">
+            and RiskDamageType = #{riskDamageType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskDescription!= null and riskDescription!=''">
+            and RiskDescription = #{riskDescription, jdbcType=VARCHAR}
+        </if>
+        <if test="riskFrequency!= null and riskFrequency!=''">
+            and RiskFrequency = #{riskFrequency, jdbcType=VARCHAR}
+        </if>
+        <if test="riskLevel!= null ">
+            and RiskLevel = #{riskLevel, jdbcType=VARCHAR}
+        </if>
+        <if test="riskValue!= null ">
+            and RiskValue = #{riskValue, jdbcType=INTEGER}
+        </if>
+        <if test="riskMajorType!= null and riskMajorType!=''">
+            and RiskMajorType = #{riskMajorType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteType!= null and riskSiteType!=''">
+            and RiskSiteType = #{riskSiteType.code, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteTypeContent!= null and riskSiteTypeContent!=''">
+            and RiskSiteTypeContent = #{riskSiteTypeContent, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSupervisor!= null and riskSupervisor!=''">
+            and RiskSupervisor = #{riskSupervisor, jdbcType=VARCHAR}
+        </if>
+    </select>
+
+</mapper>

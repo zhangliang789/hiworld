@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.kingc.risk.dao.RiskidentificationbyyearDao">
+    <resultMap id="RiskidentificationbyyearMap" type="cn.com.kingc.risk.model.Riskidentificationbyyear">
+        <result property="coalMineName" column="CoalMineName" jdbcType="VARCHAR"/>
+        <result property="frameWorkID" column="FrameWorkID" jdbcType="VARCHAR"/>
+        <result property="riskIdentificationYearUUID" column="RiskIdentificationYearUUID" jdbcType="VARCHAR"/>
+        <result property="riskIdentificationYearID" column="RiskIdentificationYearID" jdbcType="INTEGER"/>
+        <result property="meetingCompere" column="MeetingCompere" jdbcType="VARCHAR"/>
+        <result property="meetingContent" column="MeetingContent" jdbcType="VARCHAR"/>
+        <result property="meetingParticipant" column="MeetingParticipant" jdbcType="VARCHAR"/>
+        <result property="meetingPlace" column="MeetingPlace" jdbcType="VARCHAR"/>
+        <result property="meetingRecorder" column="MeetingRecorder" jdbcType="VARCHAR"/>
+        <result property="meetingTime" column="MeetingTime" jdbcType="VARCHAR"/>
+        <result property="meetringAttachmentUUID" column="MeetringAttachmentUUID" jdbcType="VARCHAR"/>
+        <result property="meetringAttachmentFileName" column="meetringAttachmentFileName" jdbcType="VARCHAR"/>
+        <result property="mYear" column="MYear" jdbcType="INTEGER"/>
+        <collection property="mYearEntry" column="{riskIdentificationYearID=RiskIdentificationYearID,frameWorkID=FrameWorkID}"
+                    ofType="cn.com.kingc.risk.model.Riskidentificationbyyearentry"
+                    select="findEntryByYearID"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+            CoalMineName,
+            FrameWorkID,
+            RiskIdentificationYearUUID,
+            RiskIdentificationYearID,
+            MeetingCompere,
+            MeetingContent,
+            MeetingParticipant,
+            MeetingPlace,
+            MeetingRecorder,
+            MeetingTime,
+            MeetringAttachmentUUID,
+            meetringAttachmentFileName,
+            MYear
+    </sql>
+
+    <select id="findEntryByYearID" parameterType="java.util.Map" resultMap="cn.com.kingc.risk.dao.RiskidentificationbyyearentryDao.RiskidentificationbyyearentryMap">
+        select
+        <include refid="cn.com.kingc.risk.dao.RiskidentificationbyyearentryDao.Base_Column_List"/>
+        from riskidentificationbyyearentry
+        where RiskIdentificationYearID=#{riskIdentificationYearID,jdbcType=INTEGER} AND FrameWorkID=#{frameWorkID}
+    </select>
+
+    <insert id="addRiskidentificationbyyear" parameterType="cn.com.kingc.risk.model.Riskidentificationbyyear"
+            useGeneratedKeys="true" keyProperty="riskIdentificationYearID">
+        insert into riskidentificationbyyear (
+                CoalMineName,
+                FrameWorkID,
+                RiskIdentificationYearUUID,
+                RiskIdentificationYearID,
+                MeetingCompere,
+                MeetingContent,
+                MeetingParticipant,
+                MeetingPlace,
+                MeetingRecorder,
+                MeetingTime,
+                MeetringAttachmentUUID,
+                meetringAttachmentFileName,
+                MYear
+        )
+        values(
+                #{coalMineName, jdbcType=VARCHAR}  ,
+                #{frameWorkID, jdbcType=VARCHAR}  ,
+                #{riskIdentificationYearUUID, jdbcType=VARCHAR}  ,
+                #{riskIdentificationYearID, jdbcType=INTEGER}  ,
+                #{meetingCompere, jdbcType=VARCHAR}  ,
+                #{meetingContent, jdbcType=VARCHAR}  ,
+                #{meetingParticipant, jdbcType=VARCHAR}  ,
+                #{meetingPlace, jdbcType=VARCHAR}  ,
+                #{meetingRecorder, jdbcType=VARCHAR}  ,
+                #{meetingTime, jdbcType=VARCHAR}  ,
+                #{meetringAttachmentUUID, jdbcType=VARCHAR}  ,
+                #{meetringAttachmentFileName, jdbcType=VARCHAR}  ,
+                #{mYear, jdbcType=INTEGER}  
+        )
+    </insert>
+
+    <delete id="deleteRiskidentificationbyyear" parameterType="cn.com.kingc.risk.model.Riskidentificationbyyear">
+        DELETE FROM riskidentificationbyyear
+        WHERE  RiskIdentificationYearID = #{riskIdentificationYearID,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteRiskidentificationbyyearByID" parameterType="java.lang.Integer">
+        DELETE FROM riskidentificationbyyear
+        WHERE  RiskIdentificationYearID = #{riskIdentificationYearID,jdbcType=INTEGER}
+    </delete>
+
+    <update id="updateRiskidentificationbyyear" parameterType="cn.com.kingc.risk.model.Riskidentificationbyyear">
+        UPDATE riskidentificationbyyear
+        <set>
+            <if test="coalMineName!= null ">
+                CoalMineName = #{coalMineName, jdbcType=VARCHAR} ,
+            </if>
+            <if test="frameWorkID!= null ">
+                FrameWorkID = #{frameWorkID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskIdentificationYearUUID!= null ">
+                RiskIdentificationYearUUID = #{riskIdentificationYearUUID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskIdentificationYearID!= null ">
+                RiskIdentificationYearID = #{riskIdentificationYearID, jdbcType=INTEGER} ,
+            </if>
+            <if test="meetingCompere!= null ">
+                MeetingCompere = #{meetingCompere, jdbcType=VARCHAR} ,
+            </if>
+            <if test="meetingContent!= null ">
+                MeetingContent = #{meetingContent, jdbcType=VARCHAR} ,
+            </if>
+            <if test="meetingParticipant!= null ">
+                MeetingParticipant = #{meetingParticipant, jdbcType=VARCHAR} ,
+            </if>
+            <if test="meetingPlace!= null ">
+                MeetingPlace = #{meetingPlace, jdbcType=VARCHAR} ,
+            </if>
+            <if test="meetingRecorder!= null ">
+                MeetingRecorder = #{meetingRecorder, jdbcType=VARCHAR} ,
+            </if>
+            <if test="meetingTime!= null ">
+                MeetingTime = #{meetingTime, jdbcType=VARCHAR} ,
+            </if>
+            <if test="meetringAttachmentUUID!= null ">
+                MeetringAttachmentUUID = #{meetringAttachmentUUID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="meetringAttachmentFileName!= null ">
+                MeetringAttachmentFileName = #{meetringAttachmentFileName, jdbcType=VARCHAR} ,
+            </if>
+            <if test="mYear!= null ">
+                MYear = #{mYear, jdbcType=INTEGER}
+            </if>
+        </set>
+        WHERE RiskIdentificationYearID = #{riskIdentificationYearID,jdbcType=INTEGER}
+    </update>
+
+    <select id="getRiskidentificationbyyear" resultMap="RiskidentificationbyyearMap"
+            parameterType="INTEGER">
+        select
+        <include refid="Base_Column_List"/>
+        from riskidentificationbyyear
+        WHERE RiskIdentificationYearID = #{riskIdentificationYearID,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRiskidentificationbyyearCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  riskidentificationbyyear
+    </select>
+
+    <select id="getRiskidentificationbyyearByPage" resultMap="RiskidentificationbyyearMap"
+            parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from riskidentificationbyyear
+        ORDER BY MYear DESC
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRiskidentificationbyyearCountbyid" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  riskidentificationbyyear where RiskIdentificationYearID = #{riskIdentificationYearID, jdbcType=INTEGER}
+    </select>
+
+    <select id="getRiskidentificationbyyearByPagebyid" resultMap="RiskidentificationbyyearMap"
+            parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from riskidentificationbyyear where RiskIdentificationYearID = #{riskIdentificationYearID, jdbcType=INTEGER}
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+
+
+
+    <select id="getRiskidentificationbyyearCountByRiskidentificationbyyear" resultType="java.lang.Integer">
+        select
+        count(*)
+        from riskidentificationbyyear
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!=''  ">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!='' ">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskIdentificationYearUUID!= null and riskIdentificationYearUUID!=''">
+            and RiskIdentificationYearUUID = #{riskIdentificationYearUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskIdentificationYearID!= null ">
+            and RiskIdentificationYearID = #{riskIdentificationYearID, jdbcType=INTEGER}
+        </if>
+        <if test="meetingCompere!= null and meetingCompere!='' ">
+            and MeetingCompere = #{meetingCompere, jdbcType=VARCHAR}
+        </if>
+        <if test="meetingContent!= null and meetingContent!='' ">
+            and MeetingContent = #{meetingContent, jdbcType=VARCHAR}
+        </if>
+        <if test="meetingParticipant!= null and meetingParticipant!='' ">
+            and MeetingParticipant = #{meetingParticipant, jdbcType=VARCHAR}
+        </if>
+        <if test="meetingPlace!= null and meetingPlace!='' ">
+            and MeetingPlace = #{meetingPlace, jdbcType=VARCHAR}
+        </if>
+        <if test="meetingRecorder!= null and meetingRecorder!='' ">
+            and MeetingRecorder = #{meetingRecorder, jdbcType=VARCHAR}
+        </if>
+        <if test="meetingTime!= null and meetingTime!='' ">
+            and MeetingTime = #{meetingTime, jdbcType=VARCHAR}
+        </if>
+        <if test="meetringAttachmentUUID!= null and meetringAttachmentUUID!='' ">
+            and MeetringAttachmentUUID = #{meetringAttachmentUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="meetringAttachmentFileName!= null and meetringAttachmentFileName!='' ">
+            and MeetringAttachmentFileName = #{meetringAttachmentFileName, jdbcType=VARCHAR}
+        </if>
+        <if test="mYear!= null ">
+            and MYear = #{mYear, jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <select id="getRiskidentificationbyyearByPageAndRiskidentificationbyyear" resultMap="RiskidentificationbyyearMap">
+        select
+        <include refid="Base_Column_List"/>
+        from riskidentificationbyyear
+        where 1=1
+        <if test="riskidentificationbyyear.coalMineName!= null and riskidentificationbyyear.coalMineName!='' ">
+            and CoalMineName = #{riskidentificationbyyear.coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskidentificationbyyear.frameWorkID!= null and riskidentificationbyyear.frameWorkID!=''  ">
+            and FrameWorkID = #{riskidentificationbyyear.frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskidentificationbyyear.riskIdentificationYearUUID!= null and riskidentificationbyyear.riskIdentificationYearUUID!=''">
+            and RiskIdentificationYearUUID = #{riskidentificationbyyear.riskIdentificationYearUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskidentificationbyyear.riskIdentificationYearID!= null ">
+            and RiskIdentificationYearID = #{riskidentificationbyyear.riskIdentificationYearID, jdbcType=INTEGER}
+        </if>
+        <if test="riskidentificationbyyear.meetingCompere!= null and riskidentificationbyyear.meetingCompere!=''  ">
+            and MeetingCompere = #{riskidentificationbyyear.meetingCompere, jdbcType=VARCHAR}
+        </if>
+        <if test="riskidentificationbyyear.meetingContent!= null and riskidentificationbyyear.meetingContent!=''  ">
+            and MeetingContent = #{riskidentificationbyyear.meetingContent, jdbcType=VARCHAR}
+        </if>
+        <if test="riskidentificationbyyear.meetingParticipant!= null and riskidentificationbyyear.meetingParticipant!=''  ">
+            and MeetingParticipant = #{riskidentificationbyyear.meetingParticipant, jdbcType=VARCHAR}
+        </if>
+        <if test="riskidentificationbyyear.meetingPlace!= null and riskidentificationbyyear.meetingPlace!=''  ">
+            and MeetingPlace = #{riskidentificationbyyear.meetingPlace, jdbcType=VARCHAR}
+        </if>
+        <if test="riskidentificationbyyear.meetingRecorder!= null and riskidentificationbyyear.meetingRecorder!=''  ">
+            and MeetingRecorder = #{riskidentificationbyyear.meetingRecorder, jdbcType=VARCHAR}
+        </if>
+        <if test="riskidentificationbyyear.meetingTime!= null and riskidentificationbyyear.meetingTime!=''  ">
+            and MeetingTime = #{riskidentificationbyyear.meetingTime, jdbcType=VARCHAR}
+        </if>
+        <if test="riskidentificationbyyear.meetringAttachmentUUID!= null and riskidentificationbyyear.meetringAttachmentUUID!=''  ">
+            and MeetringAttachmentUUID = #{riskidentificationbyyear.meetringAttachmentUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskidentificationbyyear.meetringAttachmentFileName!= null and riskidentificationbyyear.meetringAttachmentFileName!=''  ">
+            and MeetringAttachmentFileName = #{riskidentificationbyyear.meetringAttachmentFileName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskidentificationbyyear.mYear!= null ">
+            and MYear = #{riskidentificationbyyear.mYear, jdbcType=INTEGER}
+        </if>
+        ORDER BY MYear DESC
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRiskidentificationbyyearData" resultMap="RiskidentificationbyyearMap">
+        select
+        <include refid="Base_Column_List"/>
+        from riskidentificationbyyear
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!='' ">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!='' ">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskIdentificationYearUUID!= null and riskIdentificationYearUUID!=''">
+            and RiskIdentificationYearUUID = #{riskIdentificationYearUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskIdentificationYearID!= null ">
+            and RiskIdentificationYearID = #{riskIdentificationYearID, jdbcType=INTEGER}
+        </if>
+        <if test="meetingCompere!= null and meetingCompere!='' ">
+            and MeetingCompere = #{meetingCompere, jdbcType=VARCHAR}
+        </if>
+        <if test="meetingContent!= null and meetingContent!='' ">
+            and MeetingContent = #{meetingContent, jdbcType=VARCHAR}
+        </if>
+        <if test="meetingParticipant!= null and meetingParticipant!='' ">
+            and MeetingParticipant = #{meetingParticipant, jdbcType=VARCHAR}
+        </if>
+        <if test="meetingPlace!= null and meetingPlace!='' ">
+            and MeetingPlace = #{meetingPlace, jdbcType=VARCHAR}
+        </if>
+        <if test="meetingRecorder!= null and meetingRecorder!='' ">
+            and MeetingRecorder = #{meetingRecorder, jdbcType=VARCHAR}
+        </if>
+        <if test="meetingTime!= null and meetingTime!='' ">
+            and MeetingTime = #{meetingTime, jdbcType=VARCHAR}
+        </if>
+        <if test="meetringAttachmentUUID!= null and meetringAttachmentUUID!='' ">
+            and MeetringAttachmentUUID = #{meetringAttachmentUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="meetringAttachmentFileName!= null and meetringAttachmentFileName!='' ">
+            and MeetringAttachmentFileName = #{meetringAttachmentFileName, jdbcType=VARCHAR}
+        </if>
+        <if test="mYear!= null ">
+            and MYear = #{mYear, jdbcType=INTEGER}
+        </if>
+    </select>
+
+</mapper>

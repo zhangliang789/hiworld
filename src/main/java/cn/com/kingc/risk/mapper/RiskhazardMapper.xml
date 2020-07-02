@@ -1,0 +1,1314 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.kingc.risk.dao.RiskhazardDao">
+    <cache-ref namespace="cn.com.kingc.risk.dao.RisksiteDao"/>
+    <resultMap id="RiskhazardMap" type="cn.com.kingc.risk.model.Riskhazard">
+        <result property="hazardID" column="HazardID" jdbcType="INTEGER"/>
+        <result property="hazardUUID" column="HazardUUID" jdbcType="VARCHAR"/>
+        <result property="riskSiteID" column="RiskSiteID" jdbcType="INTEGER"/>
+        <result property="coalMineName" column="CoalMineName" jdbcType="VARBINARY"/>
+        <result property="frameWorkID" column="FrameWorkID" jdbcType="VARCHAR"/>
+        <result property="accountabilityUnit" column="AccountabilityUnit" jdbcType="VARCHAR"/>
+        <result property="consequence" column="Consequence" jdbcType="VARCHAR"/>
+        <result property="damageType" column="DamageType" jdbcType="VARCHAR"/>
+        <result property="eexpose" column="Expose" jdbcType="INTEGER"/>
+        <result property="riskTemplateID" column="RiskTemplateID" jdbcType="INTEGER"/>
+        <result property="exposeDegree" column="ExposeDegree" jdbcType="VARCHAR"/>
+        <result property="clossConsequence" column="LossConsequence" jdbcType="INTEGER"/>
+        <result property="majorType" column="MajorType" jdbcType="VARCHAR"/>
+        <result property="manageUnit" column="ManageUnit" jdbcType="VARCHAR"/>
+        <result property="name" column="Name" jdbcType="VARCHAR"/>
+        <result property="operatingPost" column="OperatingPost" jdbcType="VARCHAR"/>
+        <result property="Lpossibility" column="Possibility" jdbcType="INTEGER"/>
+        <result property="riskDegree" column="RiskDegree" jdbcType="VARCHAR"/>
+        <result property="riskObject" column="RiskObject" jdbcType="VARCHAR"/>
+        <result property="riskPlace" column="RiskPlace" jdbcType="VARCHAR"/>
+        <result property="riskType" column="RiskType" jdbcType="VARCHAR"/>
+        <result property="driskValue" column="RiskValue" jdbcType="DECIMAL"/>
+        <result property="status" column="Status" jdbcType="BIT"/>
+        <result property="Sseverity" column="Sseverity" jdbcType="INTEGER"/>
+        <result property="riskSiteFullNumber" column="RiskSiteFullNumber" jdbcType="VARCHAR"/>
+        <result property="standardFullNumber" column="StandardFullNumber" jdbcType="VARCHAR"/>
+        <result property="standardName" column="StandardName" jdbcType="VARCHAR"/>
+        <result property="dutyRole" column="DutyRole" jdbcType="VARCHAR"/>
+        <result property="supervisionUnit" column="SupervisionUnit" jdbcType="VARCHAR"/>
+        <result property="extendedAttributesJsonString" column="ExtendedAttributesJsonString" jdbcType="VARCHAR"/>
+        <result property="hazardDesc" column="HazardDesc" jdbcType="VARCHAR"/>
+        <result property="riskLevelSettingID" column="RiskLevelSettingID" jdbcType="INTEGER"/>
+        <result property="riskColor" column="RiskColor" jdbcType="VARCHAR"/>
+        <result property="riskLevel" column="RiskLevel" jdbcType="VARCHAR"/>
+        <result property="riskObjectType" column="RiskObjectType" jdbcType="VARCHAR"/>
+        <result property="accidentType" column="AccidentType" jdbcType="VARCHAR"/>
+        <result property="riskKind" column="RiskKind" jdbcType="VARCHAR"/>
+        <result property="controlResult" column="ControlResult" jdbcType="VARCHAR"/>
+        <result property="identifyMethod" column="IdentifyMethod" jdbcType="VARCHAR"/>
+        <result property="isSubmit" column="is_submit" jdbcType="VARCHAR"/>
+        <result property="riskByTypes" column="RiskByTypes" jdbcType="VARCHAR"/>
+        <result property="riskFactors" column="RiskFactors" jdbcType="VARCHAR"/>
+        <result property="technologyDepartment" column="TechnologyDepartment" jdbcType="VARCHAR"/>
+        <result property="supervisionDepartment" column="SupervisionDepartment" jdbcType="VARCHAR"/>
+        <result property="riskhazardStatus" column="riskhazardStatus" jdbcType="BIT" />
+        <result property="outOfControlStatus" column="outOfControlStatus" jdbcType="VARCHAR"/>
+
+        <collection property="mRiskControlRange" javaType="cn.com.kingc.risk.model.Riskhazardcontrolrange">
+            <result property="riskSiteControlRangeID" column="RRiskSiteControlRangeID" jdbcType="INTEGER"/>
+            <result property="coalMineName" column="RCoalMineName" jdbcType="VARCHAR"/>
+            <result property="hazardID" column="RHazardID" jdbcType="INTEGER"/>
+            <result property="frameWorkID" column="RFrameWorkID" jdbcType="VARCHAR"/>
+            <result property="hazardUUID" column="RHazardUUID" jdbcType="VARCHAR"/>
+            <result property="riskSiteID" column="RRiskSiteID" jdbcType="INTEGER"/>
+            <result property="riskSiteFullNumber" column="RRiskSiteFullNumber" jdbcType="VARCHAR"/>
+            <result property="controlRangeName" column="RControlRangeName" jdbcType="VARCHAR"/>
+            <result property="controlRangeStartDay" column="RControlRangeStartDay" jdbcType="VARCHAR"/>
+            <result property="controlRangeEndDay" column="RControlRangeEndDay" jdbcType="VARCHAR"/>
+            <result property="controlRangePinci" column="RControlRangePinci" jdbcType="VARCHAR"/>
+            <result property="manageUnit" column="RManageUnit" jdbcType="VARCHAR"/>
+            <result property="manageUnitID" column="RManageUnitID" jdbcType="VARCHAR"/>
+            <result property="manageDuty" column="RManageDuty" jdbcType="VARCHAR"/>
+            <result property="manageDutyID" column="RManageDutyID" jdbcType="VARCHAR"/>
+
+        </collection>
+
+        <collection property="mRiskControlMeasure" javaType="cn.com.kingc.risk.model.Riskcontrolmeasure">
+            <result property="measureID" column="MMeasureID" jdbcType="INTEGER"/>
+            <result property="measureUUID" column="MMeasureUUID" jdbcType="VARCHAR"/>
+            <result property="riskSiteID" column="MRiskSiteID" jdbcType="INTEGER"/>
+            <result property="hazardID" column="MHazardID" jdbcType="INTEGER"/>
+            <result property="measureContent" column="MMeasureContent" jdbcType="VARCHAR"/>
+            <result property="measureName" column="MMeasureName" jdbcType="VARCHAR"/>
+            <result property="measureType" column="MMeasureType" jdbcType="VARCHAR"/>
+            <result property="measureURL" column="MMeasureURL" jdbcType="VARCHAR"/>
+            <result property="measureCreateTime" column="MeasureCreateTime" jdbcType="VARCHAR"/>
+            <result property="frameWorkID" column="MFrameWorkID" jdbcType="VARCHAR"/>
+            <result property="coalMineName" column="MCoalMineName" jdbcType="VARCHAR"/>
+            <result property="riskSiteFullNumber" column="MRiskSiteFullNumber" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+    <sql id="Hazard_Column_List">
+        H.HazardID,
+        H.HazardUUID,
+        H.RiskSiteID,
+        H.CoalMineName,
+        H.FrameWorkID,
+        H.MajorType,
+        H.ManageUnit,
+        H.Name
+    </sql>
+    <sql id="Base_Column_List">
+            H.HazardID,
+            H.HazardUUID,
+            H.RiskSiteID,
+            H.CoalMineName,
+            H.FrameWorkID,
+            H.AccountabilityUnit,
+            H.Consequence,
+            H.DamageType,
+            H.Expose,
+            H.RiskTemplateID,
+            H.ExposeDegree,
+            H.LossConsequence,
+            H.MajorType,
+            H.ManageUnit,
+            H.Name,
+            H.OperatingPost,
+            H.Possibility,
+            H.RiskDegree,
+            H.RiskObject,
+            H.RiskPlace,
+            D.RiskLevel,
+            D.RiskColor,
+            H.RiskType,
+            H.RiskValue,
+            H.Status,
+            H.Sseverity,
+            H.RiskSiteFullNumber,
+            H.StandardFullNumber,
+            H.StandardName,
+            H.DutyRole,
+            H.SupervisionUnit,
+            H.ExtendedAttributesJsonString,
+            H.HazardDesc,
+            H.RiskLevelSettingID,
+            H.RiskObjectType,
+            H.AccidentType,
+            H.RiskKind,
+            H.ControlResult,
+            H.IdentifyMethod,
+    </sql>
+    <sql id="riskHazardJoinM">
+        H.HazardID,
+        H.HazardUUID,
+        H.RiskSiteID,
+        H.CoalMineName,
+        H.FrameWorkID,
+        H.AccountabilityUnit,
+        H.Consequence,
+        H.DamageType,
+        H.Expose,
+        H.RiskTemplateID,
+        H.ExposeDegree,
+        H.LossConsequence,
+        H.MajorType,
+        H.ManageUnit,
+        H.NAME,
+        H.OperatingPost,
+        H.Possibility,
+        H.RiskDegree,
+        H.RiskObject,
+        H.RiskPlace,
+        D.RiskLevel,
+        D.RiskColor,
+        H.RiskType,
+        H.RiskValue,
+        H.STATUS,
+        H.Sseverity,
+        H.RiskSiteFullNumber,
+        H.StandardFullNumber,
+        H.StandardName,
+        H.DutyRole,
+        H.SupervisionUnit,
+        H.ExtendedAttributesJsonString,
+        H.HazardDesc,
+        H.RiskLevelSettingID,
+        H.RiskObjectType,
+        H.AccidentType,
+        H.RiskKind,
+        H.ControlResult,
+        H.IdentifyMethod,
+        H.RiskByTypes,
+        H.RiskFactors,
+        H.TechnologyDepartment,
+        H.SupervisionDepartment,
+        H.riskhazardStatus,
+
+        R.RiskSiteControlRangeID AS RRiskSiteControlRangeID,
+        R.CoalMineName AS RCoalMineName,
+        R.HazardID AS RHazardID,
+        R.FrameWorkID AS RFrameWorkID,
+        R.HazardUUID AS RHazardUUID,
+        R.RiskSiteID AS RRiskSiteID,
+        R.RiskSiteFullNumber AS RRiskSiteFullNumber,
+        R.ControlRangeName AS RControlRangeName,
+        R.ControlRangeStartDay AS RControlRangeStartDay,
+        R.ControlRangeEndDay AS RControlRangeEndDay,
+        R.ControlRangePinci AS RControlRangePinci,
+        R.ManageUnit AS RManageUnit,
+        R.ManageUnitID AS RManageUnitID,
+        R.ManageDuty AS RManageDuty,
+        R.ManageDutyID AS RManageDutyID,
+        M.MeasureID AS MMeasureID,
+        M.MeasureUUID AS MMeasureUUID,
+        M.MeasureCreateTime AS MeasureCreateTime,
+        M.RiskSiteID AS MRiskSiteID,
+        M.HazardID AS MHazardID,
+        M.MeasureContent AS MMeasureContent,
+        M.MeasureName AS MMeasureName,
+        M.MeasureType AS MMeasureType,
+        M.MeasureURL AS MMeasureURL,
+        M.FrameWorkID AS MFrameWorkID,
+        M.CoalMineName AS MCoalMineName,
+        M.RiskSiteFullNumber AS MRiskSiteFullNumber
+    </sql>
+    <sql id="riskHazardForTouch">
+
+    </sql>
+    <insert id="addRiskhazard" parameterType="cn.com.kingc.risk.model.Riskhazard"
+            useGeneratedKeys="true" keyProperty="hazardID" flushCache="true">
+        insert into riskhazard (
+            HazardID,
+            HazardUUID,
+            RiskSiteID,
+            CoalMineName,
+            FrameWorkID,
+            AccountabilityUnit,
+            Consequence,
+            DamageType,
+            Expose,
+            RiskTemplateID,
+            ExposeDegree,
+            LossConsequence,
+            MajorType,
+            ManageUnit,
+            Name,
+            OperatingPost,
+            Possibility,
+            RiskDegree,
+            RiskObject,
+            RiskPlace,
+            RiskType,
+            RiskValue,
+            Status,
+            Sseverity,
+            RiskSiteFullNumber,
+            StandardFullNumber,
+            StandardName,
+            DutyRole,
+            SupervisionUnit,
+            ExtendedAttributesJsonString,
+            HazardDesc,
+            RiskLevelSettingID,
+            RiskObjectType,
+            AccidentType,
+            RiskKind,
+            ControlResult,
+            IdentifyMethod,
+            RiskByTypes,
+            RiskFactors,
+            TechnologyDepartment,
+            SupervisionDepartment
+        )
+        values(
+            #{hazardID, jdbcType=INTEGER}  ,
+            #{hazardUUID, jdbcType=VARCHAR}  ,
+            #{riskSiteID, jdbcType=INTEGER}  ,
+            #{coalMineName, jdbcType=VARBINARY}  ,
+            #{frameWorkID, jdbcType=VARCHAR}  ,
+            #{accountabilityUnit, jdbcType=VARCHAR}  ,
+            #{consequence, jdbcType=VARCHAR}  ,
+            #{damageType, jdbcType=VARCHAR}  ,
+            #{Eexpose, jdbcType=INTEGER}  ,
+            #{riskTemplateID, jdbcType=INTEGER}  ,
+            #{exposeDegree, jdbcType=VARCHAR}  ,
+            #{ClossConsequence, jdbcType=INTEGER}  ,
+            #{majorType, jdbcType=VARCHAR}  ,
+            #{manageUnit, jdbcType=VARCHAR}  ,
+            #{name, jdbcType=VARCHAR}  ,
+            #{operatingPost, jdbcType=VARCHAR}  ,
+            #{Lpossibility, jdbcType=INTEGER}  ,
+            #{riskDegree, jdbcType=VARCHAR}  ,
+            #{riskObject, jdbcType=VARCHAR}  ,
+            #{riskPlace, jdbcType=VARCHAR}  ,
+            #{riskType, jdbcType=VARCHAR}  ,
+            #{driskValue, jdbcType=DECIMAL}  ,
+            #{status, jdbcType=BIT}  ,
+            #{Sseverity, jdbcType=INTEGER},
+            #{riskSiteFullNumber, jdbcType=VARCHAR},
+            #{standardFullNumber, jdbcType=VARCHAR}  ,
+            #{standardName, jdbcType=VARCHAR}  ,
+            #{dutyRole, jdbcType=VARCHAR}  ,
+            #{supervisionUnit, jdbcType=VARCHAR},
+            #{extendedAttributesJsonString,jdbcType=VARCHAR},
+            #{hazardDesc,jdbcType=VARCHAR},
+            #{riskLevelSettingID, jdbcType=INTEGER},
+            #{riskObjectType,jdbcType=VARCHAR},
+            #{accidentType,jdbcType=VARCHAR},
+            #{riskKind,jdbcType=VARCHAR},
+            #{controlResult,jdbcType=VARCHAR},
+            #{identifyMethod,jdbcType=VARCHAR},
+            #{riskByTypes,jdbcType=VARCHAR},
+            #{riskFactors,jdbcType=VARCHAR},
+            #{technologyDepartment,jdbcType=VARCHAR},
+            #{supervisionDepartment,jdbcType=VARCHAR}
+
+        );
+    </insert>
+    <insert id="addRiskhazardList" useGeneratedKeys="true" parameterType="java.util.List" flushCache="true">
+        insert into riskhazard (
+        HazardID,
+        HazardUUID,
+        RiskSiteID,
+        CoalMineName,
+        FrameWorkID,
+        AccountabilityUnit,
+        Consequence,
+        DamageType,
+        Expose,
+        RiskTemplateID,
+        ExposeDegree,
+        LossConsequence,
+        MajorType,
+        ManageUnit,
+        Name,
+        OperatingPost,
+        Possibility,
+        RiskDegree,
+        RiskObject,
+        RiskPlace,
+        RiskType,
+        RiskValue,
+        Status,
+        Sseverity,
+        RiskSiteFullNumber,
+        StandardFullNumber,
+        StandardName,
+        DutyRole,
+        SupervisionUnit,
+        ExtendedAttributesJsonString,
+        HazardDesc,
+        RiskLevelSettingID,
+        RiskObjectType,
+        AccidentType,
+        RiskKind,
+        ControlResult,
+        IdentifyMethod)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.hazardID, jdbcType=INTEGER} ,
+            #{item.hazardUUID, jdbcType=VARCHAR} ,
+            #{item.riskSiteID, jdbcType=INTEGER} ,
+            #{item.coalMineName, jdbcType=VARBINARY} ,
+            #{item.frameWorkID, jdbcType=VARCHAR} ,
+            #{item.accountabilityUnit, jdbcType=VARCHAR} ,
+            #{item.consequence, jdbcType=VARCHAR} ,
+            #{item.damageType, jdbcType=VARCHAR} ,
+            #{item.eexpose, jdbcType=INTEGER} ,
+            #{item.riskTemplateID, jdbcType=INTEGER} ,
+            #{item.exposeDegree, jdbcType=VARCHAR} ,
+            #{item.clossConsequence, jdbcType=INTEGER} ,
+            #{item.majorType, jdbcType=VARCHAR} ,
+            #{item.manageUnit, jdbcType=VARCHAR} ,
+            #{item.name, jdbcType=VARCHAR} ,
+            #{item.operatingPost, jdbcType=VARCHAR} ,
+            #{item.lpossibility, jdbcType=INTEGER} ,
+            #{item.riskDegree, jdbcType=VARCHAR} ,
+            #{item.riskObject, jdbcType=VARCHAR} ,
+            #{item.riskPlace, jdbcType=VARCHAR} ,
+            #{item.riskType, jdbcType=VARCHAR} ,
+            #{item.driskValue, jdbcType=DECIMAL} ,
+            #{item.status, jdbcType=BIT} ,
+            #{item.Sseverity, jdbcType=INTEGER},
+            #{item.riskSiteFullNumber, jdbcType=VARCHAR},
+            #{item.standardFullNumber, jdbcType=VARCHAR} ,
+            #{item.standardName, jdbcType=VARCHAR},
+            #{item.dutyRole, jdbcType=VARCHAR} ,
+            #{item.supervisionUnit, jdbcType=VARCHAR},
+            #{item.extendedAttributesJsonString,jdbcType=VARCHAR},
+            #{item.hazardDesc,jdbcType=VARCHAR},
+            #{item.riskLevelSettingID, jdbcType=INTEGER},
+            #{item.riskObjectType, jdbcType=VARCHAR},
+            #{item.accidentType,jdbcType=VARCHAR},
+            #{item.riskKind,jdbcType=VARCHAR},
+            #{item.controlResult,jdbcType=VARCHAR},
+            #{item.identifyMethod,jdbcType=VARCHAR}
+            )
+        </foreach>
+
+    </insert>
+    <delete id="deleteRiskhazard" parameterType="cn.com.kingc.risk.model.Riskhazard" flushCache="true">
+        DELETE FROM riskhazardcontrolrange
+        WHERE HazardID= #{hazardID,jdbcType=INTEGER};
+
+        DELETE FROM riskcontrolmeasure
+        WHERE HazardID= #{hazardID,jdbcType=INTEGER};
+
+        DELETE FROM risksiteoutofcontrolitem
+        WHERE HazardID= #{hazardID,jdbcType=INTEGER};
+
+        DELETE FROM riskhazard
+        WHERE  HazardID = #{hazardID,jdbcType=INTEGER};
+    </delete>
+    <delete id="deleteRiskhazardByID" parameterType="java.lang.Integer" flushCache="true">
+        DELETE FROM riskcontrolhistory
+        WHERE RiskHazardID= #{hazardID,jdbcType=INTEGER};
+
+        DELETE FROM riskhazardcontrolrange
+        WHERE HazardID= #{hazardID,jdbcType=INTEGER};
+
+        DELETE FROM riskcontrolmeasure
+        WHERE HazardID= #{hazardID,jdbcType=INTEGER};
+
+        DELETE FROM risksiteoutofcontrolitem
+        WHERE HazardID= #{hazardID,jdbcType=INTEGER};
+
+        DELETE FROM riskhazard
+        WHERE  HazardID = #{hazardID,jdbcType=INTEGER};
+    </delete>
+    <delete id="deleteRiskhazardByFullNumber" parameterType="java.lang.String" flushCache="true">
+        DELETE FROM riskhazardcontrolrange
+        WHERE  RiskSiteFullNumber LIKE CONCAT(#{riskSiteFullNumber, jdbcType=VARCHAR}, '%');
+        DELETE FROM riskhazard
+        WHERE  RiskSiteFullNumber LIKE CONCAT(#{riskSiteFullNumber, jdbcType=VARCHAR}, '%');
+    </delete>
+    <update id="updateRiskhazard" parameterType="cn.com.kingc.risk.model.Riskhazard" flushCache="true">
+        UPDATE riskhazard
+        <set>
+            <if test="hazardID!= null ">
+                HazardID = #{hazardID, jdbcType=INTEGER} ,
+            </if>
+            <if test="hazardUUID!= null ">
+                HazardUUID = #{hazardUUID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskSiteID!= null ">
+                RiskSiteID = #{riskSiteID, jdbcType=INTEGER} ,
+            </if>
+            <if test="coalMineName!= null ">
+                CoalMineName = #{coalMineName, jdbcType=VARBINARY} ,
+            </if>
+            <if test="frameWorkID!= null ">
+                FrameWorkID = #{frameWorkID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="accountabilityUnit!= null ">
+                AccountabilityUnit = #{accountabilityUnit, jdbcType=VARCHAR} ,
+            </if>
+            <if test="consequence!= null ">
+                Consequence = #{consequence, jdbcType=VARCHAR} ,
+            </if>
+            <if test="damageType!= null ">
+                DamageType = #{damageType, jdbcType=VARCHAR} ,
+            </if>
+            <if test="eexpose!= null ">
+                Expose = #{eexpose, jdbcType=INTEGER} ,
+            </if>
+            <if test="riskTemplateID!= null ">
+                RiskTemplateID = #{riskTemplateID, jdbcType=INTEGER} ,
+            </if>
+            <if test="exposeDegree!= null ">
+                ExposeDegree = #{exposeDegree, jdbcType=VARCHAR} ,
+            </if>
+            <if test="clossConsequence!= null ">
+                LossConsequence = #{clossConsequence, jdbcType=INTEGER} ,
+            </if>
+            <if test="majorType!= null ">
+                MajorType = #{majorType, jdbcType=VARCHAR} ,
+            </if>
+            <if test="manageUnit!= null ">
+                ManageUnit = #{manageUnit, jdbcType=VARCHAR} ,
+            </if>
+            <if test="name!= null ">
+                Name = #{name, jdbcType=VARCHAR} ,
+            </if>
+            <if test="operatingPost!= null ">
+                OperatingPost = #{operatingPost, jdbcType=VARCHAR} ,
+            </if>
+            <if test="lpossibility!= null ">
+                Possibility = #{lpossibility, jdbcType=INTEGER} ,
+            </if>
+            <if test="DriskValue!= null ">
+                RiskValue = #{DriskValue, jdbcType=INTEGER} ,
+            </if>
+            <if test="riskDegree!= null ">
+                RiskDegree = #{riskDegree, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskObject!= null ">
+                RiskObject = #{riskObject, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskPlace!= null ">
+                RiskPlace = #{riskPlace, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskType!= null ">
+                RiskType = #{riskType, jdbcType=VARCHAR} ,
+            </if>
+            <if test="status!= null ">
+                Status = #{status, jdbcType=BIT},
+            </if>
+            <if test="Sseverity!= null ">
+                Sseverity= #{Sseverity, jdbcType=INTEGER},
+            </if>
+            <if test="riskSiteFullNumber!= null ">
+                RiskSiteFullNumber = #{riskSiteFullNumber, jdbcType=VARCHAR},
+            </if>
+            <if test="standardFullNumber!= null ">
+                StandardFullNumber = #{standardFullNumber, jdbcType=VARCHAR},
+            </if>
+            <if test="standardName!= null ">
+                StandardName = #{standardName, jdbcType=VARCHAR},
+            </if>
+            <if test="dutyRole!= null ">
+                DutyRole = #{dutyRole, jdbcType=VARCHAR},
+            </if>
+            <if test="supervisionUnit!= null ">
+                SupervisionUnit = #{supervisionUnit, jdbcType=VARCHAR},
+            </if>
+            <if test="extendedAttributesJsonString!= null ">
+                ExtendedAttributesJsonString = #{extendedAttributesJsonString,jdbcType=VARCHAR},
+            </if>
+            <if test="hazardDesc!= null ">
+                HazardDesc = #{hazardDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="extendedAttributesJsonString!= null ">
+                ExtendedAttributesJsonString = #{extendedAttributesJsonString,jdbcType=VARCHAR},
+            </if>
+            <if test="riskLevelSettingID!= null ">
+                RiskLevelSettingID=#{riskLevelSettingID, jdbcType=INTEGER},
+            </if>
+            <if test="riskObjectType!=null">
+                RiskObjectType=#{riskObjectType,jdbcType=VARCHAR},
+            </if>
+            <if test="accidentType!=null">
+                AccidentType=#{accidentType,jdbcType=VARCHAR},
+            </if>
+            <if test="riskKind!=null">
+                RiskKind=#{riskKind,jdbcType=VARCHAR},
+            </if>
+            <if test="controlResult!=null">
+                ControlResult=#{controlResult,jdbcType=VARCHAR},
+            </if>
+            <if test="identifyMethod!=null">
+                IdentifyMethod=#{identifyMethod,jdbcType=VARCHAR},
+            </if>
+            <if test="riskByTypes!=null">
+                RiskByTypes=#{riskByTypes,jdbcType=VARCHAR},
+            </if>
+            <if test="riskFactors!=null">
+                RiskFactors=#{riskFactors,jdbcType=VARCHAR},
+            </if>
+            <if test="technologyDepartment!=null">
+                TechnologyDepartment=#{technologyDepartment,jdbcType=VARCHAR},
+            </if>
+            <if test="supervisionDepartment!=null">
+                SupervisionDepartment=#{supervisionDepartment,jdbcType=VARCHAR},
+            </if>
+            <if test="riskhazardStatus !=null">
+                riskhazardStatus =#{riskhazardStatus,jdbcType=BIT }
+            </if>
+        </set>
+        WHERE HazardID = #{hazardID,jdbcType=INTEGER}
+    </update>
+    <select id="getHazards" resultMap="RiskhazardMap" flushCache="true">
+        SELECT
+        <include refid="Hazard_Column_List"/>
+        FROM riskhazard H
+        WHERE FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        AND RiskSiteFullNumber
+        LIKE CONCAT(#{riskSiteFullNumber, jdbcType=VARCHAR}, '%')
+    </select>
+    <select id="getRiskhazard" resultMap="RiskhazardMap"
+            parameterType="INTEGER">
+        select
+        <include refid="riskHazardJoinM"/>
+        FROM
+        riskhazard H
+        LEFT JOIN riskLeverSetting D ON H.FrameWorkID = D.FrameWorkID
+        AND H.RiskLevelSettingID = D.RiskLevelSettingID
+        LEFT JOIN riskcontrolmeasure M ON H.FrameWorkID = M.FrameWorkID
+        AND H.RiskSiteID = M.RiskSiteID
+        AND H.HazardID = M.HazardID
+        LEFT JOIN riskhazardcontrolrange R ON H.FrameWorkID = R.FrameWorkID
+        AND H.HazardID = R.HazardID AND R.RiskSiteID=H.RiskSiteID
+
+        WHERE H.HazardID = #{hazardID,jdbcType=INTEGER}
+    </select>
+    <select id="getRiskhazardCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  riskhazard
+    </select>
+    <select id="getRiskhazardByPage" resultMap="RiskhazardMap"
+            parameterType="java.lang.Integer">
+        select
+        <include refid="riskHazardJoinM"/>
+        from
+        riskhazard H
+        LEFT JOIN riskLeverSetting D ON H.FrameWorkID = D.FrameWorkID
+        AND H.RiskLevelSettingID = D.RiskLevelSettingID
+        LEFT JOIN riskcontrolmeasure M ON H.FrameWorkID = M.FrameWorkID
+        AND H.RiskSiteID = M.RiskSiteID
+        AND H.HazardID = M.HazardID
+        LEFT JOIN riskhazardcontrolrange R ON H.FrameWorkID = R.FrameWorkID
+        AND H.HazardID = R.HazardID AND R.RiskSiteID=H.RiskSiteID
+
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+    <select id="getRiskhazardCountByRiskhazard" resultType="java.lang.Integer">
+        select
+        count(*)
+        from riskhazard
+        where 1=1
+        <if test="hazardID!= null ">
+            and HazardID = #{hazardID, jdbcType=INTEGER}
+        </if>
+        <if test="hazardUUID!= null and hazardUUID!='' ">
+            and HazardUUID = #{hazardUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteID!= null ">
+            and RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="coalMineName!= null ">
+            and CoalMineName = #{coalMineName, jdbcType=VARBINARY}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!='' ">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="accountabilityUnit!= null and accountabilityUnit!='' ">
+            and AccountabilityUnit = #{accountabilityUnit, jdbcType=VARCHAR}
+        </if>
+        <if test="consequence!= null and consequence!='' ">
+            and Consequence = #{consequence, jdbcType=VARCHAR}
+        </if>
+        <if test="damageType!= null and damageType!='' ">
+            and DamageType = #{damageType, jdbcType=VARCHAR}
+        </if>
+        <if test="eexpose!= null ">
+            and Expose = #{eexpose, jdbcType=INTEGER}
+        </if>
+        <if test="riskTemplateID!= null ">
+            and RiskTemplateID = #{riskTemplateID, jdbcType=INTEGER}
+        </if>
+        <if test="exposeDegree!= null and exposeDegree!='' ">
+            and ExposeDegree = #{exposeDegree, jdbcType=VARCHAR}
+        </if>
+        <if test="clossConsequence!= null ">
+            and LossConsequence = #{clossConsequence, jdbcType=INTEGER}
+        </if>
+        <if test="majorType!= null and majorType!='' ">
+            and MajorType = #{majorType, jdbcType=VARCHAR}
+        </if>
+        <if test="manageUnit!= null and manageUnit!='' ">
+            and ManageUnit = #{manageUnit, jdbcType=VARCHAR}
+        </if>
+        <if test="name!= null and name!='' ">
+            and Name = #{name, jdbcType=VARCHAR}
+        </if>
+        <if test="operatingPost!= null and operatingPost!='' ">
+            and OperatingPost = #{operatingPost, jdbcType=VARCHAR}
+        </if>
+        <if test="lpossibility!= null ">
+            and Possibility = #{lpossibility, jdbcType=INTEGER}
+        </if>
+        <if test="riskDegree!= null and riskDegree!='' ">
+            and RiskDegree = #{riskDegree, jdbcType=VARCHAR}
+        </if>
+        <if test="riskObject!= null and riskObject!='' ">
+            and RiskObject = #{riskObject, jdbcType=VARCHAR}
+        </if>
+        <if test="riskPlace!= null and riskPlace!='' ">
+            and RiskPlace = #{riskPlace, jdbcType=VARCHAR}
+        </if>
+        <if test="riskType!= null and riskType!='' ">
+            and RiskType = #{riskType, jdbcType=VARCHAR}
+        </if>
+        <if test="status!= null ">
+            and Status = #{status, jdbcType=BIT}
+        </if>
+        <if test="riskSiteFullNumber!= null and riskSiteFullNumber!='' ">
+            and RiskSiteFullNumber LIKE CONCAT(#{riskSiteFullNumber, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="standardFullNumber!= null and standardFullNumber!='' ">
+            AND StandardFullNumber = #{standardFullNumber, jdbcType=VARCHAR}
+        </if>
+        <if test="standardName!= null and standardName!='' ">
+            AND StandardName = #{standardName, jdbcType=VARCHAR}
+        </if>
+        <if test="dutyRole!= null and dutyRole!='' ">
+            AND DutyRole = #{dutyRole, jdbcType=VARCHAR}
+        </if>
+        <if test="supervisionUnit!= null and supervisionUnit!='' ">
+            AND SupervisionUnit = #{supervisionUnit, jdbcType=VARCHAR}
+        </if>
+        <if test="riskLevelSettingID!=null and riskLevelSettingID>0">
+            AND RiskLevelSettingID=#{riskLevelSettingID, jdbcType=INTEGER}
+        </if>
+        <if test="riskObjectType!=null and riskObjectType!=''">
+            AND RiskObjectType=#{riskObjectType,jdbcType=VARCHAR}
+        </if>
+        <if test="accidentType!=null and accidentType!=''">
+            AND AccidentType=#{accidentType,jdbcType=VARCHAR}
+        </if>
+        <if test="riskKind!=null and riskKind!=''">
+            AND RiskKind=#{riskKind,jdbcType=VARCHAR}
+        </if>
+        <if test="controlResult!=null and controlResult!=''">
+            AND ControlResult=#{controlResult,jdbcType=VARCHAR}
+        </if>
+        <if test="identifyMethod!=null and identifyMethod!=''">
+            AND IdentifyMethod=#{identifyMethod,jdbcType=VARCHAR}
+        </if>
+
+    </select>
+    <select id="getRiskhazardByPageAndRiskhazard" resultMap="RiskhazardMap">
+        select
+        <include refid="riskHazardJoinM"/>
+        from riskhazard H
+        LEFT JOIN riskLeverSetting D ON H.FrameWorkID = D.FrameWorkID
+        AND H.RiskLevelSettingID = D.RiskLevelSettingID
+        LEFT JOIN riskcontrolmeasure M ON H.FrameWorkID = M.FrameWorkID
+        AND H.RiskSiteID = M.RiskSiteID
+        AND H.HazardID = M.HazardID
+        LEFT JOIN riskhazardcontrolrange R ON H.FrameWorkID = R.FrameWorkID
+        AND H.HazardID = R.HazardID AND R.RiskSiteID=H.RiskSiteID
+
+        where 1=1
+        <if test="riskhazard.hazardID!= null ">
+            and H.HazardID = #{riskhazard.hazardID, jdbcType=INTEGER}
+        </if>
+        <if test="riskhazard.hazardUUID!= null and riskhazard.hazardUUID!='' ">
+            and H.HazardUUID = #{riskhazard.hazardUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskhazard.riskSiteID!= null ">
+            and H.RiskSiteID = #{riskhazard.riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="riskhazard.coalMineName!= null ">
+            and H.CoalMineName = #{riskhazard.coalMineName, jdbcType=VARBINARY}
+        </if>
+        <if test="riskhazard.frameWorkID!= null and riskhazard.frameWorkID!='' ">
+            and H.FrameWorkID = #{riskhazard.frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskhazard.accountabilityUnit!= null and riskhazard.accountabilityUnit!='' ">
+            and H.AccountabilityUnit = #{riskhazard.accountabilityUnit, jdbcType=VARCHAR}
+        </if>
+        <if test="riskhazard.consequence!= null and riskhazard.consequence!='' ">
+            and H.Consequence = #{riskhazard.consequence, jdbcType=VARCHAR}
+        </if>
+        <if test="riskhazard.damageType!= null and riskhazard.damageType!='' ">
+            and H.DamageType = #{riskhazard.damageType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskhazard.eexpose!= null ">
+            and H.Expose = #{riskhazard.eexpose, jdbcType=INTEGER}
+        </if>
+        <if test="riskhazard.riskTemplateID!= null ">
+            and H.RiskTemplateID = #{riskhazard.riskTemplateID, jdbcType=INTEGER}
+        </if>
+        <if test="riskhazard.exposeDegree!= null and riskhazard.exposeDegree!='' ">
+            and H.ExposeDegree = #{riskhazard.exposeDegree, jdbcType=VARCHAR}
+        </if>
+        <if test="riskhazard.clossConsequence!= null ">
+            and H.LossConsequence = #{riskhazard.clossConsequence, jdbcType=INTEGER}
+        </if>
+        <if test="riskhazard.majorType!= null and riskhazard.majorType!='' ">
+            and H.MajorType = #{riskhazard.majorType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskhazard.manageUnit!= null and riskhazard.manageUnit!='' ">
+            and H.ManageUnit = #{riskhazard.manageUnit, jdbcType=VARCHAR}
+        </if>
+        <if test="riskhazard.name!= null and riskhazard.name!='' ">
+            and H.Name = #{riskhazard.name, jdbcType=VARCHAR}
+        </if>
+        <if test="riskhazard.operatingPost!= null and riskhazard.operatingPost!='' ">
+            and H.OperatingPost = #{riskhazard.operatingPost, jdbcType=VARCHAR}
+        </if>
+        <if test="riskhazard.lpossibility!= null ">
+            and H.Possibility = #{riskhazard.lpossibility, jdbcType=INTEGER}
+        </if>
+        <if test="riskhazard.riskDegree!= null and riskhazard.riskDegree!='' ">
+            and H.RiskDegree = #{riskhazard.riskDegree, jdbcType=VARCHAR}
+        </if>
+        <if test="riskhazard.riskObject!= null and riskhazard.riskObject!='' ">
+            and H.RiskObject = #{riskhazard.riskObject, jdbcType=VARCHAR}
+        </if>
+        <if test="riskhazard.riskPlace!= null and riskhazard.riskPlace!='' ">
+            and H.RiskPlace = #{riskhazard.riskPlace, jdbcType=VARCHAR}
+        </if>
+        <if test="riskhazard.riskType!= null and riskhazard.riskType!='' ">
+            and H.RiskType = #{riskhazard.riskType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskhazard.status!= null ">
+            and H.Status = #{riskhazard.status, jdbcType=BIT}
+        </if>
+        <if test="riskhazard.riskSiteFullNumber!= null and riskhazard.riskSiteFullNumber!=''  ">
+            and H.RiskSiteFullNumber LIKE CONCAT(#{riskhazard.riskSiteFullNumber, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="riskhazard.standardFullNumber!= null and riskhazard.standardFullNumber!='' ">
+            AND H.StandardFullNumber = #{riskhazard.standardFullNumber, jdbcType=VARCHAR}
+        </if>
+        <if test="riskhazard.standardName!= null and riskhazard.standardName!='' ">
+            AND H.StandardName = #{riskhazard.standardName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskhazard.riskLevelSettingID!=null and riskhazard.riskLevelSettingID>0">
+            and H.RiskLevelSettingID=#{riskhazard.riskLevelSettingID, jdbcType=INTEGER}
+        </if>
+        <if test="riskhazard.riskObjectType!=null and riskhazard.riskObjectType!=''">
+            AND H.RiskObjectType=#{riskhazard.riskObjectType,jdbcType=VARCHAR}
+        </if>
+        <if test="riskhazard.accidentType!=null and riskhazard.accidentType!=''">
+            AND H.AccidentType=#{riskhazard.accidentType,jdbcType=VARCHAR}
+        </if>
+        <if test="riskhazard.riskKind!=null and riskhazard.riskKind!=''">
+            AND H.RiskKind=#{riskhazard.riskKind,jdbcType=VARCHAR}
+        </if>
+        <if test="riskhazard.controlResult!=null and riskhazard.controlResult!=''">
+            AND H.ControlResult=#{riskhazard.controlResult,jdbcType=VARCHAR}
+        </if>
+        <if test="riskhazard.identifyMethod!=null and riskhazard.identifyMethod!=''">
+            AND H.IdentifyMethod=#{identifyMethod,jdbcType=VARCHAR}
+        </if>
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+    <select id="getRiskhazardData" resultMap="RiskhazardMap">
+        select
+        <include refid="riskHazardJoinM"/>
+        from
+        riskhazard H
+        LEFT JOIN riskLeverSetting D ON H.FrameWorkID = D.FrameWorkID
+        AND H.RiskLevelSettingID = D.RiskLevelSettingID
+        LEFT JOIN riskcontrolmeasure M
+        ON H.FrameWorkID = M.FrameWorkID
+        AND H.RiskSiteID = M.RiskSiteID
+        AND H.HazardID = M.HazardID
+        LEFT JOIN riskhazardcontrolrange R ON H.FrameWorkID = R.FrameWorkID
+        AND H.HazardID = R.HazardID AND R.RiskSiteID=H.RiskSiteID
+        where 1=1
+        <if test="hazardID!= null ">
+            and H.HazardID = #{hazardID, jdbcType=INTEGER}
+        </if>
+        <if test="hazardUUID!= null and hazardUUID!='' ">
+            and H.HazardUUID = #{hazardUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteID!= null ">
+            and H.RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="coalMineName!= null ">
+            and H.CoalMineName = #{coalMineName, jdbcType=VARBINARY}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!='' ">
+            and H.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="accountabilityUnit!= null and accountabilityUnit!='' ">
+            and H.AccountabilityUnit = #{accountabilityUnit, jdbcType=VARCHAR}
+        </if>
+        <if test="consequence!= null and consequence!='' ">
+            and H.Consequence = #{consequence, jdbcType=VARCHAR}
+        </if>
+        <if test="damageType!= null and damageType!='' ">
+            and H.DamageType = #{damageType, jdbcType=VARCHAR}
+        </if>
+        <if test="eexpose!= null ">
+            and H.Expose = #{eexpose, jdbcType=INTEGER}
+        </if>
+        <if test="riskTemplateID!= null ">
+            and H.RiskTemplateID = #{riskTemplateID, jdbcType=INTEGER}
+        </if>
+        <if test="exposeDegree!= null and exposeDegree!='' ">
+            and H.ExposeDegree = #{exposeDegree, jdbcType=VARCHAR}
+        </if>
+        <if test="clossConsequence!= null ">
+            and H.LossConsequence = #{clossConsequence, jdbcType=INTEGER}
+        </if>
+        <if test="majorType!= null and majorType!='' ">
+            and H.MajorType = #{majorType, jdbcType=VARCHAR}
+        </if>
+        <if test="manageUnit!= null and manageUnit!='' ">
+            and H.ManageUnit = #{manageUnit, jdbcType=VARCHAR}
+        </if>
+        <if test="name!= null and name!='' ">
+            and H.Name = #{name, jdbcType=VARCHAR}
+        </if>
+        <if test="operatingPost!= null and operatingPost!='' ">
+            and H.OperatingPost = #{operatingPost, jdbcType=VARCHAR}
+        </if>
+        <if test="lpossibility!= null ">
+            and H.Possibility = #{lpossibility, jdbcType=INTEGER}
+        </if>
+        <if test="riskDegree!= null and riskDegree!='' ">
+            and H.RiskDegree = #{riskDegree, jdbcType=VARCHAR}
+        </if>
+        <if test="riskObject!= null and riskObject!='' ">
+            and H.RiskObject = #{riskObject, jdbcType=VARCHAR}
+        </if>
+        <if test="riskPlace!= null and riskPlace!='' ">
+            and H.RiskPlace = #{riskPlace, jdbcType=VARCHAR}
+        </if>
+        <if test="riskType!= null and riskType!='' ">
+            and H.RiskType = #{riskType, jdbcType=VARCHAR}
+        </if>
+        <if test="status!= null ">
+            and H.Status = #{status, jdbcType=BIT}
+        </if>
+        <if test="riskSiteFullNumber!= null and riskSiteFullNumber!='' ">
+            and H.RiskSiteFullNumber LIKE CONCAT(#{riskSiteFullNumber, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="standardFullNumber!= null and standardFullNumber!='' ">
+            AND H.StandardFullNumber = #{standardFullNumber, jdbcType=VARCHAR}
+        </if>
+        <if test="standardName!= null and standardName!='' ">
+            AND H.StandardName = #{standardName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskLevelSettingID!=null and riskLevelSettingID>0">
+            and H.RiskLevelSettingID=#{riskLevelSettingID, jdbcType=INTEGER}
+        </if>
+        <if test="riskObjectType!=null and riskObjectType!=''">
+            AND H.RiskObjectType=#{riskObjectType,jdbcType=VARCHAR}
+        </if>
+        <if test="accidentType!=null and accidentType!=''">
+            AND H.AccidentType=#{accidentType,jdbcType=VARCHAR}
+        </if>
+        <if test="riskKind!=null and riskKind!=''">
+            AND H.RiskKind=#{riskKind,jdbcType=VARCHAR}
+        </if>
+        <if test="controlResult!=null and controlResult!=''">
+            AND H.ControlResult=#{controlResult,jdbcType=VARCHAR}
+        </if>
+        <if test="identifyMethod!=null and identifyMethod!=''">
+            AND H.IdentifyMethod=#{identifyMethod,jdbcType=VARCHAR}
+        </if>
+    </select>
+    <update id="UpdateRiskSiteStatusByFullNumber">
+        UPDATE risksite R
+        INNER JOIN (
+            SELECT
+            CASE
+            WHEN COUNT(*) > 0 THEN
+                0
+            ELSE
+                1
+            END AS WPGHd
+            FROM
+                riskhazard
+            WHERE
+                FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+            AND RiskSiteFullNumber = #{riskSiteFullNumber, jdbcType=VARCHAR}
+            AND STATUS = 0
+        ) T ON R.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        AND R.FullNumber = #{riskSiteFullNumber, jdbcType=VARCHAR}
+        SET R.`Status` = T.WPGHd;
+
+        UPDATE risksite R
+        INNER JOIN (
+            SELECT
+                CASE
+                WHEN COUNT(*) > 0 THEN
+                    0
+                ELSE
+                    1
+                END AS WPGHd
+            FROM
+                risksite
+            WHERE
+                FullNumber LIKE CONCAT(#{parentFullNumber, jdbcType=VARCHAR}, '.%')
+            AND FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+            AND STATUS = 0
+        ) T ON R.FullNumber = #{parentFullNumber, jdbcType=VARCHAR}
+        AND R.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        SET R.`Status`=T.WPGHd;
+    </update>
+    <update id="updateRiskSiteRiskLevelAndValueByFullNumber">
+      UPDATE risksite R
+        INNER JOIN (
+            SELECT
+                RiskValue AS MAXRiskValue,
+                RiskLevelSettingID
+            FROM
+                riskhazard
+            WHERE
+                RiskSiteFullNumber = #{riskSiteFullNumber, jdbcType=VARCHAR}
+            AND FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+            ORDER BY RiskLevelSettingID ASC
+			LIMIT 0,1
+        ) T ON R.FullNumber = #{riskSiteFullNumber, jdbcType=VARCHAR} AND R.`Status`=1
+        AND R.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+      SET R.RiskValue = MAXRiskValue,
+          R.RiskLevelSettingID=T.RiskLevelSettingID;
+
+        UPDATE risksite R
+        INNER JOIN (
+            SELECT
+                RiskValue AS MAXRiskValue,
+                RiskLevelSettingID
+            FROM
+                risksite
+            WHERE
+                FullNumber LIKE CONCAT(#{parentFullNumber, jdbcType=VARCHAR}, '%')
+                AND FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+                AND ParentID > 0
+            ORDER BY RiskLevelSettingID ASC
+			LIMIT 0,1
+        )T ON R.FullNumber = #{parentFullNumber, jdbcType=VARCHAR} AND R.`Status`=1
+        AND R.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        SET R.RiskValue = MAXRiskValue,
+            R.RiskLevelSettingID=T.RiskLevelSettingID;
+    </update>
+    <select id="getOutOfTimeRiskHazard" resultMap="RiskhazardMap">
+        select
+        <include refid="Hazard_Column_List"/>
+        from
+        riskhazard H WHERE H.FrameWorkID =
+    </select>
+    <select id="getRiskhazardByPageAndRiskControlRange" resultMap="RiskhazardMap">
+        select
+        <include refid="riskHazardJoinM"/>
+        from
+        riskhazard H
+        LEFT JOIN riskLeverSetting D ON H.FrameWorkID = D.FrameWorkID
+        AND H.RiskLevelSettingID = D.RiskLevelSettingID
+        LEFT JOIN riskcontrolmeasure M
+        ON H.FrameWorkID = M.FrameWorkID
+        AND H.RiskSiteID = M.RiskSiteID
+        AND H.HazardID = M.HazardID
+        LEFT JOIN riskhazardcontrolrange R ON H.FrameWorkID = R.FrameWorkID
+        AND H.HazardID = R.HazardID AND R.RiskSiteID=H.RiskSiteID
+
+        WHERE 1=1
+        <if test="riskhazardcontrolrange.riskSiteControlRangeID!= null ">
+            and R.RiskSiteControlRangeID = #{riskhazardcontrolrange.riskSiteControlRangeID, jdbcType=INTEGER}
+        </if>
+        <if test="riskhazardcontrolrange.coalMineName!= null and riskhazardcontrolrange.coalMineName!= ''">
+            and R.CoalMineName = #{riskhazardcontrolrange.coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskhazardcontrolrange.hazardID!= null ">
+            and R.HazardID = #{riskhazardcontrolrange.hazardID, jdbcType=INTEGER}
+        </if>
+        <if test="riskhazardcontrolrange.frameWorkID!= null and riskhazardcontrolrange.frameWorkID!= ''">
+            and R.FrameWorkID = #{riskhazardcontrolrange.frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskhazardcontrolrange.hazardUUID!= null and riskhazardcontrolrange.hazardUUID!= ''">
+            and R.HazardUUID = #{riskhazardcontrolrange.hazardUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskhazardcontrolrange.riskSiteID!= null ">
+            and R.RiskSiteID = #{riskhazardcontrolrange.riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="riskhazardcontrolrange.riskSiteFullNumber!= null and riskhazardcontrolrange.riskSiteFullNumber!= ''">
+            and R.RiskSiteFullNumber = #{riskhazardcontrolrange.riskSiteFullNumber, jdbcType=VARCHAR}
+        </if>
+        <if test="riskhazardcontrolrange.controlRangeName!= null and riskhazardcontrolrange.controlRangeName!= ''">
+            and R.ControlRangeName = #{riskhazardcontrolrange.controlRangeName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskhazardcontrolrange.controlRangeStartDay!= null and riskhazardcontrolrange.controlRangeStartDay!= ''">
+            and R.ControlRangeStartDay = #{riskhazardcontrolrange.controlRangeStartDay, jdbcType=VARCHAR}
+        </if>
+        <if test="riskhazardcontrolrange.controlRangeEndDay!= null and riskhazardcontrolrange.controlRangeEndDay!= ''">
+            and R.ControlRangeEndDay = #{riskhazardcontrolrange.controlRangeEndDay, jdbcType=VARCHAR}
+        </if>
+        <if test="riskhazardcontrolrange.controlRangePinci!= null and riskhazardcontrolrange.controlRangePinci!= ''">
+            and R.ControlRangePinci = #{riskhazardcontrolrange.controlRangePinci, jdbcType=VARCHAR}
+        </if>
+        <if test="riskhazardcontrolrange.manageUnit!= null and riskhazardcontrolrange.manageUnit!= ''">
+            and R.ManageUnit = #{riskhazardcontrolrange.manageUnit, jdbcType=VARCHAR}
+        </if>
+        <if test="riskhazardcontrolrange.manageUnitID!= null and riskhazardcontrolrange.manageUnitID!= ''">
+            and R.ManageUnitID = #{riskhazardcontrolrange.manageUnitID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskhazardcontrolrange.manageDuty!= null and riskhazardcontrolrange.manageDuty!= ''">
+            and R.ManageDuty = #{riskhazardcontrolrange.manageDuty, jdbcType=VARCHAR}
+        </if>
+        <if test="riskhazardcontrolrange.manageDutyID!= null and riskhazardcontrolrange.manageDutyID!= ''">
+            and R.ManageDutyID = #{riskhazardcontrolrange.manageDutyID, jdbcType=VARCHAR}
+        </if>
+    </select>
+    <select id="getRiskhazardForTouch" resultType="HashMap">
+     SELECT
+	  H.HazardID,
+      H.HazardUUID,
+      H.RiskSiteID,
+      H.FrameWorkID,
+      H.DamageType,
+      H.MajorType,
+      H.`Name` as HazardName,
+      H.RiskType,
+      H.`Status`,
+      H.HazardDesc,
+      H.LastModifyVersion,
+      D.RiskLevel,
+      R.ControlRangePinci,
+      M.MeasureContent,
+      RS.ManagerUnitName,
+      RS.`Name` as RiskSiteName
+    FROM
+	    riskhazard H
+    LEFT JOIN riskleversetting D ON H.FrameWorkID = D.FrameWorkID
+    AND H.RiskLevelSettingID = D.RiskLevelSettingID
+    LEFT JOIN riskcontrolmeasure M ON H.FrameWorkID = M.FrameWorkID
+    AND H.RiskSiteID = M.RiskSiteID
+    AND H.HazardID = M.HazardID
+    LEFT JOIN riskhazardcontrolrange R ON H.FrameWorkID = R.FrameWorkID
+    AND H.HazardID = R.HazardID
+    AND R.RiskSiteID = H.RiskSiteID
+    LEFT JOIN risksite RS ON
+    RS.FrameWorkID = H.FrameWorkID AND
+    RS.FullNumber = LEFT(H.RiskSiteFullNumber,6)
+    AND RS.ParentID  = 0
+    WHERE H.FrameWorkID= #{fframeWorkID, jdbcType=VARCHAR}
+        AND H.Status = 0
+        AND RS.ManagerUnitName is NOT NULL
+        <if test="locationList.size() > 0">
+            AND
+            RS.`Name` in
+            <foreach collection="locationList" open="(" close=")" item="item" separator=",">
+                #{item, jdbcType=VARCHAR}
+            </foreach>
+        </if>
+        <if test="catagoriesList.size() > 0">
+            AND
+            H.MajorType in
+            <foreach collection="catagoriesList" open="(" close=")" item="item" separator=",">
+                #{item, jdbcType=VARCHAR}
+            </foreach>
+        </if>
+        <if test="startTime!= null and startTime!=''">
+            and H.LastModifyVersion <![CDATA[>=]]> #{startTime, jdbcType=VARCHAR}
+        </if>
+        <if test="endTime!= null and endTime!=''">
+            and H.LastModifyVersion <![CDATA[<=]]> #{endTime, jdbcType=VARCHAR}
+        </if>
+        <if test="departmentName!= null and departmentName!=''  ">
+            AND
+            RS.ManagerUnitName = #{departmentName, jdbcType=VARCHAR}
+        </if>
+GROUP BY H.HazardUUID
+    </select>
+
+    <select id="getRiskhazardwithCheckStatus" resultMap="RiskhazardMap">
+        select
+        H.HazardID,
+        H.HazardUUID,
+        H.RiskSiteID,
+        H.CoalMineName,
+        H.FrameWorkID,
+        H.AccountabilityUnit,
+        H.Consequence,
+        H.DamageType,
+        H.Expose,
+        H.RiskTemplateID,
+        H.ExposeDegree,
+        H.LossConsequence,
+        H.MajorType,
+        H.ManageUnit,
+        H.NAME,
+        H.OperatingPost,
+        H.Possibility,
+        H.RiskDegree,
+        H.RiskObject,
+        H.RiskPlace,
+        D.RiskLevel,
+        D.RiskColor,
+        H.RiskType,
+        H.RiskValue,
+        H.STATUS,
+        H.Sseverity,
+        H.RiskSiteFullNumber,
+        H.StandardFullNumber,
+        H.StandardName,
+        H.DutyRole,
+        H.SupervisionUnit,
+        H.ExtendedAttributesJsonString,
+        H.HazardDesc,
+        H.RiskLevelSettingID,
+        H.RiskObjectType,
+        H.AccidentType,
+        H.RiskKind,
+        H.ControlResult,
+        H.IdentifyMethod,
+        H.RiskByTypes,
+        H.RiskFactors,
+        H.TechnologyDepartment,
+        H.SupervisionDepartment,
+
+        R.RiskSiteControlRangeID AS RRiskSiteControlRangeID,
+        R.CoalMineName AS RCoalMineName,
+        R.HazardID AS RHazardID,
+        R.FrameWorkID AS RFrameWorkID,
+        R.HazardUUID AS RHazardUUID,
+        R.RiskSiteID AS RRiskSiteID,
+        R.RiskSiteFullNumber AS RRiskSiteFullNumber,
+        R.ControlRangeName AS RControlRangeName,
+        R.ControlRangeStartDay AS RControlRangeStartDay,
+        R.ControlRangeEndDay AS RControlRangeEndDay,
+        R.ControlRangePinci AS RControlRangePinci,
+        R.ManageUnit AS RManageUnit,
+        R.ManageUnitID AS RManageUnitID,
+        R.ManageDuty AS RManageDuty,
+        R.ManageDutyID AS RManageDutyID,
+        M.MeasureID AS MMeasureID,
+        M.MeasureUUID AS MMeasureUUID,
+        M.MeasureCreateTime AS MeasureCreateTime,
+        M.RiskSiteID AS MRiskSiteID,
+        M.HazardID AS MHazardID,
+        M.MeasureContent AS MMeasureContent,
+        M.MeasureName AS MMeasureName,
+        M.MeasureType AS MMeasureType,
+        M.MeasureURL AS MMeasureURL,
+        M.FrameWorkID AS MFrameWorkID,
+        M.CoalMineName AS MCoalMineName,
+        M.RiskSiteFullNumber AS MRiskSiteFullNumber,
+        O.ParentID AS parentID,
+        I.OutOfControlStatus as outOfControlStatus
+        from
+        riskhazard H
+        LEFT JOIN risksite O ON H.FrameWorkID = O.FrameWorkID AND H.RiskSiteID = O.RiskSiteID
+        LEFT JOIN riskLeverSetting D ON H.FrameWorkID = D.FrameWorkID AND H.RiskLevelSettingID = D.RiskLevelSettingID
+        LEFT JOIN riskcontrolmeasure M ON H.FrameWorkID = M.FrameWorkID AND H.RiskSiteID = M.RiskSiteID AND H.HazardID = M.HazardID
+        LEFT JOIN riskhazardcontrolrange R ON H.FrameWorkID = R.FrameWorkID AND H.HazardID = R.HazardID AND R.RiskSiteID=H.RiskSiteID
+        LEFT JOIN risksiteoutofcontrol C ON H.FrameWorkID = C.FrameWorkID AND O.ParentID = C.RiskSiteID
+        LEFT JOIN risksiteoutofcontrolitem I ON H.FrameWorkID = I.FrameWorkID AND C.CheckRecordID = I.CheckRecordID and H.HazardID = I.HazardID
+        where  1=1
+        <if test="hazardID!= null ">
+            and C.MonthPlaneID = #{monthPlaneID, jdbcType=INTEGER}
+        </if>
+        ="175"
+        <if test="hazardID!= null ">
+            and H.HazardID = #{hazardID, jdbcType=INTEGER}
+        </if>
+        <if test="hazardUUID!= null and hazardUUID!='' ">
+            and H.HazardUUID = #{hazardUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteID!= null ">
+            and H.RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="coalMineName!= null ">
+            and H.CoalMineName = #{coalMineName, jdbcType=VARBINARY}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!='' ">
+            and H.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="accountabilityUnit!= null and accountabilityUnit!='' ">
+            and H.AccountabilityUnit = #{accountabilityUnit, jdbcType=VARCHAR}
+        </if>
+        <if test="consequence!= null and consequence!='' ">
+            and H.Consequence = #{consequence, jdbcType=VARCHAR}
+        </if>
+        <if test="damageType!= null and damageType!='' ">
+            and H.DamageType = #{damageType, jdbcType=VARCHAR}
+        </if>
+        <if test="eexpose!= null ">
+            and H.Expose = #{eexpose, jdbcType=INTEGER}
+        </if>
+        <if test="riskTemplateID!= null ">
+            and H.RiskTemplateID = #{riskTemplateID, jdbcType=INTEGER}
+        </if>
+        <if test="exposeDegree!= null and exposeDegree!='' ">
+            and H.ExposeDegree = #{exposeDegree, jdbcType=VARCHAR}
+        </if>
+        <if test="clossConsequence!= null ">
+            and H.LossConsequence = #{clossConsequence, jdbcType=INTEGER}
+        </if>
+        <if test="majorType!= null and majorType!='' ">
+            and H.MajorType = #{majorType, jdbcType=VARCHAR}
+        </if>
+        <if test="manageUnit!= null and manageUnit!='' ">
+            and H.ManageUnit = #{manageUnit, jdbcType=VARCHAR}
+        </if>
+        <if test="name!= null and name!='' ">
+            and H.Name = #{name, jdbcType=VARCHAR}
+        </if>
+        <if test="operatingPost!= null and operatingPost!='' ">
+            and H.OperatingPost = #{operatingPost, jdbcType=VARCHAR}
+        </if>
+        <if test="lpossibility!= null ">
+            and H.Possibility = #{lpossibility, jdbcType=INTEGER}
+        </if>
+        <if test="riskDegree!= null and riskDegree!='' ">
+            and H.RiskDegree = #{riskDegree, jdbcType=VARCHAR}
+        </if>
+        <if test="riskObject!= null and riskObject!='' ">
+            and H.RiskObject = #{riskObject, jdbcType=VARCHAR}
+        </if>
+        <if test="riskPlace!= null and riskPlace!='' ">
+            and H.RiskPlace = #{riskPlace, jdbcType=VARCHAR}
+        </if>
+        <if test="riskType!= null and riskType!='' ">
+            and H.RiskType = #{riskType, jdbcType=VARCHAR}
+        </if>
+        <if test="status!= null ">
+            and H.Status = #{status, jdbcType=BIT}
+        </if>
+        <if test="riskSiteFullNumber!= null and riskSiteFullNumber!='' ">
+            and H.RiskSiteFullNumber LIKE CONCAT(#{riskSiteFullNumber, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="standardFullNumber!= null and standardFullNumber!='' ">
+            AND H.StandardFullNumber = #{standardFullNumber, jdbcType=VARCHAR}
+        </if>
+        <if test="standardName!= null and standardName!='' ">
+            AND H.StandardName = #{standardName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskLevelSettingID!=null and riskLevelSettingID>0">
+            and H.RiskLevelSettingID=#{riskLevelSettingID, jdbcType=INTEGER}
+        </if>
+        <if test="riskObjectType!=null and riskObjectType!=''">
+            AND H.RiskObjectType=#{riskObjectType,jdbcType=VARCHAR}
+        </if>
+        <if test="accidentType!=null and accidentType!=''">
+            AND H.AccidentType=#{accidentType,jdbcType=VARCHAR}
+        </if>
+        <if test="riskKind!=null and riskKind!=''">
+            AND H.RiskKind=#{riskKind,jdbcType=VARCHAR}
+        </if>
+        <if test="controlResult!=null and controlResult!=''">
+            AND H.ControlResult=#{controlResult,jdbcType=VARCHAR}
+        </if>
+        <if test="identifyMethod!=null and identifyMethod!=''">
+            AND H.IdentifyMethod=#{identifyMethod,jdbcType=VARCHAR}
+        </if>
+    </select>
+</mapper>

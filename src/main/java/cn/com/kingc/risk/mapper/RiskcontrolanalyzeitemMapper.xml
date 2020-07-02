@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.kingc.risk.dao.RiskcontrolanalyzeitemDao">
+    <resultMap id="RiskcontrolanalyzeitemMap" type="cn.com.kingc.risk.model.Riskcontrolanalyzeitem">
+        <result property="coalMineName" column="CoalMineName" jdbcType="VARCHAR"/>
+        <result property="frameWorkID" column="FrameWorkID" jdbcType="VARCHAR"/>
+        <result property="mAnalyzeID" column="mAnalyzeID" jdbcType="INTEGER"/>
+        <result property="itemID" column="ItemID" jdbcType="INTEGER"/>
+        <result property="itemUUID" column="ItemUUID" jdbcType="VARCHAR"/>
+        <result property="keyContent" column="KeyContent" jdbcType="VARCHAR"/>
+        <result property="lostControlItemID" column="LostControlItemID" jdbcType="INTEGER"/>
+        <result property="oHiddenTrouble" column="OHiddenTrouble" jdbcType="BIT"/>
+        <result property="oMeasure" column="OMeasure" jdbcType="BIT"/>
+        <result property="oRiskLevel" column="ORiskLevel" jdbcType="BIT"/>
+        <result property="oHiddenTroubleID"  column="OHiddenTroubleID" jdbcType="INTEGER"/>
+        <association property="lostControlItem"
+                     column="{lostControlItemID=LostControlItemID,frameWorkID=FrameWorkID}"
+                     javaType="cn.com.kingc.risk.model.Risksiteoutofcontrolitem"
+                     select="findOutOfControlItemByID"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+            CoalMineName,
+            FrameWorkID,
+            mAnalyzeID,
+            ItemID,
+            ItemUUID,
+            KeyContent,
+            LostControlItemID,
+            OHiddenTrouble,
+            OMeasure,
+            ORiskLevel,
+            OHiddenTroubleID
+    </sql>
+
+    <select id="findOutOfControlItemByID" parameterType="java.util.Map"
+            resultMap="cn.com.kingc.risk.dao.RisksiteoutofcontrolitemDao.RisksiteoutofcontrolitemMap">
+        select
+        <include refid="cn.com.kingc.risk.dao.RisksiteoutofcontrolitemDao.Base_Column_List"/>
+        from risksiteoutofcontrolitem
+        where ItemID=#{lostControlItemID,jdbcType=INTEGER} AND FrameWorkID=#{frameWorkID}
+    </select>
+
+    <insert id="addRiskcontrolanalyzeitem" parameterType="cn.com.kingc.risk.model.Riskcontrolanalyzeitem"
+            useGeneratedKeys="true" keyProperty="itemID">
+        insert into riskcontrolanalyzeitem (
+                CoalMineName,
+                FrameWorkID,
+                mAnalyzeID,
+                ItemID,
+                ItemUUID,
+                KeyContent,
+                LostControlItemID,
+                OHiddenTrouble,
+                OMeasure,
+                ORiskLevel,
+                OHiddenTroubleID
+        )
+        values(
+                #{coalMineName, jdbcType=VARCHAR}  ,
+                #{frameWorkID, jdbcType=VARCHAR}  ,
+                #{mAnalyzeID, jdbcType=INTEGER}  ,
+                #{itemID, jdbcType=INTEGER}  ,
+                #{itemUUID, jdbcType=VARCHAR}  ,
+                #{keyContent, jdbcType=VARCHAR},
+                #{lostControlItemID, jdbcType=INTEGER},
+                #{oHiddenTrouble, jdbcType=BIT},
+                #{oMeasure, jdbcType=BIT},
+                #{oRiskLevel, jdbcType=BIT},
+                #{oHiddenTroubleID, jdbcType=INTEGER}
+        )
+    </insert>
+
+    <delete id="deleteRiskcontrolanalyzeitem" parameterType="cn.com.kingc.risk.model.Riskcontrolanalyzeitem">
+        DELETE FROM riskcontrolanalyzeitem
+        WHERE  ItemID = #{itemID,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteRiskcontrolanalyzeitemByID" parameterType="java.lang.Integer">
+        DELETE FROM riskcontrolanalyzeitem
+    WHERE  ItemID = #{itemID,jdbcType=INTEGER}
+</delete>
+    <delete id="deleteRiskcontrolanalyzeitemByLostControlItemID">
+        DELETE FROM riskcontrolanalyzeitem
+        WHERE  LostControlItemID = #{lostControlItemID,jdbcType=INTEGER}
+        AND FrameWorkID = #{framworkID,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteitemByAnalyzeID" parameterType="java.lang.Integer">
+        DELETE FROM riskcontrolanalyzeitem
+        WHERE  itemID = #{itemID,jdbcType=INTEGER}
+    </delete>
+
+    <update id="updateRiskcontrolanalyzeitem" parameterType="cn.com.kingc.risk.model.Riskcontrolanalyzeitem">
+        UPDATE riskcontrolanalyzeitem
+        <set>
+            <if test="coalMineName!= null ">
+                CoalMineName = #{coalMineName, jdbcType=VARCHAR} ,
+            </if>
+            <if test="frameWorkID!= null ">
+                FrameWorkID = #{frameWorkID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="mAnalyzeID!= null ">
+                mAnalyzeID = #{mAnalyzeID, jdbcType=INTEGER} ,
+            </if>
+            <if test="itemID!= null ">
+                ItemID = #{itemID, jdbcType=INTEGER} ,
+            </if>
+            <if test="itemUUID!= null ">
+                ItemUUID = #{itemUUID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="keyContent!= null ">
+                KeyContent = #{keyContent, jdbcType=VARCHAR} ,
+            </if>
+            <if test="lostControlItemID!= null ">
+                LostControlItemID=#{lostControlItemID, jdbcType=INTEGER},
+            </if>
+            <if test="oHiddenTrouble!= null ">
+                OHiddenTrouble=#{oHiddenTrouble, jdbcType=BIT},
+            </if>
+            <if test="oMeasure!= null ">
+                OMeasure=#{oMeasure, jdbcType=BIT},
+            </if>
+            <if test="oRiskLevel!= null ">
+                ORiskLevel=#{oRiskLevel, jdbcType=BIT},
+            </if>
+            <if test="oHiddenTroubleID!= null and oHiddenTroubleID>0">
+                OHiddenTroubleID=#{oHiddenTroubleID, jdbcType=INTEGER}
+            </if>
+        </set>
+        WHERE ItemID = #{itemID,jdbcType=INTEGER}
+    </update>
+
+    <select id="getRiskcontrolanalyzeitem" resultMap="RiskcontrolanalyzeitemMap"
+            parameterType="INTEGER">
+        select
+        <include refid="Base_Column_List"/>
+        from riskcontrolanalyzeitem
+        WHERE ItemID = #{itemID,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRiskcontrolanalyzeitemCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  riskcontrolanalyzeitem
+    </select>
+
+    <select id="getRiskcontrolanalyzeitemByPage" resultMap="RiskcontrolanalyzeitemMap"
+            parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from riskcontrolanalyzeitem
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRiskcontrolanalyzeitemCountByRiskcontrolanalyzeitem" resultType="java.lang.Integer">
+        select
+        count(*)
+        from riskcontrolanalyzeitem
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!= ''">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!=''">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="mAnalyzeID!= null ">
+            and mAnalyzeID = #{mAnalyzeID, jdbcType=INTEGER}
+        </if>
+        <if test="itemID!= null ">
+            and ItemID = #{itemID, jdbcType=INTEGER}
+        </if>
+        <if test="itemUUID!= null and itemUUID!=''">
+            and ItemUUID = #{itemUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="keyContent!= null and keyContent!='' ">
+            and KeyContent = #{keyContent, jdbcType=VARCHAR}
+        </if>
+        <if test="lostControlItemID!= null ">
+            AND LostControlItemID=#{lostControlItemID, jdbcType=INTEGER}
+        </if>
+        <if test="oHiddenTrouble!= null ">
+            AND OHiddenTrouble=#{oHiddenTrouble, jdbcType=BIT}
+        </if>
+        <if test="oMeasure!= null ">
+            AND OMeasure=#{oMeasure, jdbcType=BIT}
+        </if>
+        <if test="oRiskLevel!= null ">
+            AND ORiskLevel=#{oRiskLevel, jdbcType=BIT}
+        </if>
+        <if test="oHiddenTroubleID!= null ">
+            AND OHiddenTroubleID=#{oHiddenTroubleID, jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <select id="getRiskcontrolanalyzeitemByPageAndRiskcontrolanalyzeitem" resultMap="RiskcontrolanalyzeitemMap">
+        select
+        <include refid="Base_Column_List"/>
+        from riskcontrolanalyzeitem
+        where 1=1
+        <if test="riskcontrolanalyzeitem.coalMineName!= null and riskcontrolanalyzeitem.coalMineName!=''">
+            and CoalMineName = #{riskcontrolanalyzeitem.coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolanalyzeitem.frameWorkID!= null and riskcontrolanalyzeitem.frameWorkID!='' ">
+            and FrameWorkID = #{riskcontrolanalyzeitem.frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolanalyzeitem.mAnalyzeID!= null ">
+            and mAnalyzeID = #{riskcontrolanalyzeitem.mAnalyzeID, jdbcType=INTEGER}
+        </if>
+        <if test="riskcontrolanalyzeitem.itemID!= null ">
+            and ItemID = #{riskcontrolanalyzeitem.itemID, jdbcType=INTEGER}
+        </if>
+        <if test="riskcontrolanalyzeitem.itemUUID!= null and riskcontrolanalyzeitem.itemUUID!=''">
+            and ItemUUID = #{riskcontrolanalyzeitem.itemUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolanalyzeitem.keyContent!= null and riskcontrolanalyzeitem.keyContent!=''">
+            and KeyContent = #{riskcontrolanalyzeitem.keyContent, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolanalyzeitem.lostControlItemID!= null ">
+            AND LostControlItemID=#{riskcontrolanalyzeitem.lostControlItemID, jdbcType=INTEGER}
+        </if>
+        <if test="oHiddenTrouble!= null ">
+            AND OHiddenTrouble=#{riskcontrolanalyzeitem.oHiddenTrouble, jdbcType=BIT}
+        </if>
+        <if test="oMeasure!= null ">
+            AND OMeasure=#{riskcontrolanalyzeitem.oMeasure, jdbcType=BIT}
+        </if>
+        <if test="oRiskLevel!= null ">
+            AND ORiskLevel=#{riskcontrolanalyzeitem.oRiskLevel, jdbcType=BIT}
+        </if>
+        <if test="oHiddenTroubleID!= null ">
+            AND OHiddenTroubleID=#{oHiddenTroubleID, jdbcType=INTEGER}
+        </if>
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRiskcontrolanalyzeitemData" resultMap="RiskcontrolanalyzeitemMap">
+        select
+        <include refid="Base_Column_List"/>
+        from riskcontrolanalyzeitem
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!=''">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!='' ">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="mAnalyzeID!= null ">
+            and mAnalyzeID = #{mAnalyzeID, jdbcType=INTEGER}
+        </if>
+        <if test="itemID!= null ">
+            and ItemID = #{itemID, jdbcType=INTEGER}
+        </if>
+        <if test="itemUUID!= null and itemUUID!=''">
+            and ItemUUID = #{itemUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="keyContent!= null and keyContent!=''">
+            and KeyContent = #{keyContent, jdbcType=VARCHAR}
+        </if>
+        <if test="lostControlItemID!= null ">
+            AND LostControlItemID=#{lostControlItemID, jdbcType=INTEGER}
+        </if>
+        <if test="oHiddenTrouble!= null and oHiddenTrouble!=''">
+            AND OHiddenTrouble=#{oHiddenTrouble, jdbcType=BIT}
+        </if>
+        <if test="oMeasure!= null and oMeasure!=''">
+            AND OMeasure=#{oMeasure, jdbcType=BIT}
+        </if>
+        <if test="oRiskLevel!= null and oRiskLevel!=''">
+            AND ORiskLevel=#{oRiskLevel, jdbcType=BIT}
+        </if>
+        <if test="oHiddenTroubleID!= null ">
+            AND OHiddenTroubleID=#{oHiddenTroubleID, jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <select id="getItemByCheck" resultMap="RiskcontrolanalyzeitemMap">
+        SELECT
+			O.CoalMineName,
+            O.FrameWorkID,
+            0 AS mAnalyzeID,
+            0 AS ItemID,
+            UUID() AS ItemUUID,
+            OI.CheckQuestion AS KeyContent,
+            OI.ItemID AS LostControlItemID,
+            0 AS OHiddenTrouble,
+            0 AS OMeasure,
+            0 AS ORiskLevel,
+            0 AS OHiddenTroubleID
+        FROM
+            risksiteoutofcontrol O
+        INNER JOIN risksiteoutofcontrolitem OI
+        ON O.CheckRecordID = OI.CheckRecordID
+        AND O.FrameWorkID = OI.FrameWorkID
+        WHERE O.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+            AND YEAR (O.CheckTime) = #{checkYear, jdbcType=INTEGER}
+            AND MONTH (O.CheckTime) = #{checkMonth, jdbcType=INTEGER}
+            AND O.MajorType = #{MajorType, jdbcType=VARCHAR}
+    </select>
+
+    <update id="updateOutofControlStatusISover">
+        UPDATE risksiteoutofcontrolitem
+        SET OutOfControlStatus=0
+        WHERE ItemID=#{lostControlItemID, jdbcType=INTEGER}
+        AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+    </update>
+    <update id="changeOutofControlStatusISover">
+        UPDATE risksiteoutofcontrolitem
+        SET OutOfControlStatus=#{status,jdbcType=BIT}
+        WHERE ItemID=#{lostControlItemID, jdbcType=INTEGER}
+        AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateOutofControlStatusISoverByHiddentroubleID">
+        UPDATE risksiteoutofcontrolitem O
+        INNER JOIN riskcontrolanalyzeitem  A
+        ON O.FrameWorkID=A.FrameWorkid AND O.ItemID=A.LostControlItemID
+        SET O.OutOfControlStatus=0
+        WHERE A.FrameWorkID=#{frameWorkID, jdbcType=VARCHAR} AND
+              A.OHiddenTroubleID=#{oHiddenTroubleID, jdbcType=INTEGER}
+    </update>
+</mapper>

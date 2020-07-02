@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.kingc.risk.dao.RisksitemapDao">
+    <cache/>
+    <resultMap id="RisksitemapMap" type="cn.com.kingc.risk.model.Risksitemap">
+            <result property="riskSiteMapId" column="RiskSiteMapId"  jdbcType="INTEGER"/>
+            <result property="svgFileName" column="SvgFileName"  jdbcType="VARCHAR"/>
+            <result property="svgFilePath" column="SvgFilePath"  jdbcType="VARCHAR"/>
+            <result property="cadFileName" column="CadFileName"  jdbcType="VARCHAR"/>
+            <result property="cadFilePath" column="CadFilePath"  jdbcType="VARCHAR"/>
+            <result property="addDate" column="AddDate"  jdbcType="VARCHAR"/>
+            <result property="updateDate" column="UpdateDate"  jdbcType="VARCHAR"/>
+            <result property="frameWorkId" column="FrameWorkId"  jdbcType="VARCHAR"/>
+            <result property="transForm" column="TransForm"  jdbcType="VARCHAR"/>
+            <result property="origionX" column="OrigionX"  jdbcType="VARCHAR"/>
+            <result property="origionY" column="OrigionY"  jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+            RiskSiteMapId,
+            SvgFileName,
+            SvgFilePath,
+            CadFileName,
+            CadFilePath,
+            AddDate,
+            UpdateDate,
+            FrameWorkId,
+            TransForm,
+            OrigionX,
+            OrigionY
+    </sql>
+
+     <!--新增一条记录-->
+    <insert id="addRisksitemap" parameterType="cn.com.kingc.risk.model.Risksitemap"
+            useGeneratedKeys="true" keyProperty="riskSiteMapId" flushCache="true">
+        insert into risksitemap (
+                RiskSiteMapId,
+                SvgFileName,
+                SvgFilePath,
+                CadFileName,
+                CadFilePath,
+                AddDate,
+                UpdateDate,
+                FrameWorkId,
+                TransForm,
+                OrigionX,
+                OrigionY
+        )
+        values(
+                #{riskSiteMapId, jdbcType=INTEGER}  ,
+                #{svgFileName, jdbcType=VARCHAR}  ,
+                #{svgFilePath, jdbcType=VARCHAR}  ,
+                #{cadFileName, jdbcType=VARCHAR}  ,
+                #{cadFilePath, jdbcType=VARCHAR}  ,
+                #{addDate, jdbcType=VARCHAR}  ,
+                #{updateDate, jdbcType=VARCHAR}  ,
+                #{frameWorkId, jdbcType=VARCHAR}  ,
+                #{transForm, jdbcType=VARCHAR}  ,
+                #{origionX, jdbcType=VARCHAR}  ,
+                #{origionY, jdbcType=VARCHAR}  
+        )
+    </insert>
+
+    <!--批量新增记录-->
+    <insert id="addRisksitemapList"  parameterType="java.util.List" flushCache="true">
+        insert into risksitemap(
+                RiskSiteMapId,
+                SvgFileName,
+                SvgFilePath,
+                CadFileName,
+                CadFilePath,
+                AddDate,
+                UpdateDate,
+                FrameWorkId,
+                TransForm,
+                OrigionX,
+                OrigionY
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+                    #{item.riskSiteMapId, jdbcType=INTEGER}  ,
+                    #{item.svgFileName, jdbcType=VARCHAR}  ,
+                    #{item.svgFilePath, jdbcType=VARCHAR}  ,
+                    #{item.cadFileName, jdbcType=VARCHAR}  ,
+                    #{item.cadFilePath, jdbcType=VARCHAR}  ,
+                    #{item.addDate, jdbcType=VARCHAR}  ,
+                    #{item.updateDate, jdbcType=VARCHAR}  ,
+                    #{item.frameWorkId, jdbcType=VARCHAR}  ,
+                    #{item.transForm, jdbcType=VARCHAR}  ,
+                    #{item.origionX, jdbcType=VARCHAR}  ,
+                    #{item.origionY, jdbcType=VARCHAR}  
+            )
+        </foreach>
+    </insert>
+
+    <!--根据主键删除记录-->
+    <delete id="deleteRisksitemap" parameterType="cn.com.kingc.risk.model.Risksitemap" flushCache="true">
+        DELETE FROM risksitemap
+        WHERE  RiskSiteMapId = #{riskSiteMapId,jdbcType=INTEGER}
+    </delete>
+
+    <!--删除一条记录-->
+    <delete id="deleteRisksitemapByID" parameterType="Integer" flushCache="true">
+        DELETE FROM risksitemap
+        WHERE  RiskSiteMapId = #{riskSiteMapId,jdbcType=INTEGER}
+    </delete>
+
+    <!--更新记录-->
+    <update id="updateRisksitemap" parameterType="cn.com.kingc.risk.model.Risksitemap" flushCache="true">
+        UPDATE  risksitemap
+        <set>
+                <if test="riskSiteMapId!= null ">
+                    RiskSiteMapId = #{riskSiteMapId, jdbcType=INTEGER} ,
+                </if>
+                <if test="svgFileName!= null ">
+                    SvgFileName = #{svgFileName, jdbcType=VARCHAR} ,
+                </if>
+                <if test="svgFilePath!= null ">
+                    SvgFilePath = #{svgFilePath, jdbcType=VARCHAR} ,
+                </if>
+                <if test="cadFileName!= null ">
+                    CadFileName = #{cadFileName, jdbcType=VARCHAR} ,
+                </if>
+                <if test="cadFilePath!= null ">
+                    CadFilePath = #{cadFilePath, jdbcType=VARCHAR} ,
+                </if>
+                <if test="addDate!= null ">
+                    AddDate = #{addDate, jdbcType=VARCHAR} ,
+                </if>
+                <if test="updateDate!= null ">
+                    UpdateDate = #{updateDate, jdbcType=VARCHAR} ,
+                </if>
+                <if test="frameWorkId!= null ">
+                    FrameWorkId = #{frameWorkId, jdbcType=VARCHAR} ,
+                </if>
+                <if test="transForm!= null ">
+                    TransForm = #{transForm, jdbcType=VARCHAR} ,
+                </if>
+                <if test="origionX!= null ">
+                    OrigionX = #{origionX, jdbcType=VARCHAR} ,
+                </if>
+                <if test="origionY!= null ">
+                    OrigionY = #{origionY, jdbcType=VARCHAR} 
+                </if>
+        </set>
+        WHERE  RiskSiteMapId = #{riskSiteMapId,jdbcType=INTEGER}
+    </update>
+
+    <!--根据主键查询记录-->
+    <select id="getRisksitemap" resultMap="RisksitemapMap"
+            parameterType="Integer">
+        select
+        <include refid="Base_Column_List" />
+        from risksitemap
+        WHERE  RiskSiteMapId = #{riskSiteMapId,jdbcType=INTEGER}
+    </select>
+    <!--获取共有多少条记录-->
+    <select id="getRisksitemapCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  risksitemap
+    </select>
+
+    <!--分页方法-->
+    <select id="getRisksitemapByPage" resultMap="RisksitemapMap"
+            parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from risksitemap
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <!--获取共有多少条记录，带有查询条件-->
+    <select id="getRisksitemapCountByRisksitemap" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  risksitemap
+        where 1=1
+        <if test="riskSiteMapId!= null and riskSiteMapId!= ''">
+            and  RiskSiteMapId = #{riskSiteMapId, jdbcType=INTEGER}  
+        </if>
+        <if test="svgFileName!= null ">
+            and  SvgFileName = #{svgFileName, jdbcType=VARCHAR}  
+        </if>
+        <if test="svgFilePath!= null ">
+            and  SvgFilePath = #{svgFilePath, jdbcType=VARCHAR}  
+        </if>
+        <if test="cadFileName!= null ">
+            and  CadFileName = #{cadFileName, jdbcType=VARCHAR}  
+        </if>
+        <if test="cadFilePath!= null ">
+            and  CadFilePath = #{cadFilePath, jdbcType=VARCHAR}  
+        </if>
+        <if test="addDate!= null ">
+            and  AddDate = #{addDate, jdbcType=VARCHAR}  
+        </if>
+        <if test="updateDate!= null ">
+            and  UpdateDate = #{updateDate, jdbcType=VARCHAR}  
+        </if>
+        <if test="frameWorkId!= null ">
+            and  FrameWorkId = #{frameWorkId, jdbcType=VARCHAR}  
+        </if>
+        <if test="transForm!= null ">
+            and  TransForm = #{transForm, jdbcType=VARCHAR}  
+        </if>
+        <if test="origionX!= null ">
+            and  OrigionX = #{origionX, jdbcType=VARCHAR}  
+        </if>
+        <if test="origionY!= null ">
+            and  OrigionY = #{origionY, jdbcType=VARCHAR} 
+        </if>
+    </select>
+
+    <!--分页获取数据，带有查询条件-->
+    <select id="getRisksitemapByPageAndRisksitemap" resultMap="RisksitemapMap">
+        select
+        <include refid="Base_Column_List" />
+        from risksitemap
+        where 1=1
+        <if test="risksitemap.riskSiteMapId!= null ">
+            and  RiskSiteMapId = #{risksitemap.riskSiteMapId, jdbcType=INTEGER}  
+        </if>
+        <if test="risksitemap.svgFileName!= null and risksitemap.svgFileName!= ''">
+            and  SvgFileName = #{risksitemap.svgFileName, jdbcType=VARCHAR}  
+        </if>
+        <if test="risksitemap.svgFilePath!= null and risksitemap.svgFilePath!= ''">
+            and  SvgFilePath = #{risksitemap.svgFilePath, jdbcType=VARCHAR}  
+        </if>
+        <if test="risksitemap.cadFileName!= null and risksitemap.cadFileName!= ''">
+            and  CadFileName = #{risksitemap.cadFileName, jdbcType=VARCHAR}  
+        </if>
+        <if test="risksitemap.cadFilePath!= null and risksitemap.cadFilePath!= ''">
+            and  CadFilePath = #{risksitemap.cadFilePath, jdbcType=VARCHAR}  
+        </if>
+        <if test="risksitemap.addDate!= null and risksitemap.addDate!= ''">
+            and  AddDate = #{risksitemap.addDate, jdbcType=VARCHAR}  
+        </if>
+        <if test="risksitemap.updateDate!= null and risksitemap.updateDate!= ''">
+            and  UpdateDate = #{risksitemap.updateDate, jdbcType=VARCHAR}  
+        </if>
+        <if test="risksitemap.frameWorkId!= null and risksitemap.frameWorkId!= ''">
+            and  FrameWorkId = #{risksitemap.frameWorkId, jdbcType=VARCHAR}  
+        </if>
+        <if test="risksitemap.transForm!= null and risksitemap.transForm!= ''">
+            and  TransForm = #{risksitemap.transForm, jdbcType=VARCHAR}  
+        </if>
+        <if test="risksitemap.origionX!= null and risksitemap.origionX!= ''">
+            and  OrigionX = #{risksitemap.origionX, jdbcType=VARCHAR}  
+        </if>
+        <if test="risksitemap.origionY!= null and risksitemap.origionY!= ''">
+            and  OrigionY = #{risksitemap.origionY, jdbcType=VARCHAR} 
+        </if>
+        LIMIT
+    #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <!--根据条件查询数据-->
+    <select id="getRisksitemapList" resultMap="RisksitemapMap">
+        select
+        <include refid="Base_Column_List" />
+        from risksitemap
+        where 1=1
+        <if test="riskSiteMapId!= null ">
+            and  RiskSiteMapId = #{riskSiteMapId, jdbcType=INTEGER}  
+        </if>
+        <if test="svgFileName!= null and svgFileName!= ''">
+           and  SvgFileName = #{svgFileName, jdbcType=VARCHAR}  
+        </if>
+        <if test="svgFilePath!= null and svgFilePath!= ''">
+           and  SvgFilePath = #{svgFilePath, jdbcType=VARCHAR}  
+        </if>
+        <if test="cadFileName!= null and cadFileName!= ''">
+           and  CadFileName = #{cadFileName, jdbcType=VARCHAR}  
+        </if>
+        <if test="cadFilePath!= null and cadFilePath!= ''">
+           and  CadFilePath = #{cadFilePath, jdbcType=VARCHAR}  
+        </if>
+        <if test="addDate!= null and addDate!= ''">
+           and  AddDate = #{addDate, jdbcType=VARCHAR}  
+        </if>
+        <if test="updateDate!= null and updateDate!= ''">
+           and  UpdateDate = #{updateDate, jdbcType=VARCHAR}  
+        </if>
+        <if test="frameWorkId!= null and frameWorkId!= ''">
+           and  FrameWorkId = #{frameWorkId, jdbcType=VARCHAR}  
+        </if>
+        <if test="transForm!= null and transForm!= ''">
+           and  TransForm = #{transForm, jdbcType=VARCHAR}  
+        </if>
+        <if test="origionX!= null and origionX!= ''">
+           and  OrigionX = #{origionX, jdbcType=VARCHAR}  
+        </if>
+        <if test="origionY!= null and origionY!= ''">
+           and  OrigionY = #{origionY, jdbcType=VARCHAR} 
+        </if>
+    </select>
+
+    <!--获取一个数据的不重复集合-->
+    <select id="getDistinctItemList" resultType="java.lang.String" statementType="STATEMENT">
+        select  DISTINCT ${attribute} FROM risksitemap
+    </select>
+
+</mapper>

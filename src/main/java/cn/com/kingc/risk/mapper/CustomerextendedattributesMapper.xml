@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.kingc.risk.dao.CustomerextendedattributesDao">
+    <resultMap id="CustomerextendedattributesMap" type="cn.com.kingc.risk.model.Customerextendedattributes">
+        <result property="classID" column="ClassID" jdbcType="INTEGER"/>
+        <result property="classPropertyID" column="ClassPropertyID" jdbcType="INTEGER"/>
+        <result property="classPropertyDataType" column="ClassPropertyDataType" jdbcType="VARCHAR"/>
+        <result property="classpropertyName" column="ClasspropertyName" jdbcType="VARCHAR"/>
+        <result property="classPropertyTitle" column="ClassPropertyTitle" jdbcType="VARCHAR"/>
+        <result property="classPropertyValue" column="ClassPropertyValue" jdbcType="VARCHAR"/>
+        <result property="coalMineName" column="CoalMineName" jdbcType="VARCHAR"/>
+        <result property="frameWorkID" column="FrameWorkID" jdbcType="VARCHAR"/>
+        <result property="systemAtrr" column="SystemAtrr" jdbcType="BIT"/>
+        <result property="canBeShow" column="CanBeShow" jdbcType="BIT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        CoalMineName,
+        FrameWorkID,
+        ClassID,
+        ClassPropertyID,
+        ClassPropertyDataType,
+        ClasspropertyName,
+        ClassPropertyTitle,
+        ClassPropertyValue,
+        SystemAtrr,
+        CanBeShow
+    </sql>
+
+    <insert id="addCustomerextendedattributes" parameterType="cn.com.kingc.risk.model.Customerextendedattributes"
+            useGeneratedKeys="true" keyProperty="classPropertyID">
+        insert into customerextendedattributes (
+                ClassID,
+                ClassPropertyID,
+                ClassPropertyDataType,
+                ClasspropertyName,
+                ClassPropertyTitle,
+                ClassPropertyValue,
+                CoalMineName,
+                FrameWorkID,
+                SystemAtrr,
+                CanBeShow
+        )
+        values(
+                #{classID, jdbcType=INTEGER}  ,
+                #{classPropertyID, jdbcType=INTEGER}  ,
+                #{classPropertyDataType, jdbcType=VARCHAR}  ,
+                #{classpropertyName, jdbcType=VARCHAR}  ,
+                #{classPropertyTitle, jdbcType=VARCHAR}  ,
+                #{classPropertyValue, jdbcType=VARCHAR},
+                #{coalMineName, jdbcType=VARCHAR}  ,
+                #{frameWorkID, jdbcType=VARCHAR},
+                #{systemAtrr, jdbcType=BIT},
+                #{canBeShow, jdbcType=BIT}
+        )
+    </insert>
+
+    <insert id="addCustomerextendedattributesList" parameterType="java.util.List">
+        insert into customerextendedattributes(
+        ClassID,
+        ClassPropertyID,
+        ClassPropertyDataType,
+        ClasspropertyName,
+        ClassPropertyTitle,
+        ClassPropertyValue,
+        SystemAtrr,
+        CanBeShow
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.classID, jdbcType=INTEGER} ,
+            #{item.classPropertyID, jdbcType=INTEGER} ,
+            #{item.classPropertyDataType, jdbcType=VARCHAR} ,
+            #{item.classpropertyName, jdbcType=VARCHAR} ,
+            #{item.classPropertyTitle, jdbcType=VARCHAR} ,
+            #{item.classPropertyValue, jdbcType=VARCHAR},
+            #{item.systemAtrr, jdbcType=BIT},
+            #{item.canBeShow, jdbcType=BIT}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="deleteCustomerextendedattributes" parameterType="cn.com.kingc.risk.model.Customerextendedattributes">
+        DELETE FROM customerextendedattributes
+        WHERE  ClassPropertyID = #{classPropertyID,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteCustomerextendedattributesByID" parameterType="java.lang.Integer">
+        DELETE FROM customerextendedattributes
+        WHERE  ClassPropertyID = #{classPropertyID,jdbcType=INTEGER}
+    </delete>
+
+    <update id="updateCustomerextendedattributes" parameterType="cn.com.kingc.risk.model.Customerextendedattributes">
+        UPDATE customerextendedattributes
+        <set>
+            <if test="classID!= null ">
+                ClassID = #{classID, jdbcType=INTEGER} ,
+            </if>
+            <if test="classPropertyID!= null ">
+                ClassPropertyID = #{classPropertyID, jdbcType=INTEGER} ,
+            </if>
+            <if test="classPropertyDataType!= null ">
+                ClassPropertyDataType = #{classPropertyDataType, jdbcType=VARCHAR} ,
+            </if>
+            <if test="classpropertyName!= null ">
+                ClasspropertyName = #{classpropertyName, jdbcType=VARCHAR} ,
+            </if>
+            <if test="classPropertyTitle!= null ">
+                ClassPropertyTitle = #{classPropertyTitle, jdbcType=VARCHAR} ,
+            </if>
+            <if test="classPropertyValue!= null ">
+                ClassPropertyValue = #{classPropertyValue, jdbcType=VARCHAR},
+            </if>
+            <if test="coalMineName!= null ">
+                CoalMineName = #{coalMineName, jdbcType=VARCHAR} ,
+            </if>
+            <if test="frameWorkID!= null ">
+                FrameWorkID = #{frameWorkID, jdbcType=VARCHAR},
+            </if>
+            <if test="systemAtrr!= null ">
+                SystemAtrr=#{systemAtrr, jdbcType=BIT},
+            </if>
+            <if test="systemAtrr!= null ">
+                CanBeShow=#{canBeShow, jdbcType=BIT}
+            </if>
+        </set>
+        WHERE ClassPropertyID = #{classPropertyID,jdbcType=INTEGER}
+    </update>
+
+    <select id="getCustomerextendedattributes" resultMap="CustomerextendedattributesMap"
+            parameterType="INTEGER">
+        select
+        <include refid="Base_Column_List"/>
+        from customerextendedattributes
+        WHERE ClassPropertyID = #{classPropertyID,jdbcType=INTEGER}
+    </select>
+
+    <select id="getCustomerextendedattributesCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  customerextendedattributes
+    </select>
+
+    <select id="getCustomerextendedattributesByPage" resultMap="CustomerextendedattributesMap"
+            parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from customerextendedattributes
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <select id="getCustomerextendedattributesCountByCustomerextendedattributes" resultType="java.lang.Integer">
+        select
+        count(*)
+        from customerextendedattributes
+        where 1=1
+        <if test="classID!= null ">
+            and ClassID = #{classID, jdbcType=INTEGER}
+        </if>
+        <if test="classPropertyID!= null ">
+            and ClassPropertyID = #{classPropertyID, jdbcType=INTEGER}
+        </if>
+        <if test="classPropertyDataType!= null and classPropertyDataType!='' ">
+            and ClassPropertyDataType = #{classPropertyDataType, jdbcType=VARCHAR}
+        </if>
+        <if test="classpropertyName!= null and classpropertyName!='' ">
+            and ClasspropertyName = #{classpropertyName, jdbcType=VARCHAR}
+        </if>
+        <if test="classPropertyTitle!= null and classPropertyTitle!='' ">
+            and ClassPropertyTitle = #{classPropertyTitle, jdbcType=VARCHAR}
+        </if>
+        <if test="classPropertyValue!= null and classPropertyValue!= '' ">
+            and ClassPropertyValue = #{classPropertyValue, jdbcType=VARCHAR}
+        </if>
+        <if test="coalMineName!= null and coalMineName!=''">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and  frameWorkID!='' ">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="systemAtrr!= null ">
+            and SystemAtrr=#{systemAtrr, jdbcType=BIT}
+        </if>
+        <if test="systemAtrr!= null ">
+            and CanBeShow=#{canBeShow, jdbcType=BIT}
+        </if>
+    </select>
+
+    <select id="getCustomerextendedattributesByPageAndCustomerextendedattributes"
+            resultMap="CustomerextendedattributesMap">
+        select
+        <include refid="Base_Column_List"/>
+        from customerextendedattributes
+        where 1=1
+        <if test="customerextendedattributes.classID!= null ">
+            and ClassID = #{customerextendedattributes.classID, jdbcType=INTEGER}
+        </if>
+        <if test="customerextendedattributes.classPropertyID!= null ">
+            and ClassPropertyID = #{customerextendedattributes.classPropertyID, jdbcType=INTEGER}
+        </if>
+        <if test="customerextendedattributes.classPropertyDataType!= null and customerextendedattributes.classPropertyDataType!= ''">
+            and ClassPropertyDataType = #{customerextendedattributes.classPropertyDataType, jdbcType=VARCHAR}
+        </if>
+        <if test="customerextendedattributes.classpropertyName!= null and customerextendedattributes.classpropertyName!=''">
+            and ClasspropertyName = #{customerextendedattributes.classpropertyName, jdbcType=VARCHAR}
+        </if>
+        <if test="customerextendedattributes.classPropertyTitle!= null and customerextendedattributes.classPropertyTitle!=''">
+            and ClassPropertyTitle = #{customerextendedattributes.classPropertyTitle, jdbcType=VARCHAR}
+        </if>
+        <if test="customerextendedattributes.classPropertyValue!= null and customerextendedattributes.classPropertyValue!= '' ">
+            and ClassPropertyValue = #{customerextendedattributes.classPropertyValue, jdbcType=VARCHAR}
+        </if>
+        <if test="coalMineName!= null and coalMineName!='' ">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!= null ">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="systemAtrr!= null ">
+            and SystemAtrr=#{systemAtrr, jdbcType=BIT}
+        </if>
+        <if test="systemAtrr!= null ">
+            and CanBeShow=#{canBeShow, jdbcType=BIT}
+        </if>
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <select id="getCustomerextendedattributesData" resultMap="CustomerextendedattributesMap">
+        select
+        <include refid="Base_Column_List"/>
+        from customerextendedattributes
+        where 1=1
+        <if test="classID!= null ">
+            and ClassID = #{classID, jdbcType=INTEGER}
+        </if>
+        <if test="classPropertyID!= null ">
+            and ClassPropertyID = #{classPropertyID, jdbcType=INTEGER}
+        </if>
+        <if test="classPropertyDataType!= null and classPropertyDataType!=''">
+            and ClassPropertyDataType = #{classPropertyDataType, jdbcType=VARCHAR}
+        </if>
+        <if test="classpropertyName!= null and classpropertyName!= ''">
+            and ClasspropertyName = #{classpropertyName, jdbcType=VARCHAR}
+        </if>
+        <if test="classPropertyTitle!= null and classPropertyTitle!=''">
+            and ClassPropertyTitle = #{classPropertyTitle, jdbcType=VARCHAR}
+        </if>
+        <if test="classPropertyValue!= null and classPropertyValue!=''">
+            and ClassPropertyValue = #{classPropertyValue, jdbcType=VARCHAR}
+        </if>
+        <if test="coalMineName!= null and coalMineName!='' ">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!=''">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="systemAtrr!= null ">
+            and SystemAtrr=#{systemAtrr, jdbcType=BIT}
+        </if>
+        <if test="systemAtrr!= null ">
+            and CanBeShow=#{canBeShow, jdbcType=BIT}
+        </if>
+    </select>
+
+</mapper>

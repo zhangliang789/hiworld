@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.kingc.risk.dao.TrinedataversionDao">
+    <resultMap id="TrinedataversionMap" type="cn.com.kingc.risk.model.Trinedataversion">
+            <id property="versionID" column="VersionID"  jdbcType="INTEGER"/>
+            <result property="frameWorkID" column="FrameWorkID"  jdbcType="VARCHAR"/>
+            <result property="coalMineName" column="CoalMineName"  jdbcType="VARCHAR"/>
+            <result property="versionTime" column="VersionTime"  jdbcType="VARCHAR"/>
+            <result property="version" column="Version"  jdbcType="VARCHAR"/>
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        VersionID ,
+        FrameWorkID ,
+        CoalMineName ,
+        VersionTime ,
+        Version 
+    </sql>
+
+
+    <!--新增一条记录-->
+    <insert id="addTrinedataversion" parameterType="cn.com.kingc.risk.model.Trinedataversion"
+            useGeneratedKeys="true" keyProperty="frameWorkID" >
+        insert into trinedataversion (
+            VersionID,
+            FrameWorkID,
+            CoalMineName,
+            VersionTime,
+            Version
+        )
+        values(
+            #{versionID, jdbcType=INTEGER}  ,
+            #{frameWorkID, jdbcType=VARCHAR}  ,
+            #{coalMineName, jdbcType=VARCHAR}  ,
+            #{versionTime, jdbcType=VARCHAR}  ,
+            #{version, jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <!--批量新增记录-->
+    <insert id="addTrinedataversionList"  parameterType="java.util.List" >
+        insert into trinedataversion(
+            VersionID,
+            FrameWorkID,
+            CoalMineName,
+            VersionTime,
+            Version
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+        (
+            #{item.versionID, jdbcType=INTEGER}  ,
+            #{item.frameWorkID, jdbcType=VARCHAR}  ,
+            #{item.coalMineName, jdbcType=VARCHAR}  ,
+            #{item.versionTime, jdbcType=VARCHAR}  ,
+            #{item.version, jdbcType=VARCHAR}
+        )
+        </foreach>
+    </insert>
+
+    <!--删除记录-->
+    <delete id="deleteTrinedataversion" parameterType="cn.com.kingc.risk.model.Trinedataversion" >
+        DELETE FROM trinedataversion
+        where 1=1
+                <if test="versionID!= null ">
+                    and  VersionID = #{versionID, jdbcType=INTEGER}  
+                </if>
+                <if test="frameWorkID!= null and frameWorkID!= ''">
+                    and  FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}  
+                </if>
+                <if test="coalMineName!= null and coalMineName!= ''">
+                    and  CoalMineName = #{coalMineName, jdbcType=VARCHAR}  
+                </if>
+                <if test="versionTime!= null and versionTime!= ''">
+                    and  VersionTime = #{versionTime, jdbcType=VARCHAR}  
+                </if>
+                <if test="version!= null and version!= ''">
+                    and  Version = #{version, jdbcType=VARCHAR}
+                </if>
+    </delete>
+
+    <!--删除一条记录-->
+    <delete id="deleteTrinedataversionByID" parameterType="String" >
+        DELETE FROM trinedataversion
+        WHERE  FrameWorkID = #{frameWorkID,jdbcType=VARCHAR}
+    </delete>
+
+    <!--批量删除记录-->
+    <insert id="deleteTrinedataversionList"  parameterType="java.util.List" >
+        DELETE FROM trinedataversion
+        WHERE FrameWorkID IN
+        <foreach item="item" collection="list" separator=",">
+        (
+            #{item.frameWorkID, jdbcType=VARCHAR}
+        )
+        </foreach>
+    </insert>
+
+    <!--更新记录-->
+    <update id="updateTrinedataversion" parameterType="cn.com.kingc.risk.model.Trinedataversion" >
+        UPDATE  trinedataversion
+        <set>
+                <if test="versionID!= null ">
+                VersionID = #{versionID, jdbcType=INTEGER} ,
+                </if>
+                <if test="frameWorkID!= null ">
+                FrameWorkID = #{frameWorkID, jdbcType=VARCHAR} ,
+                </if>
+                <if test="coalMineName!= null ">
+                CoalMineName = #{coalMineName, jdbcType=VARCHAR} ,
+                </if>
+                <if test="versionTime!= null ">
+                VersionTime = #{versionTime, jdbcType=VARCHAR} ,
+                </if>
+                <if test="version!= null ">
+                Version = #{version, jdbcType=VARCHAR}
+                </if>
+        </set>
+        WHERE  FrameWorkID = #{frameWorkID,jdbcType=VARCHAR}
+    </update>
+
+    <!--根据主键查询记录-->
+    <select id="getTrinedataversion" resultMap="TrinedataversionMap"
+            parameterType="String">
+        select
+        <include refid="Base_Column_List" />
+        from trinedataversion
+        WHERE  FrameWorkID = #{frameWorkID,jdbcType=VARCHAR}
+    </select>
+
+
+    <!--获取共有多少条记录，带有查询条件-->
+    <select id="getTrinedataversionCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  trinedataversion
+        where 1=1
+            <if test="versionID!= null ">
+                and  VersionID = #{versionID, jdbcType=INTEGER}  
+            </if>
+            <if test="frameWorkID!= null and frameWorkID!= ''">
+                and  FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}  
+            </if>
+            <if test="coalMineName!= null and coalMineName!= ''">
+                and  CoalMineName = #{coalMineName, jdbcType=VARCHAR}  
+            </if>
+            <if test="versionTime!= null and versionTime!= ''">
+                and  VersionTime = #{versionTime, jdbcType=VARCHAR}  
+            </if>
+            <if test="version!= null and version!= ''">
+                and  Version = #{version, jdbcType=VARCHAR}
+            </if>
+    </select>
+
+    <!--分页获取数据，带有查询条件-->
+    <select id="getTrinedataversionByPage" resultMap="TrinedataversionMap">
+        select
+        <include refid="Base_Column_List" />
+        from trinedataversion
+        where 1=1
+            <if test="trinedataversion.versionID!= null ">
+                and  VersionID = #{trinedataversion.versionID, jdbcType=INTEGER}  
+            </if>
+            <if test="trinedataversion.frameWorkID!= null and trinedataversion.frameWorkID!= ''">
+                and  FrameWorkID = #{trinedataversion.frameWorkID, jdbcType=VARCHAR}  
+            </if>
+            <if test="trinedataversion.coalMineName!= null and trinedataversion.coalMineName!= ''">
+                and  CoalMineName = #{trinedataversion.coalMineName, jdbcType=VARCHAR}  
+            </if>
+            <if test="trinedataversion.versionTime!= null and trinedataversion.versionTime!= ''">
+                and  VersionTime = #{trinedataversion.versionTime, jdbcType=VARCHAR}  
+            </if>
+            <if test="trinedataversion.version!= null and trinedataversion.version!= ''">
+                and  Version = #{trinedataversion.version, jdbcType=VARCHAR}
+            </if>
+        LIMIT
+    #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <!--根据条件查询数据-->
+    <select id="getTrinedataversionList" resultMap="TrinedataversionMap">
+        select
+        <include refid="Base_Column_List" />
+        from trinedataversion
+        where 1=1
+            <if test="versionID!= null ">
+                and  VersionID = #{versionID, jdbcType=INTEGER}  
+            </if>
+            <if test="frameWorkID!= null and frameWorkID!= ''">
+                and  FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}  
+            </if>
+            <if test="coalMineName!= null and coalMineName!= ''">
+                and  CoalMineName = #{coalMineName, jdbcType=VARCHAR}  
+            </if>
+            <if test="versionTime!= null and versionTime!= ''">
+                and  VersionTime = #{versionTime, jdbcType=VARCHAR}  
+            </if>
+            <if test="version!= null and version!= ''">
+                and  Version = #{version, jdbcType=VARCHAR}
+            </if>
+    </select>
+
+    <!--获取一个数据的不重复集合-->
+    <select id="getDistinctItemList" resultType="java.lang.String" statementType="STATEMENT">
+        select  DISTINCT ${attribute} FROM trinedataversion
+    </select>
+
+    <!--判断对象是否已经存在-->
+    <select id="trinedataversionIsExist" resultType="java.lang.Integer" parameterType="cn.com.kingc.risk.model.Trinedataversion">
+        select  count(*)
+        from trinedataversion
+        where 1=1
+            <if test="versionID!= null and versionID!= ''">
+                and  VersionID = #{versionID, jdbcType=INTEGER}  
+            </if>
+            <if test="frameWorkID!= null ">
+                and  FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}  
+            </if>
+            <if test="coalMineName!= null ">
+                and  CoalMineName = #{coalMineName, jdbcType=VARCHAR}  
+            </if>
+            <if test="versionTime!= null ">
+                and  VersionTime = #{versionTime, jdbcType=VARCHAR}  
+            </if>
+            <if test="version!= null ">
+                and  Version = #{version, jdbcType=VARCHAR}
+            </if>
+    </select>
+
+    <!--根据条件查询数据-->
+    <select id="getTrinedataversionUnique" resultMap="TrinedataversionMap">
+        select
+        <include refid="Base_Column_List" />
+        from trinedataversion
+        where 1=1
+            <if test="versionID!= null ">
+                and  VersionID = #{versionID, jdbcType=INTEGER}  
+            </if>
+            <if test="frameWorkID!= null and frameWorkID!= ''">
+                and  FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}  
+            </if>
+            <if test="coalMineName!= null and coalMineName!= ''">
+                and  CoalMineName = #{coalMineName, jdbcType=VARCHAR}  
+            </if>
+            <if test="versionTime!= null and versionTime!= ''">
+                and  VersionTime = #{versionTime, jdbcType=VARCHAR}  
+            </if>
+            <if test="version!= null and version!= ''">
+                and  Version = #{version, jdbcType=VARCHAR}
+            </if>
+    </select>
+
+</mapper>

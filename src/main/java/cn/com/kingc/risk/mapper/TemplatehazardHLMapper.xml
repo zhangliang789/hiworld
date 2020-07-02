@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.kingc.risk.dao.TemplatehazardHLDao">
+    <resultMap id="TemplatehazardHLMap" type="cn.com.kingc.risk.model.TemplatehazardHL">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="workflowId" column="workflow_id" jdbcType="VARCHAR"/>
+        <result property="workflowContent" column="workflow_content" jdbcType="VARCHAR"/>
+        <result property="stepCount" column="step_count" jdbcType="INTEGER"/>
+        <result property="controlObjectName" column="control_object_name" jdbcType="VARCHAR"/>
+        <result property="stepNum" column="step_num" jdbcType="INTEGER"/>
+        <result property="workStep" column="work_step" jdbcType="VARCHAR"/>
+        <result property="workResult" column="work_result" jdbcType="VARCHAR"/>
+        <result property="resultAbility" column="result_ability" jdbcType="VARCHAR"/>
+        <result property="resultSeriously" column="result_seriously" jdbcType="VARCHAR"/>
+        <result property="resultRisklradio" column="result_risklradio" jdbcType="VARCHAR"/>
+        <result property="resultRisklevel" column="result_risklevel" jdbcType="VARCHAR"/>
+        <result property="controlMeasure" column="control_measure" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,
+        workflow_id,
+        workflow_content,
+        step_count,
+        control_object_name,
+        step_num,
+        work_step,
+        work_result,
+        result_ability,
+        result_seriously,
+        result_risklradio,
+        result_risklevel,
+        control_measure
+    </sql>
+
+
+    <!--新增一条记录-->
+    <insert id="addTemplatehazardHL" parameterType="cn.com.kingc.risk.model.TemplatehazardHL"
+            useGeneratedKeys="true" keyProperty="item.id" flushCache="true">
+        insert into templatehazardHL (
+        id,
+        workflow_id,
+        workflow_content,
+        step_count,
+        control_object_name,
+        step_num,
+        work_step,
+        work_result,
+        result_ability,
+        result_seriously,
+        result_risklradio,
+        result_risklevel,
+        control_measure
+        )
+        values(
+        #{item.id, jdbcType=INTEGER}  ,
+        #{item.workflowId, jdbcType=VARCHAR}  ,
+        #{item.workflowContent, jdbcType=INTEGER}  ,
+        #{item.stepCount, jdbcType=INTEGER}  ,
+        #{item.controlObjectName, jdbcType=VARCHAR}  ,
+        #{item.stepNum, jdbcType=INTEGER}  ,
+        #{item.workStep, jdbcType=VARCHAR}  ,
+        #{item.workResult, jdbcType=VARCHAR}  ,
+        #{item.resultAbility, jdbcType=VARCHAR}  ,
+        #{item.resultSeriously, jdbcType=VARCHAR}  ,
+        #{item.resultRisklradio, jdbcType=VARCHAR}  ,
+        #{item.resultRisklevel, jdbcType=VARCHAR}  ,
+        #{item.controlMeasure, jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <!--批量新增记录-->
+    <insert id="addTemplatehazardHLList" parameterType="java.util.List">
+        insert into templatehazardHL(
+        id,
+        workflow_id,
+        workflow_content,
+        step_count,
+        control_object_name,
+        step_num,
+        work_step,
+        work_result,
+        result_ability,
+        result_seriously,
+        result_risklradio,
+        result_risklevel,
+        control_measure
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.id, jdbcType=INTEGER}  ,
+            #{item.workflowId, jdbcType=VARCHAR}  ,
+            #{item.workflowContent, jdbcType=INTEGER}  ,
+            #{item.stepCount, jdbcType=INTEGER}  ,
+            #{item.controlObjectName, jdbcType=VARCHAR}  ,
+            #{item.stepNum, jdbcType=INTEGER}  ,
+            #{item.workStep, jdbcType=VARCHAR}  ,
+            #{item.workResult, jdbcType=VARCHAR}  ,
+            #{item.resultAbility, jdbcType=VARCHAR}  ,
+            #{item.resultSeriously, jdbcType=VARCHAR}  ,
+            #{item.resultRisklradio, jdbcType=VARCHAR}  ,
+            #{item.resultRisklevel, jdbcType=VARCHAR}  ,
+            #{item.controlMeasure, jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <!--删除记录-->
+    <delete id="deleteTemplatehazardHL" parameterType="cn.com.kingc.risk.model.TemplatehazardHL">
+        DELETE FROM templatehazardHL
+        where 1=1
+        <if test="hazardID!= null ">
+            and id = #{id, jdbcType=INTEGER}
+        </if>
+        <if test="workflowId!= null and workflowId!= ''">
+            and workflow_id = #{workflowId, jdbcType=VARCHAR}
+        </if>
+        <if test="workflowContent!= null ">
+            and workflow_content = #{workflowContent, jdbcType=INTEGER}
+        </if>
+        <if test="stepCount!= null and stepCount!= ''">
+            and step_count = #{stepCount, jdbcType=VARCHAR}
+        </if>
+        <if test="controlObjectName!= null and controlObjectName!= ''">
+            and controlObjectName = #{controlObjectName, jdbcType=VARCHAR}
+        </if>
+        <if test="stepNum!= null and stepNum!= ''">
+            and stepNum = #{stepNum, jdbcType=VARCHAR}
+        </if>
+        <if test="workStep!= null and workStep!= ''">
+            and workStep = #{workStep, jdbcType=VARCHAR}
+        </if>
+        <if test="workResult!= null and workResult!= ''">
+            and workResult = #{workResult, jdbcType=VARCHAR}
+        </if>
+        <if test="resultAbility!= null and resultAbility!= ''">
+            and resultAbility = #{resultAbility, jdbcType=VARCHAR}
+        </if>
+        <if test="resultSeriously!= null and resultSeriously!= ''">
+            and resultSeriously = #{resultSeriously, jdbcType=VARCHAR}
+        </if>
+        <if test="resultRisklradio!= null and resultRisklradio!= ''">
+            and resultRisklradio = #{resultRisklradio, jdbcType=VARCHAR}
+        </if>
+        <if test="resultRisklevel!= null and resultRisklevel!= ''">
+            and resultRisklevel = #{resultRisklevel, jdbcType=VARCHAR}
+        </if>
+        <if test="controlMeasure!= null and controlMeasure!= ''">
+            and controlMeasure = #{controlMeasure, jdbcType=VARCHAR}
+        </if>
+    </delete>
+
+    <!--删除一条记录-->
+    <delete id="deleteTemplatehazardHLByID" parameterType="Integer">
+        DELETE FROM templatehazardHL
+        WHERE  id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <!--批量删除记录-->
+    <insert id="deleteTemplatehazardHLList" parameterType="java.util.List">
+        DELETE FROM templatehazardHL
+        WHERE id IN
+        <foreach item="item" collection="list" separator=",">
+            (
+            #{item.id, jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+
+    <!--更新记录-->
+    <update id="updateTemplatehazardHL" parameterType="cn.com.kingc.risk.model.TemplatehazardHL">
+        UPDATE templatehazardHL
+        <set>
+            <if test="id!= null ">
+                and id = #{id, jdbcType=INTEGER}
+            </if>
+            <if test="workflowId!= null ">
+                and workflow_id = #{workflowId, jdbcType=VARCHAR}
+            </if>
+            <if test="workflowContent!= null ">
+                and workflow_content = #{workflowContent, jdbcType=VARCHAR}
+            </if>
+            <if test="stepCount!= null ">
+                and step_count = #{stepCount, jdbcType=INTEGER}
+            </if>
+            <if test="controlObjectName!= null ">
+                and controlObjectName = #{controlObjectName, jdbcType=VARCHAR}
+            </if>
+            <if test="stepNum!= null ">
+                and stepNum = #{stepNum, jdbcType=INTEGER}
+            </if>
+            <if test="workStep!= null ">
+                and workStep = #{workStep, jdbcType=VARCHAR}
+            </if>
+            <if test="workResult!= null ">
+                and workResult = #{workResult, jdbcType=VARCHAR}
+            </if>
+            <if test="resultAbility!= null ">
+                and resultAbility = #{resultAbility, jdbcType=VARCHAR}
+            </if>
+            <if test="resultSeriously!= null ">
+                and resultSeriously = #{resultSeriously, jdbcType=VARCHAR}
+            </if>
+            <if test="resultRisklradio!= null ">
+                and resultRisklradio = #{resultRisklradio, jdbcType=VARCHAR}
+            </if>
+            <if test="resultRisklevel!= null ">
+                and resultRisklevel = #{resultRisklevel, jdbcType=VARCHAR}
+            </if>
+            <if test="controlMeasure!= null ">
+                and controlMeasure = #{controlMeasure, jdbcType=VARCHAR}
+            </if>
+        </set>
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!--根据主键查询记录-->
+    <select id="getTemplatehazardHL" resultMap="TemplatehazardHLMap"
+            parameterType="Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from templatehazardHL
+        WHERE id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <!--获取共有多少条记录，带有查询条件-->
+    <select id="getTemplatehazardHLCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from templatehazardHL
+        where 1=1
+        <if test="templatehazardHL.id!= null ">
+            and id = #{templatehazardHL.id, jdbcType=INTEGER}
+        </if>
+        <if test="templatehazardHL.workflowId!= null ">
+            and workflow_id = #{templatehazardHL.workflowId, jdbcType=VARCHAR}
+        </if>
+        <if test="templatehazardHL.workflowContent!= null ">
+            and workflow_content LIKE CONCAT('%',#{templatehazardHL.workflowContent},'%')
+        </if>
+        <if test="templatehazardHL.stepCount!= null ">
+            and step_count = #{templatehazardHL.stepCount, jdbcType=INTEGER}
+        </if>
+        <if test="templatehazardHL.controlObjectName!= null ">
+            and control_object_name LIKE CONCAT('%',#{templatehazardHL.controlObjectName},'%')
+        </if>
+        <if test="templatehazardHL.stepNum!= null ">
+            and step_num = #{templatehazardHL.stepNum, jdbcType=INTEGER}
+        </if>
+        <if test="templatehazardHL.workStep!= null ">
+            and work_step LIKE CONCAT('%',#{templatehazardHL.workStep},'%')
+        </if>
+        <if test="templatehazardHL.workResult!= null ">
+            and work_result LIKE CONCAT('%',#{templatehazardHL.workResult},'%')
+        </if>
+        <if test="templatehazardHL.resultAbility!= null ">
+            and result_ability = #{templatehazardHL.resultAbility, jdbcType=VARCHAR}
+        </if>
+        <if test="templatehazardHL.resultSeriously!= null ">
+            and result_seriously = #{templatehazardHL.resultSeriously, jdbcType=VARCHAR}
+        </if>
+        <if test="templatehazardHL.resultRisklradio!= null ">
+            and result_risklradio = #{templatehazardHL.resultRisklradio, jdbcType=VARCHAR}
+        </if>
+        <if test="templatehazardHL.resultRisklevel!= null ">
+            and result_risklevel = #{templatehazardHL.resultRisklevel, jdbcType=VARCHAR}
+        </if>
+        <if test="templatehazardHL.controlMeasure!= null ">
+            and control_measure LIKE CONCAT('%',#{templatehazardHL.controlMeasure},'%')
+        </if>
+    </select>
+
+    <!--分页获取数据，带有查询条件-->
+    <select id="getTemplatehazardHLByPage" resultMap="TemplatehazardHLMap">
+        select
+        <include refid="Base_Column_List"/>
+        from templatehazardHL
+        where 1=1
+        <if test="templatehazardHL.id!= null ">
+            and id = #{templatehazardHL.id, jdbcType=INTEGER}
+        </if>
+        <if test="templatehazardHL.workflowId!= null ">
+            and workflow_id = #{templatehazardHL.workflowId, jdbcType=VARCHAR}
+        </if>
+        <if test="templatehazardHL.workflowContent!= null ">
+            and workflow_content LIKE CONCAT('%',#{templatehazardHL.workflowContent},'%')
+        </if>
+        <if test="templatehazardHL.stepCount!= null ">
+            and step_count = #{templatehazardHL.stepCount, jdbcType=INTEGER}
+        </if>
+        <if test="templatehazardHL.controlObjectName!= null ">
+            and control_object_name LIKE CONCAT('%',#{templatehazardHL.controlObjectName},'%')
+        </if>
+        <if test="templatehazardHL.stepNum!= null ">
+            and step_num = #{templatehazardHL.stepNum, jdbcType=INTEGER}
+        </if>
+        <if test="templatehazardHL.workStep!= null ">
+            and work_step LIKE CONCAT('%',#{templatehazardHL.workStep},'%')
+        </if>
+        <if test="templatehazardHL.workResult!= null ">
+            and work_result LIKE CONCAT('%',#{templatehazardHL.workResult},'%')
+        </if>
+        <if test="templatehazardHL.resultAbility!= null ">
+            and result_ability = #{templatehazardHL.resultAbility, jdbcType=VARCHAR}
+        </if>
+        <if test="templatehazardHL.resultSeriously!= null ">
+            and result_seriously = #{templatehazardHL.resultSeriously, jdbcType=VARCHAR}
+        </if>
+        <if test="templatehazardHL.resultRisklradio!= null ">
+            and result_risklradio = #{templatehazardHL.resultRisklradio, jdbcType=VARCHAR}
+        </if>
+        <if test="templatehazardHL.resultRisklevel!= null ">
+            and result_risklevel = #{templatehazardHL.resultRisklevel, jdbcType=VARCHAR}
+        </if>
+        <if test="templatehazardHL.controlMeasure!= null ">
+            and control_measure LIKE CONCAT('%',#{templatehazardHL.controlMeasure},'%')
+        </if>
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <!--根据条件查询数据-->
+    <select id="getTemplatehazardHLList" resultMap="TemplatehazardHLMap">
+        select
+        <include refid="Base_Column_List"/>
+        from templatehazardHL
+        where 1=1
+        <if test="templatehazardHL.id!= null ">
+            and id = #{templatehazardHL.id, jdbcType=INTEGER}
+        </if>
+        <if test="templatehazardHL.workflowId!= null ">
+            and workflow_id = #{templatehazardHL.workflowId, jdbcType=VARCHAR}
+        </if>
+        <if test="templatehazardHL.workflowContent!= null ">
+            and workflow_content LIKE CONCAT('%',#{templatehazardHL.workflowContent},'%')
+        </if>
+        <if test="templatehazardHL.stepCount!= null ">
+            and step_count = #{templatehazardHL.stepCount, jdbcType=INTEGER}
+        </if>
+        <if test="templatehazardHL.controlObjectName!= null ">
+            and control_object_name LIKE CONCAT('%',#{templatehazardHL.controlObjectName},'%')
+        </if>
+        <if test="templatehazardHL.stepNum!= null ">
+            and step_num = #{templatehazardHL.stepNum, jdbcType=INTEGER}
+        </if>
+        <if test="templatehazardHL.workStep!= null ">
+            and work_step LIKE CONCAT('%',#{templatehazardHL.workStep},'%')
+        </if>
+        <if test="templatehazardHL.workResult!= null ">
+            and work_result LIKE CONCAT('%',#{templatehazardHL.workResult},'%')
+        </if>
+        <if test="templatehazardHL.resultAbility!= null ">
+            and result_ability = #{templatehazardHL.resultAbility, jdbcType=VARCHAR}
+        </if>
+        <if test="templatehazardHL.resultSeriously!= null ">
+            and result_seriously = #{templatehazardHL.resultSeriously, jdbcType=VARCHAR}
+        </if>
+        <if test="templatehazardHL.resultRisklradio!= null ">
+            and result_risklradio = #{templatehazardHL.resultRisklradio, jdbcType=VARCHAR}
+        </if>
+        <if test="templatehazardHL.resultRisklevel!= null ">
+            and result_risklevel = #{templatehazardHL.resultRisklevel, jdbcType=VARCHAR}
+        </if>
+        <if test="templatehazardHL.controlMeasure!= null ">
+            and control_measure LIKE CONCAT('%',#{templatehazardHL.controlMeasure},'%')
+        </if>
+    </select>
+
+</mapper>

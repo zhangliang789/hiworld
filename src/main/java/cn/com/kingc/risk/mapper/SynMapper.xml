@@ -1,0 +1,600 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.kingc.risk.dao.SynDao">
+    <resultMap id="topRiskMap" type="cn.com.kingc.risk.model.Synaddress">
+        <result property="id" column="TopRiskID" jdbcType="VARCHAR"/>
+        <result property="aiAddressName" column="TopRiskName" jdbcType="VARCHAR"/>
+        <result property="aiManageMan" column="TopRiskManagerName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="childRiskMap" type="cn.com.kingc.risk.model.Synhazard">
+        <result property="id" column="ChildRiskID" jdbcType="VARCHAR"/>
+        <result property="hmHazardName" column="ChildRiskName" jdbcType="VARCHAR"/>
+        <result property="hmHazardType" column="ChildRiskType" jdbcType="VARCHAR"/>
+        <result property="hmDamageType" column="ChildRiskDamageType" jdbcType="VARCHAR"/>
+        <result property="hmProfessionType" column="ChildRiskProfessionType" jdbcType="VARCHAR"/>
+        <result property="hmAccidentType" column="ChildRiskAccidentType" jdbcType="VARCHAR"/>
+        <result property="isDelete" column="ChildRiskisDelete" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="topRiskAndDepartmentMap" type="cn.com.kingc.risk.model.Synaddressdepartrel">
+        <result property="id" column="DepartmerntID" jdbcType="VARCHAR"/>
+        <result property="adrDutyMan" column="DepartmerntDutyMan" jdbcType="VARCHAR"/>
+        <result property="adrAddressId" column="DepartmerntAddressId" jdbcType="VARCHAR"/>
+        <result property="adrDepartName" column="DepartName" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="topRiskAndHazardMap" type="cn.com.kingc.risk.model.Synreportmajoryearrisk">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="yeMhazardDesc" column="yeMhazardDesc" jdbcType="VARCHAR"/>
+        <result property="yeProfession" column="yeProfession" jdbcType="VARCHAR"/>
+        <result property="yeAccident" column="yeAccident" jdbcType="VARCHAR"/>
+        <result property="yeStandard" column="yeStandard" jdbcType="VARCHAR"/>
+        <result property="yePossiblyHazard" column="yePossiblyHazard" jdbcType="VARCHAR"/>
+        <result property="yeHazardCate" column="yeHazardCate" jdbcType="VARCHAR"/>
+        <result property="yeRiskGrade" column="yeRiskGrade" jdbcType="VARCHAR"/>
+        <result property="yeCaseNum" column="yeCaseNum" jdbcType="VARCHAR"/>
+        <result property="yeRecognizeTime" column="yeRecognizeTime" jdbcType="VARCHAR"/>
+        <result property="isMajor" column="isMajor" jdbcType="VARCHAR"/>
+        <result property="riskValue" column="riskValue" jdbcType="VARCHAR"/>
+        <result property="manageMeasure" column="manageMeasure" jdbcType="VARCHAR"/>
+        <result property="lECRiskValue" column="LECRiskValue" jdbcType="VARCHAR"/>
+        <result property="docSource" column="docSource" jdbcType="VARCHAR"/>
+        <result property="sectionName" column="sectionName" jdbcType="VARCHAR"/>
+        <result property="dutyPost" column="dutyPost" jdbcType="VARCHAR"/>
+        <result property="activity" column="activity" jdbcType="VARCHAR"/>
+        <result property="hazardManageName" column="hazardManageName" jdbcType="VARCHAR"/>
+        <result property="damageType" column="damageType" jdbcType="VARCHAR"/>
+        <result property="hiddenLevel" column="hiddenLevel" jdbcType="VARCHAR"/>
+        <!--<result property="attachments" column="attachments" jdbcType="VARCHAR"/>-->
+        <result property="riskSiteID" column="RiskSiteID" jdbcType="VARCHAR"/>
+        <result property="hazardID" column="HazardID" jdbcType="VARCHAR"/>
+        <result property="riskSiteFullNumber" column="RiskSiteFullNumber" jdbcType="VARCHAR"/>
+        <collection property="manageRecord" javaType="cn.com.kingc.risk.model.SynreportmajoryearriskControl">
+            <result property="id" column="RecordID" jdbcType="VARCHAR"/>
+            <result property="dangerId" column="RecordDangerId" jdbcType="VARCHAR"/>
+            <result property="controller" column="RecordController" jdbcType="VARCHAR"/>
+            <result property="controlleDate" column="RecordControlleDate" jdbcType="VARCHAR"/>
+            <result property="workContent" column="RecordWorkContent" jdbcType="VARCHAR"/>
+            <result property="achieveEffect" column="RecordAchieveEffect" jdbcType="VARCHAR"/>
+            <result property="createName" column="RecordCreateName" jdbcType="VARCHAR"/>
+            <result property="createBy" column="RecordCreateBy" jdbcType="VARCHAR"/>
+            <result property="createDate" column="RecordCreateDate" jdbcType="VARCHAR"/>
+            <result property="updateName" column="RecordUpdateName" jdbcType="VARCHAR"/>
+            <result property="updateBy" column="RecordUpdateBy" jdbcType="VARCHAR"/>
+            <result property="updateDate" column="RecordUpdateDate" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+
+    <resultMap id="ReportyearriskMap" type="cn.com.kingc.risk.model.Synreportmajoryearrisk">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="yeMhazardDesc" column="yeMhazardDesc" jdbcType="VARCHAR"/>
+        <result property="yeProfession" column="yeProfession" jdbcType="VARCHAR"/>
+        <result property="yeAccident" column="yeAccident" jdbcType="VARCHAR"/>
+        <result property="yeStandard" column="yeStandard" jdbcType="VARCHAR"/>
+        <result property="yePossiblyHazard" column="yePossiblyHazard" jdbcType="VARCHAR"/>
+        <result property="yeHazardCate" column="yeHazardCate" jdbcType="VARCHAR"/>
+        <result property="yeRiskGrade" column="yeRiskGrade" jdbcType="VARCHAR"/>
+        <result property="yeCaseNum" column="yeCaseNum" jdbcType="VARCHAR"/>
+        <result property="yeRecognizeTime" column="yeRecognizeTime" jdbcType="VARCHAR"/>
+        <result property="isMajor" column="isMajor" jdbcType="VARCHAR"/>
+        <result property="riskValue" column="riskValue" jdbcType="VARCHAR"/>
+        <result property="manageMeasure" column="manageMeasure" jdbcType="VARCHAR"/>
+        <result property="lECRiskValue" column="LECRiskValue" jdbcType="VARCHAR"/>
+        <result property="docSource" column="docSource" jdbcType="VARCHAR"/>
+        <result property="sectionName" column="sectionName" jdbcType="VARCHAR"/>
+        <result property="dutyPost" column="dutyPost" jdbcType="VARCHAR"/>
+        <result property="activity" column="activity" jdbcType="VARCHAR"/>
+        <result property="hazardManageName" column="hazardManageName" jdbcType="VARCHAR"/>
+        <result property="damageType" column="damageType" jdbcType="VARCHAR"/>
+        <result property="hiddenLevel" column="hiddenLevel" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="SpecialevaluatereportMap" type="cn.com.kingc.risk.model.SynSpecialevaluatereport">
+        <result property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="mineCode" column="mineCode" jdbcType="VARCHAR"/>
+        <result property="mineName" column="mineName" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="leader" column="leader" jdbcType="VARCHAR"/>
+        <result property="leaderType" column="leaderType" jdbcType="VARCHAR"/>
+        <result property="evalTime" column="evalTime" jdbcType="VARCHAR"/>
+        <result property="participants" column="participants" jdbcType="VARCHAR"/>
+        <result property="location" column="location" jdbcType="VARCHAR"/>
+        <result property="remark" column="remark" jdbcType="VARCHAR"/>
+        <result property="evalType" column="evalType" jdbcType="VARCHAR"/>
+        <result property="riskSiteID" column="riskSiteID" jdbcType="INTEGER"/>
+        <collection property="riskdatas" javaType="cn.com.kingc.risk.model.SynSpecialevaluatereportEntry">
+            <result property="id" column="Riskdatasid" jdbcType="VARCHAR"/>
+            <result property="yeMhazardDesc" column="yeMhazardDesc" jdbcType="VARCHAR"/>
+            <result property="yeProfession" column="yeProfession" jdbcType="VARCHAR"/>
+            <result property="yeAccident" column="yeAccident" jdbcType="VARCHAR"/>
+            <result property="yeStandard" column="yeStandard" jdbcType="VARCHAR"/>
+            <result property="yePossiblyHazard" column="yePossiblyHazard" jdbcType="VARCHAR"/>
+            <result property="yeHazardCate" column="yeHazardCate" jdbcType="VARCHAR"/>
+            <result property="yeRiskGrade" column="yeRiskGrade" jdbcType="VARCHAR"/>
+            <result property="yeCaseNum" column="yeCaseNum" jdbcType="VARCHAR"/>
+            <result property="yeRecognizeTime" column="yeRecognizeTime" jdbcType="VARCHAR"/>
+            <result property="isMajor" column="isMajor" jdbcType="VARCHAR"/>
+            <result property="riskValue" column="riskValue" jdbcType="VARCHAR"/>
+            <result property="manageMeasure" column="manageMeasure" jdbcType="VARCHAR"/>
+            <result property="LECRiskValue" column="LECRiskValue" jdbcType="VARCHAR"/>
+            <result property="docSource" column="docSource" jdbcType="VARCHAR"/>
+            <result property="sectionName" column="sectionName" jdbcType="VARCHAR"/>
+            <result property="dutyPost" column="dutyPost" jdbcType="VARCHAR"/>
+            <result property="activity" column="activity" jdbcType="VARCHAR"/>
+            <result property="hazardManageName" column="hazardManageName" jdbcType="VARCHAR"/>
+            <result property="damageType" column="damageType" jdbcType="VARCHAR"/>
+            <result property="hiddenLevel" column="hiddenLevel" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+    <select id="getWaittingForSynByRiskHistory" parameterType="java.lang.String" resultType="HashMap">
+        <![CDATA[
+
+
+        SELECT
+            IFNULL(R.RiskSiteID, 0) AS RiskSiteID,
+            IFNULL(R.ParentID, 0) AS ParentID,
+            IFNULL(R.FullNumber,'') AS FullNumber,
+            IFNULL(R.`Name`, '') AS RiskName,
+            CASE
+            WHEN R.RiskSiteType = 1 THEN
+                '地点'
+            WHEN R.RiskSiteType = 2 THEN
+                '设施'
+            ELSE
+                '作业活动'
+            END AS RiskSiteType,
+            R.ManagerName,
+            COUNT(DISTINCT H.HazardID) NeedSyn
+        FROM
+            risksite R
+            LEFT JOIN riskhazard H
+            ON R.FrameWorkID = H.FrameWorkID
+            AND R.RiskSiteID = H.RiskSiteID AND H.RiskValue>0
+            LEFT JOIN riskleversetting S
+            ON R.RiskLevelSettingID = S.RiskLevelSettingID
+            AND R.FrameWorkID = S.FrameWorkID
+            LEFT JOIN syncriskhistory HIS
+            ON H.FrameWorkID = HIS.FrameWorkID
+            AND H.RiskSiteID = H.RiskSiteID
+            AND H.HazardID = HIS.HazardID
+            AND H.LastModifyVersion>=IFNULL(HIS.FSynTime,H.LastModifyVersion)
+        ]]>
+        WHERE R.FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        <if test="showMajor=='0'.toString()">
+            AND INSTR(S.RiskLevel,'重大')=0
+        </if>
+        <if test="showMajor=='1'.toString()">
+            AND INSTR(S.RiskLevel,'重大')>0
+        </if>
+        GROUP BY
+        R.RiskSiteID,R.ParentID,
+        R.`Name`,
+        R.RiskSiteTypeContent
+        ORDER  BY R.RiskSiteID
+    </select>
+
+    <select id="getWaittingForSynByRiskHazardHistory" resultType="HashMap">
+        <![CDATA[
+
+
+
+
+
+        SELECT
+            IFNULL(R.RiskSiteID, 0) AS RiskSiteID,
+            IFNULL(R.ParentID, 0) AS ParentID,
+            IFNULL(R.FullNumber,'') AS FullNumber,
+            IFNULL(R.`Name`, '') AS RiskName,
+            CASE
+            WHEN R.RiskSiteType = 1 THEN
+                '地点'
+            WHEN R.RiskSiteType = 2 THEN
+                '设施'
+            ELSE
+                '作业活动'
+            END AS RiskSiteType,
+            R.ManagerName,
+            COUNT(DISTINCT H.HazardID) NeedSyn
+        FROM
+            risksite R
+            LEFT JOIN riskhazard H
+            ON R.FrameWorkID = H.FrameWorkID
+            AND R.RiskSiteID = H.RiskSiteID
+            LEFT JOIN riskleversetting S
+            ON R.RiskLevelSettingID = S.RiskLevelSettingID
+            AND R.FrameWorkID = S.FrameWorkID
+            LEFT JOIN syncriskhistory HIS
+            ON H.FrameWorkID = HIS.FrameWorkID
+            AND H.RiskSiteID = H.RiskSiteID
+            AND H.HazardID = HIS.HazardID
+            AND H.LastModifyVersion>=IFNULL(HIS.FSynTime,H.LastModifyVersion)
+        ]]>
+        WHERE R.FrameWorkID=#{frameWorkID, jdbcType=VARCHAR} AND INSTR(S.RiskLevel,'重大')>0
+        GROUP BY
+        R.RiskSiteID,R.ParentID,
+        R.`Name`,
+        R.RiskSiteTypeContent
+    </select>
+
+    <select id="getHazardInfoBySelectRisk" resultType="HashMap">
+        <![CDATA[
+        SELECT
+        H.RiskSiteID,
+        H.HazardID,
+        H.`Name`,
+        H.HazardDesc,
+        H.DamageType,
+        H.MajorType,
+        H.RiskType,
+        IFNULL(HIS.FSynStatus,0)AS FSynStatus,
+        1 AS NeedSyn
+        FROM
+        riskhazard H
+        LEFT JOIN riskleversetting S ON H.RiskLevelSettingID = S.RiskLevelSettingID
+        AND H.FrameWorkID = S.FrameWorkID
+        LEFT JOIN syncriskhistory HIS ON H.FrameWorkID = HIS.FrameWorkID
+        AND H.RiskSiteID = H.RiskSiteID
+        AND H.HazardID = HIS.HazardID
+
+        WHERE
+         IFNULL(HIS.FSynTime,H.LastModifyVersion)<=H.LastModifyVersion
+        ]]>
+        AND H.FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        AND H.RiskSiteFullNumber LIKE CONCAT(#{riskFullNumber, jdbcType=VARCHAR},'%')
+    </select>
+
+    <select id="getReportedHazardInfo" resultType="HashMap">
+        <![CDATA[
+        SELECT
+        H.RiskSiteID,
+        H.HazardID,
+        H.`Name`,
+        H.HazardDesc,
+        H.DamageType,
+        H.MajorType,
+        H.RiskType,
+        IFNULL(HIS.FSynStatus,0)AS FSynStatus,
+        1 AS NeedSyn
+        FROM
+        riskhazard H
+        LEFT JOIN riskleversetting S ON H.RiskLevelSettingID = S.RiskLevelSettingID
+        AND H.FrameWorkID = S.FrameWorkID
+        LEFT JOIN syncriskhistory HIS ON H.FrameWorkID = HIS.FrameWorkID
+        AND H.RiskSiteID = H.RiskSiteID
+        AND H.HazardID = HIS.HazardID
+
+        WHERE
+         IFNULL(HIS.FSynTime,H.LastModifyVersion)>H.LastModifyVersion
+        ]]>
+        AND H.FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        AND H.RiskSiteFullNumber LIKE CONCAT(#{riskFullNumber, jdbcType=VARCHAR},'%')
+    </select>
+
+
+    <select id="getWaittingForSynByYearHistory" resultMap="ReportyearriskMap">
+        <![CDATA[
+        SELECT
+        RiskIdentificationYearUUID AS id,
+        R.`Name` AS yeMhazardDesc,
+        H.MajorType AS yeProfession,
+        H.DamageType AS yeAccident,
+        '' AS yeStandard,
+        H.HazardDesc AS yePossiblyHazard,
+        H.RiskType AS yeHazardCate,
+        S.RiskLevel AS  yeRiskGrade,
+        H.HazardUUID AS yeCaseNum,
+        DATE_FORMAT(CONCAT(Y.MYear,'-',Y.MeetingTime),'%Y-%m-%d') AS  yeRecognizeTime,
+        CASE WHEN INSTR(S.RiskLevel,'重大')>0 THEN 1 ELSE 0 END AS isMajor,
+        CASE WHEN H.Consequence>0 THEN 0 ELSE H.RiskValue END AS riskValue,
+        GROUP_CONCAT(M.MeasureContent) AS manageMeasure,
+        CASE WHEN H.Consequence>0 THEN H.RiskValue ELSE 0 END AS LECRiskValue,
+        '管控标准来源' AS docSource,
+        '章节条款' AS sectionName,
+        H.DutyRole AS dutyPost,
+        R.`Name` AS activity,
+        O.`Name` as controlMangerName,
+        H.name as harzardName,
+        R.RiskSiteUUID AS hazardManageName,
+        '20' AS damageType,
+        CASE
+        WHEN INSTR(S.RiskLevel, '重大') > 0 THEN
+        1
+        WHEN INSTR(S.RiskLevel, '较大') > 0 THEN
+        2
+        WHEN INSTR(S.RiskLevel, '一般') > 0 THEN
+        3
+        ELSE
+        4
+        END AS  hiddenLevel,
+        IFNULL(HIS.FSynStatus,0)AS HasSyned,
+        1  AS NeedToUpdate
+        FROM
+        riskidentificationbyyear Y
+        LEFT JOIN riskidentificationbyyearentry E
+        ON Y.FrameWorkID=E.FrameWorkID AND Y.RiskIdentificationYearID=E.RiskIdentificationYearID
+        LEFT JOIN risksite R
+        ON E.RiskSiteID=R.RiskSiteID AND R.FrameWorkID=E.FrameWorkID
+        LEFT JOIN riskhazard H
+        ON H.FrameWorkID=Y.FrameWorkID AND H.RiskSiteFullNumber LIKE CONCAT(R.FullNumber,'%')
+        LEFT JOIN risksite O ON H.FrameWorkID=O.FrameWorkID AND H.RiskSiteID=O.RiskSiteID
+        LEFT JOIN riskleversetting S
+        ON H.FrameWorkID=S.FrameWorkID AND H.RiskLevelSettingID=S.RiskLevelSettingID
+        LEFT JOIN syncyearhistory HIS
+        ON Y.FrameWorkID=HIS.FrameWorkID AND Y.RiskIdentificationYearID=HIS.RiskIdentificationYearID
+        LEFT JOIN riskcontrolmeasure M ON H.HazardID = M.HazardID and H.FrameWorkID = M.FrameWorkID
+        WHERE
+          H.LastModifyVersion <= IFNULL(HIS.FSynTime,NOW())
+        ]]>
+        AND R.FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        <if test="year!=''and year!=null">
+            AND Y.MYear =#{year, jdbcType=VARCHAR}
+        </if>
+        <if test="month!='' and month!=null">
+            AND Y.MeetingTime LIKE CONCAT(CONCAT(#{month}), '-%')
+        </if>
+        <if test="Name!='' and Name!=null">
+            AND H.Name like CONCAT('%',#{Name},'%')
+        </if>
+
+        GROUP BY RiskIdentificationYearUUID,R.RiskSiteUUID,H.HazardUUID
+    </select>
+
+    <select id="getWaittingForSynBySpeciallyHistory" resultMap="SpecialevaluatereportMap">
+        <![CDATA[
+
+        SELECT
+        P.RiskIdentificationSpeciallyUUID AS id,
+        P.FrameWorkID AS mineCode,
+        P.CoalMineName AS mineName,
+        CONCAT(P.IdentificationYear,P.IdentityType) AS name,
+        P.MeetingCompere AS leader,
+        'kz' AS leaderType,
+        P.MeetingTime AS evalTime,
+        p.MeetingParticipant AS participants,
+        P.MeetingPlace AS location,
+        p.MeetingContent AS remark,
+        CASE
+        WHEN INSTR(P.IdentityType,'工作面')>0 THEN 'xgzm'
+        WHEN INSTR(P.IdentityType,'水平')>0 THEN 'xgzm'
+        WHEN INSTR(P.IdentityType,'工艺')>0 THEN 'gysb'
+        WHEN INSTR(P.IdentityType,'停')>0 THEN 'tfgjxjs'
+        WHEN INSTR(P.IdentityType,'高危')>0 THEN 'gwzy'
+        WHEN INSTR(P.IdentityType,'事故')>0 THEN 'sgh'
+        ELSE  'xgzm'
+        END AS evalType,
+        H.HazardUUID  AS Riskdatasid,
+        R.`Name` AS yeMhazardDesc,
+        H.MajorType AS yeProfession,
+        H.DamageType AS yeAccident,
+        '' AS yeStandard,
+        H.HazardDesc AS yePossiblyHazard,
+        H.RiskType AS yeHazardCate,
+        S.RiskLevel AS  yeRiskGrade,
+        H.HazardUUID AS yeCaseNum,
+        P.MeetingTime AS  yeRecognizeTime,
+        CASE WHEN INSTR(S.RiskLevel,'重大')>0 THEN 1 ELSE 0 END AS isMajor,
+        CASE WHEN H.Consequence>0 THEN 0 ELSE H.RiskValue END AS riskValue,
+        '' AS manageMeasure,
+        CASE WHEN H.Consequence>0 THEN H.RiskValue ELSE 0 END AS LECRiskValue,
+        '管控标准来源' AS docSource,
+        '章节条款' AS sectionName,
+        H.DutyRole AS dutyPost,
+        R.`Name` AS activity,
+        R.RiskSiteUUID AS hazardManageName,
+        '20' AS damageType,
+        CASE
+        WHEN INSTR(S.RiskLevel, '重大') > 0 THEN
+        1
+        WHEN INSTR(S.RiskLevel, '较大') > 0 THEN
+        2
+        WHEN INSTR(S.RiskLevel, '一般') > 0 THEN
+        3
+        ELSE
+        4
+        END AS  hiddenLevel,
+        IFNULL(HIS.FSynStatus,0)AS HasSyned,
+        1 AS NeedToUpdate,
+        P.RiskSiteID AS riskSiteID
+        FROM
+        riskidentificationbyspecially P
+        INNER JOIN risksite R
+        ON P.RiskSiteID=R.RiskSiteID AND R.FrameWorkID=P.FrameWorkID
+        LEFT JOIN riskhazard H
+        ON H.FrameWorkID=P.FrameWorkID AND H.RiskSiteFullNumber LIKE CONCAT(R.FullNumber,'%')
+        LEFT JOIN riskleversetting S
+        ON P.FrameWorkID=S.FrameWorkID AND H.RiskLevelSettingID=S.RiskLevelSettingID
+        LEFT JOIN syncspecialhistory HIS
+        ON P.RiskIdentificationSpeciallyID=HIS.RiskIdentificationSpeciallyID
+        WHERE
+        H.LastModifyVersion <= IFNULL(HIS.FSynTime,NOW())
+        ]]>
+        AND P.FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        <if test="year!='' and year!=null">
+            AND P.MeetingTime LIKE CONCAT(CONCAT('%', #{year}), '%')
+        </if>
+        <if test="month!='' and month!=null">
+            AND P.MeetingTime LIKE CONCAT(CONCAT('_____', #{month}), '___')
+        </if>
+        GROUP BY id
+    </select>
+
+
+    <select id="repairSynAddress" resultMap="topRiskMap">
+        SELECT
+        DISTINCT
+        R.RiskSiteUUID AS TopRiskID,
+        R.`Name` AS TopRiskName,
+        IFNULL(R.ManagerName,'') AS TopRiskManagerName
+        FROM
+        risksite R
+        LEFT JOIN riskhazard H
+        ON H.FrameWorkID=R.FrameWorkID
+        AND H.RiskSiteFullNumber LIKE CONCAT(R.FullNumber,'%')
+        AND R.ParentID=0
+        WHERE
+        H.FrameWorkID=#{frameWorkID, jdbcType=VARCHAR} AND
+        FIND_IN_SET(H.HazardID,#{hazards, jdbcType=VARCHAR})
+    </select>
+
+    <select id="repairSynHazard" resultMap="childRiskMap">
+        SELECT DISTINCT
+        R.RiskSiteUUID AS ChildRiskID,
+        CONCAT(
+        RParent.`Name`,
+        '-',
+        R.`Name`
+        ) AS ChildRiskName,
+        CASE
+        WHEN R.RiskSiteType = 3 THEN
+        4
+        ELSE
+        R.RiskSiteType
+        END AS ChildRiskType,
+        '' AS ChildRiskDamageType,
+        R.RiskMajorType AS ChildRiskProfessionType,
+        R.RiskDamageType AS ChildRiskAccidentType,
+        0 AS ChildRiskisDelete
+        FROM
+        riskhazard H
+        LEFT JOIN risksite R ON H.FrameWorkID = R.FrameWorkID
+        AND H.RiskSiteFullNumber LIKE CONCAT(R.FullNumber, '%')
+        AND R.ParentID > 0
+        LEFT JOIN risksite RParent ON R.FrameWorkID = RParent.FrameWorkID
+        AND R.ParentID = RParent.RiskSiteID
+        WHERE
+        H.FrameWorkID=#{frameWorkID, jdbcType=VARCHAR} AND
+        FIND_IN_SET(H.HazardID,#{hazards, jdbcType=VARCHAR})
+    </select>
+
+    <select id="repairSynAddressdepartrel" resultMap="topRiskAndDepartmentMap">
+        SELECT DISTINCT
+        R.RiskSiteUUID AS id,
+        R.ManagerName AS adrDutyMan,
+        RParent.RiskSiteUUID AS adrAddressId,
+        R.ManagerUnitName AS adrDepartName
+        FROM
+        riskhazard H
+        LEFT JOIN risksite R ON H.FrameWorkID = R.FrameWorkID
+        AND H.RiskSiteFullNumber LIKE CONCAT(R.FullNumber, '%')
+        AND R.ParentID > 0
+        LEFT JOIN risksite RParent ON R.FrameWorkID = RParent.FrameWorkID
+        AND R.ParentID = RParent.RiskSiteID
+        WHERE
+        H.FrameWorkID=#{frameWorkID, jdbcType=VARCHAR} AND
+        FIND_IN_SET(H.HazardID,#{hazards, jdbcType=VARCHAR})
+    </select>
+
+
+    <select id="repairSynReportmajoryearrisk" resultMap="topRiskAndHazardMap">
+        SELECT DISTINCT
+        H.HazardUUID AS id,
+        IFNULL(H.`Name`,'') AS yeMhazardDesc,
+        CASE
+        WHEN INSTR(H.MajorType,'采煤') THEN '1'
+        WHEN INSTR(H.MajorType,'掘进') THEN '2'
+        WHEN INSTR(H.MajorType,'机电') THEN '3'
+        WHEN INSTR(H.MajorType,'运输') THEN '4'
+        WHEN INSTR(H.MajorType,'通风') THEN '5'
+        WHEN INSTR(H.MajorType,'其他') THEN '6'
+        ELSE '6'
+        END AS yeProfession,
+        CASE
+        WHEN INSTR(H.DamageType,'顶板') THEN '1'
+        WHEN INSTR(H.DamageType,'瓦斯') THEN  '2'
+        WHEN INSTR(H.DamageType,'机电') THEN  '3'
+        WHEN INSTR(H.DamageType,'运输') THEN  '4'
+        WHEN INSTR(H.DamageType,'放炮') THEN  '5'
+        WHEN INSTR(H.DamageType,'水害') THEN  '6'
+        WHEN INSTR(H.DamageType,'火灾') THEN  '7'
+        WHEN INSTR(H.DamageType,'其他') THEN  '8'
+        ELSE '8'
+        END AS yeAccident,
+        '' AS yeStandard,
+        IFNULL(H.HazardDesc,'') AS yePossiblyHazard,
+        CASE
+        WHEN INSTR(H.RiskType,'人') THEN '1'
+        WHEN INSTR(H.RiskType,'机') THEN '2'
+        WHEN INSTR(H.RiskType,'环') THEN '3'
+        WHEN INSTR(H.RiskType,'管') THEN '4'
+        WHEN INSTR(H.RiskType,'技') THEN '5'
+        ELSE '5'
+        END AS yeHazardCate,
+        CASE
+        WHEN INSTR(S.RiskLevel,'重大风险') THEN '1'
+        WHEN INSTR(S.RiskLevel,'较大风险') THEN '2'
+        WHEN INSTR(S.RiskLevel,'一般风险') THEN '3'
+        WHEN INSTR(S.RiskLevel,'低风险') THEN '4'
+        ELSE ''
+        END AS yeRiskGrade,
+        IFNULL(H.HazardUUID,'') AS yeCaseNum,
+        date_format(H.LastModifyVersion,'%Y-%m-%d') AS yeRecognizeTime,
+        CASE
+        WHEN INSTR(S.RiskLevel, '重大') > 0 THEN
+        1
+        ELSE
+        0
+        END AS isMajor,
+        CASE WHEN H.Consequence > 0 THEN
+        0
+        ELSE
+        H.RiskValue
+        END AS riskValue,
+        '' AS manageMeasure,
+        CASE
+        WHEN H.Consequence > 0 THEN
+        H.RiskValue
+        ELSE
+        0
+        END AS LECRiskValue,
+        '管控标准来源' AS docSource,
+        '章节条款' AS sectionName,
+        IFNULL(H.DutyRole,'') AS dutyPost,
+        IFNULL(R.`Name`,'') AS activity,
+        IFNULL(R.RiskSiteUUID,'') AS hazardManageName,
+        '20' AS damageType,
+        CASE
+        WHEN INSTR(S.RiskLevel, '重大') > 0 THEN
+        1
+        WHEN INSTR(S.RiskLevel, '较大') > 0 THEN
+        2
+        WHEN INSTR(S.RiskLevel, '一般') > 0 THEN
+        3
+        ELSE
+        4
+        END AS hiddenLevel,
+        CASE WHEN Citem.ItemID>0 THEN CONCAT(H.HazardUUID,'-',Citem.ItemID) ELSE NULL END AS RecordID,
+        CASE WHEN Citem.ItemID>0 THEN H.HazardUUID  ELSE NULL END AS RecordDangerId,
+        CASE WHEN Citem.ItemID>0 THEN C.CreateName   ELSE NULL END AS RecordController,
+        CASE WHEN Citem.ItemID>0 THEN C.CheckTime  ELSE NULL END AS RecordControlleDate,
+        CASE WHEN Citem.ItemID>0 THEN CONCAT(H.`Name`,'现场检查')  ELSE NULL END AS RecordWorkContent,
+        CASE WHEN Citem.ItemID>0 THEN Citem.CheckQuestion  ELSE NULL END AS RecordAchieveEffect,
+        CASE WHEN Citem.ItemID>0 THEN C.CreateName  ELSE NULL END AS RecordCreateName,
+        CASE WHEN Citem.ItemID>0 THEN C.CreateName  ELSE NULL END AS RecordCreateBy,
+        CASE WHEN Citem.ItemID>0 THEN C.CheckTime  ELSE NULL END AS RecordCreateDate,
+        CASE WHEN Citem.ItemID>0 THEN C.CreateName  ELSE NULL END AS RecordUpdateName,
+        CASE WHEN Citem.ItemID>0 THEN C.CreateName  ELSE NULL END AS RecordUpdateBy,
+        CASE WHEN Citem.ItemID>0 THEN C.CheckTime  ELSE NULL END AS RecordUpdateDate,
+        /*'' AS attachments,*/
+        H.RiskSiteID,
+        H.HazardID,
+        H.RiskSiteFullNumber
+
+        FROM
+        riskhazard H
+        LEFT JOIN risksite R ON H.FrameWorkID = R.FrameWorkID
+             AND H.RiskSiteFullNumber LIKE CONCAT(R.FullNumber, '%') AND R.ParentID>0
+        LEFT JOIN risksiteoutofcontrolitem Citem
+             ON H.RiskSiteID=Citem.RiskSiteID AND H.FrameWorkID=Citem.FrameWorkID AND H.HazardID=Citem.HazardID
+        LEFT JOIN risksiteoutofcontrol C
+             ON Citem.FrameWorkID=C.FrameWorkID AND Citem.CheckRecordID=C.CheckRecordID
+        LEFT JOIN riskleversetting S ON H.FrameWorkID = S.FrameWorkID
+             AND H.RiskLevelSettingID = S.RiskLevelSettingID
+        WHERE
+        H.FrameWorkID=#{frameWorkID, jdbcType=VARCHAR} AND
+        FIND_IN_SET(H.HazardID,#{hazards, jdbcType=VARCHAR})
+
+    </select>
+</mapper>

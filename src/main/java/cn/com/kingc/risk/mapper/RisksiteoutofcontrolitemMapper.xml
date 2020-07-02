@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.kingc.risk.dao.RisksiteoutofcontrolitemDao">
+    <resultMap id="RisksiteoutofcontrolitemMap" type="cn.com.kingc.risk.model.Risksiteoutofcontrolitem">
+        <result property="coalMineName" column="CoalMineName" jdbcType="VARCHAR"/>
+        <result property="frameWorkID" column="FrameWorkID" jdbcType="VARCHAR"/>
+        <result property="checkRecordID" column="CheckRecordID" jdbcType="INTEGER"/>
+        <result property="itemID" column="ItemID" jdbcType="INTEGER"/>
+        <result property="hazardID" column="HazardID"  jdbcType="INTEGER"/>
+        <result property="riskSiteID" column="RiskSiteID"  jdbcType="INTEGER"/>
+        <result property="checkQuestion" column="CheckQuestion" jdbcType="VARCHAR"/>
+        <result property="outOfControlStatus" column="OutOfControlStatus" jdbcType="BIT"/>
+        <result property="risksiteName" column="RisksiteName" jdbcType="VARCHAR"/>
+        <!--<association property="riskSite"
+                     column="{riskSiteID=riskSiteID,frameWorkID=FrameWorkID}"
+                     javaType="cn.com.kingc.risk.model.Risksite"
+                     select="findRiskSiteByRiskSiteID"/>-->
+        <association property="hazard"
+                     column="{HazardID=HazardID,frameWorkID=FrameWorkID}"
+                     javaType="cn.com.kingc.risk.model.Riskhazard"
+                     select="findHazardByHazardID"/>
+        <collection property="accthes" column="{checkRecordID=CheckRecordID,itemID=ItemID,frameWorkID=FrameWorkID}"
+                    ofType="cn.com.kingc.risk.model.Risksiteoutofcontrolattachment"
+                    select="findAccthById"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+            CoalMineName,
+            FrameWorkID,
+            CheckRecordID,
+            ItemID,
+            RiskSiteID,
+            HazardID,
+            CheckQuestion,
+            OutOfControlStatus
+    </sql>
+    <sql id="Base_Column_List1">
+        O.CoalMineName,
+        O.FrameWorkID,
+        O.CheckRecordID,
+        O.ItemID,
+        O.RiskSiteID,
+        O.HazardID,
+        O.CheckQuestion,
+        O.OutOfControlStatus,
+        R.Name AS RisksiteName
+    </sql>
+
+    <select id="findHazardByHazardID" parameterType="java.util.Map"
+            resultMap="cn.com.kingc.risk.dao.RiskhazardDao.RiskhazardMap">
+        select
+          <include refid="cn.com.kingc.risk.dao.RiskhazardDao.riskHazardJoinM"/>
+        FROM
+            riskhazard H
+            LEFT JOIN riskLeverSetting D ON H.FrameWorkID = D.FrameWorkID
+            AND H.RiskLevelSettingID = D.RiskLevelSettingID
+            LEFT JOIN riskcontrolmeasure M
+            ON H.FrameWorkID = M.FrameWorkID
+            AND H.RiskSiteID = M.RiskSiteID
+            AND H.HazardID = M.HazardID
+            LEFT JOIN riskhazardcontrolrange R ON H.FrameWorkID = R.FrameWorkID
+            AND H.HazardID = R.HazardID AND R.RiskSiteID=H.RiskSiteID
+        WHERE H.HazardID =#{HazardID,jdbcType=INTEGER} AND  H.FrameWorkID=#{frameWorkID}
+    </select>
+
+    <select id="findAccthById" parameterType="java.util.Map"
+            resultMap="cn.com.kingc.risk.dao.RisksiteoutofcontrolattachmentDao.RisksiteoutofcontrolattachmentMap">
+        select
+        <include refid="cn.com.kingc.risk.dao.RisksiteoutofcontrolattachmentDao.Base_Column_List"/>
+        from risksiteoutofcontrolattachment
+        where CheckRecordID=#{checkRecordID,jdbcType=INTEGER}
+        AND ItemID=#{itemID,jdbcType=INTEGER}
+        AND FrameWorkID=#{frameWorkID}
+    </select>
+
+    <select id="findRiskSiteByRiskSiteID" parameterType="java.util.Map"
+            resultMap="cn.com.kingc.risk.dao.RisksiteDao.RisksiteSimpleMap">
+        select
+        <include refid="cn.com.kingc.risk.dao.RisksiteDao.Base_Column_List"/>
+        from risksite R
+        LEFT JOIN riskLeverSetting D ON R.FrameWorkID = D.FrameWorkID
+        AND R.RiskLevelSettingID = D.RiskLevelSettingID
+        WHERE R.RiskSiteID = #{riskSiteID,jdbcType=INTEGER}  AND  R.FrameWorkID=#{frameWorkID}
+    </select>
+
+    <insert id="addRisksiteoutofcontrolitem" parameterType="cn.com.kingc.risk.model.Risksiteoutofcontrolitem"
+            useGeneratedKeys="true" keyProperty="itemID">
+        insert into risksiteoutofcontrolitem (
+                CoalMineName,
+                FrameWorkID,
+                CheckRecordID,
+                ItemID,
+                RiskSiteID,
+                HazardID,
+                CheckQuestion,
+                OutOfControlStatus
+        )
+        values(
+                #{coalMineName, jdbcType=VARCHAR}  ,
+                #{frameWorkID, jdbcType=VARCHAR}  ,
+                #{checkRecordID, jdbcType=INTEGER}  ,
+                #{itemID, jdbcType=INTEGER}  ,
+                #{riskSiteID, jdbcType=INTEGER}  ,
+                #{hazardID, jdbcType=INTEGER}  ,
+                #{checkQuestion, jdbcType=VARCHAR} ,
+                #{outOfControlStatus, jdbcType=BIT}
+        )
+    </insert>
+
+    <insert id="addRisksiteOutOfcontrolItemes" useGeneratedKeys="true" parameterType="java.util.List">
+        insert into risksiteoutofcontrolitem (
+        CoalMineName,
+        FrameWorkID,
+        CheckRecordID,
+        ItemID,
+        RiskSiteID,
+        HazardID,
+        CheckQuestion,
+        OutOfControlStatus
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.coalMineName, jdbcType=VARCHAR} ,
+            #{item.frameWorkID, jdbcType=VARCHAR} ,
+            #{item.checkRecordID, jdbcType=INTEGER} ,
+            #{item.itemID, jdbcType=INTEGER} ,
+            #{item.riskSiteID, jdbcType=INTEGER}  ,
+            #{item.hazardID, jdbcType=INTEGER} ,
+            #{item.checkQuestion, jdbcType=VARCHAR},
+            #{item.outOfControlStatus, jdbcType=BIT}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="deleteRisksiteoutofcontrolitem" parameterType="cn.com.kingc.risk.model.Risksiteoutofcontrolitem">
+        DELETE FROM risksiteoutofcontrolitem
+        WHERE  ItemID = #{itemID,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteRisksiteoutofcontrolitemByID" parameterType="java.lang.Integer">
+
+        DELETE FROM riskcontrolanalyzeitem
+        WHERE LostControlItemID=#{itemID,jdbcType=INTEGER};
+
+        DELETE FROM risksiteoutofcontrolitem
+        WHERE  ItemID = #{itemID,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteRisksiteoutofcontrolitemByCheckRecordID" parameterType="java.lang.Integer">
+        DELETE FROM risksiteoutofcontrolitem
+        WHERE  CheckRecordID = #{checkRecordID,jdbcType=INTEGER}
+    </delete>
+
+    <update id="updateRisksiteoutofcontrolitem" parameterType="cn.com.kingc.risk.model.Risksiteoutofcontrolitem">
+        UPDATE risksiteoutofcontrolitem
+        <set>
+            <if test="coalMineName!= null ">
+                CoalMineName = #{coalMineName, jdbcType=VARCHAR} ,
+            </if>
+            <if test="frameWorkID!= null ">
+                FrameWorkID = #{frameWorkID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="checkRecordID!= null ">
+                CheckRecordID = #{checkRecordID, jdbcType=INTEGER} ,
+            </if>
+            <if test="itemID!= null ">
+                ItemID = #{itemID, jdbcType=INTEGER} ,
+            </if>
+            <if test="riskSiteID!= null ">
+                RiskSiteID = #{riskSiteID, jdbcType=INTEGER} ,
+            </if>
+            <if test="hazardID!= null ">
+                HazardID = #{hazardID, jdbcType=INTEGER} ,
+            </if>
+            <if test="checkQuestion!= null ">
+                CheckQuestion = #{checkQuestion, jdbcType=VARCHAR},
+            </if>
+            <if test="outOfControlStatus!= null ">
+                OutOfControlStatus = #{outOfControlStatus, jdbcType=BIT}
+            </if>
+        </set>
+        WHERE ItemID = #{itemID,jdbcType=INTEGER}
+    </update>
+
+    <select id="getRisksiteoutofcontrolitem" resultMap="RisksiteoutofcontrolitemMap"
+            parameterType="INTEGER">
+        select
+        <include refid="Base_Column_List1"/>
+        from risksiteoutofcontrolitem  O LEFT JOIN risksite R ON R.FrameWorkID = O.FrameWorkID AND R.riskSiteID = O.riskSiteID
+        WHERE O.ItemID = #{itemID,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRisksiteoutofcontrolitemCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  risksiteoutofcontrolitem
+    </select>
+
+    <select id="getRisksiteoutofcontrolitemByPage" resultMap="RisksiteoutofcontrolitemMap"
+            parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from risksiteoutofcontrolitem
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRisksiteoutofcontrolitemCountByRisksiteoutofcontrolitem" resultType="java.lang.Integer">
+        select
+        count(*)
+        from risksiteoutofcontrolitem
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!=''">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!=''">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="checkRecordID!= null ">
+            and CheckRecordID = #{checkRecordID, jdbcType=INTEGER}
+        </if>
+        <if test="itemID!= null ">
+            and ItemID = #{itemID, jdbcType=INTEGER}
+        </if>
+        <if test="riskSiteID!= null ">
+            AND RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="hazardID!= null ">
+            and HazardID = #{hazardID, jdbcType=INTEGER}
+        </if>
+        <if test="checkQuestion!= null and checkQuestion!= ''">
+            and CheckQuestion = #{checkQuestion, jdbcType=VARCHAR}
+        </if>
+        <if test="outOfControlStatus!= null ">
+            and OutOfControlStatus = #{outOfControlStatus, jdbcType=BIT}
+        </if>
+    </select>
+
+    <select id="getRisksiteoutofcontrolitemByPageAndRisksiteoutofcontrolitem" resultMap="RisksiteoutofcontrolitemMap">
+        select
+        <include refid="Base_Column_List"/>
+        from risksiteoutofcontrolitem
+        where 1=1
+        <if test="risksiteoutofcontrolitem.coalMineName!= null and risksiteoutofcontrolitem.coalMineName!= ''">
+            and CoalMineName = #{risksiteoutofcontrolitem.coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="risksiteoutofcontrolitem.frameWorkID!= null and risksiteoutofcontrolitem.frameWorkID!=''">
+            and FrameWorkID = #{risksiteoutofcontrolitem.frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="risksiteoutofcontrolitem.checkRecordID!= null ">
+            and CheckRecordID = #{risksiteoutofcontrolitem.checkRecordID, jdbcType=INTEGER}
+        </if>
+        <if test="risksiteoutofcontrolitem.itemID!= null ">
+            and ItemID = #{risksiteoutofcontrolitem.itemID, jdbcType=INTEGER}
+        </if>
+        <if test="risksiteoutofcontrolitem.riskSiteID!= null ">
+            AND RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="risksiteoutofcontrolitem.hazardID!= null ">
+            and HazardID = #{risksiteoutofcontrolitem.hazardID, jdbcType=INTEGER}
+        </if>
+        <if test="risksiteoutofcontrolitem.checkQuestion!= null and risksiteoutofcontrolitem.checkQuestion!=''">
+            and CheckQuestion = #{risksiteoutofcontrolitem.checkQuestion, jdbcType=VARCHAR}
+        </if>
+        <if test="risksiteoutofcontrolitem.outOfControlStatus!= null ">
+            and OutOfControlStatus = #{risksiteoutofcontrolitem.outOfControlStatus, jdbcType=BIT}
+        </if>
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRisksiteoutofcontrolitemData" resultMap="RisksiteoutofcontrolitemMap">
+        select
+        <include refid="Base_Column_List"/>
+        from risksiteoutofcontrolitem
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!=''">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!= ''">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="checkRecordID!= null ">
+            and CheckRecordID = #{checkRecordID, jdbcType=INTEGER}
+        </if>
+        <if test="itemID!= null ">
+            and ItemID = #{itemID, jdbcType=INTEGER}
+        </if>
+        <if test="riskSiteID!= null ">
+            AND RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="hazardID!= null ">
+            and HazardID = #{hazardID, jdbcType=INTEGER}
+        </if>
+        <if test="checkQuestion!= null and checkQuestion!=''">
+            and CheckQuestion = #{checkQuestion, jdbcType=VARCHAR}
+        </if>
+
+    </select>
+
+</mapper>

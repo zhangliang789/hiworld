@@ -1,0 +1,1404 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.kingc.risk.dao.RiskAnalyzeDao">
+    <resultMap id="RiskAnalyzeByPlaceTypeMap" type="cn.com.kingc.risk.model.RiskAnalyzeByPlaceType">
+        <result property="riskSiteTypeContent" column="RiskSiteTypeContent" jdbcType="VARCHAR"/>
+        <result property="places" column="PLACE" jdbcType="VARCHAR"/>
+        <result property="riskSiteName" column="RiskSiteName" jdbcType="VARCHAR"/>
+        <result property="hazardCount" column="HazardCount" jdbcType="INTEGER"/>
+        <result property="l1" column="L1" jdbcType="INTEGER"/>
+        <result property="l2" column="L2" jdbcType="INTEGER"/>
+        <result property="l3" column="L3" jdbcType="INTEGER"/>
+        <result property="l4" column="L4" jdbcType="INTEGER"/>
+        <result property="wpg" column="WPJ" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <resultMap id="RiskAnalyzeByDamageTypeMap" type="cn.com.kingc.risk.model.RiskAnalyzeByDamageType">
+        <result property="frameworkId" column="FrameworkId" jdbcType="VARCHAR"/>
+        <result property="frameworkName" column="FrameworkName" jdbcType="VARCHAR"/>
+        <result property="riskDamageName" column="RiskDamageName" jdbcType="VARCHAR"/>
+        <result property="places" column="PLACE" jdbcType="VARCHAR"/>
+        <result property="placeCount" column="PLACECount" jdbcType="INTEGER"/>
+        <result property="l1" column="L1" jdbcType="INTEGER"/>
+        <result property="l2" column="L2" jdbcType="INTEGER"/>
+        <result property="l3" column="L3" jdbcType="INTEGER"/>
+        <result property="l4" column="L4" jdbcType="INTEGER"/>
+        <result property="wpg" column="WPG" jdbcType="INTEGER"/>
+    </resultMap>
+
+
+    <select id="getRiskAnalyzeByPlaceType" resultMap="RiskAnalyzeByDamageTypeMap">
+    SELECT
+        IFNULL(R.RiskSiteTypeContent,'未指定')AS RiskDamageName,
+        group_concat(DISTINCT R.RiskSiteID)AS PLACE,
+        COUNT(RiskSiteID) AS PLACECount,
+        SUM(CASE WHEN LOCATE('重大', D.RiskLevel) > 0 THEN 1 ELSE	0	END	) AS L1,
+        SUM(CASE WHEN LOCATE('较大', D.RiskLevel) > 0 THEN 1 ELSE	0	END	) AS L2,
+        SUM(CASE WHEN LOCATE('一般', D.RiskLevel) > 0 THEN 1 ELSE	0	END ) AS L3,
+        SUM(CASE WHEN LOCATE('低', D.RiskLevel)  > 0 THEN	1	ELSE	0	END	) AS L4,
+        IFNULL(SUM(CASE WHEN ISNULL(R.Status) OR R.Status=0 THEN 1 ELSE 0 END),0) AS WPG
+    FROM
+        risksite R
+ 				LEFT JOIN riskLeverSetting D ON R.FrameWorkID = D.FrameWorkID
+        AND R.RiskLevelSettingID = D.RiskLevelSettingID
+
+    WHERE
+				R.ParentID=0 AND  R.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+    GROUP BY
+        R.RiskSiteTypeContent
+    ORDER BY
+        R.RiskSiteTypeContent, L1 DESC
+    </select>
+
+    <select id="getRiskAnalyzeByDamageType" resultMap="RiskAnalyzeByDamageTypeMap">
+        SELECT
+        #{RiskDamageType, jdbcType=VARCHAR},
+        group_concat(DISTINCT R.RiskSiteID)AS PLACE,
+        COUNT(DISTINCT RiskSiteID) AS PLACECount,
+        IFNULL(SUM(CASE WHEN LOCATE('重大', D.RiskLevel) > 0 THEN 1 ELSE 0 END ),0) AS L1,
+        IFNULL(SUM(CASE WHEN LOCATE('较大', D.RiskLevel) > 0 THEN 1 ELSE 0 END ),0) AS L2,
+        IFNULL(SUM(CASE WHEN LOCATE('一般', D.RiskLevel) > 0 THEN 1 ELSE 0 END ),0) AS L3,
+        IFNULL(SUM(CASE WHEN LOCATE('低', D.RiskLevel) > 0 THEN 1 ELSE 0 END ),0) AS L4,
+        IFNULL(SUM(CASE WHEN ISNULL(R.Status) OR R.Status=0 THEN 1 ELSE 0 END),0) AS WPG
+        FROM risksite R
+        LEFT JOIN riskLeverSetting D ON R.FrameWorkID = D.FrameWorkID
+        AND R.RiskLevelSettingID = D.RiskLevelSettingID
+        WHERE
+        R.FrameWorkID=#{frameWorkID, jdbcType=VARCHAR} AND R.ParentID=0
+        <if test="RiskDamageType!= null and RiskDamageType!='未分类' ">
+            AND R.RiskDamageType LIKE CONCAT('%',#{RiskDamageType, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="RiskDamageType!= null and RiskDamageType =='未分类' ">
+            AND IFNULL(R.RiskDamageType,'') =''
+        </if>
+    </select>
+
+    <select id="getRiskAnalyzeByDamageTypeByOrgIDItem" resultMap="RiskAnalyzeByDamageTypeMap">
+        SELECT
+        DISTINCT R.FrameworkID AS FrameworkID,R.CoalMineName AS FrameworkName,
+        #{RiskDamageType, jdbcType=VARCHAR},
+        group_concat(DISTINCT R.RiskSiteID)AS PLACE,
+        COUNT(DISTINCT RiskSiteID) AS PLACECount,
+        IFNULL(SUM(CASE WHEN LOCATE('重大', D.RiskLevel) > 0 THEN 1 ELSE 0 END ),0) AS L1,
+        IFNULL(SUM(CASE WHEN LOCATE('较大', D.RiskLevel) > 0 THEN 1 ELSE 0 END ),0) AS L2,
+        IFNULL(SUM(CASE WHEN LOCATE('一般', D.RiskLevel) > 0 THEN 1 ELSE 0 END ),0) AS L3,
+        IFNULL(SUM(CASE WHEN LOCATE('低', D.RiskLevel) > 0 THEN 1 ELSE 0 END ),0) AS L4,
+        IFNULL(SUM(CASE WHEN ISNULL(R.Status) OR R.Status=0 THEN 1 ELSE 0 END),0) AS WPG
+        FROM risksite R
+        LEFT JOIN riskLeverSetting D ON R.FrameWorkID = D.FrameWorkID
+        AND R.RiskLevelSettingID = D.RiskLevelSettingID
+        WHERE
+        R.ParentID=0
+        <if test="RiskDamageType!= null and RiskDamageType!='未分类' and RiskDamageType !=''">
+            AND R.RiskDamageType LIKE CONCAT('%',#{RiskDamageType, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="RiskDamageType!= null and RiskDamageType =='未分类' and RiskDamageType !='' ">
+            AND IFNULL(R.RiskDamageType,'') =''
+        </if>
+        AND R.FrameWorkID IN
+        <foreach collection="orgIdItem" item="item" index="index" open="(" separator="," close=")">
+            #{item, jdbcType=VARCHAR}
+        </foreach>
+        group by R.FrameworkID
+    </select>
+
+    <select id="getRiskAnalyzeByTask" resultMap="RiskAnalyzeByDamageTypeMap">
+        SELECT
+            IFNULL(R.RiskSiteTypeContent,'未指定作业名称') AS RiskDamageName,
+            group_concat(DISTINCT R.RiskSiteID)AS PLACE,
+            COUNT(DISTINCT R.RiskSiteID) AS PLACECount,
+            IFNULL(SUM(CASE WHEN LOCATE('重大', D.RiskLevel) > 0 THEN	1	ELSE	0	END	),0) AS L1,
+            IFNULL(SUM(CASE WHEN LOCATE('较大', D.RiskLevel) > 0 THEN	1	ELSE	0	END	),0) AS L2,
+            IFNULL(SUM(CASE WHEN LOCATE('一般', D.RiskLevel) > 0 THEN	1	ELSE	0	END	),0) AS L3,
+            IFNULL(SUM(CASE WHEN LOCATE('低', D.RiskLevel) > 0 THEN	1	ELSE	0	END	),0) AS L4,
+            IFNULL(SUM(CASE WHEN ISNULL(R.RiskLevelSettingID) OR R.RiskLevelSettingID=0 THEN 1 ELSE 0 END),0) AS WPG
+        FROM risksite R
+        LEFT JOIN riskleversetting D
+          ON R.FrameWorkID=D.FrameWorkID AND R.RiskLevelSettingID=D.RiskLevelSettingID
+        WHERE RiskSiteType=3 AND R.FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        GROUP BY R.RiskSiteTypeContent
+    </select>
+
+    <select id="getOutOfControlRiskAnalyze" resultType="java.util.Map">
+        SELECT DISTINCT
+        R.RiskSiteID,
+        R.`Name`,
+        R.RiskDescription,
+        R.RiskDamageType,
+        R.RiskAccident,
+        R.RiskFrequency,
+        R.ManagerUnitName,
+        L.RiskLevel,
+        L.RiskColor,
+        Count(DISTINCT O.HazardID) AS HazardCount,
+        group_concat(DISTINCT O.HazardID) AS Hazards,
+        SUM(CASE WHEN O.OutOfControlStatus=1 THEN 1 ELSE 0 END)AS LostNowCount,
+        SUM(CASE WHEN O.OutOfControlStatus=0 THEN 1 ELSE 0 END)AS LostHistoryCount,
+        group_concat(CASE WHEN O.OutOfControlStatus=1 THEN O.ItemID END) AS LostNowItemIDs,
+        group_concat(CASE WHEN O.OutOfControlStatus=0 THEN O.ItemID END) AS LostHistoryItemIDs,
+        CASE WHEN IFNULL(O.CheckRecordID, 0) = 0 THEN 0 ELSE 1
+        END AS CheckStatus
+        FROM
+        risksite R
+        LEFT JOIN riskleversetting L ON R.RiskLevelSettingID = L.RiskLevelSettingID
+        AND R.FrameWorkID = L.FrameWorkID
+        LEFT JOIN risksiteoutofcontrolitem O ON O.RiskSiteID = R.RiskSiteID
+        AND R.FrameWorkID = O.FrameWorkID
+        WHERE
+        R.ParentID=0 AND R.FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        <if test="riskName!= null and riskName!='' ">
+            AND R.Name LIKE CONCAT(CONCAT('%', #{riskName}), '%')
+        </if>
+        GROUP BY
+        R.RiskSiteID
+    </select>
+
+    <select id="getOutofControlByLostItemIDs" resultType="java.util.Map">
+        SELECT
+        M.MonthPlanName,O.CheckTime,O.CreateUnitName,O.CreateName,H.`Name`,OI.CheckQuestion,OI.OutOfControlStatus
+        FROM
+        risksiteoutofcontrol O
+        INNER JOIN risksiteoutofcontrolitem OI
+        ON O.FrameWorkID = OI.FrameWorkID
+        AND O.CheckRecordID = OI.CheckRecordID
+        LEFT JOIN riskcontrolplanebymonth M
+        ON O.MonthPlaneID=M.MonthPlaneID
+        LEFT JOIN riskhazard H
+        ON OI.HazardID=H.HazardID
+        WHERE
+        O.FrameWorkID=#{frameWorkID, jdbcType=VARCHAR} and OI.ItemID in
+        <foreach collection="LostItemIDs" item="item" index="index" open="(" separator="," close=")">
+            #{item, jdbcType=VARCHAR}
+        </foreach>
+    </select>
+
+    <select id="getRiskByDepartmentAndRole" resultType="java.util.Map">
+        SELECT
+        IFNULL(RiskTop.RiskSiteID,0) AS TopRiskSiteID,
+        IFNULL(RiskTop.`Name`,'') AS TopName ,
+        IFNULL(RiskTop.RiskDescription,'') AS TopRiskDescription,
+        IFNULL(RiskChild.`Name`,'') AS ChildName,
+        IFNULL(RiskChild.RiskSiteID,0) AS ChildRiskSiteID,
+        IFNULL(RiskChild.FullNumber,'') AS ChildFullNumber,
+        IFNULL(RiskChild.RiskDescription,'') AS ChildRiskDescription,
+        IFNULL(H.HazardID,0) AS HazardID,
+        IFNULL(H.HazardDesc,'') AS HazardDesc,
+        IFNULL(H.`Name`,'') AS HazardName,
+        IFNULL(H.IdentifyMethod, '') AS HazardIdentifyMethod,
+        IFNULL(H.MajorType,'') AS HazardMajorType,
+        IFNULL(H.DamageType,'') AS HazardDamageType,
+        IFNULL(S.RiskColor,'') AS RiskColor,
+        IFNULL(S.RiskLevel,'') AS RiskLevel,
+        IFNULL(c.ControlRangeStartDay,'长期')AS ControlRangeStartDay,
+        IFNULL(C.ControlRangeEndDay,'长期')AS ControlRangeEndDay,
+        GROUP_CONCAT(CASE
+        WHEN C.ControlRangeName= '矿级' THEN
+        CONCAT_WS(
+        '-',
+        IFNULL(C.ManageUnit, ' '),
+        IFNULL(C.ManageDuty, ' '),
+        IFNULL(C.ControlRangePinci, '')
+        ) END) AS KJControlRang,
+        GROUP_CONCAT( CASE
+        WHEN C.ControlRangeName= '专业级' THEN
+        CONCAT_WS(
+        '-',
+        IFNULL(C.ManageUnit, ' '),
+        IFNULL(C.ManageDuty, ' '),
+        IFNULL(C.ControlRangePinci, '')
+        ) END )AS ZYControlRang,
+        GROUP_CONCAT( CASE
+        WHEN C.ControlRangeName= '职能部室级' THEN
+        CONCAT_WS(
+        '-',
+        IFNULL(C.ManageUnit, ' '),
+        IFNULL(C.ManageDuty, ' '),
+        IFNULL(C.ControlRangePinci, '')
+        ) END )AS QDControlRang,
+        GROUP_CONCAT( CASE
+        WHEN C.ControlRangeName= '区队级' THEN
+        CONCAT_WS(
+        '-',
+        IFNULL(C.ManageUnit, ' '),
+        IFNULL(C.ManageDuty, ' '),
+        IFNULL(C.ControlRangePinci, '')
+        ) END )AS BZControlRang,
+        GROUP_CONCAT( CASE
+        WHEN C.ControlRangeName= '班组个人级' THEN
+        CONCAT_WS(
+        '-',
+        IFNULL(C.ManageUnit, ' '),
+        IFNULL(C.ManageDuty, ' '),
+        IFNULL(C.ControlRangePinci, '')
+        ) END )AS GRControlRang
+        FROM
+        riskhazardcontrolrange C
+        LEFT JOIN riskhazard H ON C.FrameWorkID = H.FrameWorkID
+        AND C.HazardID = H.HazardID
+        LEFT JOIN risksite RiskChild ON RiskChild.FrameWorkID = H.FrameWorkID
+        AND RiskChild.RiskSiteID = H.RiskSiteID
+        LEFT JOIN risksite RiskTop ON RiskChild.FrameWorkID = RiskTop.FrameWorkID
+        AND RiskChild.ParentID = RiskTop.RiskSiteID
+        LEFT JOIN riskleversetting S
+        ON H.RiskLevelSettingID=S.RiskLevelSettingID AND H.FrameWorkID=S.FrameWorkID
+        WHERE
+        C.FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        <if test="RoleName!= null and RoleName!='' ">
+            AND C.ManageDuty=#{RoleName, jdbcType=VARCHAR}
+        </if>
+        <if test="departmentName!= null and departmentName!='' ">
+            AND C.ManageUnit=#{departmentName, jdbcType=VARCHAR}
+        </if>
+        <if test="RoleName!= null and RoleName!='' ">
+            AND C.ManageDuty=#{RoleName, jdbcType=VARCHAR}
+        </if>
+        <if test="Category!= null and Category!='' ">
+            AND H.MajorType=#{Category, jdbcType=VARCHAR}
+        </if>
+        <if test="DamageType!= null and DamageType!='' ">
+            AND H.DamageType =#{DamageType, jdbcType=VARCHAR}
+        </if>
+        <if test="hazardName!= null and hazardName!='' ">
+            AND H.`Name` like CONCAT(CONCAT('%', #{hazardName}), '%')
+        </if>
+        <if test="riskObj!= null and riskObj!='' ">
+            AND RiskChild.`Name` like CONCAT(CONCAT('%', #{riskObj}), '%')
+        </if>
+        <if test="startTime!= null and startTime!=''">
+            AND C.ControlRangeStartDay <![CDATA[>=]]> #{startTime, jdbcType=VARCHAR}
+        </if>
+        <if test="endTime!= null and endTime!=''">
+            AND C.ControlRangeEndDay <![CDATA[<=]]> #{endTime, jdbcType=VARCHAR}
+        </if>
+        GROUP BY
+        TopRiskSiteID,
+        ChildRiskSiteID,
+        HazardID
+    </select>
+
+    <select id="getRiskByPlace" resultType="java.util.Map">
+        SELECT
+        IFNULL(RiskTop.RiskSiteID,0) AS TopRiskSiteID,
+        IFNULL(RiskTop.`Name`,'') AS TopName ,
+        IFNULL(RiskTop.RiskDescription,'') AS TopRiskDescription,
+        IFNULL(RiskChild.`Name`,' ') AS ChildName,
+        IFNULL(RiskChild.RiskSiteID,0) AS ChildRiskSiteID,
+        IFNULL(RiskChild.FullNumber,'') AS ChildFullNumber,
+        IFNULL(RiskChild.RiskDescription,'') AS ChildRiskDescription,
+        IFNULL(H.HazardID,0) AS HazardID,
+        IFNULL(H.HazardDesc,'') AS HazardDesc,
+        IFNULL(H.`Name`,'') AS HazardName,
+        IFNULL(H.IdentifyMethod, '') AS HazardIdentifyMethod,
+        IFNULL(H.MajorType,'') AS HazardMajorType,
+        IFNULL(H.DamageType,'') AS HazardDamageType,
+        IFNULL(S.RiskColor,'') AS RiskColor,
+        IFNULL(S.RiskLevel,'') AS RiskLevel,
+        IFNULL(C.ManageDuty,'') AS ManageDuty,
+        IFNULL(c.ControlRangeStartDay,'长期')AS ControlRangeStartDay,
+        IFNULL(C.ControlRangeEndDay,'长期')AS ControlRangeEndDay,
+        c.ControlRangeName as ControlRangeName,
+        GROUP_CONCAT(CASE
+        WHEN C.ControlRangeName= '矿级' THEN
+        CONCAT_WS(
+        '-',
+        IFNULL(C.ManageUnit, ' '),
+        IFNULL(C.ManageDuty, ' '),
+        IFNULL(C.ControlRangePinci, '')
+        ) END) AS KJControlRang,
+        GROUP_CONCAT( CASE
+        WHEN C.ControlRangeName= '专业级' THEN
+        CONCAT_WS(
+        '-',
+        IFNULL(C.ManageUnit, ' '),
+        IFNULL(C.ManageDuty, ' '),
+        IFNULL(C.ControlRangePinci, '')
+        ) END )AS ZYControlRang,
+        GROUP_CONCAT( CASE
+        WHEN C.ControlRangeName= '职能部室级' THEN
+        CONCAT_WS(
+        '-',
+        IFNULL(C.ManageUnit, ' '),
+        IFNULL(C.ManageDuty, ' '),
+        IFNULL(C.ControlRangePinci, '')
+        ) END )AS QDControlRang,
+        GROUP_CONCAT( CASE
+        WHEN C.ControlRangeName= '区队级' THEN
+        CONCAT_WS(
+        '-',
+        IFNULL(C.ManageUnit, ' '),
+        IFNULL(C.ManageDuty, ' '),
+        IFNULL(C.ControlRangePinci, '')
+        ) END )AS BZControlRang,
+        GROUP_CONCAT( CASE
+        WHEN C.ControlRangeName= '班组个人级' THEN
+        CONCAT_WS(
+        '-',
+        IFNULL(C.ManageUnit, ' '),
+        IFNULL(C.ManageDuty, ' '),
+        IFNULL(C.ControlRangePinci, '')
+        ) END )AS GRControlRang,
+        GROUP_CONCAT(M.MeasureContent) as MeasureContent
+        FROM
+        riskhazard H
+        LEFT JOIN risksite RiskChild ON RiskChild.FrameWorkID = H.FrameWorkID
+        AND RiskChild.RiskSiteID = H.RiskSiteID
+        LEFT JOIN risksite RiskTop ON RiskChild.FrameWorkID = RiskTop.FrameWorkID
+        AND RiskChild.ParentID = RiskTop.RiskSiteID
+        LEFT JOIN riskleversetting S ON H.RiskLevelSettingID = S.RiskLevelSettingID
+        AND H.FrameWorkID = S.FrameWorkID
+        LEFT JOIN riskhazardcontrolrange C ON C.FrameWorkID = H.FrameWorkID
+        AND C.HazardID = H.HazardID
+        LEFT JOIN riskcontrolmeasure as M ON H.HazardID = M.HazardID
+        WHERE
+        H.FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        <if test="hazardID!= null and hazardID!=0 ">
+            AND
+            H.`HazardID`=#{hazardID, jdbcType=INTEGER}
+        </if>
+        <if test="RiskName!= null and RiskName!='' ">
+            AND
+            RiskTop.`Name`=#{RiskName, jdbcType=VARCHAR}
+        </if>
+
+        <if test="departmentName!= null and departmentName!='' ">
+            AND C.ManageUnit=#{departmentName, jdbcType=VARCHAR}
+        </if>
+        <if test="RoleName!= null and RoleName!='' ">
+            AND C.ManageDuty like CONCAT(CONCAT('%', #{RoleName}), '%')
+        </if>
+        <if test="Category!= null and Category!='' ">
+            AND H.MajorType=#{Category, jdbcType=VARCHAR}
+        </if>
+        <if test="DamageType!= null and DamageType!='' ">
+            AND H.DamageType =#{DamageType, jdbcType=VARCHAR}
+        </if>
+        <if test="hazardName!= null and hazardName!='' ">
+            AND H.`Name` like CONCAT(CONCAT('%', #{hazardName}), '%')
+        </if>
+        <if test="riskObj!= null and riskObj!='' ">
+            AND RiskChild.`Name` like CONCAT(CONCAT('%', #{riskObj}), '%')
+        </if>
+        <if test="startTime!= null and startTime!=''">
+            AND C.ControlRangeStartDay <![CDATA[>=]]> #{startTime, jdbcType=VARCHAR}
+        </if>
+        <if test="endTime!= null and endTime!=''">
+            AND C.ControlRangeEndDay <![CDATA[<=]]> #{endTime, jdbcType=VARCHAR}
+        </if>
+        GROUP BY
+        TopRiskSiteID,
+        ChildRiskSiteID,
+        HazardID
+    </select>
+
+    <select id="getRiskDetailByXinAn" resultType="java.util.Map">
+        SELECT DISTINCT
+        IFNULL(RiskTop.RiskSiteID, 0) AS TopRiskSiteID,
+        IFNULL(RiskTop.`Name`, '') AS TopName,
+       <!-- 地点-->
+        IFNULL(RiskChild.`Name`, ' ') AS ChildName,
+        <!--重点管控对象-->
+      IFNULL(RiskChild.RiskSiteID, 0) AS ChildRiskSiteID,
+        <!-- 重点管控对象ID-->
+      IFNULL(RiskChild.FullNumber, '') AS ChildFullNumber,
+        <!-- 重点管控对象NUMBER-->
+      IFNULL(H.HazardID, 0) AS HazardID,
+        <!--  风险ID-->
+      IFNULL(H.HazardDesc, '') AS HazardDesc,
+        <!--  风险描述-->
+      IFNULL(H.`Name`, '') AS HazardName,
+        <!--  风险名称-->
+      IFNULL(H.IdentifyMethod, '') AS HazardIdentifyMethod,
+
+      IFNULL(H.MajorType, '') AS HazardMajorType,
+        <!--  专业-->
+      IFNULL(H.DamageType, '') AS HazardDamageType,
+        <!--  暴露率-->
+        IFNULL(H.Expose, '') AS HazardExpose,
+       <!--   可能性-->
+      IFNULL(H.LossConsequence, '') AS HazardLossConsequence,
+        <!--  暴露率-->
+      IFNULL(H.Possibility, '') AS HazardPossibility,
+        <!--  严重性-->
+      IFNULL(H.Sseverity, '') AS HazardSseverity,
+        <!--  风险值-->
+      IFNULL(H.RiskValue, '') AS HazardRiskValue,
+        <!--  灾害类型-->
+      IFNULL(H.AccidentType, '') AS HAccidentType,
+        <!--  事故类型-->
+      IFNULL(S.RiskColor, '') AS RiskColor,
+        <!-- 预警颜色-->
+      IFNULL(S.RiskLevel, '') AS RiskLevel,
+      IFNULL(c.ControlRangeStartDay,'长期')AS ControlRangeStartDay,
+      IFNULL(C.ControlRangeEndDay,'长期')AS ControlRangeEndDay,
+        <!--  风险等级-->
+      IFNULL(C.ControlRangeStartDay, '') AS ControlRangeStartDay,
+      IFNULL(C.ControlRangeEndDay, '') AS ControlRangeEndDay,
+      GROUP_CONCAT(CASE
+      WHEN C.ControlRangeName= '矿级' THEN
+      CONCAT_WS(
+      '-',
+      IFNULL(C.ManageUnit, ' '),
+      IFNULL(C.ManageDuty, ' '),
+      IFNULL(C.ControlRangePinci, '')
+      ) END) AS KJControlRang,
+      GROUP_CONCAT( CASE
+      WHEN C.ControlRangeName= '专业级' THEN
+      CONCAT_WS(
+      '-',
+      IFNULL(C.ManageUnit, ' '),
+      IFNULL(C.ManageDuty, ' '),
+      IFNULL(C.ControlRangePinci, '')
+      ) END )AS ZYControlRang,
+      GROUP_CONCAT( CASE
+      WHEN C.ControlRangeName= '职能部室级' THEN
+      CONCAT_WS(
+      '-',
+      IFNULL(C.ManageUnit, ' '),
+      IFNULL(C.ManageDuty, ' '),
+      IFNULL(C.ControlRangePinci, '')
+      ) END )AS QDControlRang,
+      GROUP_CONCAT( CASE
+      WHEN C.ControlRangeName= '区队级' THEN
+      CONCAT_WS(
+      '-',
+      IFNULL(C.ManageUnit, ' '),
+      IFNULL(C.ManageDuty, ' '),
+      IFNULL(C.ControlRangePinci, '')
+      ) END )AS BZControlRang,
+      GROUP_CONCAT( CASE
+      WHEN C.ControlRangeName= '班组个人级' THEN
+      CONCAT_WS(
+      '-',
+      IFNULL(C.ManageUnit, ' '),
+      IFNULL(C.ManageDuty, ' '),
+      IFNULL(C.ControlRangePinci, '')
+      ) END )AS GRControlRang
+      FROM
+      riskhazard H
+      LEFT JOIN risksite RiskChild ON RiskChild.FrameWorkID = H.FrameWorkID
+      AND RiskChild.RiskSiteID = H.RiskSiteID
+      LEFT JOIN risksite RiskTop ON RiskChild.FrameWorkID = RiskTop.FrameWorkID
+      AND RiskChild.ParentID = RiskTop.RiskSiteID
+      LEFT JOIN riskleversetting S ON H.RiskLevelSettingID = S.RiskLevelSettingID
+      AND H.FrameWorkID = S.FrameWorkID
+      LEFT JOIN riskhazardcontrolrange C ON C.FrameWorkID = H.FrameWorkID
+      AND C.HazardID = H.HazardID
+      WHERE H.CoalMineName = #{coalname,jdbcType=VARCHAR}
+      AND H.FrameWorkID = #{frameworkID,jdbcType=VARCHAR}
+      <if test="topName!= null and topName!=''">
+          AND RiskTop.`Name` like CONCAT(CONCAT('%', #{topName}), '%')
+      </if>
+      <if test="childName!= null and childName!=''">
+         AND RiskChild.`Name` like CONCAT(CONCAT('%', #{childName}), '%')
+      </if>
+      <if test="hazardName != null and hazardName !=''">
+          AND H.Name like CONCAT('%',#{hazardName},'%')
+      </if>
+      <if test="damageType!= null and damageType!=''">
+          <!--AND H.DamageType = #{damageType,jdbcType=VARCHAR}-->
+          AND H.DamageType like CONCAT(CONCAT('%', #{damageType}), '%')
+      </if>
+      <if test="majorType!= null and majorType!=''">
+          AND H.MajorType =#{majorType,jdbcType=VARCHAR}
+      </if>
+      <if test="accidentType!= null and accidentType!=''">
+          AND H.AccidentType like CONCAT(CONCAT('%', #{accidentType}), '%')
+      </if>
+      <if test="riskLevelSettingID!= null and riskLevelSettingID!=''">
+          AND H.RiskLevelSettingID =#{riskLevelSettingID,jdbcType=INTEGER}
+      </if>
+      <if test="startTime!= null and startTime!=''">
+          AND C.ControlRangeStartDay <![CDATA[>=]]> #{startTime, jdbcType=VARCHAR}
+      </if>
+      <if test="endTime!= null and endTime!=''">
+          AND C.ControlRangeEndDay <![CDATA[<=]]> #{endTime, jdbcType=VARCHAR}
+      </if>
+      GROUP BY
+      TopRiskSiteID,
+      ChildRiskSiteID,
+      HazardID
+      LIMIT
+      #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+  </select>
+  <select id="getRiskDetailByXinAnCount" resultType="java.lang.Integer">
+      SELECT COUNT(*) FROM
+      (
+      SELECT DISTINCT
+      IFNULL(RiskTop.RiskSiteID, 0) AS TopRiskSiteID,
+      IFNULL(RiskChild.RiskSiteID, 0) AS ChildRiskSiteID,
+      IFNULL(H.HazardID, 0) AS HazardID
+      FROM
+      riskhazard H
+      LEFT JOIN risksite RiskChild ON RiskChild.FrameWorkID = H.FrameWorkID
+      AND RiskChild.RiskSiteID = H.RiskSiteID
+      LEFT JOIN risksite RiskTop ON RiskChild.FrameWorkID = RiskTop.FrameWorkID
+      AND RiskChild.ParentID = RiskTop.RiskSiteID
+      LEFT JOIN riskleversetting S ON H.RiskLevelSettingID = S.RiskLevelSettingID
+      AND H.FrameWorkID = S.FrameWorkID
+      LEFT JOIN riskhazardcontrolrange C ON C.FrameWorkID = H.FrameWorkID
+      AND C.HazardID = H.HazardID
+      WHERE H.CoalMineName = #{coalname,jdbcType=VARCHAR}
+      AND H.FrameWorkID = #{frameworkID,jdbcType=VARCHAR}
+      <if test="topName!= null and topName!=''">
+          AND RiskTop.`Name` like CONCAT(CONCAT('%', #{topName}), '%')
+      </if>
+      <if test="childName!= null and childName!=''">
+          AND RiskChild.`Name` like CONCAT(CONCAT('%', #{childName}), '%')
+      </if>
+      <if test="hazardName != null and hazardName !=''">
+          AND H.Name like CONCAT('%',#{hazardName},'%')
+      </if>
+      <if test="damageType!= null and damageType!=''">
+          <!--AND H.DamageType = #{damageType,jdbcType=VARCHAR}-->
+          AND H.DamageType like CONCAT(CONCAT('%', #{damageType}), '%')
+      </if>
+      <if test="majorType!= null and majorType!=''">
+          AND H.MajorType =#{majorType,jdbcType=VARCHAR}
+      </if>
+      <if test="accidentType!= null and accidentType!=''">
+          AND H.AccidentType like CONCAT(CONCAT('%', #{accidentType}), '%')
+      </if>
+      <if test="riskLevelSettingID!= null and riskLevelSettingID!=''">
+          AND H.RiskLevelSettingID =#{riskLevelSettingID,jdbcType=INTEGER}
+      </if>
+      <if test="startTime!= null and startTime!=''">
+          AND C.ControlRangeStartDay <![CDATA[>=]]> #{startTime, jdbcType=VARCHAR}
+      </if>
+      <if test="endTime!= null and endTime!=''">
+          AND C.ControlRangeEndDay <![CDATA[<=]]> #{endTime, jdbcType=VARCHAR}
+      </if>
+      GROUP BY
+      TopRiskSiteID,
+      ChildRiskSiteID,
+      HazardID
+      ) datacount
+  </select>
+
+  <select id="getRiskDetailByLiangJia" resultType="java.util.Map">
+       SELECT DISTINCT
+      IFNULL(m.MeasureID, 0) AS mazardID,
+      IFNULL(H.HazardID, 0) AS HazardID,
+      IFNULL(m.MeasureContent,'') AS MeasureContent,
+      IFNULL(m.MeasureName,'') AS MeasureName,
+      IFNULL(m.MeasureURL,'') AS MeasureURL,
+      IFNULL(H.RiskByTypes,'') AS RiskByTypes,
+      IFNULL(H.RiskFactors,'') AS RiskFactors,
+      IFNULL(H.TechnologyDepartment,'') AS TechnologyDepartment,
+      IFNULL(H.SupervisionDepartment,'') AS SupervisionDepartment,
+      IFNULL(H.RiskType,'') AS RiskType,
+      IFNULL(RiskTop.RiskSiteID, 0) AS TopRiskSiteID,
+      IFNULL(RiskTop.`Name`, '') AS TopName,
+      IFNULL(RiskChild.`Name`, ' ') AS ChildName,
+      IFNULL(RiskChild.RiskSiteID, 0) AS ChildRiskSiteID,
+      IFNULL(RiskChild.FullNumber, '') AS ChildFullNumber,
+      IFNULL(H.HazardDesc, '') AS HazardDesc,
+      IFNULL(H.`Name`, '') AS HazardName,
+      IFNULL(H.IdentifyMethod, '') AS HazardIdentifyMethod,
+      IFNULL(H.MajorType, '') AS HazardMajorType,
+      IFNULL(H.DamageType, '') AS HazardDamageType,
+      IFNULL(H.Expose, '') AS HazardExpose,
+      IFNULL(H.LossConsequence, '') AS HazardLossConsequence,
+      IFNULL(H.Possibility, '') AS HazardPossibility,
+      IFNULL(H.Sseverity, '') AS HazardSseverity,
+      IFNULL(H.RiskValue, '') AS HazardRiskValue,
+      IFNULL(H.AccidentType, '') AS HAccidentType,
+      IFNULL(S.RiskColor, '') AS RiskColor,
+      IFNULL(S.RiskLevel, '') AS RiskLevel,
+      IFNULL(C.ControlRangeStartDay, '') AS ControlRangeStartDay,
+      IFNULL(C.ControlRangeEndDay, '') AS ControlRangeEndDay,
+      GROUP_CONCAT(CASE
+      WHEN C.ControlRangeName= '矿级' THEN
+      CONCAT_WS(
+      '-',
+      IFNULL(C.ManageUnit, ' '),
+      IFNULL(C.ManageDuty, ' '),
+      IFNULL(C.ControlRangePinci, '')
+      ) END) AS KJControlRang,
+      GROUP_CONCAT( CASE
+      WHEN C.ControlRangeName= '专业级' THEN
+      CONCAT_WS(
+      '-',
+      IFNULL(C.ManageUnit, ' '),
+      IFNULL(C.ManageDuty, ' '),
+      IFNULL(C.ControlRangePinci, '')
+      ) END )AS ZYControlRang,
+      GROUP_CONCAT( CASE
+      WHEN C.ControlRangeName= '职能部室级' THEN
+      CONCAT_WS(
+      '-',
+      IFNULL(C.ManageUnit, ' '),
+      IFNULL(C.ManageDuty, ' '),
+      IFNULL(C.ControlRangePinci, '')
+      ) END )AS QDControlRang,
+      GROUP_CONCAT( CASE
+      WHEN C.ControlRangeName= '区队级' THEN
+      CONCAT_WS(
+      '-',
+      IFNULL(C.ManageUnit, ' '),
+      IFNULL(C.ManageDuty, ' '),
+      IFNULL(C.ControlRangePinci, '')
+      ) END )AS BZControlRang,
+      GROUP_CONCAT( CASE
+      WHEN C.ControlRangeName= '班组个人级' THEN
+      CONCAT_WS(
+      '-',
+      IFNULL(C.ManageUnit, ' '),
+      IFNULL(C.ManageDuty, ' '),
+      IFNULL(C.ControlRangePinci, '')
+      ) END )AS GRControlRang
+      FROM
+      riskhazard H
+      LEFT JOIN risksite RiskChild ON RiskChild.FrameWorkID = H.FrameWorkID
+      AND RiskChild.RiskSiteID = H.RiskSiteID
+      LEFT JOIN risksite RiskTop ON RiskChild.FrameWorkID = RiskTop.FrameWorkID
+      AND RiskChild.ParentID = RiskTop.RiskSiteID
+      LEFT JOIN riskleversetting S ON H.RiskLevelSettingID = S.RiskLevelSettingID
+      AND H.FrameWorkID = S.FrameWorkID
+      LEFT JOIN riskhazardcontrolrange C ON C.FrameWorkID = H.FrameWorkID
+      AND C.HazardID = H.HazardID
+      LEFT JOIN riskcontrolmeasure m ON m.FrameWorkID = H.FrameWorkID
+      AND m.HazardID = H.HazardID
+      WHERE H.CoalMineName = #{coalname,jdbcType=VARCHAR}
+      AND H.FrameWorkID = #{frameworkID,jdbcType=VARCHAR}
+      <if test="topName!= null and topName!=''">
+          AND RiskTop.`Name` like CONCAT(CONCAT('%', #{topName}), '%')
+      </if>
+      <if test="hazardName != null and hazardName !=''">
+          AND H.Name like CONCAT('%',#{hazardName},'%')
+      </if>
+      <if test="damageType!= null and damageType!=''">
+          AND H.DamageType = #{damageType,jdbcType=VARCHAR}
+      </if>
+      <if test="majorType!= null and majorType!=''">
+          AND H.MajorType =#{majorType,jdbcType=VARCHAR}
+      </if>
+      <if test="accidentType!= null and accidentType!=''">
+          AND H.AccidentType like CONCAT(CONCAT('%', #{accidentType}), '%')
+      </if>
+      <if test="riskLevelSettingID!= null and riskLevelSettingID!=''">
+          AND H.RiskLevelSettingID =#{riskLevelSettingID,jdbcType=INTEGER}
+      </if>
+      <if test="startTime!= null and startTime!=''">
+          AND C.ControlRangeStartDay <![CDATA[>=]]> #{startTime, jdbcType=VARCHAR}
+      </if>
+      <if test="endTime!= null and endTime!=''">
+          AND C.ControlRangeEndDay <![CDATA[<=]]> #{endTime, jdbcType=VARCHAR}
+      </if>
+      GROUP BY
+      TopRiskSiteID,
+      ChildRiskSiteID,
+      HazardID,
+      mazardID
+      LIMIT
+      #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+  </select>
+
+  <select id="getRiskDetailByLiangJiaCount" resultType="java.lang.Integer">
+      SELECT COUNT(*) FROM
+      (
+      SELECT DISTINCT
+      IFNULL(m.MeasureID, 0) AS mazardID,
+      IFNULL(RiskTop.RiskSiteID, 0) AS TopRiskSiteID,
+      IFNULL(RiskChild.RiskSiteID, 0) AS ChildRiskSiteID,
+      IFNULL(H.HazardID, 0) AS HazardID
+      FROM
+      riskhazard H
+      LEFT JOIN risksite RiskChild ON RiskChild.FrameWorkID = H.FrameWorkID
+      AND RiskChild.RiskSiteID = H.RiskSiteID
+      LEFT JOIN risksite RiskTop ON RiskChild.FrameWorkID = RiskTop.FrameWorkID
+      AND RiskChild.ParentID = RiskTop.RiskSiteID
+      LEFT JOIN riskleversetting S ON H.RiskLevelSettingID = S.RiskLevelSettingID
+      AND H.FrameWorkID = S.FrameWorkID
+      LEFT JOIN riskhazardcontrolrange C ON C.FrameWorkID = H.FrameWorkID
+      AND C.HazardID = H.HazardID
+      LEFT JOIN riskcontrolmeasure m ON m.FrameWorkID = H.FrameWorkID
+      AND m.HazardID = H.HazardID
+      WHERE H.CoalMineName = #{coalname,jdbcType=VARCHAR}
+      AND H.FrameWorkID = #{frameworkID,jdbcType=VARCHAR}
+      <if test="topName!= null and topName!=''">
+          AND RiskTop.`Name` like CONCAT(CONCAT('%', #{topName}), '%')
+      </if>
+      <if test="hazardName != null and hazardName !=''">
+          AND H.Name like CONCAT('%',#{hazardName},'%')
+      </if>
+      <if test="damageType!= null and damageType!=''">
+          AND H.DamageType = #{damageType,jdbcType=VARCHAR}
+      </if>
+      <if test="majorType!= null and majorType!=''">
+          AND H.MajorType =#{majorType,jdbcType=VARCHAR}
+      </if>
+      <if test="accidentType!= null and accidentType!=''">
+          AND H.AccidentType like CONCAT(CONCAT('%', #{accidentType}), '%')
+      </if>
+      <if test="riskLevelSettingID!= null and riskLevelSettingID!=''">
+          AND H.RiskLevelSettingID =#{riskLevelSettingID,jdbcType=INTEGER}
+      </if>
+      <if test="startTime!= null and startTime!=''">
+          AND C.ControlRangeStartDay <![CDATA[>=]]> #{startTime, jdbcType=VARCHAR}
+      </if>
+      <if test="endTime!= null and endTime!=''">
+          AND C.ControlRangeEndDay <![CDATA[<=]]> #{endTime, jdbcType=VARCHAR}
+      </if>
+      GROUP BY
+      TopRiskSiteID,
+      ChildRiskSiteID,
+      HazardID,
+      mazardID
+      ) datacount
+  </select>
+
+
+  <select id="getRiskSubmitCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+      SELECT COUNT(*) FROM
+      (
+      SELECT DISTINCT
+      IFNULL(RiskTop.RiskSiteID, 0) AS TopRiskSiteID,
+      IFNULL(RiskChild.RiskSiteID, 0) AS ChildRiskSiteID,
+      IFNULL(H.HazardID, 0) AS HazardID
+      FROM
+      riskhazard H
+      LEFT JOIN risksite RiskChild ON RiskChild.FrameWorkID = H.FrameWorkID
+      AND RiskChild.RiskSiteID = H.RiskSiteID
+      LEFT JOIN risksite RiskTop ON RiskChild.FrameWorkID = RiskTop.FrameWorkID
+      AND RiskChild.ParentID = RiskTop.RiskSiteID
+      LEFT JOIN riskleversetting S ON H.RiskLevelSettingID = S.RiskLevelSettingID
+      AND H.FrameWorkID = S.FrameWorkID
+      LEFT JOIN riskhazardcontrolrange C ON C.FrameWorkID = H.FrameWorkID
+      AND C.HazardID = H.HazardID
+      WHERE H.CoalMineName = #{param.coalname,jdbcType=VARCHAR}
+      AND H.FrameWorkID = #{param.frameworkID,jdbcType=VARCHAR}
+      and H.is_submit is null
+      and H.RiskLevelSettingID is not null
+      <if test="param.topName!= null and param.topName!=''">
+          AND RiskTop.`Name` like CONCAT(CONCAT('%', #{param.topName}), '%')
+      </if>
+      <if test="param.childName!= null and param.childName!=''">
+          AND RiskChild.`Name` like CONCAT(CONCAT('%', #{childName}), '%')
+      </if>
+      <if test="param.damageType!= null and param.damageType!=''">
+          AND H.DamageType = #{param.damageType,jdbcType=VARCHAR}
+      </if>
+      <if test="param.majorType!= null and param.majorType!=''">
+          AND H.MajorType =#{param.majorType,jdbcType=VARCHAR}
+      </if>
+      <if test="param.accidentType!= null and param.accidentType!=''">
+          AND H.AccidentType like CONCAT(CONCAT('%', #{param.accidentType}), '%')
+      </if>
+      <if test="param.riskLevelSettingID!= null and param.riskLevelSettingID!=''">
+          AND H.RiskLevelSettingID =#{param.riskLevelSettingID,jdbcType=INTEGER}
+      </if>
+      <if test="param.startTime!= null and param.startTime!=''">
+          AND C.ControlRangeStartDay <![CDATA[>=]]> #{param.startTime, jdbcType=VARCHAR}
+      </if>
+      <if test="param.endTime!= null and param.endTime!=''">
+          AND C.ControlRangeEndDay <![CDATA[<=]]> #{param.endTime, jdbcType=VARCHAR}
+      </if>
+      <if test="param.hazardID!= null and param.hazardID!=''">
+          AND H.HazardID = #{param.hazardID, jdbcType=INTEGER}
+      </if>
+      GROUP BY
+      TopRiskSiteID,
+      ChildRiskSiteID,
+      HazardID
+      ) datacount
+  </select>
+
+  <select id="getUnSubmitRiskList" resultType="java.util.Map">
+  SELECT DISTINCT
+  IFNULL(RiskTop.RiskSiteID, 0) AS TopRiskSiteID,
+  IFNULL(RiskTop.`Name`, '') AS TopName,
+  -- 地点
+  IFNULL(RiskChild.`Name`, ' ') AS ChildName,
+  -- 重点管控对象
+  IFNULL(RiskChild.RiskSiteID, 0) AS ChildRiskSiteID,
+  -- 重点管控对象ID
+  IFNULL(RiskChild.FullNumber, '') AS ChildFullNumber,
+  -- 重点管控对象NUMBER
+  IFNULL(H.HazardID, 0) AS HazardID,
+  -- 风险ID
+  IFNULL(H.HazardDesc, '') AS HazardDesc,
+  -- 风险描述
+  IFNULL(H.`Name`, '') AS HazardName,
+  -- 风险名称
+  IFNULL(H.IdentifyMethod, '') AS HazardIdentifyMethod,
+
+  IFNULL(H.MajorType, '') AS HazardMajorType,
+  -- 专业
+  IFNULL(H.DamageType, '') AS HazardDamageType,
+  -- 暴露率
+  IFNULL(H.Expose, '') AS HazardExpose,
+  -- 可能性
+  IFNULL(H.LossConsequence, '') AS HazardLossConsequence,
+  -- 暴露率
+  IFNULL(H.Possibility, '') AS HazardPossibility,
+  -- 严重性
+  IFNULL(H.Sseverity, '') AS HazardSseverity,
+  -- 风险值
+  IFNULL(H.RiskValue, '') AS HazardRiskValue,
+  -- 灾害类型
+  IFNULL(H.AccidentType, '') AS HAccidentType,
+  -- 事故类型
+  IFNULL(S.RiskColor, '') AS RiskColor,
+  -- 预警颜色
+  IFNULL(S.RiskLevel, '') AS RiskLevel,
+  IFNULL(c.ControlRangeStartDay,'长期')AS ControlRangeStartDay,
+  IFNULL(C.ControlRangeEndDay,'长期')AS ControlRangeEndDay,
+  -- 风险等级
+  IFNULL(C.ControlRangeStartDay, '') AS ControlRangeStartDay,
+  IFNULL(C.ControlRangeEndDay, '') AS ControlRangeEndDay,
+  GROUP_CONCAT(CASE
+  WHEN C.ControlRangeName= '矿级' THEN
+  CONCAT_WS(
+  '-',
+  IFNULL(C.ManageUnit, ' '),
+  IFNULL(C.ManageDuty, ' '),
+  IFNULL(C.ControlRangePinci, '')
+  ) END) AS KJControlRang,
+  GROUP_CONCAT( CASE
+  WHEN C.ControlRangeName= '专业级' THEN
+  CONCAT_WS(
+  '-',
+  IFNULL(C.ManageUnit, ' '),
+  IFNULL(C.ManageDuty, ' '),
+  IFNULL(C.ControlRangePinci, '')
+  ) END )AS ZYControlRang,
+  GROUP_CONCAT( CASE
+  WHEN C.ControlRangeName= '职能部室级' THEN
+  CONCAT_WS(
+  '-',
+  IFNULL(C.ManageUnit, ' '),
+  IFNULL(C.ManageDuty, ' '),
+  IFNULL(C.ControlRangePinci, '')
+  ) END )AS QDControlRang,
+  GROUP_CONCAT( CASE
+  WHEN C.ControlRangeName= '区队级' THEN
+  CONCAT_WS(
+  '-',
+  IFNULL(C.ManageUnit, ' '),
+  IFNULL(C.ManageDuty, ' '),
+  IFNULL(C.ControlRangePinci, '')
+  ) END )AS BZControlRang,
+  GROUP_CONCAT( CASE
+  WHEN C.ControlRangeName= '班组个人级' THEN
+  CONCAT_WS(
+  '-',
+  IFNULL(C.ManageUnit, ' '),
+  IFNULL(C.ManageDuty, ' '),
+  IFNULL(C.ControlRangePinci, '')
+  ) END )AS GRControlRang
+  FROM
+  riskhazard H
+  LEFT JOIN risksite RiskChild ON RiskChild.FrameWorkID = H.FrameWorkID
+  AND RiskChild.RiskSiteID = H.RiskSiteID
+  LEFT JOIN risksite RiskTop ON RiskChild.FrameWorkID = RiskTop.FrameWorkID
+  AND RiskChild.ParentID = RiskTop.RiskSiteID
+  LEFT JOIN riskleversetting S ON H.RiskLevelSettingID = S.RiskLevelSettingID
+  AND H.FrameWorkID = S.FrameWorkID
+  LEFT JOIN riskhazardcontrolrange C ON C.FrameWorkID = H.FrameWorkID
+  AND C.HazardID = H.HazardID
+  WHERE H.CoalMineName = #{param.coalname,jdbcType=VARCHAR}
+  AND H.FrameWorkID = #{param.frameworkID,jdbcType=VARCHAR}
+  and H.is_submit is null
+  and H.RiskLevelSettingID is not null
+  <if test="param.topName!= null and param.topName!=''">
+      AND RiskTop.`Name` like CONCAT(CONCAT('%', #{param.topName}), '%')
+  </if>
+  <if test="param.childName!= null and param.childName!=''">
+      AND RiskChild.`Name` like CONCAT(CONCAT('%', #{childName}), '%')
+  </if>
+  <if test="param.damageType!= null and param.damageType!=''">
+      AND H.DamageType = #{param.damageType,jdbcType=VARCHAR}
+  </if>
+  <if test="param.majorType!= null and param.majorType!=''">
+      AND H.MajorType =#{param.majorType,jdbcType=VARCHAR}
+  </if>
+  <if test="param.accidentType!= null and param.accidentType!=''">
+      AND H.AccidentType like CONCAT(CONCAT('%', #{param.accidentType}), '%')
+  </if>
+  <if test="param.riskLevelSettingID!= null and param.riskLevelSettingID!=''">
+      AND H.RiskLevelSettingID =#{param.riskLevelSettingID,jdbcType=INTEGER}
+  </if>
+  <if test="param.startTime!= null and param.startTime!=''">
+      AND C.ControlRangeStartDay <![CDATA[>=]]> #{param.startTime, jdbcType=VARCHAR}
+  </if>
+  <if test="param.endTime!= null and param.endTime!=''">
+      AND C.ControlRangeEndDay <![CDATA[<=]]> #{param.endTime, jdbcType=VARCHAR}
+  </if>
+  <if test="param.hazardID!= null and param.hazardID!=''">
+      AND H.HazardID = #{param.hazardID, jdbcType=INTEGER}
+  </if>
+  GROUP BY
+  TopRiskSiteID,
+  ChildRiskSiteID,
+  HazardID
+  LIMIT
+  #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+</select>
+
+
+  <select id="getRiskInfoList" resultType="java.util.Map">
+      SELECT DISTINCT
+      IFNULL(RiskTop.RiskSiteID, 0) AS TopRiskSiteID,
+      IFNULL(RiskTop.`Name`, '') AS TopName,
+      -- 地点
+      IFNULL(RiskChild.`Name`, ' ') AS ChildName,
+      -- 重点管控对象
+      IFNULL(RiskChild.RiskSiteID, 0) AS ChildRiskSiteID,
+      -- 重点管控对象ID
+      IFNULL(RiskChild.FullNumber, '') AS ChildFullNumber,
+      -- 重点管控对象NUMBER
+      IFNULL(H.HazardID, 0) AS HazardID,
+      -- 风险ID
+      IFNULL(H.HazardDesc, '') AS HazardDesc,
+      -- 风险描述
+      IFNULL(H.`Name`, '') AS HazardName,
+      -- 风险名称
+      IFNULL(H.IdentifyMethod, '') AS HazardIdentifyMethod,
+
+      IFNULL(H.MajorType, '') AS HazardMajorType,
+      -- 专业
+      IFNULL(H.DamageType, '') AS HazardDamageType,
+      -- 暴露率
+      IFNULL(H.Expose, '') AS HazardExpose,
+      -- 可能性
+      IFNULL(H.LossConsequence, '') AS HazardLossConsequence,
+      -- 暴露率
+      IFNULL(H.Possibility, '') AS HazardPossibility,
+      -- 严重性
+      IFNULL(H.Sseverity, '') AS HazardSseverity,
+      -- 风险值
+      IFNULL(H.RiskValue, '') AS HazardRiskValue,
+      -- 灾害类型
+      IFNULL(H.AccidentType, '') AS HAccidentType,
+      -- 事故类型
+      IFNULL(S.RiskColor, '') AS RiskColor,
+      -- 预警颜色
+      IFNULL(S.RiskLevel, '') AS RiskLevel,
+      IFNULL(c.ControlRangeStartDay,'长期')AS ControlRangeStartDay,
+      IFNULL(C.ControlRangeEndDay,'长期')AS ControlRangeEndDay,
+      -- 风险等级
+      IFNULL(C.ControlRangeStartDay, '') AS ControlRangeStartDay,
+      IFNULL(C.ControlRangeEndDay, '') AS ControlRangeEndDay,
+      GROUP_CONCAT(CASE
+      WHEN C.ControlRangeName= '矿级' THEN
+      CONCAT_WS(
+      '-',
+      IFNULL(C.ManageUnit, ' '),
+      IFNULL(C.ManageDuty, ' '),
+      IFNULL(C.ControlRangePinci, '')
+      ) END) AS KJControlRang,
+      GROUP_CONCAT( CASE
+      WHEN C.ControlRangeName= '专业级' THEN
+      CONCAT_WS(
+      '-',
+      IFNULL(C.ManageUnit, ' '),
+      IFNULL(C.ManageDuty, ' '),
+      IFNULL(C.ControlRangePinci, '')
+      ) END )AS ZYControlRang,
+      GROUP_CONCAT( CASE
+      WHEN C.ControlRangeName= '职能部室级' THEN
+      CONCAT_WS(
+      '-',
+      IFNULL(C.ManageUnit, ' '),
+      IFNULL(C.ManageDuty, ' '),
+      IFNULL(C.ControlRangePinci, '')
+      ) END )AS QDControlRang,
+      GROUP_CONCAT( CASE
+      WHEN C.ControlRangeName= '区队级' THEN
+      CONCAT_WS(
+      '-',
+      IFNULL(C.ManageUnit, ' '),
+      IFNULL(C.ManageDuty, ' '),
+      IFNULL(C.ControlRangePinci, '')
+      ) END )AS BZControlRang,
+      GROUP_CONCAT( CASE
+      WHEN C.ControlRangeName= '班组个人级' THEN
+      CONCAT_WS(
+      '-',
+      IFNULL(C.ManageUnit, ' '),
+      IFNULL(C.ManageDuty, ' '),
+      IFNULL(C.ControlRangePinci, '')
+      ) END )AS GRControlRang
+      FROM
+      riskhazard H
+      LEFT JOIN risksite RiskChild ON RiskChild.FrameWorkID = H.FrameWorkID
+      AND RiskChild.RiskSiteID = H.RiskSiteID
+      LEFT JOIN risksite RiskTop ON RiskChild.FrameWorkID = RiskTop.FrameWorkID
+      AND RiskChild.ParentID = RiskTop.RiskSiteID
+      LEFT JOIN riskleversetting S ON H.RiskLevelSettingID = S.RiskLevelSettingID
+      AND H.FrameWorkID = S.FrameWorkID
+      LEFT JOIN riskhazardcontrolrange C ON C.FrameWorkID = H.FrameWorkID
+      AND C.HazardID = H.HazardID
+      WHERE H.CoalMineName = #{param.coalname,jdbcType=VARCHAR}
+      AND H.FrameWorkID = #{param.frameworkID,jdbcType=VARCHAR}
+      and H.RiskLevelSettingID is not null
+      <if test="param.topName!= null and param.topName!=''">
+          AND RiskTop.`Name` like CONCAT(CONCAT('%', #{param.topName}), '%')
+      </if>
+      <if test="param.childName!= null and param.childName!=''">
+          AND RiskChild.`Name` like CONCAT(CONCAT('%', #{childName}), '%')
+      </if>
+      <if test="param.damageType!= null and param.damageType!=''">
+          AND H.DamageType = #{param.damageType,jdbcType=VARCHAR}
+      </if>
+      <if test="param.majorType!= null and param.majorType!=''">
+          AND H.MajorType =#{param.majorType,jdbcType=VARCHAR}
+      </if>
+      <if test="param.accidentType!= null and param.accidentType!=''">
+          AND H.AccidentType like CONCAT(CONCAT('%', #{param.accidentType}), '%')
+      </if>
+      <if test="param.riskLevelSettingID!= null and param.riskLevelSettingID!=''">
+          AND H.RiskLevelSettingID =#{param.riskLevelSettingID,jdbcType=INTEGER}
+      </if>
+      <if test="param.startTime!= null and param.startTime!=''">
+          AND C.ControlRangeStartDay <![CDATA[>=]]> #{param.startTime, jdbcType=VARCHAR}
+      </if>
+      <if test="param.endTime!= null and param.endTime!=''">
+          AND C.ControlRangeEndDay <![CDATA[<=]]> #{param.endTime, jdbcType=VARCHAR}
+      </if>
+      <if test="param.hazardID!= null and param.hazardID!=''">
+          AND H.HazardID = #{param.hazardID, jdbcType=INTEGER}
+      </if>
+      GROUP BY
+      TopRiskSiteID,
+      ChildRiskSiteID,
+      HazardID
+      LIMIT
+      #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+  </select>
+
+
+  <select id="getRiskReviewStatusByLiangJia" resultType="java.util.Map">
+      SELECT DISTINCT
+      IFNULL(m.MeasureID, 0) AS mazardID,
+      IFNULL(H.HazardID, 0) AS HazardID,
+      IFNULL(m.MeasureContent,'') AS MeasureContent,
+      -- 管控内容
+      IFNULL(m.MeasureName,'') AS MeasureName,
+      -- 管控附件名称
+      IFNULL(m.MeasureURL,'') AS MeasureURL,
+      -- 附件URL
+      IFNULL(H.RiskByTypes,'') AS RiskByTypes,
+      -- 风险类型
+      IFNULL(H.RiskFactors,'') AS RiskFactors,
+      -- 危害因素
+      IFNULL(H.TechnologyDepartment,'') AS TechnologyDepartment,
+      -- 技术部门
+      IFNULL(H.SupervisionDepartment,'') AS SupervisionDepartment,
+      -- 监管部门
+      IFNULL(H.RiskType,'') AS RiskType,
+      -- 管理属性（人、机）
+      IFNULL(RiskTop.RiskSiteID, 0) AS TopRiskSiteID,
+      IFNULL(RiskTop.`Name`, '') AS TopName,
+      -- 地点
+      IFNULL(RiskChild.`Name`, ' ') AS ChildName,
+      -- 重点管控对象
+      IFNULL(RiskChild.RiskSiteID, 0) AS ChildRiskSiteID,
+      -- 重点管控对象ID
+      IFNULL(RiskChild.FullNumber, '') AS ChildFullNumber,
+      -- 重点管控对象NUMBER
+      -- 风险ID
+      IFNULL(H.HazardDesc, '') AS HazardDesc,
+      -- 风险描述
+      IFNULL(H.`Name`, '') AS HazardName,
+      -- 风险名称
+      IFNULL(H.IdentifyMethod, '') AS HazardIdentifyMethod,
+
+      IFNULL(H.MajorType, '') AS HazardMajorType,
+      -- 专业
+      IFNULL(H.DamageType, '') AS HazardDamageType,
+      -- 暴露率
+      IFNULL(H.Expose, '') AS HazardExpose,
+      -- 可能性
+      IFNULL(H.LossConsequence, '') AS HazardLossConsequence,
+      -- 暴露率
+      IFNULL(H.Possibility, '') AS HazardPossibility,
+      -- 严重性
+      IFNULL(H.Sseverity, '') AS HazardSseverity,
+      -- 风险值
+      IFNULL(H.RiskValue, '') AS HazardRiskValue,
+      -- 灾害类型
+      IFNULL(H.AccidentType, '') AS HAccidentType,
+      -- 事故类型
+      IFNULL(S.RiskColor, '') AS RiskColor,
+      -- 预警颜色
+      IFNULL(S.RiskLevel, '') AS RiskLevel,
+      -- 风险等级
+      IFNULL(C.ControlRangeStartDay, '') AS ControlRangeStartDay,
+      IFNULL(C.ControlRangeEndDay, '') AS ControlRangeEndDay,
+      IFNULL(v.reviewStatus, '未审核') AS reviewStatus,
+      GROUP_CONCAT(CASE
+      WHEN C.ControlRangeName= '矿级' THEN
+      CONCAT_WS(
+      '-',
+      IFNULL(C.ManageUnit, ' '),
+      IFNULL(C.ManageDuty, ' '),
+      IFNULL(C.ControlRangePinci, '')
+      ) END) AS KJControlRang,
+      GROUP_CONCAT( CASE
+      WHEN C.ControlRangeName= '专业级' THEN
+      CONCAT_WS(
+      '-',
+      IFNULL(C.ManageUnit, ' '),
+      IFNULL(C.ManageDuty, ' '),
+      IFNULL(C.ControlRangePinci, '')
+      ) END )AS ZYControlRang,
+      GROUP_CONCAT( CASE
+      WHEN C.ControlRangeName= '职能部室级' THEN
+      CONCAT_WS(
+      '-',
+      IFNULL(C.ManageUnit, ' '),
+      IFNULL(C.ManageDuty, ' '),
+      IFNULL(C.ControlRangePinci, '')
+      ) END )AS QDControlRang,
+      GROUP_CONCAT( CASE
+      WHEN C.ControlRangeName= '区队级' THEN
+      CONCAT_WS(
+      '-',
+      IFNULL(C.ManageUnit, ' '),
+      IFNULL(C.ManageDuty, ' '),
+      IFNULL(C.ControlRangePinci, '')
+      ) END )AS BZControlRang,
+      GROUP_CONCAT( CASE
+      WHEN C.ControlRangeName= '班组个人级' THEN
+      CONCAT_WS(
+      '-',
+      IFNULL(C.ManageUnit, ' '),
+      IFNULL(C.ManageDuty, ' '),
+      IFNULL(C.ControlRangePinci, '')
+      ) END )AS GRControlRang
+      FROM
+      riskhazard H
+      LEFT JOIN risksite RiskChild ON RiskChild.FrameWorkID = H.FrameWorkID
+      AND RiskChild.RiskSiteID = H.RiskSiteID
+      LEFT JOIN risksite RiskTop ON RiskChild.FrameWorkID = RiskTop.FrameWorkID
+      AND RiskChild.ParentID = RiskTop.RiskSiteID
+      LEFT JOIN riskleversetting S ON H.RiskLevelSettingID = S.RiskLevelSettingID
+      AND H.FrameWorkID = S.FrameWorkID
+      LEFT JOIN riskhazardcontrolrange C ON C.FrameWorkID = H.FrameWorkID
+      AND C.HazardID = H.HazardID
+      LEFT JOIN riskcontrolmeasure m ON m.FrameWorkID = H.FrameWorkID
+      AND m.HazardID = H.HazardID
+      LEFT JOIN riskhazardreview v ON v.frameworkId = H.FrameWorkID
+      AND v.HazardId = H.HazardID and m.MeasureID = v.MeasureId
+      WHERE H.CoalMineName = #{coalname,jdbcType=VARCHAR}
+      AND H.FrameWorkID = #{frameworkID,jdbcType=VARCHAR}
+      <if test="topName!= null and topName!=''">
+          AND RiskTop.`Name` like CONCAT(CONCAT('%', #{topName}), '%')
+      </if>
+      <if test="hazardName != null and hazardName !=''">
+          AND H.Name like CONCAT('%',#{hazardName},'%')
+      </if>
+      <if test="damageType!= null and damageType!=''">
+          AND H.DamageType = #{damageType,jdbcType=VARCHAR}
+      </if>
+      <if test="majorType!= null and majorType!=''">
+          AND H.MajorType =#{majorType,jdbcType=VARCHAR}
+      </if>
+      <if test="accidentType!= null and accidentType!=''">
+          AND H.AccidentType like CONCAT(CONCAT('%', #{accidentType}), '%')
+      </if>
+      <if test="riskLevelSettingID!= null and riskLevelSettingID!=''">
+          AND H.RiskLevelSettingID =#{riskLevelSettingID,jdbcType=INTEGER}
+      </if>
+      <if test="startTime!= null and startTime!=''">
+          AND C.ControlRangeStartDay <![CDATA[>=]]> #{startTime, jdbcType=VARCHAR}
+      </if>
+      <if test="endTime!= null and endTime!=''">
+          AND C.ControlRangeEndDay <![CDATA[<=]]> #{endTime, jdbcType=VARCHAR}
+      </if>
+      GROUP BY
+      TopRiskSiteID,
+      ChildRiskSiteID,
+      HazardID,
+      mazardID
+      LIMIT
+      #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+  </select>
+
+  <insert id="updateRiskReviewStatusByLiangJia" useGeneratedKeys="true" keyProperty="id" flushCache="true">
+   INSERT INTO riskhazardreview(
+    id,
+    frameworkId,
+    HazardId,
+    MeasureId,
+    reviewStatus
+    )
+    VALUES
+    (
+       #{id,jdbcType=VARCHAR},
+       #{frameworkId,jdbcType=VARCHAR},
+       #{hazardId,jdbcType=INTEGER},
+       #{measureId,jdbcType=INTEGER},
+       #{reviewStatus,jdbcType=VARCHAR}
+    )
+  </insert>
+
+
+  <select id="getRiskHazardByLiangJia" resultType="java.util.Map">
+      SELECT DISTINCT
+      IFNULL(H.HazardID, 0) AS HazardID,
+      IFNULL(H.RiskByTypes,'') AS RiskByTypes,
+      IFNULL(H.RiskFactors,'') AS RiskFactors,
+      IFNULL(H.TechnologyDepartment,'') AS TechnologyDepartment,
+      IFNULL(H.SupervisionDepartment,'') AS SupervisionDepartment,
+      IFNULL(H.RiskType,'') AS RiskType,
+      IFNULL(RiskTop.RiskSiteID, 0) AS TopRiskSiteID,
+      IFNULL(RiskTop.`Name`, '') AS TopName,
+      IFNULL(RiskChild.`Name`, ' ') AS ChildName,
+      IFNULL(RiskChild.RiskSiteID, 0) AS ChildRiskSiteID,
+      IFNULL(RiskChild.FullNumber, '') AS ChildFullNumber,
+      IFNULL(H.HazardDesc, '') AS HazardDesc,
+      IFNULL(H.`Name`, '') AS HazardName,
+      IFNULL(H.IdentifyMethod, '') AS HazardIdentifyMethod,
+      IFNULL(H.MajorType, '') AS HazardMajorType,
+      IFNULL(H.DamageType, '') AS HazardDamageType,
+      IFNULL(H.Expose, '') AS HazardExpose,
+      IFNULL(H.LossConsequence, '') AS HazardLossConsequence,
+      IFNULL(H.Possibility, '') AS HazardPossibility,
+      IFNULL(H.Sseverity, '') AS HazardSseverity,
+      IFNULL(H.RiskValue, '') AS HazardRiskValue,
+      IFNULL(H.AccidentType, '') AS HAccidentType,
+      IFNULL(S.RiskColor, '') AS RiskColor,
+      IFNULL(S.RiskLevel, '') AS RiskLevel,
+      IFNULL(C.ControlRangeStartDay, '') AS ControlRangeStartDay,
+      IFNULL(C.ControlRangeEndDay, '') AS ControlRangeEndDay,
+      GROUP_CONCAT(CASE
+      WHEN C.ControlRangeName= '矿级' THEN
+      CONCAT_WS(
+      '-',
+      IFNULL(C.ManageUnit, ' '),
+      IFNULL(C.ManageDuty, ' '),
+      IFNULL(C.ControlRangePinci, '')
+      ) END) AS KJControlRang,
+      GROUP_CONCAT( CASE
+      WHEN C.ControlRangeName= '专业级' THEN
+      CONCAT_WS(
+      '-',
+      IFNULL(C.ManageUnit, ' '),
+      IFNULL(C.ManageDuty, ' '),
+      IFNULL(C.ControlRangePinci, '')
+      ) END )AS ZYControlRang,
+      GROUP_CONCAT( CASE
+      WHEN C.ControlRangeName= '职能部室级' THEN
+      CONCAT_WS(
+      '-',
+      IFNULL(C.ManageUnit, ' '),
+      IFNULL(C.ManageDuty, ' '),
+      IFNULL(C.ControlRangePinci, '')
+      ) END )AS QDControlRang,
+      GROUP_CONCAT( CASE
+      WHEN C.ControlRangeName= '区队级' THEN
+      CONCAT_WS(
+      '-',
+      IFNULL(C.ManageUnit, ' '),
+      IFNULL(C.ManageDuty, ' '),
+      IFNULL(C.ControlRangePinci, '')
+      ) END )AS BZControlRang,
+      GROUP_CONCAT( CASE
+      WHEN C.ControlRangeName= '班组个人级' THEN
+      CONCAT_WS(
+      '-',
+      IFNULL(C.ManageUnit, ' '),
+      IFNULL(C.ManageDuty, ' '),
+      IFNULL(C.ControlRangePinci, '')
+      ) END )AS GRControlRang
+      FROM
+      riskhazard H
+      LEFT JOIN risksite RiskChild ON RiskChild.FrameWorkID = H.FrameWorkID
+      AND RiskChild.RiskSiteID = H.RiskSiteID
+      LEFT JOIN risksite RiskTop ON RiskChild.FrameWorkID = RiskTop.FrameWorkID
+      AND RiskChild.ParentID = RiskTop.RiskSiteID
+      LEFT JOIN riskleversetting S ON H.RiskLevelSettingID = S.RiskLevelSettingID
+      AND H.FrameWorkID = S.FrameWorkID
+      LEFT JOIN riskhazardcontrolrange C ON C.FrameWorkID = H.FrameWorkID
+      AND C.HazardID = H.HazardID
+      WHERE H.CoalMineName = #{coalname,jdbcType=VARCHAR}
+      AND H.FrameWorkID = #{frameworkID,jdbcType=VARCHAR}
+      <if test="topName!= null and topName!=''">
+          AND RiskTop.`Name` like CONCAT(CONCAT('%', #{topName}), '%')
+      </if>
+      <if test="childName!= null and childName!=''">
+          AND RiskChild.`Name` like CONCAT(CONCAT('%', #{childName}), '%')
+      </if>
+      <if test="hazardName != null and hazardName !=''">
+          AND H.Name like CONCAT('%',#{hazardName},'%')
+      </if>
+      <if test="damageType!= null and damageType!=''">
+          AND H.DamageType = #{damageType,jdbcType=VARCHAR}
+      </if>
+      <if test="majorType!= null and majorType!=''">
+          AND H.MajorType =#{majorType,jdbcType=VARCHAR}
+      </if>
+      <if test="accidentType!= null and accidentType!=''">
+          AND H.AccidentType like CONCAT(CONCAT('%', #{accidentType}), '%')
+      </if>
+      <if test="riskLevelSettingID!= null and riskLevelSettingID!=''">
+          AND H.RiskLevelSettingID =#{riskLevelSettingID,jdbcType=INTEGER}
+      </if>
+      <if test="startTime!= null and startTime!=''">
+          AND C.ControlRangeStartDay <![CDATA[>=]]> #{startTime, jdbcType=VARCHAR}
+      </if>
+      <if test="endTime!= null and endTime!=''">
+          AND C.ControlRangeEndDay <![CDATA[<=]]> #{endTime, jdbcType=VARCHAR}
+      </if>
+      GROUP BY
+      TopRiskSiteID,
+      ChildRiskSiteID,
+      HazardID
+      LIMIT
+      #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+  </select>
+
+  <select id="getRiskHazardByLiangJiaCount" resultType="java.lang.Integer">
+      SELECT COUNT(*) FROM
+      (
+      SELECT DISTINCT
+      IFNULL(RiskTop.RiskSiteID, 0) AS TopRiskSiteID,
+      IFNULL(RiskChild.RiskSiteID, 0) AS ChildRiskSiteID,
+      IFNULL(H.HazardID, 0) AS HazardID
+      FROM
+      riskhazard H
+      LEFT JOIN risksite RiskChild ON RiskChild.FrameWorkID = H.FrameWorkID
+      AND RiskChild.RiskSiteID = H.RiskSiteID
+      LEFT JOIN risksite RiskTop ON RiskChild.FrameWorkID = RiskTop.FrameWorkID
+      AND RiskChild.ParentID = RiskTop.RiskSiteID
+      LEFT JOIN riskleversetting S ON H.RiskLevelSettingID = S.RiskLevelSettingID
+      AND H.FrameWorkID = S.FrameWorkID
+      LEFT JOIN riskhazardcontrolrange C ON C.FrameWorkID = H.FrameWorkID
+      AND C.HazardID = H.HazardID
+      WHERE H.CoalMineName = #{coalname,jdbcType=VARCHAR}
+      AND H.FrameWorkID = #{frameworkID,jdbcType=VARCHAR}
+      <if test="topName!= null and topName!=''">
+          AND RiskTop.`Name` like CONCAT(CONCAT('%', #{topName}), '%')
+      </if>
+      <if test="hazardName != null and hazardName !=''">
+          AND H.Name like CONCAT('%',#{hazardName},'%')
+      </if>
+      <if test="damageType!= null and damageType!=''">
+          AND H.DamageType = #{damageType,jdbcType=VARCHAR}
+      </if>
+      <if test="majorType!= null and majorType!=''">
+          AND H.MajorType =#{majorType,jdbcType=VARCHAR}
+      </if>
+      <if test="accidentType!= null and accidentType!=''">
+          AND H.AccidentType like CONCAT(CONCAT('%', #{accidentType}), '%')
+      </if>
+      <if test="riskLevelSettingID!= null and riskLevelSettingID!=''">
+          AND H.RiskLevelSettingID =#{riskLevelSettingID,jdbcType=INTEGER}
+      </if>
+      <if test="startTime!= null and startTime!=''">
+          AND C.ControlRangeStartDay <![CDATA[>=]]> #{startTime, jdbcType=VARCHAR}
+      </if>
+      <if test="endTime!= null and endTime!=''">
+          AND C.ControlRangeEndDay <![CDATA[<=]]> #{endTime, jdbcType=VARCHAR}
+      </if>
+      GROUP BY
+      TopRiskSiteID,
+      ChildRiskSiteID,
+      HazardID
+      ) datacount
+  </select>
+
+
+</mapper>

@@ -1,0 +1,557 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.kingc.risk.dao.RiskcontrolplanebymonthDao">
+    <resultMap id="RiskcontrolplanebymonthMap" type="cn.com.kingc.risk.model.Riskcontrolplanebymonth">
+        <result property="coalMineName" column="CoalMineName" jdbcType="VARCHAR"/>
+        <result property="frameWorkID" column="FrameWorkID" jdbcType="VARCHAR"/>
+        <result property="monthPlanContent" column="MonthPlanContent" jdbcType="VARCHAR"/>
+        <result property="monthPlaneID" column="MonthPlaneID" jdbcType="INTEGER"/>
+        <result property="fyear" column="FYear" jdbcType="INTEGER"/>
+        <result property="fMonth" column="FMonth" jdbcType="INTEGER"/>
+        <result property="monthPlanCreater" column="MonthPlanCreater" jdbcType="VARCHAR"/>
+        <result property="monthPlanCreateUnit" column="MonthPlanCreateUnit" jdbcType="VARCHAR"/>
+        <result property="monthPlanMajorType" column="MonthPlanMajorType" jdbcType="VARCHAR"/>
+        <result property="monthPlanName" column="MonthPlanName" jdbcType="VARCHAR"/>
+        <result property="monthPlanStatus" column="MonthPlanStatus" jdbcType="BIT"/>
+        <result property="monthPlanType" column="MonthPlanType" jdbcType="VARCHAR"/>
+        <result property="monthPlanFrequency" column="MonthPlanFrequency" jdbcType="VARCHAR"/>
+        <result property="monthPlanUUID" column="MonthPlanUUID" jdbcType="VARCHAR"/>
+        <result property="riskSiteName" column="RiskSiteName" jdbcType="VARCHAR"/>
+        <collection property="mMonthPlanItems"
+                    javaType="cn.com.kingc.risk.model.Riskcontrolplanebymonthitem">
+            <result property="coalMineName" column="ICoalMineName" jdbcType="VARCHAR"/>
+            <result property="frameWorkID" column="IFrameWorkID" jdbcType="VARCHAR"/>
+            <result property="monthPlaneID" column="IMonthPlaneID" jdbcType="INTEGER"/>
+            <result property="itemID" column="IItemID" jdbcType="INTEGER"/>
+            <result property="itemUUID" column="IItemUUID" jdbcType="VARCHAR"/>
+            <result property="itemCheckerID" column="IItemCheckerID" jdbcType="INTEGER"/>
+            <result property="itemCheckerName" column="IItemCheckerName" jdbcType="VARCHAR"/>
+            <result property="itemUnitID" column="IItemUnitID" jdbcType="INTEGER"/>
+            <result property="unitName" column="IUnitName" jdbcType="VARCHAR"/>
+            <result property="keyContent" column="IKeyContent" jdbcType="VARCHAR"/>
+            <result property="riskSiteID" column="IRiskSiteID" jdbcType="INTEGER"/>
+            <result property="planStartDate" column="IPlanStartDate" jdbcType="VARCHAR"/>
+            <result property="planEndDate" column="IPlanEndDate" jdbcType="VARCHAR"/>
+            <result property="riskHazardsCount" column="IRiskHazardsCount" jdbcType="INTEGER"/>
+            <result property="controlMeasureCount" column="IControlMeasureCount" jdbcType="INTEGER"/>
+            <result property="monthPlanItemStatus" column="IMonthPlanItemStatus" jdbcType="BIT"/>
+            <result property="name" column="IName" jdbcType="VARCHAR"/>
+            <result property="riskDamageType" column="IRiskDamageType" jdbcType="VARCHAR"/>
+            <result property="riskLevel" column="IRiskLevel" jdbcType="VARCHAR"/>
+            <result property="riskColor" column="IRiskColor" jdbcType="VARCHAR"/>
+
+        </collection>
+
+        <!--column="{monthPlaneID=MonthPlaneID,frameWorkID=FrameWorkID}"-->
+        <!--ofType="cn.com.kingc.risk.model.Riskcontrolplanebymonthitem"-->
+        <!--select="findItemByMonthPlaneId"/>-->
+    </resultMap>
+
+    <resultMap id="RiskcontrolplanebymonthSimpleMap" type="cn.com.kingc.risk.model.Riskcontrolplanebymonth">
+        <result property="coalMineName" column="CoalMineName" jdbcType="VARCHAR"/>
+        <result property="frameWorkID" column="FrameWorkID" jdbcType="VARCHAR"/>
+        <result property="monthPlanContent" column="MonthPlanContent" jdbcType="VARCHAR"/>
+        <result property="monthPlaneID" column="MonthPlaneID" jdbcType="INTEGER"/>
+        <result property="fyear" column="FYear" jdbcType="INTEGER"/>
+        <result property="fMonth" column="FMonth" jdbcType="INTEGER"/>
+        <result property="monthPlanCreater" column="MonthPlanCreater" jdbcType="VARCHAR"/>
+        <result property="monthPlanCreateUnit" column="MonthPlanCreateUnit" jdbcType="VARCHAR"/>
+        <result property="monthPlanMajorType" column="MonthPlanMajorType" jdbcType="VARCHAR"/>
+        <result property="monthPlanName" column="MonthPlanName" jdbcType="VARCHAR"/>
+        <result property="monthPlanStatus" column="MonthPlanStatus" jdbcType="BIT"/>
+        <result property="monthPlanType" column="MonthPlanType" jdbcType="VARCHAR"/>
+        <result property="monthPlanFrequency" column="MonthPlanFrequency" jdbcType="VARCHAR"/>
+        <result property="monthPlanUUID" column="MonthPlanUUID" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+            CoalMineName,
+            FrameWorkID,
+            MonthPlanContent,
+            MonthPlaneID,
+            FYear,
+            FMonth,
+            MonthPlanCreater,
+            MonthPlanCreateUnit,
+            MonthPlanMajorType,
+            MonthPlanName,
+            MonthPlanStatus,
+            MonthPlanType,
+            MonthPlanFrequency,
+            MonthPlanUUID
+    </sql>
+
+    <sql id="MonthJoinItem">
+        M.CoalMineName,
+        M.FrameWorkID,
+        M.MonthPlanContent,
+        M.MonthPlaneID,
+        M.FYear,
+        M.FMonth,
+        M.MonthPlanCreater,
+        M.MonthPlanCreateUnit,
+        M.MonthPlanMajorType,
+        M.MonthPlanName,
+        M.MonthPlanStatus,
+        M.MonthPlanType,
+        M.MonthPlanFrequency,
+        M.MonthPlanUUID,
+        I.CoalMineName AS ICoalMineName,
+        I.FrameWorkID AS IFrameWorkID,
+        I.MonthPlaneID AS IMonthPlaneID,
+        I.ItemID AS IItemID,
+        I.ItemUUID AS IItemUUID,
+        I.ItemCheckerID AS IItemCheckerID,
+        I.ItemCheckerName AS IItemCheckerName,
+        I.ItemUnitID AS IItemUnitID,
+        I.UnitName AS IUnitName,
+        I.KeyContent AS IKeyContent,
+        I.RiskSiteID AS IRiskSiteID,
+        I.PlanStartDate AS IPlanStartDate,
+        I.PlanEndDate AS IPlanEndDate,
+        I.RiskHazardsCount AS IRiskHazardsCount,
+        I.ControlMeasureCount AS IControlMeasureCount,
+        I.MonthPlanItemStatus AS IMonthPlanItemStatus
+    </sql>
+
+
+    <insert id="addRiskcontrolplanebymonth" parameterType="cn.com.kingc.risk.model.Riskcontrolplanebymonth"
+            useGeneratedKeys="true" keyProperty="monthPlaneID">
+        insert into riskcontrolplanebymonth (
+                CoalMineName,
+                FrameWorkID,
+                MonthPlanContent,
+                MonthPlaneID,
+                FYear,
+                FMonth,
+                MonthPlanCreater,
+                MonthPlanCreateUnit,
+                MonthPlanMajorType,
+                MonthPlanName,
+                MonthPlanStatus,
+                MonthPlanType,
+                MonthPlanFrequency,
+                MonthPlanUUID
+        )
+        values(
+                #{coalMineName, jdbcType=VARCHAR}  ,
+                #{frameWorkID, jdbcType=VARCHAR}  ,
+                #{monthPlanContent, jdbcType=VARCHAR}  ,
+                #{monthPlaneID, jdbcType=INTEGER}  ,
+                #{fyear, jdbcType=INTEGER}  ,
+                #{fMonth, jdbcType=INTEGER}  ,
+                #{monthPlanCreater, jdbcType=VARCHAR}  ,
+                #{monthPlanCreateUnit, jdbcType=VARCHAR}  ,
+                #{monthPlanMajorType, jdbcType=VARCHAR}  ,
+                #{monthPlanName, jdbcType=VARCHAR}  ,
+                #{monthPlanStatus, jdbcType=BIT}  ,
+                #{monthPlanType, jdbcType=VARCHAR}  ,
+                #{monthPlanFrequency, jdbcType=VARCHAR}  ,
+                #{monthPlanUUID, jdbcType=VARCHAR}  
+        )
+    </insert>
+
+    <delete id="deleteRiskcontrolplanebymonth" parameterType="cn.com.kingc.risk.model.Riskcontrolplanebymonth">
+        DELETE FROM riskcontrolplanebymonth
+        WHERE  MonthPlaneID = #{monthPlaneID,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteRiskcontrolplanebymonthByID" parameterType="java.lang.Integer">
+        DELETE FROM riskcontrolplanebymonth
+        WHERE  MonthPlaneID = #{monthPlaneID,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteRisksiteoutofcontrolAndRiskcontrolanalyze" parameterType="java.lang.Integer">
+
+        DELETE FROM riskcontrolanalyzeitem
+        WHERE mAnalyzeID IN (SELECT mAnalyzeID FROM riskcontrolanalyze WHERE MonthPlaneID=#{monthPlaneID,jdbcType=INTEGER});
+
+        DELETE FROM riskcontrolanalyze
+        WHERE MonthPlaneID=#{monthPlaneID,jdbcType=INTEGER};
+
+        DELETE FROM risksiteoutofcontrolattachment WHERE CheckRecordID IN (SELECT CheckRecordID FROM risksiteoutofcontrol
+        WHERE MonthPlaneID=#{monthPlaneID,jdbcType=INTEGER});
+
+        DELETE FROM risksiteoutofcontrolitem
+        WHERE CheckRecordID IN (SELECT CheckRecordID FROM risksiteoutofcontrol WHERE MonthPlaneID=#{monthPlaneID,jdbcType=INTEGER});
+
+        DELETE FROM risksiteoutofcontrol
+        WHERE  MonthPlaneID = #{monthPlaneID,jdbcType=INTEGER};
+    </delete>
+    <update id="updateRiskcontrolplanebymonth" parameterType="cn.com.kingc.risk.model.Riskcontrolplanebymonth">
+        UPDATE riskcontrolplanebymonth
+        <set>
+            <if test="coalMineName!= null ">
+                CoalMineName = #{coalMineName, jdbcType=VARCHAR} ,
+            </if>
+            <if test="frameWorkID!= null ">
+                FrameWorkID = #{frameWorkID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="monthPlanContent!= null ">
+                MonthPlanContent = #{monthPlanContent, jdbcType=VARCHAR} ,
+            </if>
+            <if test="monthPlaneID!= null ">
+                MonthPlaneID = #{monthPlaneID, jdbcType=INTEGER} ,
+            </if>
+            <if test="fyear!= null ">
+                FYear=#{fyear, jdbcType=INTEGER} ,
+            </if>
+            <if test="fMonth!= null ">
+                FMonth=#{fMonth, jdbcType=INTEGER},
+            </if>
+            <if test="monthPlanCreater!= null ">
+                MonthPlanCreater = #{monthPlanCreater, jdbcType=VARCHAR} ,
+            </if>
+            <if test="monthPlanCreateUnit!= null ">
+                MonthPlanCreateUnit = #{monthPlanCreateUnit, jdbcType=VARCHAR} ,
+            </if>
+            <if test="monthPlanMajorType!= null ">
+                MonthPlanMajorType = #{monthPlanMajorType, jdbcType=VARCHAR} ,
+            </if>
+            <if test="monthPlanName!= null ">
+                MonthPlanName = #{monthPlanName, jdbcType=VARCHAR} ,
+            </if>
+            <if test="monthPlanStatus!= null ">
+                MonthPlanStatus = #{monthPlanStatus, jdbcType=BIT} ,
+            </if>
+            <if test="monthPlanType!= null ">
+                MonthPlanType = #{monthPlanType, jdbcType=VARCHAR} ,
+            </if>
+            <if test="monthPlanFrequency!= null">
+                MonthPlanFrequency = #{monthPlanFrequency, jdbcType=VARCHAR} ,
+            </if>
+            <if test="monthPlanUUID!= null ">
+                MonthPlanUUID = #{monthPlanUUID, jdbcType=VARCHAR}
+            </if>
+        </set>
+        WHERE MonthPlaneID = #{monthPlaneID,jdbcType=INTEGER}
+    </update>
+
+    <select id="getRiskcontrolplanebymonth" resultMap="RiskcontrolplanebymonthMap"
+            parameterType="INTEGER">
+        select
+        <include refid="MonthJoinItem"/>
+        FROM
+        riskcontrolplanebymonth M
+        LEFT JOIN riskcontrolplanebymonthitem I ON M.FrameWorkID = I.FrameWorkID
+        AND M.MonthPlaneID = I.MonthPlaneID
+        WHERE M.MonthPlaneID = #{monthPlaneID,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRiskcontrolplanebymonthCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  riskcontrolplanebymonth
+    </select>
+
+    <select id="getRiskcontrolplanebymonthByPage" resultMap="RiskcontrolplanebymonthMap"
+            parameterType="java.lang.Integer">
+        select
+        <include refid="MonthJoinItem"/>
+        from
+        riskcontrolplanebymonth M
+        LEFT JOIN riskcontrolplanebymonthitem I
+        ON M.FrameWorkID = I.FrameWorkID
+        AND M.MonthPlaneID = I.MonthPlaneID
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRiskcontrolplanebymonthCountByRiskcontrolplanebymonth" resultType="java.lang.Integer">
+        select
+        count(*)
+        from riskcontrolplanebymonth
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!= ''">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!=''">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="monthPlanContent!= null and monthPlanContent!=''">
+            and MonthPlanContent = #{monthPlanContent, jdbcType=VARCHAR}
+        </if>
+        <if test="monthPlaneID!= null ">
+            and MonthPlaneID = #{monthPlaneID, jdbcType=INTEGER}
+        </if>
+        <if test="fyear!= null ">
+            and FYear=#{fyear, jdbcType=INTEGER}
+        </if>
+        <if test="fMonth!= null ">
+            and FMonth=#{fMonth, jdbcType=INTEGER}
+        </if>
+        <if test="monthPlanCreater!= null and monthPlanCreater!= ''">
+            and MonthPlanCreater = #{monthPlanCreater, jdbcType=VARCHAR}
+        </if>
+        <if test="monthPlanCreateUnit!= null and monthPlanCreateUnit!=''">
+            and MonthPlanCreateUnit = #{monthPlanCreateUnit, jdbcType=VARCHAR}
+        </if>
+        <if test="monthPlanMajorType!= null and monthPlanMajorType!=''">
+            and MonthPlanMajorType = #{monthPlanMajorType, jdbcType=VARCHAR}
+        </if>
+        <if test="monthPlanName!= null and monthPlanName!=''">
+            and MonthPlanName like CONCAT(CONCAT('%', #{monthPlanName}), '%')
+        </if>
+        <if test="monthPlanStatus!= null ">
+            and MonthPlanStatus = #{monthPlanStatus, jdbcType=BIT}
+        </if>
+        <if test="monthPlanType!= null and monthPlanType!=''">
+            and MonthPlanType = #{monthPlanType, jdbcType=VARCHAR}
+        </if>
+        <if test="monthPlanFrequency!= null and monthPlanFrequency!=''">
+            and MonthPlanFrequency = #{monthPlanFrequency, jdbcType=VARCHAR}
+        </if>
+        <if test="monthPlanUUID!= null and monthPlanUUID!=''">
+            and MonthPlanUUID = #{monthPlanUUID, jdbcType=VARCHAR}
+        </if>
+        ORDER BY MonthPlaneID DESC
+    </select>
+
+    <select id="getRiskcontrolplanebymonthByPageAndRiskcontrolplanebymonth" resultMap="RiskcontrolplanebymonthMap">
+        select
+        <include refid="MonthJoinItem"/>
+        from
+        (
+        SELECT * FROM riskcontrolplanebymonth
+        where 1=1
+        <if test="riskcontrolplanebymonth.coalMineName!= null and riskcontrolplanebymonth.coalMineName!=''">
+            and CoalMineName = #{riskcontrolplanebymonth.coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolplanebymonth.frameWorkID!= null and riskcontrolplanebymonth.frameWorkID!=''">
+            and FrameWorkID = #{riskcontrolplanebymonth.frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolplanebymonth.monthPlanContent!= null and riskcontrolplanebymonth.monthPlanContent!=''">
+            and MonthPlanContent = #{riskcontrolplanebymonth.monthPlanContent, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolplanebymonth.monthPlaneID!= null ">
+            and MonthPlaneID = #{riskcontrolplanebymonth.monthPlaneID, jdbcType=INTEGER}
+        </if>
+        <if test="riskcontrolplanebymonth.fyear!= null ">
+            and FYear=#{riskcontrolplanebymonth.fyear, jdbcType=INTEGER}
+        </if>
+        <if test="riskcontrolplanebymonth.fMonth!= null ">
+            and FMonth=#{riskcontrolplanebymonth.fMonth, jdbcType=INTEGER}
+        </if>
+        <if test="riskcontrolplanebymonth.monthPlanCreater!= null and riskcontrolplanebymonth.monthPlanCreater!=''">
+            and MonthPlanCreater = #{riskcontrolplanebymonth.monthPlanCreater, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolplanebymonth.monthPlanCreateUnit!= null and riskcontrolplanebymonth.monthPlanCreateUnit!=''">
+            and MonthPlanCreateUnit = #{riskcontrolplanebymonth.monthPlanCreateUnit, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolplanebymonth.monthPlanMajorType!= null and riskcontrolplanebymonth.monthPlanMajorType!=''">
+            and MonthPlanMajorType = #{riskcontrolplanebymonth.monthPlanMajorType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolplanebymonth.monthPlanName!= null and riskcontrolplanebymonth.monthPlanName!=''">
+            and MonthPlanName like CONCAT(CONCAT('%', #{riskcontrolplanebymonth.monthPlanName}), '%')
+        </if>
+        <if test="riskcontrolplanebymonth.monthPlanStatus!= null ">
+            and MonthPlanStatus = #{riskcontrolplanebymonth.monthPlanStatus, jdbcType=BIT}
+        </if>
+        <if test="riskcontrolplanebymonth.monthPlanType!= null and riskcontrolplanebymonth.monthPlanType!=''">
+            and MonthPlanType = #{riskcontrolplanebymonth.monthPlanType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolplanebymonth.monthPlanFrequency!= null and riskcontrolplanebymonth.monthPlanFrequency!=''">
+            and MonthPlanFrequency = #{riskcontrolplanebymonth.monthPlanFrequency, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolplanebymonth.monthPlanUUID!= null and riskcontrolplanebymonth.monthPlanUUID!=''">
+            and MonthPlanUUID = #{riskcontrolplanebymonth.monthPlanUUID, jdbcType=VARCHAR}
+        </if>
+        ORDER BY MonthPlaneID DESC
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},
+        #{pageEnd,jdbcType=INTEGER}
+        )M
+        LEFT JOIN riskcontrolplanebymonthitem I
+        ON M.FrameWorkID = I.FrameWorkID
+        AND M.MonthPlaneID = I.MonthPlaneID
+
+    </select>
+
+    <select id="getRiskcontrolplanebymonthData" resultMap="RiskcontrolplanebymonthMap">
+        select
+        M.CoalMineName,
+        M.FrameWorkID,
+        M.MonthPlanContent,
+        M.MonthPlaneID,
+        M.FYear,
+        M.FMonth,
+        M.MonthPlanCreater,
+        M.MonthPlanCreateUnit,
+        M.MonthPlanMajorType,
+        M.MonthPlanName,
+        M.MonthPlanStatus,
+        M.MonthPlanType,
+        M.MonthPlanFrequency,
+        M.MonthPlanUUID,
+        I.CoalMineName AS ICoalMineName,
+        I.FrameWorkID AS IFrameWorkID,
+        I.MonthPlaneID AS IMonthPlaneID,
+        I.ItemID AS IItemID,
+        I.ItemUUID AS IItemUUID,
+        I.ItemCheckerID AS IItemCheckerID,
+        I.ItemCheckerName AS IItemCheckerName,
+        I.ItemUnitID AS IItemUnitID,
+        I.UnitName AS IUnitName,
+        I.KeyContent AS IKeyContent,
+        I.RiskSiteID AS IRiskSiteID,
+        I.PlanStartDate AS IPlanStartDate,
+        I.PlanEndDate AS IPlanEndDate,
+        I.RiskHazardsCount AS IRiskHazardsCount,
+        I.ControlMeasureCount AS IControlMeasureCount,
+        I.MonthPlanItemStatus AS IMonthPlanItemStatus,
+        rs.Name AS IName,
+        rs.RiskDamageType AS IRiskDamageType,
+        rls.RiskLevel AS IRiskLevel,
+        rls.RiskColor AS IRiskColor
+        from
+        (
+        SELECT * FROM riskcontrolplanebymonth
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!=''">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!=''">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="monthPlanContent!= null and monthPlanContent!=''">
+            and MonthPlanContent = #{monthPlanContent, jdbcType=VARCHAR}
+        </if>
+        <if test="monthPlaneID!= null ">
+            and MonthPlaneID = #{monthPlaneID, jdbcType=INTEGER}
+        </if>
+        <if test="fyear!= null ">
+            and FYear=#{fyear, jdbcType=INTEGER}
+        </if>
+        <if test="fMonth!= null ">
+            and FMonth=#{fMonth, jdbcType=INTEGER}
+        </if>
+        <if test="monthPlanCreater!= null and monthPlanCreater!=''">
+            and MonthPlanCreater = #{monthPlanCreater, jdbcType=VARCHAR}
+        </if>
+        <if test="monthPlanCreateUnit!= null and monthPlanCreateUnit!=''">
+            and MonthPlanCreateUnit = #{monthPlanCreateUnit, jdbcType=VARCHAR}
+        </if>
+        <if test="monthPlanMajorType!= null and monthPlanMajorType!=''">
+            and MonthPlanMajorType = #{monthPlanMajorType, jdbcType=VARCHAR}
+        </if>
+        <if test="monthPlanName!= null and monthPlanName!=''">
+            and MonthPlanName like CONCAT(CONCAT('%', #{monthPlanName}), '%')
+        </if>
+        <if test="monthPlanStatus!= null ">
+            and MonthPlanStatus = #{monthPlanStatus, jdbcType=BIT}
+        </if>
+        <if test="monthPlanType!= null and monthPlanType!=''">
+            and MonthPlanType = #{monthPlanType, jdbcType=VARCHAR}
+        </if>
+        <if test="monthPlanFrequency!= null">
+            and MonthPlanFrequency = #{monthPlanFrequency, jdbcType=VARCHAR}
+        </if>
+        <if test="monthPlanUUID!= null and monthPlanUUID!=''">
+            and MonthPlanUUID = #{monthPlanUUID, jdbcType=VARCHAR}
+        </if>
+        )M
+        LEFT JOIN riskcontrolplanebymonthitem I
+        ON M.FrameWorkID = I.FrameWorkID
+        AND M.MonthPlaneID = I.MonthPlaneID
+        LEFT JOIN risksite rs on rs.RiskSiteID = I.RiskSiteID
+        LEFT JOIN riskleversetting rls ON rls.RiskLevelSettingID  = rs.RiskLevelSettingID
+
+    </select>
+
+    <update id="updateRiskcontrolplanebymonthItemStatus">
+        UPDATE riskcontrolplanebymonthitem
+        SET MonthPlanItemStatus = 1
+        WHERE
+            FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+            AND MonthPlaneID =  #{monthPlaneID, jdbcType=INTEGER}
+            AND ItemID =  #{itemID, jdbcType=INTEGER};
+
+
+        UPDATE riskcontrolplanebymonth M
+        INNER JOIN (
+            SELECT
+                CASE
+            WHEN COUNT(*) >= 0 THEN
+                0
+            ELSE
+                1
+            END AS WPGHd
+            FROM
+                riskcontrolplanebymonthitem
+            WHERE
+                FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+                AND MonthPlaneID = #{monthPlaneID, jdbcType=INTEGER}
+                AND MonthPlanItemStatus = 0
+        ) T ON M.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        AND M.MonthPlaneID = #{monthPlaneID, jdbcType=INTEGER}
+        SET M.MonthPlanStatus = T.WPGHd;
+
+    </update>
+
+    <select id="getRiskControlMonthPlaneByUser" resultMap="RiskcontrolplanebymonthMap">
+
+        SELECT
+        <include refid="MonthJoinItem"/>,
+        R.`Name` AS RiskSiteName
+        FROM
+        riskcontrolplanebymonth M
+        INNER JOIN riskcontrolplanebymonthitem I ON M.FrameWorkID = I.FrameWorkID AND M.MonthPlaneID=I.MonthPlaneID
+        LEFT JOIN risksite R ON M.FrameWorkID = R.FrameWorkID AND I.RiskSiteID = R.RiskSiteID
+        WHERE
+        <![CDATA[
+            DATEDIFF(NOW(),I.PlanStartDate) <=30
+        ]]>
+        <if test="frameWorkID!= null and frameWorkID!=''">
+            AND M.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        AND I.UnitName LIKE CONCAT(CONCAT('%', #{monthPlanUnitName, jdbcType=VARCHAR}), '%')
+    </select>
+
+    <select id="getRiskControlMonthPlaneByDHZ" resultMap="RiskcontrolplanebymonthMap">
+
+        SELECT
+        M.CoalMineName,
+        M.FrameWorkID,
+        M.MonthPlanContent,
+        M.MonthPlaneID,
+        M.FYear,
+        M.FMonth,
+        M.MonthPlanCreater,
+        M.MonthPlanCreateUnit,
+        M.MonthPlanMajorType,
+        M.MonthPlanName,
+        M.MonthPlanStatus,
+        M.MonthPlanType,
+        M.MonthPlanFrequency,
+        M.MonthPlanUUID,
+        I.CoalMineName AS ICoalMineName,
+        I.FrameWorkID AS IFrameWorkID,
+        I.MonthPlaneID AS IMonthPlaneID,
+        I.ItemID AS IItemID,
+        I.ItemUUID AS IItemUUID,
+        I.ItemCheckerID AS IItemCheckerID,
+        I.ItemCheckerName AS IItemCheckerName,
+        I.ItemUnitID AS IItemUnitID,
+        I.UnitName AS IUnitName,
+        I.KeyContent AS IKeyContent,
+        I.RiskSiteID AS IRiskSiteID,
+        I.PlanStartDate AS IPlanStartDate,
+        I.PlanEndDate AS IPlanEndDate,
+        I.RiskHazardsCount AS IRiskHazardsCount,
+        I.ControlMeasureCount AS IControlMeasureCount,
+        I.MonthPlanItemStatus AS IMonthPlanItemStatus,
+        R.`Name` AS IName
+        FROM
+        riskcontrolplanebymonth M
+        INNER JOIN riskcontrolplanebymonthitem I ON M.FrameWorkID = I.FrameWorkID AND M.MonthPlaneID=I.MonthPlaneID
+        LEFT JOIN risksite R ON M.FrameWorkID = R.FrameWorkID AND I.RiskSiteID = R.RiskSiteID
+        WHERE
+        <![CDATA[
+            DATEDIFF(NOW(),I.PlanStartDate) <=30
+        ]]>
+        <if test="frameWorkID!= null and frameWorkID!=''">
+            AND M.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        AND I.UnitName LIKE CONCAT(CONCAT('%', #{monthPlanUnitName, jdbcType=VARCHAR}), '%')
+    </select>
+
+</mapper>

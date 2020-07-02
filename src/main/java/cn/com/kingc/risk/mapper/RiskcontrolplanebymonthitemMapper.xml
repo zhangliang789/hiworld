@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.kingc.risk.dao.RiskcontrolplanebymonthitemDao">
+    <resultMap id="RiskcontrolplanebymonthitemMap" type="cn.com.kingc.risk.model.Riskcontrolplanebymonthitem">
+        <result property="coalMineName" column="CoalMineName" jdbcType="VARCHAR"/>
+        <result property="frameWorkID" column="FrameWorkID" jdbcType="VARCHAR"/>
+        <result property="monthPlaneID" column="MonthPlaneID" jdbcType="INTEGER"/>
+        <result property="itemID" column="ItemID" jdbcType="INTEGER"/>
+        <result property="itemUUID" column="ItemUUID" jdbcType="VARCHAR"/>
+        <result property="itemCheckerID" column="ItemCheckerID" jdbcType="INTEGER"/>
+        <result property="itemCheckerName" column="ItemCheckerName" jdbcType="VARCHAR"/>
+        <result property="itemUnitID" column="ItemUnitID" jdbcType="INTEGER"/>
+        <result property="unitName" column="UnitName" jdbcType="VARCHAR"/>
+        <result property="keyContent" column="KeyContent" jdbcType="VARCHAR"/>
+        <result property="riskSiteID" column="RiskSiteID" jdbcType="INTEGER"/>
+        <result property="planStartDate" column="PlanStartDate" jdbcType="VARCHAR"/>
+        <result property="planEndDate" column="PlanEndDate" jdbcType="VARCHAR"/>
+        <result property="riskHazardsCount" column="RiskHazardsCount" jdbcType="INTEGER"/>
+        <result property="controlMeasureCount" column="ControlMeasureCount" jdbcType="INTEGER"/>
+        <association property="mRiskSite"
+                     column="{riskSiteID=RiskSiteID,frameWorkID=FrameWorkID}"
+                     javaType="cn.com.kingc.risk.model.Risksite"
+                     select="findRiskSiteByRiskSiteID"/>
+    </resultMap>
+    <resultMap id="RiskcontrolplanebymonthitemMapB" type="cn.com.kingc.risk.model.Riskcontrolplanebymonthitem">
+        <result property="coalMineName" column="CoalMineName" jdbcType="VARCHAR"/>
+        <result property="frameWorkID" column="FrameWorkID" jdbcType="VARCHAR"/>
+        <result property="monthPlaneID" column="MonthPlaneID" jdbcType="INTEGER"/>
+        <result property="itemID" column="ItemID" jdbcType="INTEGER"/>
+        <result property="itemUUID" column="ItemUUID" jdbcType="VARCHAR"/>
+        <result property="itemCheckerID" column="ItemCheckerID" jdbcType="INTEGER"/>
+        <result property="itemCheckerName" column="ItemCheckerName" jdbcType="VARCHAR"/>
+        <result property="itemUnitID" column="ItemUnitID" jdbcType="INTEGER"/>
+        <result property="unitName" column="UnitName" jdbcType="VARCHAR"/>
+        <result property="keyContent" column="KeyContent" jdbcType="VARCHAR"/>
+        <result property="riskSiteID" column="RiskSiteID" jdbcType="INTEGER"/>
+        <result property="planStartDate" column="PlanStartDate" jdbcType="VARCHAR"/>
+        <result property="planEndDate" column="PlanEndDate" jdbcType="VARCHAR"/>
+        <result property="riskHazardsCount" column="RiskHazardsCount" jdbcType="INTEGER"/>
+        <result property="controlMeasureCount" column="ControlMeasureCount" jdbcType="INTEGER"/>
+
+    </resultMap>
+    <select id="findRiskSiteByRiskSiteID" parameterType="java.util.Map"
+            resultMap="cn.com.kingc.risk.dao.RisksiteDao.RisksiteMap">
+        select
+        <include refid="cn.com.kingc.risk.dao.RisksiteDao.Base_Column_List"/>
+        from risksite R
+        LEFT JOIN riskLeverSetting D ON R.FrameWorkID = D.FrameWorkID
+        AND R.RiskLevelSettingID = D.RiskLevelSettingID
+        WHERE
+          R.RiskSiteID=#{riskSiteID,jdbcType=INTEGER} AND R.FrameWorkID=#{frameWorkID}
+    </select>
+
+    <sql id="Base_Column_List">
+            CoalMineName,
+            FrameWorkID,
+            MonthPlaneID,
+            ItemID,
+            ItemUUID,
+            ItemCheckerID,
+            ItemCheckerName,
+            ItemUnitID,
+            UnitName,
+            KeyContent,
+            RiskSiteID,
+            PlanStartDate,
+            PlanEndDate,
+            RiskHazardsCount,
+            ControlMeasureCount
+    </sql>
+    <select id="findriskcontrolplanebymonthitemAll" resultMap="RiskcontrolplanebymonthitemMapB">
+        select
+         <include refid="Base_Column_List"/>
+        from riskcontrolplanebymonthitem
+
+    </select>
+    <insert id="addRiskcontrolplanebymonthitem" parameterType="cn.com.kingc.risk.model.Riskcontrolplanebymonthitem"
+            useGeneratedKeys="true" keyProperty="itemID">
+        insert into riskcontrolplanebymonthitem (
+                CoalMineName,
+                FrameWorkID,
+                MonthPlaneID,
+                ItemID,
+                ItemUUID,
+                ItemCheckerID,
+                ItemCheckerName,
+                ItemUnitID,
+                UnitName,
+                KeyContent,
+                RiskSiteID,
+                PlanStartDate,
+                PlanEndDate,
+                RiskHazardsCount,
+                ControlMeasureCount
+        )
+        values(
+                #{coalMineName, jdbcType=VARCHAR}  ,
+                #{frameWorkID, jdbcType=VARCHAR}  ,
+                #{monthPlaneID, jdbcType=INTEGER}  ,
+                #{itemID, jdbcType=INTEGER}  ,
+                #{itemUUID, jdbcType=VARCHAR}  ,
+                #{itemCheckerID, jdbcType=INTEGER}  ,
+                #{itemCheckerName, jdbcType=VARCHAR}  ,
+                #{itemUnitID, jdbcType=INTEGER}  ,
+                #{unitName, jdbcType=VARCHAR}  ,
+                #{keyContent, jdbcType=VARCHAR}  ,
+                #{riskSiteID, jdbcType=INTEGER}  ,
+                #{planStartDate,jdbcType=VARCHAR},
+                #{planEndDate,jdbcType=VARCHAR},
+                #{riskHazardsCount, jdbcType=INTEGER}  ,
+                #{controlMeasureCount, jdbcType=INTEGER}
+        )
+    </insert>
+
+    <insert id="addRiskcontrolplanebymonthitemList" useGeneratedKeys="true" parameterType="java.util.List">
+        insert into riskcontrolplanebymonthitem (
+        CoalMineName,
+        FrameWorkID,
+        MonthPlaneID,
+        ItemID,
+        ItemUUID,
+        ItemCheckerID,
+        ItemCheckerName,
+        ItemUnitID,
+        UnitName,
+        KeyContent,
+        RiskSiteID,
+        PlanStartDate,
+        PlanEndDate,
+        RiskHazardsCount,
+        ControlMeasureCount
+        )
+        values
+        <foreach collection="riskcontrolplanebymonthitems" item="item" index="index" separator=",">
+           (
+            #{item.coalMineName, jdbcType=VARCHAR} ,
+            #{item.frameWorkID, jdbcType=VARCHAR} ,
+            #{item.monthPlaneID, jdbcType=INTEGER} ,
+            #{item.itemID, jdbcType=INTEGER} ,
+            #{item.itemUUID, jdbcType=VARCHAR} ,
+            #{item.itemCheckerID, jdbcType=INTEGER} ,
+            #{item.itemCheckerName, jdbcType=VARCHAR} ,
+            #{item.itemUnitID, jdbcType=INTEGER} ,
+            #{item.unitName, jdbcType=VARCHAR} ,
+            #{item.keyContent, jdbcType=VARCHAR} ,
+            #{item.riskSiteID, jdbcType=INTEGER},
+            #{item.planStartDate,jdbcType=VARCHAR},
+            #{item.planEndDate,jdbcType=VARCHAR},
+            #{item.riskHazardsCount, jdbcType=INTEGER}  ,
+            #{item.controlMeasureCount, jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+
+
+    <delete id="deleteRiskcontrolplanebymonthitem" parameterType="cn.com.kingc.risk.model.Riskcontrolplanebymonthitem">
+        DELETE A.*
+        FROM
+            risksiteoutofcontrol r
+        INNER JOIN risksiteoutofcontrolitem O ON r.CheckRecordID = o.CheckRecordID
+        INNER JOIN RiskControlAnalyzeItem A ON O.ItemID = A.LostControlItemID
+        WHERE
+            r.MonthPlaneID=#{riskcontrolplanebymonthitem.monthPlaneID, jdbcType=INTEGER} AND
+            O.RiskSiteID=#{riskcontrolplanebymonthitem.riskSiteID, jdbcType=INTEGER};
+
+        DELETE o.*
+        FROM
+            risksiteoutofcontrol r
+        INNER JOIN
+            risksiteoutofcontrolitem O
+         ON r.CheckRecordID=o.CheckRecordID
+        WHERE
+            r.MonthPlaneID=#{riskcontrolplanebymonthitem.monthPlaneID, jdbcType=INTEGER} AND
+            O.RiskSiteID=#{riskcontrolplanebymonthitem.riskSiteID, jdbcType=INTEGER};
+
+        DELETE FROM risksiteoutofcontrol
+        WHERE MonthPlaneID=#{riskcontrolplanebymonthitem.monthPlaneID, jdbcType=INTEGER} AND
+        RiskSiteID=#{riskcontrolplanebymonthitem.riskSiteID, jdbcType=INTEGER};
+
+        DELETE FROM riskcontrolplanebymonthitem
+        WHERE  ItemID = #{riskcontrolplanebymonthitem.itemID,jdbcType=INTEGER};
+    </delete>
+
+    <delete id="deleteRiskcontrolplanemonthitemByMonthID" parameterType="java.lang.Integer">
+        DELETE o.*
+        FROM
+            risksiteoutofcontrol r
+        INNER JOIN
+            risksiteoutofcontrolitem O
+         ON r.CheckRecordID=o.CheckRecordID
+        WHERE
+            r.MonthPlaneID=#{monthPlaneID, jdbcType=INTEGER};
+
+        DELETE FROM risksiteoutofcontrol
+        WHERE MonthPlaneID=#{monthPlaneID, jdbcType=INTEGER};
+
+        DELETE FROM riskcontrolplanebymonthitem
+        WHERE  MonthPlaneID=#{monthPlaneID, jdbcType=INTEGER};
+    </delete>
+
+    <delete id="deleteRiskcontrolplanebymonthitemByID" parameterType="java.lang.Integer">
+        DELETE FROM riskcontrolplanebymonthitem
+        WHERE  ItemID = #{itemID,jdbcType=INTEGER}
+    </delete>
+
+    <update id="updateRiskcontrolplanebymonthitem" parameterType="cn.com.kingc.risk.model.Riskcontrolplanebymonthitem">
+        UPDATE riskcontrolplanebymonthitem
+        <set>
+            <if test="riskcontrolplanebymonthitem.coalMineName!= null and riskcontrolplanebymonthitem.coalMineName!= ''">
+                CoalMineName = #{riskcontrolplanebymonthitem.coalMineName, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskcontrolplanebymonthitem.frameWorkID!= null and riskcontrolplanebymonthitem.frameWorkID!= ''">
+                FrameWorkID = #{riskcontrolplanebymonthitem.frameWorkID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskcontrolplanebymonthitem.monthPlaneID!= null and riskcontrolplanebymonthitem.monthPlaneID!= ''">
+                MonthPlaneID = #{riskcontrolplanebymonthitem.monthPlaneID, jdbcType=INTEGER} ,
+            </if>
+            <if test="riskcontrolplanebymonthitem.itemID!= null and riskcontrolplanebymonthitem.itemID!= ''">
+                ItemID = #{riskcontrolplanebymonthitem.itemID, jdbcType=INTEGER} ,
+            </if>
+            <if test="riskcontrolplanebymonthitem.itemUUID!= null and riskcontrolplanebymonthitem.itemUUID!= '' ">
+                ItemUUID = #{riskcontrolplanebymonthitem.itemUUID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskcontrolplanebymonthitem.itemCheckerID!= null and riskcontrolplanebymonthitem.itemCheckerID!= '' ">
+                ItemCheckerID = #{riskcontrolplanebymonthitem.itemCheckerID, jdbcType=INTEGER} ,
+            </if>
+            <if test="riskcontrolplanebymonthitem.itemCheckerName!= null and riskcontrolplanebymonthitem.itemCheckerName!= '' ">
+                ItemCheckerName = #{riskcontrolplanebymonthitem.itemCheckerName, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskcontrolplanebymonthitem.itemUnitID!= null and riskcontrolplanebymonthitem.itemUnitID!= ''">
+                ItemUnitID = #{riskcontrolplanebymonthitem.itemUnitID, jdbcType=INTEGER} ,
+            </if>
+            <if test="riskcontrolplanebymonthitem.unitName!= null and riskcontrolplanebymonthitem.unitName!= ''">
+                UnitName = #{riskcontrolplanebymonthitem.unitName, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskcontrolplanebymonthitem.keyContent!= null and riskcontrolplanebymonthitem.keyContent!= ''">
+                KeyContent = #{riskcontrolplanebymonthitem.keyContent, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskcontrolplanebymonthitem.riskSiteID!= null and riskcontrolplanebymonthitem.riskSiteID!= ''">
+                RiskSiteID = #{riskcontrolplanebymonthitem.riskSiteID, jdbcType=INTEGER},
+            </if>
+            <if test="riskcontrolplanebymonthitem.planStartDate!= null and riskcontrolplanebymonthitem.planStartDate!= ''">
+                AND PlanStartDate = #{planStartDate,jdbcType=VARCHAR}
+            </if>
+            <if test="riskcontrolplanebymonthitem.planEndDate!= null and riskcontrolplanebymonthitem.planEndDate!= ''">
+                AND PlanEndDate = #{planEndDate,jdbcType=VARCHAR}
+            </if>
+            <if test="riskcontrolplanebymonthitem.riskHazardsCount!= null and riskcontrolplanebymonthitem.riskHazardsCount!= '' ">
+                RiskHazardsCount=#{riskcontrolplanebymonthitem.riskHazardsCount, jdbcType=INTEGER}  ,
+            </if>
+            <if test="riskcontrolplanebymonthitem.controlMeasureCount!= null and riskcontrolplanebymonthitem.controlMeasureCount!= ''">
+                ControlMeasureCount=#{riskcontrolplanebymonthitem.controlMeasureCount, jdbcType=INTEGER}
+            </if>
+        </set>
+        WHERE ItemID = #{riskcontrolplanebymonthitem.itemID,jdbcType=INTEGER}
+    </update>
+
+    <select id="getRiskcontrolplanebymonthitem" resultMap="RiskcontrolplanebymonthitemMap">
+        select
+        <include refid="Base_Column_List"/>
+        from riskcontrolplanebymonthitem
+        WHERE ItemID = #{itemID,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRiskcontrolplanebymonthitemCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  riskcontrolplanebymonthitem
+    </select>
+
+    <select id="getRiskcontrolplanebymonthitemByPage" resultMap="RiskcontrolplanebymonthitemMap"
+            parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from riskcontrolplanebymonthitem
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRiskcontrolplanebymonthitemCountByRiskcontrolplanebymonthitem" resultType="java.lang.Integer">
+        select
+        count(*)
+        from riskcontrolplanebymonthitem
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!=''">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!=''">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="monthPlaneID!= null ">
+            and MonthPlaneID = #{monthPlaneID, jdbcType=INTEGER}
+        </if>
+        <if test="itemID!= null ">
+            and ItemID = #{itemID, jdbcType=INTEGER}
+        </if>
+        <if test="itemUUID!= null and itemUUID!=''">
+            and ItemUUID = #{itemUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="itemCheckerID!= null ">
+            and ItemCheckerID = #{itemCheckerID, jdbcType=INTEGER}
+        </if>
+        <if test="itemCheckerName!= null and itemCheckerName!=''">
+            and ItemCheckerName = #{itemCheckerName, jdbcType=VARCHAR}
+        </if>
+        <if test="itemUnitID!= null ">
+            and ItemUnitID = #{itemUnitID, jdbcType=INTEGER}
+        </if>
+        <if test="unitName!= null and unitName!=''">
+            and UnitName = #{unitName, jdbcType=VARCHAR}
+        </if>
+        <if test="keyContent!= null and keyContent!=''">
+            and KeyContent = #{keyContent, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteID!= null ">
+            and RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="planStartDate!= null ">
+            AND PlanStartDate = #{planStartDate,jdbcType=VARCHAR}
+        </if>
+        <if test="planEndDate!= null ">
+            AND PlanEndDate = #{planEndDate,jdbcType=VARCHAR}
+        </if>
+        <if test="riskHazardsCount!= null ">
+            AND RiskHazardsCount=#{riskHazardsCount, jdbcType=INTEGER}
+        </if>
+        <if test="controlMeasureCount!= null ">
+            AND ControlMeasureCount=#{controlMeasureCount, jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <select id="getRiskcontrolplanebymonthitemByPageAndRiskcontrolplanebymonthitem"
+            resultMap="RiskcontrolplanebymonthitemMap">
+        select
+        <include refid="Base_Column_List"/>
+        from riskcontrolplanebymonthitem
+        where 1=1
+        <if test="riskcontrolplanebymonthitem.coalMineName!= null and riskcontrolplanebymonthitem.coalMineName!=''">
+            and CoalMineName = #{riskcontrolplanebymonthitem.coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolplanebymonthitem.frameWorkID!= null and riskcontrolplanebymonthitem.frameWorkID!=''">
+            and FrameWorkID = #{riskcontrolplanebymonthitem.frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolplanebymonthitem.monthPlaneID!= null ">
+            and MonthPlaneID = #{riskcontrolplanebymonthitem.monthPlaneID, jdbcType=INTEGER}
+        </if>
+        <if test="riskcontrolplanebymonthitem.itemID!= null ">
+            and ItemID = #{riskcontrolplanebymonthitem.itemID, jdbcType=INTEGER}
+        </if>
+        <if test="riskcontrolplanebymonthitem.itemUUID!= null and riskcontrolplanebymonthitem.itemUUID!=''">
+            and ItemUUID = #{riskcontrolplanebymonthitem.itemUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolplanebymonthitem.itemCheckerID!= null ">
+            and ItemCheckerID = #{riskcontrolplanebymonthitem.itemCheckerID, jdbcType=INTEGER}
+        </if>
+        <if test="riskcontrolplanebymonthitem.itemCheckerName!= null and riskcontrolplanebymonthitem.itemCheckerName!=''">
+            and ItemCheckerName = #{riskcontrolplanebymonthitem.itemCheckerName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolplanebymonthitem.itemUnitID!= null ">
+            and ItemUnitID = #{riskcontrolplanebymonthitem.itemUnitID, jdbcType=INTEGER}
+        </if>
+        <if test="riskcontrolplanebymonthitem.unitName!= null and riskcontrolplanebymonthitem.unitName!=''">
+            and UnitName = #{riskcontrolplanebymonthitem.unitName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolplanebymonthitem.keyContent!= null and riskcontrolplanebymonthitem.keyContent!=''">
+            and KeyContent = #{riskcontrolplanebymonthitem.keyContent, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolplanebymonthitem.riskSiteID!= null ">
+            and RiskSiteID = #{riskcontrolplanebymonthitem.riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="planStartDate!= null ">
+            AND PlanStartDate = #{planStartDate,jdbcType=VARCHAR}
+        </if>
+        <if test="planEndDate!= null ">
+            AND PlanEndDate = #{planEndDate,jdbcType=VARCHAR}
+        </if>
+        <if test="riskHazardsCount!= null ">
+            AND RiskHazardsCount=#{riskHazardsCount, jdbcType=INTEGER}
+        </if>
+        <if test="controlMeasureCount!= null ">
+            AND ControlMeasureCount=#{controlMeasureCount, jdbcType=INTEGER}
+        </if>
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRiskcontrolplanebymonthitemData" resultMap="RiskcontrolplanebymonthitemMap">
+        select
+        <include refid="Base_Column_List"/>
+        from riskcontrolplanebymonthitem
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!=''">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!=''">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="monthPlaneID!= null ">
+            and MonthPlaneID = #{monthPlaneID, jdbcType=INTEGER}
+        </if>
+        <if test="itemID!= null ">
+            and ItemID = #{itemID, jdbcType=INTEGER}
+        </if>
+        <if test="itemUUID!= null and itemUUID!=''">
+            and ItemUUID = #{itemUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="itemCheckerID!= null ">
+            and ItemCheckerID = #{itemCheckerID, jdbcType=INTEGER}
+        </if>
+        <if test="itemCheckerName!= null and itemCheckerName!=''">
+            and ItemCheckerName = #{itemCheckerName, jdbcType=VARCHAR}
+        </if>
+        <if test="itemUnitID!= null ">
+            and ItemUnitID = #{itemUnitID, jdbcType=INTEGER}
+        </if>
+        <if test="unitName!= null and unitName!=''">
+            and UnitName = #{unitName, jdbcType=VARCHAR}
+        </if>
+        <if test="keyContent!= null and keyContent!=''">
+            and KeyContent = #{keyContent, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteID!= null ">
+            and RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="planStartDate!= null ">
+            AND PlanStartDate  = #{planStartDate,jdbcType=VARCHAR}
+        </if>
+        <if test="planEndDate!= null ">
+            AND  PlanEndDate = #{planEndDate,jdbcType=VARCHAR}
+        </if>
+        <if test="riskHazardsCount!= null ">
+            AND RiskHazardsCount=#{riskHazardsCount, jdbcType=INTEGER}
+        </if>
+        <if test="controlMeasureCount!= null ">
+            AND ControlMeasureCount=#{controlMeasureCount, jdbcType=INTEGER}
+        </if>
+    </select>
+
+</mapper>

@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.kingc.risk.dao.RisksiteoutofcontrolattachmentDao">
+    <resultMap id="RisksiteoutofcontrolattachmentMap" type="cn.com.kingc.risk.model.Risksiteoutofcontrolattachment">
+            <result property="checkRecordID" column="CheckRecordID"  jdbcType="INTEGER"/>
+            <result property="itemID" column="ItemID"  jdbcType="INTEGER"/>
+            <result property="coalMineName" column="CoalMineName"  jdbcType="VARCHAR"/>
+            <result property="frameWorkID" column="FrameWorkID"  jdbcType="VARCHAR"/>
+            <result property="attchID" column="AttchID"  jdbcType="INTEGER"/>
+            <result property="localPath" column="LocalPath"  jdbcType="VARCHAR"/>
+            <result property="fileName" column="FileName"  jdbcType="VARCHAR"/>
+            <result property="serviceUUID" column="ServiceUUID"  jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+            CheckRecordID,
+            ItemID,
+            CoalMineName,
+            FrameWorkID,
+            AttchID,
+            LocalPath,
+            FileName,
+            ServiceUUID
+    </sql>
+
+    <insert id="addRisksiteoutofcontrolattachment" parameterType="cn.com.kingc.risk.model.Risksiteoutofcontrolattachment"
+            useGeneratedKeys="true" keyProperty="attchID">
+        insert into risksiteoutofcontrolattachment (
+                CheckRecordID,
+                ItemID,
+                CoalMineName,
+                FrameWorkID,
+                AttchID,
+                LocalPath,
+                FileName,
+                ServiceUUID
+        )
+        values(
+                #{checkRecordID, jdbcType=INTEGER}  ,
+                #{itemID, jdbcType=INTEGER}  ,
+                #{coalMineName, jdbcType=VARCHAR}  ,
+                #{frameWorkID, jdbcType=VARCHAR}  ,
+                #{attchID, jdbcType=INTEGER}  ,
+                #{localPath, jdbcType=VARCHAR}  ,
+                #{fileName, jdbcType=VARCHAR}  ,
+                #{serviceUUID, jdbcType=VARCHAR}  
+        )
+    </insert>
+
+    <insert id="addRisksiteoutofcontrolattachmentList"  parameterType="java.util.List">
+        insert into risksiteoutofcontrolattachment(
+                CheckRecordID,
+                ItemID,
+                CoalMineName,
+                FrameWorkID,
+                AttchID,
+                LocalPath,
+                FileName,
+                ServiceUUID
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+                    #{item.checkRecordID, jdbcType=INTEGER}  ,
+                    #{item.itemID, jdbcType=INTEGER}  ,
+                    #{item.coalMineName, jdbcType=VARCHAR}  ,
+                    #{item.frameWorkID, jdbcType=VARCHAR}  ,
+                    #{item.attchID, jdbcType=INTEGER}  ,
+                    #{item.localPath, jdbcType=VARCHAR}  ,
+                    #{item.fileName, jdbcType=VARCHAR}  ,
+                    #{item.serviceUUID, jdbcType=VARCHAR}  
+            )
+        </foreach>
+    </insert>
+
+
+    <delete id="deleteRisksiteoutofcontrolattachment" parameterType="cn.com.kingc.risk.model.Risksiteoutofcontrolattachment">
+        DELETE FROM risksiteoutofcontrolattachment
+        WHERE  CheckRecordID = #{checkRecordID,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteRisksiteoutofcontrolattachmentByID" parameterType="Integer">
+        DELETE FROM risksiteoutofcontrolattachment
+        WHERE  AttchID = #{attchID,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteRisksiteoutofcontrolattachmentByItemID" parameterType="Integer">
+        DELETE FROM risksiteoutofcontrolattachment
+        WHERE  ItemID = #{ItemID,jdbcType=INTEGER}
+    </delete>
+
+    <update id="updateRisksiteoutofcontrolattachment" parameterType="cn.com.kingc.risk.model.Risksiteoutofcontrolattachment">
+        UPDATE  risksiteoutofcontrolattachment
+        <set>
+                <if test="checkRecordID!= null ">
+                    CheckRecordID = #{checkRecordID, jdbcType=INTEGER} ,
+                </if>
+                <if test="itemID!= null ">
+                    ItemID = #{itemID, jdbcType=INTEGER} ,
+                </if>
+                <if test="coalMineName!= null ">
+                    CoalMineName = #{coalMineName, jdbcType=VARCHAR} ,
+                </if>
+                <if test="frameWorkID!= null ">
+                    FrameWorkID = #{frameWorkID, jdbcType=VARCHAR} ,
+                </if>
+                <if test="attchID!= null ">
+                    AttchID = #{attchID, jdbcType=INTEGER} ,
+                </if>
+                <if test="localPath!= null ">
+                    LocalPath = #{localPath, jdbcType=VARCHAR} ,
+                </if>
+                <if test="fileName!= null ">
+                    FileName = #{fileName, jdbcType=VARCHAR} ,
+                </if>
+                <if test="serviceUUID!= null ">
+                    ServiceUUID = #{serviceUUID, jdbcType=VARCHAR} 
+                </if>
+        </set>
+        WHERE  CheckRecordID = #{checkRecordID,jdbcType=INTEGER}
+    </update>
+
+    <select id="getRisksiteoutofcontrolattachment" resultMap="RisksiteoutofcontrolattachmentMap"
+            parameterType="INTEGER">
+        select
+        <include refid="Base_Column_List" />
+        from risksiteoutofcontrolattachment
+        WHERE  CheckRecordID = #{checkRecordID,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRisksiteoutofcontrolattachmentCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  risksiteoutofcontrolattachment
+    </select>
+
+    <select id="getRisksiteoutofcontrolattachmentByPage" resultMap="RisksiteoutofcontrolattachmentMap"
+            parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from risksiteoutofcontrolattachment
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRisksiteoutofcontrolattachmentCountByRisksiteoutofcontrolattachment" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  risksiteoutofcontrolattachment
+        where 1=1
+            <if test="checkRecordID!= null ">
+                and  CheckRecordID = #{checkRecordID, jdbcType=INTEGER}  
+            </if>
+            <if test="itemID!= null ">
+                and  ItemID = #{itemID, jdbcType=INTEGER}  
+            </if>
+            <if test="coalMineName!= null and coalMineName!= ''">
+                and  CoalMineName = #{coalMineName, jdbcType=VARCHAR}  
+            </if>
+            <if test="frameWorkID!= null and frameWorkID!= ''">
+                and  FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}  
+            </if>
+            <if test="attchID!= null ">
+                and  AttchID = #{attchID, jdbcType=INTEGER}  
+            </if>
+            <if test="localPath!= null and localPath!=''">
+                and  LocalPath = #{localPath, jdbcType=VARCHAR}  
+            </if>
+            <if test="fileName!= null and fileName!=''">
+                and  FileName = #{fileName, jdbcType=VARCHAR}  
+            </if>
+            <if test="serviceUUID!= null and serviceUUID!=''">
+                and  ServiceUUID = #{serviceUUID, jdbcType=VARCHAR} 
+            </if>
+    </select>
+
+    <select id="getRisksiteoutofcontrolattachmentByPageAndRisksiteoutofcontrolattachment" resultMap="RisksiteoutofcontrolattachmentMap">
+        select
+        <include refid="Base_Column_List" />
+        from risksiteoutofcontrolattachment
+        where 1=1
+            <if test="risksiteoutofcontrolattachment.checkRecordID!= null ">
+                and  CheckRecordID = #{risksiteoutofcontrolattachment.checkRecordID, jdbcType=INTEGER}  
+            </if>
+            <if test="risksiteoutofcontrolattachment.itemID!= null ">
+                and  ItemID = #{risksiteoutofcontrolattachment.itemID, jdbcType=INTEGER}  
+            </if>
+            <if test="risksiteoutofcontrolattachment.coalMineName!= null and risksiteoutofcontrolattachment.coalMineName!=''">
+                and  CoalMineName = #{risksiteoutofcontrolattachment.coalMineName, jdbcType=VARCHAR}  
+            </if>
+            <if test="risksiteoutofcontrolattachment.frameWorkID!= null and risksiteoutofcontrolattachment.frameWorkID!=''">
+                and  FrameWorkID = #{risksiteoutofcontrolattachment.frameWorkID, jdbcType=VARCHAR}  
+            </if>
+            <if test="risksiteoutofcontrolattachment.attchID!= null ">
+                and  AttchID = #{risksiteoutofcontrolattachment.attchID, jdbcType=INTEGER}  
+            </if>
+            <if test="risksiteoutofcontrolattachment.localPath!= null and risksiteoutofcontrolattachment.localPath!=''">
+                and  LocalPath = #{risksiteoutofcontrolattachment.localPath, jdbcType=VARCHAR}  
+            </if>
+            <if test="risksiteoutofcontrolattachment.fileName!= null and risksiteoutofcontrolattachment.fileName!=''">
+                and  FileName = #{risksiteoutofcontrolattachment.fileName, jdbcType=VARCHAR}  
+            </if>
+            <if test="risksiteoutofcontrolattachment.serviceUUID!= null and risksiteoutofcontrolattachment.serviceUUID!=''">
+                and  ServiceUUID = #{risksiteoutofcontrolattachment.serviceUUID, jdbcType=VARCHAR} 
+            </if>
+        LIMIT
+    #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRisksiteoutofcontrolattachmentList" resultMap="RisksiteoutofcontrolattachmentMap">
+        select
+        <include refid="Base_Column_List" />
+        from risksiteoutofcontrolattachment
+        where 1=1
+        <if test="checkRecordID!= null ">
+           and  CheckRecordID = #{checkRecordID, jdbcType=INTEGER}  
+        </if>
+        <if test="itemID!= null ">
+           and  ItemID = #{itemID, jdbcType=INTEGER}  
+        </if>
+        <if test="coalMineName!= null and coalMineName!=''">
+           and  CoalMineName = #{coalMineName, jdbcType=VARCHAR}  
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!=''">
+           and  FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}  
+        </if>
+        <if test="attchID!= null ">
+           and  AttchID = #{attchID, jdbcType=INTEGER}  
+        </if>
+        <if test="localPath!= null and localPath!=''">
+           and  LocalPath = #{localPath, jdbcType=VARCHAR}  
+        </if>
+        <if test="fileName!= null and fileName!=''">
+           and  FileName = #{fileName, jdbcType=VARCHAR}  
+        </if>
+        <if test="serviceUUID!= null and serviceUUID!=''">
+           and  ServiceUUID = #{serviceUUID, jdbcType=VARCHAR} 
+        </if>
+    </select>
+
+</mapper>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context" xmlns:aop="http://www.springframework.org/schema/aop" xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+
+	<!-- 1、配置映射器与适配器 -->
+	<mvc:annotation-driven></mvc:annotation-driven>
+	
+    <!-- 静态资源 -->
+	<mvc:resources mapping="/css/**" location="/WEB-INF/resource/css/"/>
+	<mvc:resources mapping="/default/**" location="/WEB-INF/resource/default/"/>
+	<mvc:resources mapping="/img/**" location="/WEB-INF/resource/img/" />
+	<mvc:resources mapping="/js/**" location="/WEB-INF/resource/js/"/>
+	<mvc:resources mapping="/file/**" location="/WEB-INF/resource/file/"/>
+	<mvc:resources mapping="/swagger/**" location="/WEB-INF/swagger/"/>
+	<mvc:resources mapping="/fullcalendar/**" location="/WEB-INF/resource/fullcalendar/"/>
+	 <mvc:resources mapping="/iview/**" location="/WEB-INF/resource/iview/"/>
+	<!-- 2、视图解析器 -->
+	<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+		<property name="order" value="1" />
+	</bean>
+
+	<!-- 3、自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 -->
+	<context:component-scan base-package="cn.com.kingc.risk.controller"  />
+	<!-- <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+	</context:component-scan> -->
+
+
+   <!--4、文件上传的配置 START -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<description>配置文件上传</description>
+		<property name="defaultEncoding" value="utf-8" />
+		<!-- 文件大小最大值 -->
+		<property name="maxUploadSize" value="10485760000" />
+		<!-- 内存中的最大值 -->
+		<property name="maxInMemorySize" value="40960" />
+	</bean>
+   <!-- 文件上传的配置 END -->
+
+	<!--5、 启动对@AspectJ注解的支持  START-->
+	<aop:aspectj-autoproxy />
+
+	<!--通知spring使用cglib而不是jdk的来生成代理方法 AOP可以拦截到Controller -->
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+	<!-- 启动对@AspectJ注解的支持  END-->
+
+	<!-- Spring MVC 配置 -->
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/plain;charset=UTF-8</value>
+						<value>text/html;charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>application/json; charset=UTF-8</value>
+						<value>application/x-www-form-urlencoded; charset=UTF-8</value>
+					</list>
+				</property>
+				<!-- 配置 objectMapper 为我们自定义扩展后的 CustomMapper -->
+				<property name="objectMapper">
+					<bean class="cn.com.kingc.risk.config.jackson.CustomMapper">
+					</bean>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+	<context:component-scan base-package="org.platform4j.filter"  />
+
+	<!--添加前置拦截-->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="cn.com.kingc.risk.interceptor.ControllerInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+	<bean id="druid-stat-pointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut" scope="prototype">
+		<property name="patterns">
+			<list>
+
+				<value>org.platform4j.filter.*</value>
+
+			</list>
+		</property>
+	</bean>
+</beans>

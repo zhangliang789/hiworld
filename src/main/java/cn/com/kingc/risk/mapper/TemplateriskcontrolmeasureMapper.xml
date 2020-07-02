@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.kingc.risk.dao.TemplateriskcontrolmeasureDao">
+    <resultMap id="TemplateriskcontrolmeasureMap" type="cn.com.kingc.risk.model.Templateriskcontrolmeasure">
+            <result property="measureID" column="MeasureID"  jdbcType="INTEGER"/>
+            <result property="measureContent" column="MeasureContent"  jdbcType="VARCHAR"/>
+            <result property="measureName" column="MeasureName"  jdbcType="VARCHAR"/>
+            <result property="measureType" column="MeasureType"  jdbcType="VARCHAR"/>
+            <result property="measureURL" column="MeasureURL"  jdbcType="VARCHAR"/>
+            <result property="measureUUID" column="MeasureUUID"  jdbcType="VARCHAR"/>
+            <result property="frameWorkID" column="FrameWorkID"  jdbcType="VARCHAR"/>
+            <result property="coalMineName" column="CoalMineName"  jdbcType="VARCHAR"/>
+            <result property="riskTemplateID" column="RiskTemplateID"  jdbcType="INTEGER"/>
+            <result property="hazardID" column="HazardID"  jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+            MeasureID,
+            MeasureContent,
+            MeasureName,
+            MeasureType,
+            MeasureURL,
+            MeasureUUID,
+            FrameWorkID,
+            CoalMineName,
+            RiskTemplateID,
+            HazardID
+    </sql>
+
+    <insert id="addTemplateriskcontrolmeasure" parameterType="cn.com.kingc.risk.model.Templateriskcontrolmeasure"
+            useGeneratedKeys="true" keyProperty="measureID">
+        insert into templateriskcontrolmeasure (
+                MeasureID,
+                MeasureContent,
+                MeasureName,
+                MeasureType,
+                MeasureURL,
+                MeasureUUID,
+                FrameWorkID,
+                CoalMineName,
+                RiskTemplateID,
+                HazardID
+        )
+        values(
+                #{measureID, jdbcType=INTEGER}  ,
+                #{measureContent, jdbcType=VARCHAR}  ,
+                #{measureName, jdbcType=VARCHAR}  ,
+                #{measureType, jdbcType=VARCHAR}  ,
+                #{measureURL, jdbcType=VARCHAR}  ,
+                #{measureUUID, jdbcType=VARCHAR}  ,
+                #{frameWorkID, jdbcType=VARCHAR}  ,
+                #{coalMineName, jdbcType=VARCHAR}  ,
+                #{riskTemplateID, jdbcType=INTEGER}  ,
+                #{hazardID, jdbcType=INTEGER}  
+        )
+    </insert>
+
+    <delete id="deleteTemplateriskcontrolmeasure" parameterType="cn.com.kingc.risk.model.Templateriskcontrolmeasure">
+        DELETE FROM templateriskcontrolmeasure
+        WHERE  MeasureID = #{measureID,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteTemplateriskcontrolmeasureByHazardID" parameterType="java.lang.Integer">
+        DELETE FROM templateriskcontrolmeasure
+        WHERE  HazardID = #{hazardID,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteTemplateriskcontrolmeasureByID" parameterType="java.lang.Integer">
+        DELETE FROM templateriskcontrolmeasure
+        WHERE  MeasureID = #{measureID,jdbcType=INTEGER}
+    </delete>
+
+    <update id="updateTemplateriskcontrolmeasure" parameterType="cn.com.kingc.risk.model.Templateriskcontrolmeasure">
+        UPDATE  templateriskcontrolmeasure
+        <set>
+                <if test="measureID!= null ">
+                    MeasureID = #{measureID, jdbcType=INTEGER} ,
+                </if>
+                <if test="measureContent!= null ">
+                    MeasureContent = #{measureContent, jdbcType=VARCHAR} ,
+                </if>
+                <if test="measureName!= null ">
+                    MeasureName = #{measureName, jdbcType=VARCHAR} ,
+                </if>
+                <if test="measureType!= null ">
+                    MeasureType = #{measureType, jdbcType=VARCHAR} ,
+                </if>
+                <if test="measureURL!= null ">
+                    MeasureURL = #{measureURL, jdbcType=VARCHAR} ,
+                </if>
+                <if test="measureUUID!= null ">
+                    MeasureUUID = #{measureUUID, jdbcType=VARCHAR} ,
+                </if>
+                <if test="frameWorkID!= null ">
+                    FrameWorkID = #{frameWorkID, jdbcType=VARCHAR} ,
+                </if>
+                <if test="coalMineName!= null ">
+                    CoalMineName = #{coalMineName, jdbcType=VARCHAR} ,
+                </if>
+                <if test="riskTemplateID!= null ">
+                    RiskTemplateID = #{riskTemplateID, jdbcType=INTEGER} ,
+                </if>
+                <if test="hazardID!= null ">
+                    HazardID = #{hazardID, jdbcType=INTEGER} 
+                </if>
+        </set>
+        WHERE  MeasureID = #{measureID,jdbcType=INTEGER}
+    </update>
+
+    <select id="getTemplateriskcontrolmeasure" resultMap="TemplateriskcontrolmeasureMap"
+            parameterType="INTEGER">
+        select
+        <include refid="Base_Column_List" />
+        from templateriskcontrolmeasure
+        WHERE  MeasureID = #{measureID,jdbcType=INTEGER}
+    </select>
+
+    <select id="getTemplateriskcontrolmeasureCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  templateriskcontrolmeasure
+    </select>
+
+    <select id="getTemplateriskcontrolmeasureByPage" resultMap="TemplateriskcontrolmeasureMap"
+            parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from templateriskcontrolmeasure
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <select id="getTemplateriskcontrolmeasureCountByTemplateriskcontrolmeasure" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  templateriskcontrolmeasure
+        where 1=1
+            <if test="measureID!= null ">
+                and  MeasureID = #{measureID, jdbcType=INTEGER}  
+            </if>
+            <if test="measureContent!= null and measureContent!=''">
+                and  MeasureContent = #{measureContent, jdbcType=VARCHAR}
+            </if>
+            <if test="measureName!= null and measureName!=''">
+                and  MeasureName = #{measureName, jdbcType=VARCHAR}  
+            </if>
+            <if test="measureType!= null and measureType!=''">
+                and  MeasureType = #{measureType, jdbcType=VARCHAR}  
+            </if>
+            <if test="measureURL!= null and measureURL!=''">
+                and  MeasureURL = #{measureURL, jdbcType=VARCHAR}  
+            </if>
+            <if test="measureUUID!= null and measureUUID!=''">
+                and  MeasureUUID = #{measureUUID, jdbcType=VARCHAR}  
+            </if>
+            <if test="frameWorkID!= null and frameWorkID!=''">
+                and  FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}  
+            </if>
+            <if test="coalMineName!= null and coalMineName!= ''">
+                and  CoalMineName = #{coalMineName, jdbcType=VARCHAR}  
+            </if>
+            <if test="riskTemplateID!= null ">
+                and  RiskTemplateID = #{riskTemplateID, jdbcType=INTEGER}  
+            </if>
+            <if test="hazardID!= null ">
+                and  HazardID = #{hazardID, jdbcType=INTEGER} 
+            </if>
+    </select>
+
+    <select id="getTemplateriskcontrolmeasureByPageAndTemplateriskcontrolmeasure" resultMap="TemplateriskcontrolmeasureMap">
+        select
+        <include refid="Base_Column_List" />
+        from templateriskcontrolmeasure
+        where 1=1
+            <if test="templateriskcontrolmeasure.measureID!= null ">
+                and  MeasureID = #{templateriskcontrolmeasure.measureID, jdbcType=INTEGER}  
+            </if>
+            <if test="templateriskcontrolmeasure.measureContent!= null and templateriskcontrolmeasure.measureContent!= ''">
+                and  MeasureContent = #{templateriskcontrolmeasure.measureContent, jdbcType=VARCHAR}
+            </if>
+            <if test="templateriskcontrolmeasure.measureName!= null and templateriskcontrolmeasure.measureName!= ''">
+                and  MeasureName = #{templateriskcontrolmeasure.measureName, jdbcType=VARCHAR}  
+            </if>
+            <if test="templateriskcontrolmeasure.measureType!= null and templateriskcontrolmeasure.measureType!=''">
+                and  MeasureType = #{templateriskcontrolmeasure.measureType, jdbcType=VARCHAR}  
+            </if>
+            <if test="templateriskcontrolmeasure.measureURL!= null and templateriskcontrolmeasure.measureURL!= ''">
+                and  MeasureURL = #{templateriskcontrolmeasure.measureURL, jdbcType=VARCHAR}  
+            </if>
+            <if test="templateriskcontrolmeasure.measureUUID!= null and templateriskcontrolmeasure.measureUUID!=''">
+                and  MeasureUUID = #{templateriskcontrolmeasure.measureUUID, jdbcType=VARCHAR}  
+            </if>
+            <if test="templateriskcontrolmeasure.frameWorkID!= null and templateriskcontrolmeasure.frameWorkID!= ''">
+                and  FrameWorkID = #{templateriskcontrolmeasure.frameWorkID, jdbcType=VARCHAR}  
+            </if>
+            <if test="templateriskcontrolmeasure.coalMineName!= null and templateriskcontrolmeasure.coalMineName!=''">
+                and  CoalMineName = #{templateriskcontrolmeasure.coalMineName, jdbcType=VARCHAR}  
+            </if>
+            <if test="templateriskcontrolmeasure.riskTemplateID!= null ">
+                and  RiskTemplateID = #{templateriskcontrolmeasure.riskTemplateID, jdbcType=INTEGER}  
+            </if>
+            <if test="templateriskcontrolmeasure.hazardID!= null ">
+                and  HazardID = #{templateriskcontrolmeasure.hazardID, jdbcType=INTEGER} 
+            </if>
+        LIMIT
+    #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <select id="getTemplateriskcontrolmeasureData" resultMap="TemplateriskcontrolmeasureMap">
+        select
+        <include refid="Base_Column_List" />
+        from templateriskcontrolmeasure
+        where 1=1
+        <if test="measureID!= null ">
+           and  MeasureID = #{measureID, jdbcType=INTEGER}  
+        </if>
+        <if test="measureContent!= null and measureContent!= ''">
+           and  MeasureContent = #{measureContent, jdbcType=VARCHAR}
+        </if>
+        <if test="measureName!= null and measureName!= ''">
+           and  MeasureName = #{measureName, jdbcType=VARCHAR}  
+        </if>
+        <if test="measureType!= null and measureType!=''">
+           and  MeasureType = #{measureType, jdbcType=VARCHAR}  
+        </if>
+        <if test="measureURL!= null and measureURL!= ''">
+           and  MeasureURL = #{measureURL, jdbcType=VARCHAR}  
+        </if>
+        <if test="measureUUID!= null and measureUUID!= ''">
+           and  MeasureUUID = #{measureUUID, jdbcType=VARCHAR}  
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!=''">
+           and  FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}  
+        </if>
+        <if test="coalMineName!= null and coalMineName!= ''">
+           and  CoalMineName = #{coalMineName, jdbcType=VARCHAR}  
+        </if>
+        <if test="riskTemplateID!= null ">
+           and  RiskTemplateID = #{riskTemplateID, jdbcType=INTEGER}  
+        </if>
+        <if test="hazardID!= null ">
+           and  HazardID = #{hazardID, jdbcType=INTEGER} 
+        </if>
+    </select>
+
+</mapper>

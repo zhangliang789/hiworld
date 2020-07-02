@@ -1,0 +1,663 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.kingc.risk.dao.Security_risk_assessmentDao">
+    <resultMap id="Security_risk_assessmentMap" type="cn.com.kingc.risk.model.Security_risk_assessment">
+        <id property="risk_id" column="risk_id" jdbcType="INTEGER"/>
+        <result property="risk_department" column="risk_department" jdbcType="VARCHAR"/>
+        <result property="risk_task" column="risk_task" jdbcType="VARCHAR"/>
+        <result property="risk_procedure" column="risk_procedure" jdbcType="VARCHAR"/>
+        <result property="risk_risk" column="risk_risk" jdbcType="VARCHAR"/>
+        <result property="risk_consequences" column="risk_consequences" jdbcType="VARCHAR"/>
+        <result property="risk_type" column="risk_type" jdbcType="VARCHAR"/>
+        <result property="risk_accitype" column="risk_accitype" jdbcType="VARCHAR"/>
+        <result property="risk_condition" column="risk_condition" jdbcType="VARCHAR"/>
+        <result property="risk_possibility" column="risk_possibility" jdbcType="VARCHAR"/>
+        <result property="risk_loss" column="risk_loss" jdbcType="VARCHAR"/>
+        <result property="risk_value" column="risk_value" jdbcType="VARCHAR"/>
+        <result property="risk_grade" column="risk_grade" jdbcType="VARCHAR"/>
+        <result property="risk_object" column="risk_object" jdbcType="VARCHAR"/>
+        <result property="risk_standard" column="risk_standard" jdbcType="VARCHAR"/>
+        <result property="risk_priperson" column="risk_priperson" jdbcType="VARCHAR"/>
+        <result property="risk_dirmanager" column="risk_dirmanager" jdbcType="VARCHAR"/>
+        <result property="risk_major" column="risk_major" jdbcType="VARCHAR"/>
+        <result property="risk_majorperson" column="risk_majorperson" jdbcType="VARCHAR"/>
+        <result property="risk_measures" column="risk_measures" jdbcType="VARCHAR"/>
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        risk_id ,
+        risk_department,
+        risk_task ,
+        risk_procedure ,
+        risk_risk ,
+        risk_consequences ,
+        risk_type ,
+        risk_accitype ,
+        risk_condition ,
+        risk_possibility ,
+        risk_loss ,
+        risk_value ,
+        risk_grade ,
+        risk_object ,
+        risk_standard ,
+        risk_priperson ,
+        risk_dirmanager ,
+        risk_major ,
+        risk_majorperson ,
+        risk_measures 
+    </sql>
+
+
+    <!--新增一条记录-->
+    <insert id="addSecurity_risk_assessment" parameterType="cn.com.kingc.risk.model.Security_risk_assessment"
+            useGeneratedKeys="true" keyProperty="risk_id">
+        insert into security_risk_assessment (
+            risk_id,
+            risk_department,
+            risk_task,
+            risk_procedure,
+            risk_risk,
+            risk_consequences,
+            risk_type,
+            risk_accitype,
+            risk_condition,
+            risk_possibility,
+            risk_loss,
+            risk_value,
+            risk_grade,
+            risk_object,
+            risk_standard,
+            risk_priperson,
+            risk_dirmanager,
+            risk_major,
+            risk_majorperson,
+            risk_measures
+        )
+        values(
+            #{risk_id, jdbcType=INTEGER}  ,
+            #{risk_department, jdbcType=VARCHAR}  ,
+            #{risk_task, jdbcType=VARCHAR}  ,
+            #{risk_procedure, jdbcType=VARCHAR}  ,
+            #{risk_risk, jdbcType=VARCHAR}  ,
+            #{risk_consequences, jdbcType=VARCHAR}  ,
+            #{risk_type, jdbcType=VARCHAR}  ,
+            #{risk_accitype, jdbcType=VARCHAR}  ,
+            #{risk_condition, jdbcType=VARCHAR}  ,
+            #{risk_possibility, jdbcType=VARCHAR}  ,
+            #{risk_loss, jdbcType=VARCHAR}  ,
+            #{risk_value, jdbcType=VARCHAR}  ,
+            #{risk_grade, jdbcType=VARCHAR}  ,
+            #{risk_object, jdbcType=VARCHAR}  ,
+            #{risk_standard, jdbcType=VARCHAR}  ,
+            #{risk_priperson, jdbcType=VARCHAR}  ,
+            #{risk_dirmanager, jdbcType=VARCHAR}  ,
+            #{risk_major, jdbcType=VARCHAR}  ,
+            #{risk_majorperson, jdbcType=VARCHAR}  ,
+            #{risk_measures, jdbcType=VARCHAR}  
+        )
+    </insert>
+
+    <!--批量新增记录-->
+    <insert id="addSecurity_risk_assessmentList" parameterType="java.util.List"
+            useGeneratedKeys="true" keyProperty="risk_id">
+        insert into security_risk_assessment(
+        risk_id,
+        risk_department,
+        risk_task,
+        risk_procedure,
+        risk_risk,
+        risk_consequences,
+        risk_type,
+        risk_accitype,
+        risk_condition,
+        risk_possibility,
+        risk_loss,
+        risk_value,
+        risk_grade,
+        risk_object,
+        risk_standard,
+        risk_priperson,
+        risk_dirmanager,
+        risk_major,
+        risk_majorperson,
+        risk_measures
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.risk_id, jdbcType=INTEGER} ,
+            #{item.risk_department, jdbcType=VARCHAR} ,
+            #{item.risk_task, jdbcType=VARCHAR} ,
+            #{item.risk_procedure, jdbcType=VARCHAR} ,
+            #{item.risk_risk, jdbcType=VARCHAR} ,
+            #{item.risk_consequences, jdbcType=VARCHAR} ,
+            #{item.risk_type, jdbcType=VARCHAR} ,
+            #{item.risk_accitype, jdbcType=VARCHAR} ,
+            #{item.risk_condition, jdbcType=VARCHAR} ,
+            #{item.risk_possibility, jdbcType=VARCHAR} ,
+            #{item.risk_loss, jdbcType=VARCHAR} ,
+            #{item.risk_value, jdbcType=VARCHAR} ,
+            #{item.risk_grade, jdbcType=VARCHAR} ,
+            #{item.risk_object, jdbcType=VARCHAR} ,
+            #{item.risk_standard, jdbcType=VARCHAR} ,
+            #{item.risk_priperson, jdbcType=VARCHAR} ,
+            #{item.risk_dirmanager, jdbcType=VARCHAR} ,
+            #{item.risk_major, jdbcType=VARCHAR} ,
+            #{item.risk_majorperson, jdbcType=VARCHAR} ,
+            #{item.risk_measures, jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <!--删除记录-->
+    <delete id="deleteSecurity_risk_assessment" parameterType="cn.com.kingc.risk.model.Security_risk_assessment">
+        DELETE FROM security_risk_assessment
+        where 1=1
+        <if test="risk_id!= null ">
+            and risk_id = #{risk_id, jdbcType=INTEGER}
+        </if>
+        <if test="risk_department!= null and risk_department!= ''">
+            and risk_department = #{risk_department, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_task!= null and risk_task!= ''">
+            and risk_task = #{risk_task, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_procedure!= null and risk_procedure!= ''">
+            and risk_procedure = #{risk_procedure, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_risk!= null and risk_risk!= ''">
+            and risk_risk = #{risk_risk, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_consequences!= null and risk_consequences!= ''">
+            and risk_consequences = #{risk_consequences, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_type!= null and risk_type!= ''">
+            and risk_type = #{risk_type, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_accitype!= null and risk_accitype!= ''">
+            and risk_accitype = #{risk_accitype, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_condition!= null and risk_condition!= ''">
+            and risk_condition = #{risk_condition, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_possibility!= null ">
+            and risk_possibility = #{risk_possibility, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_loss!= null ">
+            and risk_loss = #{risk_loss, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_value!= null ">
+            and risk_value = #{risk_value, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_grade!= null and risk_grade!= ''">
+            and risk_grade = #{risk_grade, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_object!= null and risk_object!= ''">
+            and risk_object = #{risk_object, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_standard!= null and risk_standard!= ''">
+            and risk_standard = #{risk_standard, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_priperson!= null and risk_priperson!= ''">
+            and risk_priperson = #{risk_priperson, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_dirmanager!= null and risk_dirmanager!= ''">
+            and risk_dirmanager = #{risk_dirmanager, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_major!= null and risk_major!= ''">
+            and risk_major = #{risk_major, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_majorperson!= null and risk_majorperson!= ''">
+            and risk_majorperson = #{risk_majorperson, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_measures!= null and risk_measures!= ''">
+            and risk_measures = #{risk_measures, jdbcType=VARCHAR}
+        </if>
+    </delete>
+
+    <!--删除一条记录-->
+    <delete id="deleteSecurity_risk_assessmentByID" parameterType="Integer">
+        DELETE FROM security_risk_assessment
+        WHERE  risk_id = #{risk_id,jdbcType=INTEGER}
+    </delete>
+
+    <!--批量删除记录-->
+    <insert id="deleteSecurity_risk_assessmentList" parameterType="java.util.List">
+        DELETE FROM security_risk_assessment
+        WHERE risk_id IN
+        <foreach item="item" collection="list" separator=",">
+            (
+            #{item.risk_id, jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+
+    <!--更新记录-->
+    <update id="updateSecurity_risk_assessment" parameterType="cn.com.kingc.risk.model.Security_risk_assessment">
+        UPDATE security_risk_assessment
+        <set>
+            <if test="risk_id!= null ">
+                risk_id = #{risk_id, jdbcType=INTEGER} ,
+            </if>
+            <if test="risk_department!= null ">
+                risk_department = #{risk_department, jdbcType=VARCHAR} ,
+            </if>
+            <if test="risk_task!= null ">
+                risk_task = #{risk_task, jdbcType=VARCHAR} ,
+            </if>
+            <if test="risk_procedure!= null ">
+                risk_procedure = #{risk_procedure, jdbcType=VARCHAR} ,
+            </if>
+            <if test="risk_risk!= null ">
+                risk_risk = #{risk_risk, jdbcType=VARCHAR} ,
+            </if>
+            <if test="risk_consequences!= null ">
+                risk_consequences = #{risk_consequences, jdbcType=VARCHAR} ,
+            </if>
+            <if test="risk_type!= null ">
+                risk_type = #{risk_type, jdbcType=VARCHAR} ,
+            </if>
+            <if test="risk_accitype!= null ">
+                risk_accitype = #{risk_accitype, jdbcType=VARCHAR} ,
+            </if>
+            <if test="risk_condition!= null ">
+                risk_condition = #{risk_condition, jdbcType=VARCHAR} ,
+            </if>
+            <if test="risk_possibility!= null ">
+                risk_possibility = #{risk_possibility, jdbcType=VARCHAR} ,
+            </if>
+            <if test="risk_loss!= null ">
+                risk_loss = #{risk_loss, jdbcType=VARCHAR} ,
+            </if>
+            <if test="risk_value!= null ">
+                risk_value = #{risk_value, jdbcType=VARCHAR} ,
+            </if>
+            <if test="risk_grade!= null ">
+                risk_grade = #{risk_grade, jdbcType=VARCHAR} ,
+            </if>
+            <if test="risk_object!= null ">
+                risk_object = #{risk_object, jdbcType=VARCHAR} ,
+            </if>
+            <if test="risk_standard!=
+                null ">
+                risk_standard = #{risk_standard, jdbcType=VARCHAR} ,
+            </if>
+            <if test="risk_priperson!= null ">
+                risk_priperson = #{risk_priperson, jdbcType=VARCHAR} ,
+            </if>
+            <if test="risk_dirmanager!= null ">
+                risk_dirmanager = #{risk_dirmanager, jdbcType=VARCHAR} ,
+            </if>
+            <if test="risk_major!= null ">
+                risk_major = #{risk_major, jdbcType=VARCHAR} ,
+            </if>
+            <if test="risk_majorperson!= null ">
+                risk_majorperson = #{risk_majorperson, jdbcType=VARCHAR} ,
+            </if>
+            <if test="risk_measures!= null ">
+                risk_measures = #{risk_measures, jdbcType=VARCHAR}
+            </if>
+        </set>
+        WHERE risk_id = #{risk_id,jdbcType=INTEGER}
+    </update>
+
+    <!--根据主键查询记录-->
+    <select id="getSecurity_risk_assessment" resultMap="Security_risk_assessmentMap"
+            parameterType="Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from security_risk_assessment
+        WHERE risk_id = #{risk_id,jdbcType=INTEGER}
+    </select>
+
+
+    <!--获取共有多少条记录，带有查询条件-->
+    <select id="getSecurity_risk_assessmentCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from security_risk_assessment
+        where 1=1
+        <if test="risk_id!= null ">
+            and risk_id = #{risk_id, jdbcType=INTEGER}
+        </if>
+        <if test="risk_department!= null and risk_department!= ''">
+            and risk_department like concat('%',#{risk_department, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="risk_task!= null and risk_task!= ''">
+            and risk_task like concat('%',#{risk_task, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="risk_procedure!= null and risk_procedure!= ''">
+            and risk_procedure like concat('%',#{risk_procedure, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="risk_risk!= null and risk_risk!= ''">
+            and risk_risk like concat('%',#{risk_risk, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="risk_consequences!= null and risk_consequences!= ''">
+            and risk_consequences = #{risk_consequences, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_type!= null and risk_type!= ''">
+            and risk_type like concat('%',#{risk_type, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="risk_accitype!= null and risk_accitype!= ''">
+            and risk_accitype like concat('%',#{risk_accitype, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="risk_condition!= null and risk_condition!= ''">
+            and risk_condition = #{risk_condition, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_possibility!= null ">
+            and risk_possibility = #{risk_possibility, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_loss!= null ">
+            and risk_loss = #{risk_loss, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_value!= null ">
+            and risk_value = #{risk_value, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_grade!= null and risk_grade!= ''">
+            and risk_grade like concat('%',#{risk_grade, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="risk_object!= null and risk_object!= ''">
+            and risk_object = #{risk_object, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_standard!= null and risk_standard!= ''">
+            and risk_standard = #{risk_standard, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_priperson!= null and risk_priperson!= ''">
+            and risk_priperson = #{risk_priperson, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_dirmanager!= null and risk_dirmanager!= ''">
+            and risk_dirmanager = #{risk_dirmanager, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_major!= null and risk_major!= ''">
+            and risk_major = #{risk_major, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_majorperson!= null and risk_majorperson!= ''">
+            and risk_majorperson = #{risk_majorperson, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_measures!= null and risk_measures!= ''">
+            and risk_measures = #{risk_measures, jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <!--分页获取数据，带有查询条件-->
+    <select id="getSecurity_risk_assessmentByPage" resultMap="Security_risk_assessmentMap">
+        select
+        <include refid="Base_Column_List"/>
+        from security_risk_assessment
+        where 1=1
+        <if test="security_risk_assessment.risk_id!= null ">
+            and risk_id = #{security_risk_assessment.risk_id, jdbcType=INTEGER}
+        </if>
+        <if test="security_risk_assessment.risk_department!= null and security_risk_assessment.risk_department!= ''">
+            and risk_department LIKE concat('%',#{security_risk_assessment.risk_department, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="security_risk_assessment.risk_task!= null and security_risk_assessment.risk_task!= ''">
+            and risk_task LIKE concat('%',#{security_risk_assessment.risk_task, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="security_risk_assessment.risk_procedure!= null and security_risk_assessment.risk_procedure!= ''">
+            and risk_procedure like concat('%',#{security_risk_assessment.risk_procedure, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="security_risk_assessment.risk_risk!= null and security_risk_assessment.risk_risk!= ''">
+            and risk_risk LIKE concat('%',#{security_risk_assessment.risk_risk, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="security_risk_assessment.risk_consequences!= null and security_risk_assessment.risk_consequences!= ''">
+            and risk_consequences = #{security_risk_assessment.risk_consequences, jdbcType=VARCHAR}
+        </if>
+        <if test="security_risk_assessment.risk_type!= null and security_risk_assessment.risk_type!= ''">
+            and risk_type LIKE concat('%',#{security_risk_assessment.risk_type, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="security_risk_assessment.risk_accitype!= null and security_risk_assessment.risk_accitype!= ''">
+            and risk_accitype LIKE concat('%',#{security_risk_assessment.risk_accitype, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="security_risk_assessment.risk_condition!= null and security_risk_assessment.risk_condition!= ''">
+            and risk_condition = #{security_risk_assessment.risk_condition, jdbcType=VARCHAR}
+        </if>
+        <if test="security_risk_assessment.risk_possibility!= null ">
+            and risk_possibility = #{security_risk_assessment.risk_possibility, jdbcType=VARCHAR}
+        </if>
+        <if test="security_risk_assessment.risk_loss!= null ">
+            and risk_loss = #{security_risk_assessment.risk_loss, jdbcType=VARCHAR}
+        </if>
+        <if test="security_risk_assessment.risk_value!= null ">
+            and risk_value = #{security_risk_assessment.risk_value, jdbcType=VARCHAR}
+        </if>
+        <if test="security_risk_assessment.risk_grade!= null and security_risk_assessment.risk_grade!= ''">
+            and risk_grade LIKE concat('%',#{security_risk_assessment.risk_grade, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="security_risk_assessment.risk_object!= null and security_risk_assessment.risk_object!= ''">
+            and risk_object = #{security_risk_assessment.risk_object, jdbcType=VARCHAR}
+        </if>
+        <if test="security_risk_assessment.risk_standard!= null and security_risk_assessment.risk_standard!= ''">
+            and risk_standard = #{security_risk_assessment.risk_standard, jdbcType=VARCHAR}
+        </if>
+        <if test="security_risk_assessment.risk_priperson!= null and security_risk_assessment.risk_priperson!= ''">
+            and risk_priperson = #{security_risk_assessment.risk_priperson, jdbcType=VARCHAR}
+        </if>
+        <if test="security_risk_assessment.risk_dirmanager!= null and security_risk_assessment.risk_dirmanager!= ''">
+            and risk_dirmanager = #{security_risk_assessment.risk_dirmanager, jdbcType=VARCHAR}
+        </if>
+        <if test="security_risk_assessment.risk_major!= null and security_risk_assessment.risk_major!= ''">
+            and risk_major = #{security_risk_assessment.risk_major, jdbcType=VARCHAR}
+        </if>
+        <if test="security_risk_assessment.risk_majorperson!= null and security_risk_assessment.risk_majorperson!= ''">
+            and risk_majorperson = #{security_risk_assessment.risk_majorperson, jdbcType=VARCHAR}
+        </if>
+        <if test="security_risk_assessment.risk_measures!= null and security_risk_assessment.risk_measures!= ''">
+            and risk_measures = #{security_risk_assessment.risk_measures, jdbcType=VARCHAR}
+        </if>
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <!--根据条件查询数据-->
+    <select id="getSecurity_risk_assessmentList" resultMap="Security_risk_assessmentMap">
+        select
+        <include refid="Base_Column_List"/>
+        from security_risk_assessment
+        where 1=1
+        <if test="risk_id!= null ">
+            and risk_id = #{risk_id, jdbcType=INTEGER}
+        </if>
+        <if test="risk_department!= null and risk_department!= ''">
+            and risk_department LIKE concat('%',#{risk_department, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="risk_task!= null and risk_task!= ''">
+            and risk_task LIKE concat('%',#{risk_task, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="risk_procedure!= null and risk_procedure!= ''">
+            and risk_procedure like concat('%',#{risk_procedure, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="risk_risk!= null and risk_risk!= ''">
+            and risk_risk LIKE concat('%',#{risk_risk, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="risk_consequences!= null and risk_consequences!= ''">
+            and risk_consequences = #{risk_consequences, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_type!= null and risk_type!= ''">
+            and risk_type LIKE concat('%',#{risk_type, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="risk_accitype!= null and risk_accitype!= ''">
+
+            and risk_accitype LIKE concat('%',#{risk_accitype, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="risk_condition!= null and risk_condition!= ''">
+            and risk_condition = #{risk_condition, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_possibility!= null ">
+            and risk_possibility = #{risk_possibility, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_loss!= null ">
+            and risk_loss = #{risk_loss, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_value!= null ">
+            and risk_value = #{risk_value, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_grade!= null and risk_grade!= ''">
+            and risk_grade LIKE concat('%',#{risk_grade, jdbcType=VARCHAR},'%')
+        </if>
+        <if test="risk_object!= null and risk_object!= ''">
+            and risk_object = #{risk_object, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_standard!= null and risk_standard!= ''">
+            and risk_standard = #{risk_standard, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_priperson!= null and risk_priperson!= ''">
+            and risk_priperson = #{risk_priperson, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_dirmanager!= null and risk_dirmanager!= ''">
+            and risk_dirmanager = #{risk_dirmanager, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_major!= null and risk_major!= ''">
+            and risk_major = #{risk_major, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_majorperson!= null and risk_majorperson!= ''">
+            and risk_majorperson = #{risk_majorperson, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_measures!= null and risk_measures!= ''">
+            and risk_measures = #{risk_measures, jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <!--获取一个数据的不重复集合-->
+    <select id="getDistinctItemList" resultType="java.lang.String" statementType="STATEMENT">
+        select  DISTINCT ${attribute} FROM security_risk_assessment
+    </select>
+
+    <!--判断对象是否已经存在-->
+    <select id="security_risk_assessmentIsExist" resultType="java.lang.Integer"
+            parameterType="cn.com.kingc.risk.model.Security_risk_assessment">
+        select count(*)
+        from security_risk_assessment
+        where 1=1
+        <if test="risk_id!= null and risk_id!= ''">
+            and risk_id = #{risk_id, jdbcType=INTEGER}
+        </if>
+        <if test="risk_department!= null ">
+            and risk_department = #{risk_department, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_task!= null ">
+            and risk_task = #{risk_task, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_procedure!= null ">
+            and risk_procedure = #{risk_procedure, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_risk!= null ">
+            and risk_risk = #{risk_risk, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_consequences!= null ">
+            and risk_consequences = #{risk_consequences, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_type!= null ">
+            and risk_type = #{risk_type, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_accitype!= null ">
+            and risk_accitype = #{risk_accitype, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_condition!= null ">
+            and risk_condition = #{risk_condition, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_possibility!= null and risk_possibility!= ''">
+            and risk_possibility = #{risk_possibility, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_loss!= null and risk_loss!= ''">
+            and risk_loss = #{risk_loss, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_value!= null and risk_value!= ''">
+            and risk_value = #{risk_value, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_grade!= null ">
+            and risk_grade = #{risk_grade, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_object!= null ">
+            and risk_object = #{risk_object, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_standard!= null ">
+            and risk_standard = #{risk_standard, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_priperson!= null ">
+            and risk_priperson = #{risk_priperson, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_dirmanager!= null ">
+            and risk_dirmanager = #{risk_dirmanager, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_major!= null ">
+            and risk_major = #{risk_major, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_majorperson!= null ">
+            and risk_majorperson = #{risk_majorperson, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_measures!= null ">
+            and risk_measures = #{risk_measures, jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <!--根据条件查询数据-->
+    <select id="getSecurity_risk_assessmentUnique" resultMap="Security_risk_assessmentMap">
+        select
+        <include refid="Base_Column_List"/>
+        from security_risk_assessment
+        where 1=1
+        <if test="risk_id!= null ">
+            and risk_id = #{risk_id, jdbcType=INTEGER}
+        </if>
+        <if test="risk_department!= null and risk_department!= ''">
+            and risk_department = #{risk_department, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_task!= null and risk_task!= ''">
+            and risk_task = #{risk_task, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_procedure!= null and risk_procedure!= ''">
+            and risk_procedure = #{risk_procedure, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_risk!= null and risk_risk!= ''">
+            and risk_risk = #{risk_risk, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_consequences!= null and risk_consequences!= ''">
+            and risk_consequences = #{risk_consequences, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_type!= null and risk_type!= ''">
+            and risk_type = #{risk_type, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_accitype!= null and risk_accitype!= ''">
+            and risk_accitype = #{risk_accitype, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_condition!= null and risk_condition!= ''">
+            and risk_condition = #{risk_condition, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_possibility!= null ">
+            and risk_possibility = #{risk_possibility, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_loss!= null ">
+            and risk_loss = #{risk_loss, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_value!= null ">
+            and risk_value = #{risk_value, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_grade!= null and risk_grade!= ''">
+            and risk_grade = #{risk_grade, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_object!= null and risk_object!= ''">
+            and risk_object = #{risk_object, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_standard!= null and risk_standard!= ''">
+            and risk_standard = #{risk_standard, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_priperson!= null and risk_priperson!= ''">
+            and risk_priperson = #{risk_priperson, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_dirmanager!= null and risk_dirmanager!= ''">
+            and risk_dirmanager = #{risk_dirmanager, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_major!= null and risk_major!= ''">
+            and risk_major = #{risk_major, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_majorperson!= null and risk_majorperson!= ''">
+            and risk_majorperson = #{risk_majorperson, jdbcType=VARCHAR}
+        </if>
+        <if test="risk_measures!= null and risk_measures!= ''">
+            and risk_measures = #{risk_measures, jdbcType=VARCHAR}
+        </if>
+    </select>
+
+</mapper>

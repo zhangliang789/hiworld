@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- 要引用的服务 -->
+    <dubbo:reference interface="org.platform4j.service.DepartmentService" id="departmentService" timeout="120000"/>
+    <dubbo:reference interface="org.platform4j.service.Base_orgService" id="base_orgService" timeout="120000"/>
+    <dubbo:reference interface="org.platform4j.service.EnterpriseService" id="enterpriseService" timeout="120000"/>
+    <dubbo:reference interface="org.platform4j.service.PlaceService" id="placeService" timeout="120000"/>
+    <dubbo:reference interface="org.platform4j.service.UserinfoService" id="userinfoService" timeout="120000"/>
+    <dubbo:reference interface="org.platform4j.service.Data_dictionaryService" id="data_dictionaryService" timeout="120000"/>
+    <dubbo:reference interface="org.platform4j.service.Data_dictionary_typeService" id="data_dictionary_typeService" timeout="120000"/>
+    <dubbo:reference interface="org.platform4j.service.Enterprise_data_dictionary_typeService" id="enterprise_data_dictionary_typeService" timeout="120000"/>
+    <dubbo:reference interface="org.platform4j.service.Enterprise_data_dictionaryService" id="enterprise_data_dictionaryService" timeout="120000"/>
+    <dubbo:reference interface="org.platform4j.service.Place_classifyService" id="place_classifyService" timeout="120000"/>
+    <dubbo:reference interface="org.platform4j.service.Enterprise_menuService" id="enterprise_menuService" />
+    <dubbo:reference interface="org.platform4j.service.EmpService" id="empService" timeout="120000"/>
+    <dubbo:reference interface="org.platform4j.service.Enterprise_roleService" id="enterprise_roleService" timeout="120000"/>
+    <dubbo:reference interface="cn.com.kingc.hiddentrouble.service.HtdetailService" id="htdetailService" timeout="120000" check="false"/>
+    <dubbo:reference interface="cn.com.kingc.hiddentrouble.service.FinerecordService" id="finerecordService" timeout="120000" check="false"/>
+    <dubbo:reference interface="cn.com.kingc.hiddentrouble.service.HtdetailstandardService" id="htdetailstandardService" timeout="120000" check="false"/>
+    <dubbo:reference interface="cn.com.kingc.hiddentrouble.service.HtdetaillevelsettingService" id="htdetaillevelsettingService" timeout="120000" check="false"/>
+    <dubbo:reference interface="cn.com.kingc.hiddentrouble.service.SpecialplanService" id="specialplanService" timeout="120000" check="false"/>
+    <dubbo:reference interface="org.platform4j.service.User_login_productService" id ="user_login_productService" timeout="120000"/>
+    <dubbo:reference interface="cn.com.mkaq.instantmessaging.service.SystemMessageService" id="systemMessageService" timeout="120000" check="false"/>
+    <dubbo:reference interface="cn.com.kingc.eoms.service.Menu_helpService" id="menu_helpService" timeout="120000" check="false"/>
+    <dubbo:reference interface="cn.com.kingc.accident.service.AccidentDangerRiskService" id="accidentDangerRiskService" timeout="120000" check="false"/>
+    <dubbo:reference interface="cn.com.kingc.accident.service.AccidentsService" id="accidentsService" timeout="120000" check="false"/>
+
+    <!--引用新疆的接口-->
+    <dubbo:reference interface="cn.com.kingc.group.xinjiangdbcontrol.service.CollierySubmitService" id="collierySubmitService" timeout="120000" check="false"/>
+
+    <!-- 要暴露的服务接口 -->
+    <dubbo:service interface="cn.com.kingc.risk.service.RisksiteService" ref="risksiteService" />
+    <dubbo:service interface="cn.com.kingc.risk.service.RiskhazardService" ref="riskhazardService" />
+    <dubbo:service interface="cn.com.kingc.risk.service.RiskcontrolmeasureService" ref="riskcontrolmeasureService" />
+    <dubbo:service interface="cn.com.kingc.risk.service.RiskleversettingService" ref="riskleversettingService"/>
+    <dubbo:service interface="cn.com.kingc.risk.service.RiskcontrolanalyzeitemService" ref="riskcontrolanalyzeitemService"/>
+    <dubbo:service interface="cn.com.kingc.risk.service.RiskAnalyzeService" ref="riskAnalyzeService"/>
+    <dubbo:service interface="cn.com.kingc.risk.service.CustomerextendedclassService" ref="customerextendedclassService"/>
+    <dubbo:service interface="cn.com.kingc.risk.service.RiskrelationhiddenandaccidentService" ref="riskrelationhiddenandaccidentService"/>
+</beans>

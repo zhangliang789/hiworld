@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.kingc.risk.dao.RiskcontrolmeasureDao">
+    <cache-ref namespace="cn.com.kingc.risk.dao.RisksiteDao"/>
+    <resultMap id="RiskcontrolmeasureMap" type="cn.com.kingc.risk.model.Riskcontrolmeasure">
+        <result property="measureID" column="MeasureID" jdbcType="INTEGER"/>
+        <result property="measureUUID" column="MeasureUUID" jdbcType="VARCHAR"/>
+        <result property="riskSiteID" column="RiskSiteID" jdbcType="INTEGER"/>
+        <result property="hazardID" column="HazardID" jdbcType="INTEGER"/>
+        <result property="measureContent" column="MeasureContent" jdbcType="VARCHAR"/>
+        <result property="measureName" column="MeasureName" jdbcType="VARCHAR"/>
+        <result property="measureType" column="MeasureType" jdbcType="VARCHAR"/>
+        <result property="measureURL" column="MeasureURL" jdbcType="VARCHAR"/>
+        <result property="measureCreateTime" column="MeasureCreateTime" jdbcType="VARCHAR"/>
+        <result property="frameWorkID" column="FrameWorkID" jdbcType="VARCHAR"/>
+        <result property="coalMineName" column="CoalMineName" jdbcType="VARCHAR"/>
+        <result property="riskSiteFullNumber" column="RiskSiteFullNumber" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+            MeasureID,
+            MeasureUUID,
+            RiskSiteID,
+            HazardID,
+            MeasureContent,
+            MeasureName,
+            MeasureType,
+            MeasureURL,
+            MeasureCreateTime,
+            FrameWorkID,
+            CoalMineName,
+            RiskSiteFullNumber
+    </sql>
+
+    <insert id="addRiskcontrolmeasure" parameterType="cn.com.kingc.risk.model.Riskcontrolmeasure"
+            useGeneratedKeys="true" keyProperty="measureID" flushCache="true">
+        insert into riskcontrolmeasure (
+            MeasureID,
+            MeasureUUID,
+            RiskSiteID,
+            HazardID,
+            MeasureContent,
+            MeasureName,
+            MeasureType,
+            MeasureURL,
+            MeasureCreateTime,
+            FrameWorkID,
+            CoalMineName,
+            RiskSiteFullNumber
+        )
+        values(
+            #{measureID, jdbcType=INTEGER}  ,
+            #{measureUUID, jdbcType=VARCHAR}  ,
+            #{riskSiteID, jdbcType=INTEGER}  ,
+            #{hazardID, jdbcType=INTEGER}  ,
+            #{measureContent, jdbcType=VARCHAR}  ,
+            #{measureName, jdbcType=VARCHAR}  ,
+            #{measureType, jdbcType=VARCHAR}  ,
+            #{measureURL, jdbcType=VARCHAR}  ,
+            #{measureCreateTime, jdbcType=VARCHAR}  ,
+            #{frameWorkID, jdbcType=VARCHAR}  ,
+            #{coalMineName, jdbcType=VARCHAR}  ,
+            #{riskSiteFullNumber, jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <delete id="deleteRiskcontrolmeasure"
+            parameterType="cn.com.kingc.risk.model.Riskcontrolmeasure"
+            flushCache="true">
+        DELETE FROM riskcontrolmeasure
+        WHERE  MeasureID = #{measureID,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteRiskcontrolmeasureByFullNumber"
+            parameterType="java.lang.String"
+            flushCache="true">
+        DELETE FROM riskcontrolmeasure
+        WHERE  RiskSiteFullNumber = #{riskSiteFullNumber, jdbcType=VARCHAR};
+    </delete>
+
+    <delete id="deleteRiskcontrolmeasureByID"
+            parameterType="java.lang.Integer" flushCache="true">
+        DELETE FROM riskcontrolmeasure
+        WHERE  MeasureID = #{measureID,jdbcType=INTEGER}
+    </delete>
+
+    <update id="updateRiskcontrolmeasure" parameterType="cn.com.kingc.risk.model.Riskcontrolmeasure" flushCache="true">
+        UPDATE riskcontrolmeasure
+        <set>
+            <if test="measureID!= null ">
+                MeasureID = #{measureID, jdbcType=INTEGER} ,
+            </if>
+            <if test="measureUUID!= null ">
+                MeasureUUID = #{measureUUID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskSiteID!= null ">
+                RiskSiteID = #{riskSiteID, jdbcType=INTEGER} ,
+            </if>
+            <if test="hazardID!= null ">
+                HazardID = #{hazardID, jdbcType=INTEGER} ,
+            </if>
+            <if test="measureContent!= null ">
+                MeasureContent = #{measureContent, jdbcType=VARCHAR} ,
+            </if>
+            <if test="measureName!= null ">
+                MeasureName = #{measureName, jdbcType=VARCHAR} ,
+            </if>
+            <if test="measureType!= null ">
+                MeasureType = #{measureType, jdbcType=VARCHAR} ,
+            </if>
+            <if test="measureURL!= null ">
+                MeasureURL = #{measureURL, jdbcType=VARCHAR} ,
+            </if>
+            <if test="measureCreateTime!= null ">
+                MeasureCreateTime = #{measureCreateTime, jdbcType=VARCHAR} ,
+            </if>
+            <if test="frameWorkID!= null ">
+                FrameWorkID = #{frameWorkID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="coalMineName!= null ">
+                CoalMineName = #{coalMineName, jdbcType=VARCHAR},
+            </if>
+            <if test="riskSiteFullNumber!= null ">
+                RiskSiteFullNumber = #{riskSiteFullNumber, jdbcType=VARCHAR}
+            </if>
+        </set>
+        WHERE MeasureID = #{measureID,jdbcType=INTEGER}
+    </update>
+
+    <select id="getRiskcontrolmeasure" resultMap="RiskcontrolmeasureMap"
+            parameterType="INTEGER">
+        select
+        <include refid="Base_Column_List"/>
+        from riskcontrolmeasure
+        WHERE MeasureID = #{measureID,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRiskcontrolmeasureCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  riskcontrolmeasure
+    </select>
+
+    <select id="getRiskcontrolmeasureByPage" resultMap="RiskcontrolmeasureMap"
+            parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from riskcontrolmeasure
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRiskcontrolmeasureCountByRiskcontrolmeasure" resultType="java.lang.Integer">
+        select
+        count(*)
+        from riskcontrolmeasure
+        where 1=1
+        <if test="measureID!= null ">
+            and MeasureID = #{measureID, jdbcType=INTEGER}
+        </if>
+        <if test="measureUUID!= null and measureUUID!=''">
+            and MeasureUUID = #{measureUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteID!= null ">
+            and RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="hazardID!= null ">
+            and HazardID = #{hazardID, jdbcType=INTEGER}
+        </if>
+        <if test="measureContent!= null and measureContent!=''">
+            and MeasureContent = #{measureContent, jdbcType=VARCHAR}
+        </if>
+        <if test="measureName!= null and measureName!=''">
+            and MeasureName = #{measureName, jdbcType=VARCHAR}
+        </if>
+        <if test="measureType!= null and measureType!=''">
+            and MeasureType = #{measureType, jdbcType=VARCHAR}
+        </if>
+        <if test="measureURL!= null and measureURL!=''">
+            and MeasureURL = #{measureURL, jdbcType=VARCHAR}
+        </if>
+        <if test="measureCreateTime!= null and measureCreateTime!=''">
+            and MeasureCreateTime = #{measureCreateTime, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!=''">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="coalMineName!= null and coalMineName!=''">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteFullNumber!= null ">
+            AND RiskSiteFullNumber LIKE CONCAT(#{riskSiteFullNumber, jdbcType=VARCHAR}, '%')
+        </if>
+    </select>
+
+    <select id="getRiskcontrolmeasureByPageAndRiskcontrolmeasure" resultMap="RiskcontrolmeasureMap">
+        select
+        <include refid="Base_Column_List"/>
+        from riskcontrolmeasure
+        where 1=1
+        <if test="riskcontrolmeasure.measureID!= null ">
+            and MeasureID = #{riskcontrolmeasure.measureID, jdbcType=INTEGER}
+        </if>
+        <if test="riskcontrolmeasure.measureUUID!= null and riskcontrolmeasure.measureUUID!=''">
+            and MeasureUUID = #{riskcontrolmeasure.measureUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolmeasure.measureUUID!= null ">
+            and RiskSiteID = #{riskcontrolmeasure.riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="riskcontrolmeasure.hazardID!= null ">
+            and HazardID = #{riskcontrolmeasure.hazardID, jdbcType=INTEGER}
+        </if>
+        <if test="riskcontrolmeasure.measureContent!= null and riskcontrolmeasure.measureContent!=''">
+            and MeasureContent = #{riskcontrolmeasure.measureContent, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolmeasure.measureName!= null and riskcontrolmeasure.measureName!=''">
+            and MeasureName = #{riskcontrolmeasure.measureName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolmeasure.measureType!= null and riskcontrolmeasure.measureType!=''">
+            and MeasureType = #{riskcontrolmeasure.measureType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolmeasure.measureURL!= null and riskcontrolmeasure.measureURL!= ''">
+            and MeasureURL = #{riskcontrolmeasure.measureURL, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolmeasure.measureCreateTime!= null and riskcontrolmeasure.measureCreateTime!=''">
+            and MeasureCreateTime = #{riskcontrolmeasure.measureCreateTime, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolmeasure.frameWorkID!= null and riskcontrolmeasure.frameWorkID!=''">
+            and FrameWorkID = #{riskcontrolmeasure.frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolmeasure.coalMineName!= null and riskcontrolmeasure.coalMineName!= ''">
+            and CoalMineName = #{riskcontrolmeasure.coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteFullNumber!= null ">
+            AND RiskSiteFullNumber  LIKE CONCAT(#{riskSiteFullNumber, jdbcType=VARCHAR}, '%')
+        </if>
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRiskcontrolmeasureData" resultMap="RiskcontrolmeasureMap">
+        select
+        <include refid="Base_Column_List"/>
+        from riskcontrolmeasure
+        where 1=1
+        and MeasureContent is not null
+        <if test="measureID!= null ">
+            and MeasureID = #{measureID, jdbcType=INTEGER}
+        </if>
+        <if test="measureUUID!= null and measureUUID!=''">
+            and MeasureUUID = #{measureUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteID!= null ">
+            and RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="hazardID!= null ">
+            and HazardID = #{hazardID, jdbcType=INTEGER}
+        </if>
+        <if test="measureContent!= null and measureContent!=''">
+            and MeasureContent = #{measureContent, jdbcType=VARCHAR}
+        </if>
+        <if test="measureName!= null and measureName!=''">
+            and MeasureName = #{measureName, jdbcType=VARCHAR}
+        </if>
+        <if test="measureType!= null and measureType!=''">
+            and MeasureType = #{measureType, jdbcType=VARCHAR}
+        </if>
+        <if test="measureURL!= null and measureURL!=''">
+            and MeasureURL = #{measureURL, jdbcType=VARCHAR}
+        </if>
+        <if test="measureCreateTime!= null and measureCreateTime!=''">
+            and MeasureCreateTime = #{measureCreateTime, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!=''">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="coalMineName!= null and coalMineName!=''">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteFullNumber!= null ">
+            AND RiskSiteFullNumber LIKE CONCAT(#{riskSiteFullNumber, jdbcType=VARCHAR}, '%')
+        </if>
+    </select>
+
+    <select id="getRiskcontrolmeasureDatas" resultMap="RiskcontrolmeasureMap">
+        select
+        <include refid="Base_Column_List"/>
+        from riskcontrolmeasure
+        where 1=1
+--         and MeasureContent is not null
+        <if test="measureID!= null ">
+            and MeasureID = #{measureID, jdbcType=INTEGER}
+        </if>
+        <if test="measureUUID!= null and measureUUID!=''">
+            and MeasureUUID = #{measureUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteID!= null ">
+            and RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="hazardID!= null ">
+            and HazardID = #{hazardID, jdbcType=INTEGER}
+        </if>
+        <if test="measureContent!= null and measureContent!=''">
+            and MeasureContent = #{measureContent, jdbcType=VARCHAR}
+        </if>
+        <if test="measureName!= null and measureName!=''">
+            and MeasureName = #{measureName, jdbcType=VARCHAR}
+        </if>
+        <if test="measureType!= null and measureType!=''">
+            and MeasureType = #{measureType, jdbcType=VARCHAR}
+        </if>
+        <if test="measureURL!= null and measureURL!=''">
+            and MeasureURL = #{measureURL, jdbcType=VARCHAR}
+        </if>
+        <if test="measureCreateTime!= null and measureCreateTime!=''">
+            and MeasureCreateTime = #{measureCreateTime, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!=''">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="coalMineName!= null and coalMineName!=''">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteFullNumber!= null ">
+            AND RiskSiteFullNumber LIKE CONCAT(#{riskSiteFullNumber, jdbcType=VARCHAR}, '%')
+        </if>
+    </select>
+
+    <select id="getRiskcontrolmeasureDataCount" resultMap="RiskcontrolmeasureMap">
+        select
+        <include refid="Base_Column_List"/>
+        from riskcontrolmeasure
+        where 1=1
+        <if test="measureID!= null ">
+            and MeasureID = #{measureID, jdbcType=INTEGER}
+        </if>
+        <if test="measureUUID!= null and measureUUID!=''">
+            and MeasureUUID = #{measureUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteID!= null ">
+            and RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="hazardID!= null ">
+            and HazardID = #{hazardID, jdbcType=INTEGER}
+        </if>
+        <if test="measureContent!= null and measureContent!=''">
+            and MeasureContent = #{measureContent, jdbcType=VARCHAR}
+        </if>
+        <if test="measureName!= null and measureName!=''">
+            and MeasureName = #{measureName, jdbcType=VARCHAR}
+        </if>
+        <if test="measureType!= null and measureType!=''">
+            and MeasureType = #{measureType, jdbcType=VARCHAR}
+        </if>
+        <if test="measureURL!= null and measureURL!=''">
+            and MeasureURL = #{measureURL, jdbcType=VARCHAR}
+        </if>
+        <if test="measureCreateTime!= null and measureCreateTime!=''">
+            and MeasureCreateTime = #{measureCreateTime, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!=''">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="coalMineName!= null and coalMineName!=''">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteFullNumber!= null ">
+            AND RiskSiteFullNumber LIKE CONCAT(#{riskSiteFullNumber, jdbcType=VARCHAR}, '%')
+        </if>
+    </select>
+
+</mapper>

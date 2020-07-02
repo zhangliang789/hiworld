@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.kingc.risk.dao.RiskcontrolhistoryattachmentDao">
+    <resultMap id="RiskcontrolhistoryattachmentMap" type="cn.com.kingc.risk.model.Riskcontrolhistoryattachment">
+            <id property="id" column="id"  jdbcType="INTEGER"/>
+            <result property="attachmentUUID" column="AttachmentUUID"  jdbcType="VARCHAR"/>
+            <result property="controlHistoryID" column="ControlHistoryID"  jdbcType="INTEGER"/>
+            <result property="attachmentName" column="AttachmentName"  jdbcType="VARCHAR"/>
+            <result property="frameworkID" column="FrameworkID"  jdbcType="VARCHAR"/>
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id ,
+        AttachmentUUID ,
+        ControlHistoryID ,
+        AttachmentName ,
+        FrameworkID 
+    </sql>
+
+
+    <!--新增一条记录-->
+    <insert id="addRiskcontrolhistoryattachment" parameterType="cn.com.kingc.risk.model.Riskcontrolhistoryattachment"
+            useGeneratedKeys="true" keyProperty="id" >
+        insert into riskcontrolhistoryattachment (
+            id,
+            AttachmentUUID,
+            ControlHistoryID,
+            AttachmentName,
+            FrameworkID
+        )
+        values(
+            #{id, jdbcType=INTEGER}  ,
+            #{attachmentUUID, jdbcType=VARCHAR}  ,
+            #{controlHistoryID, jdbcType=INTEGER}  ,
+            #{attachmentName, jdbcType=VARCHAR}  ,
+            #{frameworkID, jdbcType=VARCHAR}  
+        )
+    </insert>
+
+    <!--批量新增记录-->
+    <insert id="addRiskcontrolhistoryattachmentList"  parameterType="java.util.List" >
+        insert into riskcontrolhistoryattachment(
+            id,
+            AttachmentUUID,
+            ControlHistoryID,
+            AttachmentName,
+            FrameworkID
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+        (
+            #{item.id, jdbcType=INTEGER}  ,
+            #{item.attachmentUUID, jdbcType=VARCHAR}  ,
+            #{item.controlHistoryID, jdbcType=INTEGER}  ,
+            #{item.attachmentName, jdbcType=VARCHAR}  ,
+            #{item.frameworkID, jdbcType=VARCHAR}  
+        )
+        </foreach>
+    </insert>
+
+    <!--删除记录-->
+    <delete id="deleteRiskcontrolhistoryattachment" parameterType="cn.com.kingc.risk.model.Riskcontrolhistoryattachment" >
+        DELETE FROM riskcontrolhistoryattachment
+        where 1=1
+                <if test="id!= null ">
+                    and  id = #{id, jdbcType=INTEGER}  
+                </if>
+                <if test="attachmentUUID!= null and attachmentUUID!= ''">
+                    and  AttachmentUUID = #{attachmentUUID, jdbcType=VARCHAR}  
+                </if>
+                <if test="controlHistoryID!= null ">
+                    and  ControlHistoryID = #{controlHistoryID, jdbcType=INTEGER}  
+                </if>
+                <if test="attachmentName!= null and attachmentName!= ''">
+                    and  AttachmentName = #{attachmentName, jdbcType=VARCHAR}  
+                </if>
+                <if test="frameworkID!= null and frameworkID!= ''">
+                    and  FrameworkID = #{frameworkID, jdbcType=VARCHAR} 
+                </if>
+    </delete>
+
+    <!--删除一条记录-->
+    <delete id="deleteRiskcontrolhistoryattachmentByID" parameterType="Integer" >
+        DELETE FROM riskcontrolhistoryattachment
+        WHERE  id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <!--批量删除记录-->
+    <insert id="deleteRiskcontrolhistoryattachmentList"  parameterType="java.util.List" >
+        DELETE FROM riskcontrolhistoryattachment
+        WHERE id IN
+        <foreach item="item" collection="list" separator=",">
+        (
+            #{item.id, jdbcType=INTEGER}
+        )
+        </foreach>
+    </insert>
+
+    <!--更新记录-->
+    <update id="updateRiskcontrolhistoryattachment" parameterType="cn.com.kingc.risk.model.Riskcontrolhistoryattachment" >
+        UPDATE  riskcontrolhistoryattachment
+        <set>
+                <if test="id!= null ">
+                id = #{id, jdbcType=INTEGER} ,
+                </if>
+                <if test="attachmentUUID!= null ">
+                AttachmentUUID = #{attachmentUUID, jdbcType=VARCHAR} ,
+                </if>
+                <if test="controlHistoryID!= null ">
+                ControlHistoryID = #{controlHistoryID, jdbcType=INTEGER} ,
+                </if>
+                <if test="attachmentName!= null ">
+                AttachmentName = #{attachmentName, jdbcType=VARCHAR} ,
+                </if>
+                <if test="frameworkID!= null ">
+                FrameworkID = #{frameworkID, jdbcType=VARCHAR} 
+                </if>
+        </set>
+        WHERE  id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!--根据主键查询记录-->
+    <select id="getRiskcontrolhistoryattachment" resultMap="RiskcontrolhistoryattachmentMap"
+            parameterType="Integer">
+        select
+        <include refid="Base_Column_List" />
+        from riskcontrolhistoryattachment
+        WHERE  id = #{id,jdbcType=INTEGER}
+    </select>
+
+
+    <!--获取共有多少条记录，带有查询条件-->
+    <select id="getRiskcontrolhistoryattachmentCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  riskcontrolhistoryattachment
+        where 1=1
+            <if test="id!= null ">
+                and  id = #{id, jdbcType=INTEGER}  
+            </if>
+            <if test="attachmentUUID!= null and attachmentUUID!= ''">
+                and  AttachmentUUID = #{attachmentUUID, jdbcType=VARCHAR}  
+            </if>
+            <if test="controlHistoryID!= null ">
+                and  ControlHistoryID = #{controlHistoryID, jdbcType=INTEGER}  
+            </if>
+            <if test="attachmentName!= null and attachmentName!= ''">
+                and  AttachmentName = #{attachmentName, jdbcType=VARCHAR}  
+            </if>
+            <if test="frameworkID!= null and frameworkID!= ''">
+                and  FrameworkID = #{frameworkID, jdbcType=VARCHAR} 
+            </if>
+    </select>
+
+    <!--分页获取数据，带有查询条件-->
+    <select id="getRiskcontrolhistoryattachmentByPage" resultMap="RiskcontrolhistoryattachmentMap">
+        select
+        <include refid="Base_Column_List" />
+        from riskcontrolhistoryattachment
+        where 1=1
+            <if test="riskcontrolhistoryattachment.id!= null ">
+                and  id = #{riskcontrolhistoryattachment.id, jdbcType=INTEGER}  
+            </if>
+            <if test="riskcontrolhistoryattachment.attachmentUUID!= null and riskcontrolhistoryattachment.attachmentUUID!= ''">
+                and  AttachmentUUID = #{riskcontrolhistoryattachment.attachmentUUID, jdbcType=VARCHAR}  
+            </if>
+            <if test="riskcontrolhistoryattachment.controlHistoryID!= null ">
+                and  ControlHistoryID = #{riskcontrolhistoryattachment.controlHistoryID, jdbcType=INTEGER}  
+            </if>
+            <if test="riskcontrolhistoryattachment.attachmentName!= null and riskcontrolhistoryattachment.attachmentName!= ''">
+                and  AttachmentName = #{riskcontrolhistoryattachment.attachmentName, jdbcType=VARCHAR}  
+            </if>
+            <if test="riskcontrolhistoryattachment.frameworkID!= null and riskcontrolhistoryattachment.frameworkID!= ''">
+                and  FrameworkID = #{riskcontrolhistoryattachment.frameworkID, jdbcType=VARCHAR} 
+            </if>
+        LIMIT
+    #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <!--根据条件查询数据-->
+    <select id="getRiskcontrolhistoryattachmentList" resultMap="RiskcontrolhistoryattachmentMap">
+        select
+        <include refid="Base_Column_List" />
+        from riskcontrolhistoryattachment
+        where 1=1
+            <if test="id!= null ">
+                and  id = #{id, jdbcType=INTEGER}  
+            </if>
+            <if test="attachmentUUID!= null and attachmentUUID!= ''">
+                and  AttachmentUUID = #{attachmentUUID, jdbcType=VARCHAR}  
+            </if>
+            <if test="controlHistoryID!= null ">
+                and  ControlHistoryID = #{controlHistoryID, jdbcType=INTEGER}  
+            </if>
+            <if test="attachmentName!= null and attachmentName!= ''">
+                and  AttachmentName = #{attachmentName, jdbcType=VARCHAR}  
+            </if>
+            <if test="frameworkID!= null and frameworkID!= ''">
+                and  FrameworkID = #{frameworkID, jdbcType=VARCHAR} 
+            </if>
+    </select>
+
+    <!--获取一个数据的不重复集合-->
+    <select id="getDistinctItemList" resultType="java.lang.String" statementType="STATEMENT">
+        select  DISTINCT ${attribute} FROM riskcontrolhistoryattachment
+    </select>
+
+    <!--判断对象是否已经存在-->
+    <select id="riskcontrolhistoryattachmentIsExist" resultType="java.lang.Integer" parameterType="cn.com.kingc.risk.model.Riskcontrolhistoryattachment">
+        select  count(*)
+        from riskcontrolhistoryattachment
+        where 1=1
+            <if test="id!= null and id!= ''">
+                and  id = #{id, jdbcType=INTEGER}  
+            </if>
+            <if test="attachmentUUID!= null ">
+                and  AttachmentUUID = #{attachmentUUID, jdbcType=VARCHAR}  
+            </if>
+            <if test="controlHistoryID!= null and controlHistoryID!= ''">
+                and  ControlHistoryID = #{controlHistoryID, jdbcType=INTEGER}  
+            </if>
+            <if test="attachmentName!= null ">
+                and  AttachmentName = #{attachmentName, jdbcType=VARCHAR}  
+            </if>
+            <if test="frameworkID!= null ">
+                and  FrameworkID = #{frameworkID, jdbcType=VARCHAR} 
+            </if>
+    </select>
+
+    <!--根据条件查询数据-->
+    <select id="getRiskcontrolhistoryattachmentUnique" resultMap="RiskcontrolhistoryattachmentMap">
+        select
+        <include refid="Base_Column_List" />
+        from riskcontrolhistoryattachment
+        where 1=1
+            <if test="id!= null ">
+                and  id = #{id, jdbcType=INTEGER}  
+            </if>
+            <if test="attachmentUUID!= null and attachmentUUID!= ''">
+                and  AttachmentUUID = #{attachmentUUID, jdbcType=VARCHAR}  
+            </if>
+            <if test="controlHistoryID!= null ">
+                and  ControlHistoryID = #{controlHistoryID, jdbcType=INTEGER}  
+            </if>
+            <if test="attachmentName!= null and attachmentName!= ''">
+                and  AttachmentName = #{attachmentName, jdbcType=VARCHAR}  
+            </if>
+            <if test="frameworkID!= null and frameworkID!= ''">
+                and  FrameworkID = #{frameworkID, jdbcType=VARCHAR} 
+            </if>
+    </select>
+
+</mapper>

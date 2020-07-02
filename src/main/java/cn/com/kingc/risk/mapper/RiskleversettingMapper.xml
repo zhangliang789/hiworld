@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.kingc.risk.dao.RiskleversettingDao">
+    <cache-ref namespace="cn.com.kingc.risk.dao.RisksiteDao"/>
+    <resultMap id="RiskleversettingMap" type="cn.com.kingc.risk.model.Riskleversetting">
+        <result property="coalMineName" column="CoalMineName" jdbcType="VARCHAR"/>
+        <result property="frameWorkID" column="FrameWorkID" jdbcType="VARCHAR"/>
+        <result property="riskLevelSettingID" column="RiskLevelSettingID" jdbcType="INTEGER"/>
+        <result property="riskColor" column="RiskColor" jdbcType="VARCHAR"/>
+        <result property="riskLevel" column="RiskLevel" jdbcType="VARCHAR"/>
+        <result property="riskOrder" column="RiskOrder" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+            CoalMineName,
+            FrameWorkID,
+            RiskLevelSettingID,
+            RiskColor,
+            RiskLevel,
+            RiskOrder
+    </sql>
+
+    <!--新增一条记录-->
+    <insert id="addRiskleversetting" parameterType="cn.com.kingc.risk.model.Riskleversetting"
+            useGeneratedKeys="true" keyProperty="riskLevelSettingID" flushCache="true">
+        insert into riskleversetting (
+                CoalMineName,
+                FrameWorkID,
+                RiskLevelSettingID,
+                RiskColor,
+                RiskLevel,
+                RiskOrder
+        )
+        values(
+                #{coalMineName, jdbcType=VARCHAR}  ,
+                #{frameWorkID, jdbcType=VARCHAR}  ,
+                #{riskLevelSettingID, jdbcType=INTEGER}  ,
+                #{riskColor, jdbcType=VARCHAR}  ,
+                #{riskLevel, jdbcType=VARCHAR}  ,
+                #{riskOrder, jdbcType=INTEGER}  
+        )
+    </insert>
+
+    <!--批量新增记录-->
+    <insert id="addRiskleversettingList" parameterType="java.util.List" flushCache="true">
+        insert into riskleversetting(
+        CoalMineName,
+        FrameWorkID,
+        RiskLevelSettingID,
+        RiskColor,
+        RiskLevel,
+        RiskOrder
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.coalMineName, jdbcType=VARCHAR} ,
+            #{item.frameWorkID, jdbcType=VARCHAR} ,
+            #{item.riskLevelSettingID, jdbcType=INTEGER} ,
+            #{item.riskColor, jdbcType=VARCHAR} ,
+            #{item.riskLevel, jdbcType=VARCHAR} ,
+            #{item.riskOrder, jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+
+    <!--删除记录-->
+    <delete id="deleteRiskleversetting" parameterType="cn.com.kingc.risk.model.Riskleversetting" flushCache="true">
+        DELETE FROM riskleversetting
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!= ''">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!= ''">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskLevelSettingID!= null ">
+            and RiskLevelSettingID = #{riskLevelSettingID, jdbcType=INTEGER}
+        </if>
+        <if test="riskColor!= null and riskColor!= ''">
+            and RiskColor = #{riskColor, jdbcType=VARCHAR}
+        </if>
+        <if test="riskLevel!= null and riskLevel!= ''">
+            and RiskLevel = #{riskLevel, jdbcType=VARCHAR}
+        </if>
+        <if test="riskOrder!= null ">
+            and RiskOrder = #{riskOrder, jdbcType=INTEGER}
+        </if>
+    </delete>
+
+    <!--删除一条记录-->
+    <delete id="deleteRiskleversettingByID" parameterType="Integer" flushCache="true">
+        DELETE FROM riskleversetting
+        WHERE  RiskLevelSettingID = #{riskLevelSettingID,jdbcType=INTEGER}
+    </delete>
+
+    <!--批量删除记录-->
+    <insert id="deleteRiskleversettingList" parameterType="java.util.List" flushCache="true">
+        DELETE FROM riskleversetting
+        WHERE RiskLevelSettingID IN
+        <foreach item="item" collection="list" separator=",">
+            (
+            #{item.riskLevelSettingID, jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+
+    <!--更新记录-->
+    <update id="updateRiskleversetting" parameterType="cn.com.kingc.risk.model.Riskleversetting" flushCache="true">
+        UPDATE riskleversetting
+        <set>
+            <if test="coalMineName!= null ">
+                CoalMineName = #{coalMineName, jdbcType=VARCHAR} ,
+            </if>
+            <if test="frameWorkID!= null ">
+                FrameWorkID = #{frameWorkID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskLevelSettingID!= null ">
+                RiskLevelSettingID = #{riskLevelSettingID, jdbcType=INTEGER} ,
+            </if>
+            <if test="riskColor!= null ">
+                RiskColor = #{riskColor, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskLevel!= null ">
+                RiskLevel = #{riskLevel, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskOrder!= null ">
+                RiskOrder = #{riskOrder, jdbcType=INTEGER}
+            </if>
+        </set>
+        WHERE RiskLevelSettingID = #{riskLevelSettingID,jdbcType=INTEGER}
+    </update>
+
+    <!--根据主键查询记录-->
+    <select id="getRiskleversetting" resultMap="RiskleversettingMap"
+            parameterType="Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from riskleversetting
+        WHERE RiskLevelSettingID = #{riskLevelSettingID,jdbcType=INTEGER}
+    </select>
+    <!--获取共有多少条记录-->
+    <select id="getRiskleversettingCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  riskleversetting
+    </select>
+
+    <!--分页方法-->
+    <select id="getRiskleversettingByPage" resultMap="RiskleversettingMap"
+            parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from riskleversetting
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <!--获取共有多少条记录，带有查询条件-->
+    <select id="getRiskleversettingCountByRiskleversetting" resultType="java.lang.Integer">
+        select
+        count(*)
+        from riskleversetting
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!= ''">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!= ''">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskLevelSettingID!= null ">
+            and RiskLevelSettingID = #{riskLevelSettingID, jdbcType=INTEGER}
+        </if>
+        <if test="riskColor!= null and riskColor!= ''">
+            and RiskColor = #{riskColor, jdbcType=VARCHAR}
+        </if>
+        <if test="riskLevel!= null and riskLevel!= ''">
+            and RiskLevel = #{riskLevel, jdbcType=VARCHAR}
+        </if>
+        <if test="riskOrder!= null ">
+            and RiskOrder = #{riskOrder, jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <!--分页获取数据，带有查询条件-->
+    <select id="getRiskleversettingByPageAndRiskleversetting" resultMap="RiskleversettingMap">
+        select
+        <include refid="Base_Column_List"/>
+        from riskleversetting
+        where 1=1
+        <if test="riskleversetting.coalMineName!= null and riskleversetting.coalMineName!= ''">
+            and CoalMineName = #{riskleversetting.coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskleversetting.frameWorkID!= null and riskleversetting.frameWorkID!= ''">
+            and FrameWorkID = #{riskleversetting.frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskleversetting.riskLevelSettingID!= null ">
+            and RiskLevelSettingID = #{riskleversetting.riskLevelSettingID, jdbcType=INTEGER}
+        </if>
+        <if test="riskleversetting.riskColor!= null and riskleversetting.riskColor!= ''">
+            and RiskColor = #{riskleversetting.riskColor, jdbcType=VARCHAR}
+        </if>
+        <if test="riskleversetting.riskLevel!= null and riskleversetting.riskLevel!= ''">
+            and RiskLevel = #{riskleversetting.riskLevel, jdbcType=VARCHAR}
+        </if>
+        <if test="riskleversetting.riskOrder!= null ">
+            and RiskOrder = #{riskleversetting.riskOrder, jdbcType=INTEGER}
+        </if>
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <!--根据条件查询数据-->
+    <select id="getRiskleversettingList" resultMap="RiskleversettingMap">
+        select
+        <include refid="Base_Column_List"/>
+        from riskleversetting
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!= ''">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!= ''">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskLevelSettingID!= null ">
+            and RiskLevelSettingID = #{riskLevelSettingID, jdbcType=INTEGER}
+        </if>
+        <if test="riskColor!= null and riskColor!= ''">
+            and RiskColor = #{riskColor, jdbcType=VARCHAR}
+        </if>
+        <if test="riskLevel!= null and riskLevel!= ''">
+            and RiskLevel = #{riskLevel, jdbcType=VARCHAR}
+        </if>
+        <if test="riskOrder!= null ">
+            and RiskOrder = #{riskOrder, jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <!--获取一个数据的不重复集合-->
+    <select id="getDistinctItemList" resultType="java.lang.String" statementType="STATEMENT">
+        select  DISTINCT ${attribute} FROM riskleversetting
+    </select>
+
+    <!--判断对象是否已经存在-->
+    <select id="riskleversettingIsExist" resultType="java.lang.Integer"
+            parameterType="cn.com.kingc.risk.model.Riskleversetting">
+        select count(*)
+        from riskleversetting
+        where 1=1
+        <if test="coalMineName!= null ">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null ">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskLevelSettingID!= null and riskLevelSettingID!= ''">
+            and RiskLevelSettingID = #{riskLevelSettingID, jdbcType=INTEGER}
+        </if>
+        <if test="riskColor!= null ">
+            and RiskColor = #{riskColor, jdbcType=VARCHAR}
+        </if>
+        <if test="riskLevel!= null ">
+            and RiskLevel = #{riskLevel, jdbcType=VARCHAR}
+        </if>
+        <if test="riskOrder!= null and riskOrder!= ''">
+            and RiskOrder = #{riskOrder, jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <!--根据条件查询数据-->
+    <select id="getRiskleversettingUnique" resultMap="RiskleversettingMap">
+        select
+        <include refid="Base_Column_List"/>
+        from riskleversetting
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!= ''">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!= ''">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskLevelSettingID!= null ">
+            and RiskLevelSettingID = #{riskLevelSettingID, jdbcType=INTEGER}
+        </if>
+        <if test="riskColor!= null and riskColor!= ''">
+            and RiskColor = #{riskColor, jdbcType=VARCHAR}
+        </if>
+        <if test="riskLevel!= null and riskLevel!= ''">
+            and RiskLevel = #{riskLevel, jdbcType=VARCHAR}
+        </if>
+        <if test="riskOrder!= null ">
+            and RiskOrder = #{riskOrder, jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <insert id="initializeaRiskLevelSetting">
+        DELETE FROM riskdegreeitem WHERE FrameWorkID=#{frameWorkID, jdbcType=VARCHAR};
+        DELETE FROM riskdegree WHERE FrameWorkID=#{frameWorkID, jdbcType=VARCHAR};
+        DELETE FROM riskLeverSetting WHERE FrameWorkID=#{frameWorkID, jdbcType=VARCHAR};
+
+        INSERT INTO riskleversetting (CoalMineName,FrameWorkID,RiskColor,RiskLevel,RiskOrder)
+        VALUES (#{coalMineName, jdbcType=VARCHAR}, #{frameWorkID, jdbcType=VARCHAR}, '#ff0000', '重大风险', '1');
+        INSERT INTO riskleversetting (CoalMineName,FrameWorkID,RiskColor,RiskLevel,RiskOrder)
+        VALUES (#{coalMineName, jdbcType=VARCHAR}, #{frameWorkID, jdbcType=VARCHAR},  '#ff9900', '较大风险', '2');
+        INSERT INTO riskleversetting (CoalMineName,FrameWorkID,RiskColor,RiskLevel,RiskOrder)
+        VALUES (#{coalMineName, jdbcType=VARCHAR}, #{frameWorkID, jdbcType=VARCHAR}, '#ffff00', '一般风险', '3');
+        INSERT INTO riskleversetting (CoalMineName,FrameWorkID,RiskColor,RiskLevel,RiskOrder)
+        VALUES (#{coalMineName, jdbcType=VARCHAR}, #{frameWorkID, jdbcType=VARCHAR},  '#9FC5E8', '低风险', '4');
+
+        INSERT INTO riskdegree (coalMineName, FrameWorkID, HazardIdentificationMethod)
+        VALUES (#{coalMineName, jdbcType=VARCHAR}, #{frameWorkID, jdbcType=VARCHAR}, '风险矩阵分析法（LS）');
+        INSERT INTO riskdegree (coalMineName, FrameWorkID, HazardIdentificationMethod)
+        VALUES (#{coalMineName, jdbcType=VARCHAR}, #{frameWorkID, jdbcType=VARCHAR}, 'LEC风险评价法');
+
+        INSERT INTO riskdegreeitem
+            (RiskDegreeID,RiskLevelSettingID,coalMineName,FrameWorkID)
+        SELECT
+            RiskDegreeID,
+            L.RiskLevelSettingID,
+            R.coalMineName,
+            R.FrameWorkID
+        FROM
+            riskdegree R
+        INNER JOIN riskLeverSetting L
+        ON R.FrameWorkID = L.FrameWorkID
+        WHERE R.FrameWorkID=#{frameWorkID, jdbcType=VARCHAR};
+    </insert>
+</mapper>

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.kingc.risk.dao.RiskdegreeDao">
+    <resultMap id="RiskdegreeMap" type="cn.com.kingc.risk.model.Riskdegree">
+        <result property="coalMineName" column="coalMineName" jdbcType="VARCHAR"/>
+        <result property="frameWorkID" column="FrameWorkID" jdbcType="VARCHAR"/>
+        <result property="hazardIdentificationMethod" column="HazardIdentificationMethod" jdbcType="VARCHAR"/>
+        <result property="riskDegreeID" column="RiskDegreeID" jdbcType="INTEGER"/>
+        <collection property="mRiskdegreeitems"
+                    column="{riskDegreeID=RiskDegreeID,frameWorkID=FrameWorkID}"
+                    ofType="cn.com.kingc.risk.model.Riskdegreeitem"
+                    select="findRiskdegreeitemsByDegreeID"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+            coalMineName,
+            FrameWorkID,
+            HazardIdentificationMethod,
+            RiskDegreeID
+    </sql>
+
+    <select id="findRiskdegreeitemsByDegreeID" parameterType="java.util.Map" resultMap="cn.com.kingc.risk.dao.RiskdegreeitemDao.RiskdegreeitemMap">
+        select
+        <include refid="cn.com.kingc.risk.dao.RiskdegreeitemDao.Base_Column_List"/>
+        from riskdegreeitem
+        where RiskDegreeID=#{riskDegreeID,jdbcType=INTEGER} AND FrameWorkID=#{frameWorkID}
+    </select>
+
+    <insert id="addRiskdegree" parameterType="cn.com.kingc.risk.model.Riskdegree"
+            useGeneratedKeys="true" keyProperty="riskDegreeID">
+        insert into riskdegree (
+                coalMineName,
+                FrameWorkID,
+                HazardIdentificationMethod,
+                RiskDegreeID
+        )
+        values(
+                #{coalMineName, jdbcType=VARCHAR}  ,
+                #{frameWorkID, jdbcType=VARCHAR}  ,
+                #{hazardIdentificationMethod, jdbcType=VARCHAR}  ,
+                #{riskDegreeID, jdbcType=INTEGER}  
+        )
+    </insert>
+
+    <delete id="deleteRiskdegree" parameterType="cn.com.kingc.risk.model.Riskdegree">
+        DELETE FROM riskdegree
+        WHERE  RiskDegreeID = #{riskDegreeID,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteRiskdegreeByID" parameterType="java.lang.Integer">
+        DELETE FROM riskdegree
+        WHERE  RiskDegreeID = #{riskDegreeID,jdbcType=INTEGER}
+    </delete>
+
+    <update id="updateRiskdegree" parameterType="cn.com.kingc.risk.model.Riskdegree">
+        UPDATE riskdegree
+        <set>
+            <if test="coalMineName!= null ">
+                coalMineName = #{coalMineName, jdbcType=VARCHAR} ,
+            </if>
+            <if test="frameWorkID!= null ">
+                FrameWorkID = #{frameWorkID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="hazardIdentificationMethod!= null ">
+                HazardIdentificationMethod = #{hazardIdentificationMethod, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskDegreeID!= null ">
+                RiskDegreeID = #{riskDegreeID, jdbcType=INTEGER}
+            </if>
+        </set>
+        WHERE RiskDegreeID = #{riskDegreeID,jdbcType=INTEGER}
+    </update>
+
+    <select id="getRiskdegree" resultMap="RiskdegreeMap"
+            parameterType="INTEGER">
+        select
+        <include refid="Base_Column_List"/>
+        from riskdegree
+        WHERE RiskDegreeID = #{riskDegreeID,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRiskdegreeByCoalMine" resultMap="RiskdegreeMap">
+        select
+        <include refid="Base_Column_List"/>
+        from riskdegree
+        WHERE coalMineName = #{coalMineName, jdbcType=VARCHAR} AND FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+    </select>
+
+    <select id="getRiskdegreeByMethod" resultMap="RiskdegreeMap">
+        select
+        <include refid="Base_Column_List"/>
+        from riskdegree
+        WHERE FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        AND LOCATE(#{hazardIdentificationMethod, jdbcType=VARCHAR},HazardIdentificationMethod)>0
+    </select>
+
+    <select id="getRiskdegreeCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  riskdegree
+    </select>
+
+    <select id="getRiskdegreeByPage" resultMap="RiskdegreeMap"
+            parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from riskdegree
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRiskdegreeCountByRiskdegree" resultType="java.lang.Integer">
+        select
+        count(*)
+        from riskdegree
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!='' ">
+            and coalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!='' ">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="hazardIdentificationMethod!= null and hazardIdentificationMethod!='' ">
+            and HazardIdentificationMethod = #{hazardIdentificationMethod, jdbcType=VARCHAR}
+        </if>
+        <if test="riskDegreeID!= null ">
+            and RiskDegreeID = #{riskDegreeID, jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <select id="getRiskdegreeByPageAndRiskdegree" resultMap="RiskdegreeMap">
+        select
+        <include refid="Base_Column_List"/>
+        from riskdegree
+        where 1=1
+        <if test="riskdegree.coalMineName!= null and riskdegree.coalMineName!='' ">
+            and coalMineName = #{riskdegree.coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskdegree.frameWorkID!= null and riskdegree.frameWorkID!='' ">
+            and FrameWorkID = #{riskdegree.frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskdegree.hazardIdentificationMethod!= null and riskdegree.hazardIdentificationMethod!='' ">
+            and HazardIdentificationMethod = #{riskdegree.hazardIdentificationMethod, jdbcType=VARCHAR}
+        </if>
+        <if test="riskdegree.riskDegreeID!= null ">
+            and RiskDegreeID = #{riskdegree.riskDegreeID, jdbcType=INTEGER}
+        </if>
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRiskdegreeData" resultMap="RiskdegreeMap">
+        select
+        <include refid="Base_Column_List"/>
+        from riskdegree
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!='' ">
+            and coalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!=''  ">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="hazardIdentificationMethod!= null and hazardIdentificationMethod!='' ">
+            and HazardIdentificationMethod = #{hazardIdentificationMethod, jdbcType=VARCHAR}
+        </if>
+        <if test="riskDegreeID!= null ">
+            and RiskDegreeID = #{riskDegreeID, jdbcType=INTEGER}
+        </if>
+    </select>
+
+</mapper>

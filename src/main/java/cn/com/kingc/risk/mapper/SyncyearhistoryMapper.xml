@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.kingc.risk.dao.SyncyearhistoryDao">
+    <cache/>
+    <resultMap id="SyncyearhistoryMap" type="cn.com.kingc.risk.model.Syncyearhistory">
+            <result property="coalMineName" column="CoalMineName"  jdbcType="VARCHAR"/>
+            <result property="frameWorkID" column="FrameWorkID"  jdbcType="VARCHAR"/>
+            <result property="fSynHistoryID" column="FSynHistoryID"  jdbcType="INTEGER"/>
+            <result property="riskIdentificationYearID" column="RiskIdentificationYearID"  jdbcType="VARCHAR"/>
+            <result property="fSynStatus" column="FSynStatus"  jdbcType="BIT"/>
+            <result property="fSynTime" column="FSynTime"  jdbcType="TIMESTAMP"/>
+            <result property="fSynEmpID" column="FSynEmpID"  jdbcType="INTEGER"/>
+            <result property="fSynEmpName" column="FSynEmpName"  jdbcType="VARCHAR"/>
+            <result property="fSynResultCode" column="FSynResultCode"  jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+            CoalMineName,
+            FrameWorkID,
+            FSynHistoryID,
+            RiskIdentificationYearID,
+            FSynStatus,
+            FSynTime,
+            FSynEmpID,
+            FSynEmpName,
+            FSynResultCode
+    </sql>
+    <sql id="Base_Column_ListAndYearPlan">
+        s.CoalMineName AS SynCoalMineName,
+        s.FrameWorkID AS SynFrameWorkID,
+        s.FSynHistoryID AS SynFSynHistoryID,
+        s.RiskIdentificationYearID AS SynRiskIdentificationYearID,
+        s.FSynStatus AS SynFSynStatus,
+        s.FSynTime AS SynFSynTime,
+        s.FSynEmpID AS SynFSynEmpID,
+        s.FSynEmpName AS SynFSynEmpName,
+        s.FSynResultCode AS SynFSynResultCode,
+        r.MYear AS SynMYear,
+        r.MeetingTime AS SynMeetingTime
+    </sql>
+
+     <!--新增一条记录-->
+    <insert id="addSyncyearhistory" parameterType="cn.com.kingc.risk.model.Syncyearhistory"
+            useGeneratedKeys="true" keyProperty="coalMineName" flushCache="true">
+        insert into syncyearhistory (
+                CoalMineName,
+                FrameWorkID,
+                FSynHistoryID,
+                RiskIdentificationYearID,
+                FSynStatus,
+                FSynTime,
+                FSynEmpID,
+                FSynEmpName,
+                FSynResultCode
+        )
+        values(
+                #{coalMineName, jdbcType=VARCHAR}  ,
+                #{frameWorkID, jdbcType=VARCHAR}  ,
+                #{fSynHistoryID, jdbcType=INTEGER}  ,
+                #{riskIdentificationYearID, jdbcType=VARCHAR}  ,
+                #{fSynStatus, jdbcType=BIT}  ,
+                #{fSynTime, jdbcType=TIMESTAMP}  ,
+                #{fSynEmpID, jdbcType=INTEGER}  ,
+                #{fSynEmpName, jdbcType=VARCHAR}  ,
+                #{fSynResultCode, jdbcType=INTEGER}  
+        )
+    </insert>
+
+    <!--批量新增记录-->
+    <insert id="addSyncyearhistoryList"  parameterType="java.util.List" flushCache="true">
+        insert into syncyearhistory(
+                CoalMineName,
+                FrameWorkID,
+                FSynHistoryID,
+                RiskIdentificationYearID,
+                FSynStatus,
+                FSynTime,
+                FSynEmpID,
+                FSynEmpName,
+                FSynResultCode
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+                    #{item.coalMineName, jdbcType=VARCHAR}  ,
+                    #{item.frameWorkID, jdbcType=VARCHAR}  ,
+                    #{item.fSynHistoryID, jdbcType=INTEGER}  ,
+                    #{item.riskIdentificationYearID, jdbcType=VARCHAR}  ,
+                    #{item.fSynStatus, jdbcType=BIT}  ,
+                    #{item.fSynTime, jdbcType=TIMESTAMP}  ,
+                    #{item.fSynEmpID, jdbcType=INTEGER}  ,
+                    #{item.fSynEmpName, jdbcType=VARCHAR}  ,
+                    #{item.fSynResultCode, jdbcType=INTEGER}  
+            )
+        </foreach>
+    </insert>
+
+    <!--删除记录-->
+    <delete id="deleteSyncyearhistory" parameterType="cn.com.kingc.risk.model.Syncyearhistory" flushCache="true">
+        DELETE FROM syncyearhistory
+        where 1=1
+                <if test="coalMineName!= null and coalMineName!= ''">
+                    and  CoalMineName = #{coalMineName, jdbcType=VARCHAR}  
+                </if>
+                <if test="frameWorkID!= null and frameWorkID!= ''">
+                    and  FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}  
+                </if>
+                <if test="fSynHistoryID!= null ">
+                    and  FSynHistoryID = #{fSynHistoryID, jdbcType=INTEGER}  
+                </if>
+                <if test="riskIdentificationYearID!= null ">
+                    and  RiskIdentificationYearID = #{riskIdentificationYearID, jdbcType=VARCHAR}
+                </if>
+                <if test="fSynStatus!= null ">
+                    and  FSynStatus = #{fSynStatus, jdbcType=BIT}  
+                </if>
+                <if test="fSynTime!= null ">
+                    and  FSynTime = #{fSynTime, jdbcType=TIMESTAMP}  
+                </if>
+                <if test="fSynEmpID!= null ">
+                    and  FSynEmpID = #{fSynEmpID, jdbcType=INTEGER}  
+                </if>
+                <if test="fSynEmpName!= null and fSynEmpName!= ''">
+                    and  FSynEmpName = #{fSynEmpName, jdbcType=VARCHAR}  
+                </if>
+                <if test="fSynResultCode!= null ">
+                    and  FSynResultCode = #{fSynResultCode, jdbcType=INTEGER} 
+                </if>
+    </delete>
+
+    <!--删除一条记录-->
+    <delete id="deleteSyncyearhistoryByID" parameterType="String" flushCache="true">
+        DELETE FROM syncyearhistory
+        WHERE  CoalMineName = #{coalMineName,jdbcType=VARCHAR}
+    </delete>
+
+    <!--批量删除记录-->
+    <insert id="deleteSyncyearhistoryList"  parameterType="java.util.List" flushCache="true">
+        DELETE FROM syncyearhistory
+        WHERE CoalMineName IN
+        <foreach item="item" collection="list" separator=",">
+            (
+                #{item.coalMineName, jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <!--更新记录-->
+    <update id="updateSyncyearhistory" parameterType="cn.com.kingc.risk.model.Syncyearhistory" flushCache="true">
+        UPDATE  syncyearhistory
+        <set>
+                <if test="coalMineName!= null ">
+                    CoalMineName = #{coalMineName, jdbcType=VARCHAR} ,
+                </if>
+                <if test="frameWorkID!= null ">
+                    FrameWorkID = #{frameWorkID, jdbcType=VARCHAR} ,
+                </if>
+                <if test="fSynHistoryID!= null ">
+                    FSynHistoryID = #{fSynHistoryID, jdbcType=INTEGER} ,
+                </if>
+                <if test="riskIdentificationYearID!= null ">
+                    RiskIdentificationYearID = #{riskIdentificationYearID, jdbcType=VARCHAR} ,
+                </if>
+                <if test="fSynStatus!= null ">
+                    FSynStatus = #{fSynStatus, jdbcType=BIT} ,
+                </if>
+                <if test="fSynTime!= null ">
+                    FSynTime = #{fSynTime, jdbcType=TIMESTAMP} ,
+                </if>
+                <if test="fSynEmpID!= null ">
+                    FSynEmpID = #{fSynEmpID, jdbcType=INTEGER} ,
+                </if>
+                <if test="fSynEmpName!= null ">
+                    FSynEmpName = #{fSynEmpName, jdbcType=VARCHAR} ,
+                </if>
+                <if test="fSynResultCode!= null ">
+                    FSynResultCode = #{fSynResultCode, jdbcType=INTEGER} 
+                </if>
+        </set>
+        WHERE  CoalMineName = #{coalMineName,jdbcType=VARCHAR}
+    </update>
+
+    <!--根据主键查询记录-->
+    <select id="getSyncyearhistory" resultMap="SyncyearhistoryMap"
+            parameterType="String">
+        select
+        <include refid="Base_Column_List" />
+        from syncyearhistory
+        WHERE  CoalMineName = #{coalMineName,jdbcType=VARCHAR}
+    </select>
+    <!--获取共有多少条记录-->
+    <select id="getSyncyearhistoryCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  syncyearhistory
+    </select>
+
+    <!--分页方法-->
+    <select id="getSyncyearhistoryByPage" resultMap="SyncyearhistoryMap"
+            parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from syncyearhistory
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <!--获取共有多少条记录，带有查询条件-->
+    <select id="getSyncyearhistoryCountBySyncyearhistory" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  syncyearhistory
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!= ''">
+            and  CoalMineName = #{coalMineName, jdbcType=VARCHAR}  
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!= ''">
+            and  FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}  
+        </if>
+        <if test="fSynHistoryID!= null ">
+            and  FSynHistoryID = #{fSynHistoryID, jdbcType=INTEGER}  
+        </if>
+        <if test="riskIdentificationYearID!= null ">
+            and  RiskIdentificationYearID = #{riskIdentificationYearID, jdbcType=VARCHAR}
+        </if>
+        <if test="fSynStatus!= null ">
+            and  FSynStatus = #{fSynStatus, jdbcType=BIT}  
+        </if>
+        <if test="fSynTime!= null ">
+            and  FSynTime = #{fSynTime, jdbcType=TIMESTAMP}  
+        </if>
+        <if test="fSynEmpID!= null ">
+            and  FSynEmpID = #{fSynEmpID, jdbcType=INTEGER}  
+        </if>
+        <if test="fSynEmpName!= null and fSynEmpName!= ''">
+            and  FSynEmpName = #{fSynEmpName, jdbcType=VARCHAR}  
+        </if>
+        <if test="fSynResultCode!= null ">
+            and  FSynResultCode = #{fSynResultCode, jdbcType=INTEGER} 
+        </if>
+    </select>
+
+    <!--分页获取数据，带有查询条件-->
+    <select id="getSyncyearhistoryByPageAndSyncyearhistory" resultMap="SyncyearhistoryMap">
+        select
+        <include refid="Base_Column_List" />
+        from syncyearhistory
+        where 1=1
+        <if test="syncyearhistory.coalMineName!= null and syncyearhistory.coalMineName!= ''">
+            and  CoalMineName = #{syncyearhistory.coalMineName, jdbcType=VARCHAR}  
+        </if>
+        <if test="syncyearhistory.frameWorkID!= null and syncyearhistory.frameWorkID!= ''">
+            and  FrameWorkID = #{syncyearhistory.frameWorkID, jdbcType=VARCHAR}  
+        </if>
+        <if test="syncyearhistory.fSynHistoryID!= null ">
+            and  FSynHistoryID = #{syncyearhistory.fSynHistoryID, jdbcType=INTEGER}  
+        </if>
+        <if test="syncyearhistory.riskIdentificationYearID!= null ">
+            and  RiskIdentificationYearID = #{syncyearhistory.riskIdentificationYearID, jdbcType=VARCHAR}
+        </if>
+        <if test="syncyearhistory.fSynStatus!= null ">
+            and  FSynStatus = #{syncyearhistory.fSynStatus, jdbcType=BIT}  
+        </if>
+        <if test="syncyearhistory.fSynTime!= null ">
+            and  FSynTime = #{syncyearhistory.fSynTime, jdbcType=TIMESTAMP}  
+        </if>
+        <if test="syncyearhistory.fSynEmpID!= null ">
+            and  FSynEmpID = #{syncyearhistory.fSynEmpID, jdbcType=INTEGER}  
+        </if>
+        <if test="syncyearhistory.fSynEmpName!= null and syncyearhistory.fSynEmpName!= ''">
+            and  FSynEmpName = #{syncyearhistory.fSynEmpName, jdbcType=VARCHAR}  
+        </if>
+        <if test="syncyearhistory.fSynResultCode!= null ">
+            and  FSynResultCode = #{syncyearhistory.fSynResultCode, jdbcType=INTEGER} 
+        </if>
+        LIMIT
+    #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <!--根据条件查询数据-->
+    <select id="getSyncyearhistoryList" resultType="HashMap">
+        select
+        <include refid="Base_Column_ListAndYearPlan" />
+        from syncyearhistory s
+        INNER join riskidentificationbyyear r on
+        r.RiskIdentificationYearUUID = s.RiskIdentificationYearID
+        AND r.FrameWorkID =s.FrameWorkID
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!= ''">
+           and  CoalMineName = #{coalMineName, jdbcType=VARCHAR}  
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!= ''">
+           and  FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}  
+        </if>
+        <if test="fSynHistoryID!= null ">
+            and  FSynHistoryID = #{fSynHistoryID, jdbcType=INTEGER}  
+        </if>
+        <if test="riskIdentificationYearID!= null ">
+            and  RiskIdentificationYearID = #{riskIdentificationYearID, jdbcType=VARCHAR}
+        </if>
+        <if test="fSynStatus!= null ">
+            and  FSynStatus = #{fSynStatus, jdbcType=BIT}  
+        </if>
+        <if test="fSynTime!= null ">
+            and  FSynTime = #{fSynTime, jdbcType=TIMESTAMP}  
+        </if>
+        <if test="fSynEmpID!= null ">
+            and  FSynEmpID = #{fSynEmpID, jdbcType=INTEGER}  
+        </if>
+        <if test="fSynEmpName!= null and fSynEmpName!= ''">
+           and  FSynEmpName = #{fSynEmpName, jdbcType=VARCHAR}  
+        </if>
+        <if test="fSynResultCode!= null ">
+            and  FSynResultCode = #{fSynResultCode, jdbcType=INTEGER} 
+        </if>
+    </select>
+
+    <!--获取一个数据的不重复集合-->
+    <select id="getDistinctItemList" resultType="java.lang.String" statementType="STATEMENT">
+        select  DISTINCT ${attribute} FROM syncyearhistory
+    </select>
+
+    <!--判断对象是否已经存在-->
+    <select id="syncyearhistoryIsExist" resultType="java.lang.Integer" parameterType="cn.com.kingc.risk.model.Syncyearhistory">
+        select  count(*)
+        from syncyearhistory
+        where 1=1
+                <if test="coalMineName!= null ">
+                    and  CoalMineName = #{coalMineName, jdbcType=VARCHAR}  
+                </if>
+                <if test="frameWorkID!= null ">
+                    and  FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}  
+                </if>
+                <if test="fSynHistoryID!= null and fSynHistoryID!= ''">
+                    and  FSynHistoryID = #{fSynHistoryID, jdbcType=INTEGER}  
+                </if>
+                <if test="riskIdentificationYearID!= null and riskIdentificationYearID!= ''">
+                    and  RiskIdentificationYearID = #{riskIdentificationYearID, jdbcType=VARCHAR}
+                </if>
+                <if test="fSynStatus!= null and fSynStatus!= ''">
+                    and  FSynStatus = #{fSynStatus, jdbcType=BIT}  
+                </if>
+                <if test="fSynTime!= null and fSynTime!= ''">
+                    and  FSynTime = #{fSynTime, jdbcType=TIMESTAMP}  
+                </if>
+                <if test="fSynEmpID!= null and fSynEmpID!= ''">
+                    and  FSynEmpID = #{fSynEmpID, jdbcType=INTEGER}  
+                </if>
+                <if test="fSynEmpName!= null ">
+                    and  FSynEmpName = #{fSynEmpName, jdbcType=VARCHAR}  
+                </if>
+                <if test="fSynResultCode!= null and fSynResultCode!= ''">
+                    and  FSynResultCode = #{fSynResultCode, jdbcType=INTEGER} 
+                </if>
+    </select>
+
+    <!--根据条件查询数据-->
+    <select id="getSyncyearhistoryUnique" resultMap="SyncyearhistoryMap">
+        select
+        <include refid="Base_Column_List" />
+        from syncyearhistory
+        where 1=1
+            <if test="coalMineName!= null and coalMineName!= ''">
+                and  CoalMineName = #{coalMineName, jdbcType=VARCHAR}  
+            </if>
+            <if test="frameWorkID!= null and frameWorkID!= ''">
+                and  FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}  
+            </if>
+            <if test="fSynHistoryID!= null ">
+                and  FSynHistoryID = #{fSynHistoryID, jdbcType=INTEGER}  
+            </if>
+            <if test="riskIdentificationYearID!= null ">
+                and  RiskIdentificationYearID = #{riskIdentificationYearID, jdbcType=VARCHAR}
+            </if>
+            <if test="fSynStatus!= null ">
+                and  FSynStatus = #{fSynStatus, jdbcType=BIT}  
+            </if>
+            <if test="fSynTime!= null ">
+                and  FSynTime = #{fSynTime, jdbcType=TIMESTAMP}  
+            </if>
+            <if test="fSynEmpID!= null ">
+                and  FSynEmpID = #{fSynEmpID, jdbcType=INTEGER}  
+            </if>
+            <if test="fSynEmpName!= null and fSynEmpName!= ''">
+                and  FSynEmpName = #{fSynEmpName, jdbcType=VARCHAR}  
+            </if>
+            <if test="fSynResultCode!= null ">
+                and  FSynResultCode = #{fSynResultCode, jdbcType=INTEGER} 
+            </if>
+    </select>
+
+</mapper>

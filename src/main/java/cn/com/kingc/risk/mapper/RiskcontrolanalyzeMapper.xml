@@ -1,0 +1,692 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.kingc.risk.dao.RiskcontrolanalyzeDao">
+    <resultMap id="RiskcontrolanalyzeMap" type="cn.com.kingc.risk.model.Riskcontrolanalyze">
+        <result property="coalMineName" column="CoalMineName" jdbcType="VARCHAR"/>
+        <result property="frameWorkID" column="FrameWorkID" jdbcType="VARCHAR"/>
+        <result property="createrID" column="CreaterID" jdbcType="INTEGER"/>
+        <result property="createrName" column="CreaterName" jdbcType="VARCHAR"/>
+        <result property="createTime" column="CreateTime" jdbcType="VARCHAR"/>
+        <result property="createUnitID" column="CreateUnitID" jdbcType="INTEGER"/>
+        <result property="createUnitName" column="CreateUnitName" jdbcType="VARCHAR"/>
+        <result property="mAnalyzeID" column="mAnalyzeID" jdbcType="INTEGER"/>
+        <result property="mAnalyzeUUID" column="mAnalyzeUUID" jdbcType="VARCHAR"/>
+        <result property="majorType" column="MajorType" jdbcType="VARCHAR"/>
+        <result property="monthPlanType" column="MonthPlanType" jdbcType="VARCHAR"/>
+        <result property="name" column="Name" jdbcType="VARCHAR"/>
+        <result property="reviews" column="Reviews" jdbcType="VARCHAR"/>
+        <result property="status" column="Status" jdbcType="BIT"/>
+        <result property="attachID" column="AttachID" jdbcType="VARCHAR"/>
+        <result property="attachName" column="AttachName" jdbcType="VARCHAR"/>
+        <result property="attachTime" column="AttachTime" jdbcType="VARCHAR"/>
+        <result property="frequency" column="Frequency" jdbcType="VARCHAR"/>
+        <result property="monthPlaneID" column="MonthPlaneID"  jdbcType="INTEGER"/>
+        <result property="monthPlanName" column="MonthPlanName"  jdbcType="VARCHAR"/>
+        <result property="description" column="description"  jdbcType="VARCHAR"/>
+
+        <collection property="mAnalyzeItem" column="{mAnalyzeID=mAnalyzeID,frameWorkID=FrameWorkID}"
+                    ofType="cn.com.kingc.risk.model.Riskcontrolanalyzeitem"
+                    select="findAnalyzeItemByAnalyzeID"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+            CoalMineName,
+            FrameWorkID,
+            CreaterID,
+            CreaterName,
+            CreateTime,
+            CreateUnitID,
+            CreateUnitName,
+            mAnalyzeID,
+            mAnalyzeUUID,
+            MajorType,
+            MonthPlanType,
+            Name,
+            Reviews,
+            Status,
+            AttachID,
+            AttachName,
+            AttachTime,
+            MonthPlaneID
+    </sql>
+    <sql id="Base_Column_List1">
+        R.CoalMineName,
+        R.FrameWorkID,
+        R.CreaterID,
+        R.CreaterName,
+        R.CreateTime,
+        R.CreateUnitID,
+        R.CreateUnitName,
+        R.mAnalyzeID,
+        R.mAnalyzeUUID,
+        R.MajorType,
+        R.MonthPlanType,
+        R.Name,
+        R.Reviews,
+        R.Status,
+        R.AttachID,
+        R.AttachName,
+        R.description,
+        R.AttachTime,
+        R.MonthPlaneID
+    </sql>
+    <select id="findAnalyzeItemByAnalyzeID" parameterType="java.util.Map"
+            resultMap="cn.com.kingc.risk.dao.RiskcontrolanalyzeitemDao.RiskcontrolanalyzeitemMap">
+        select
+        <include refid="cn.com.kingc.risk.dao.RiskcontrolanalyzeitemDao.Base_Column_List"/>
+        from riskcontrolanalyzeitem
+        where mAnalyzeID=#{mAnalyzeID,jdbcType=INTEGER} AND FrameWorkID=#{frameWorkID}
+    </select>
+
+    <insert id="addRiskcontrolanalyze" parameterType="cn.com.kingc.risk.model.Riskcontrolanalyze"
+            useGeneratedKeys="true" keyProperty="mAnalyzeID">
+        insert into riskcontrolanalyze (
+                CoalMineName,
+                FrameWorkID,
+                CreaterID,
+                CreaterName,
+                CreateTime,
+                CreateUnitID,
+                CreateUnitName,
+                mAnalyzeID,
+                mAnalyzeUUID,
+                MajorType,
+                MonthPlanType,
+                Name,
+                Reviews,
+                Status,
+                AttachID,
+                AttachName,
+                AttachTime,
+                MonthPlaneID
+        )
+        values(
+                #{coalMineName, jdbcType=VARCHAR}  ,
+                #{frameWorkID, jdbcType=VARCHAR}  ,
+                #{createrID, jdbcType=INTEGER}  ,
+                #{createrName, jdbcType=VARCHAR}  ,
+                #{createTime, jdbcType=VARCHAR}  ,
+                #{createUnitID, jdbcType=INTEGER}  ,
+                #{createUnitName, jdbcType=VARCHAR}  ,
+                #{mAnalyzeID, jdbcType=INTEGER}  ,
+                #{mAnalyzeUUID, jdbcType=VARCHAR}  ,
+                #{majorType, jdbcType=VARCHAR}  ,
+                #{monthPlanType, jdbcType=VARCHAR}  ,
+                #{name, jdbcType=VARCHAR}  ,
+                #{reviews, jdbcType=VARCHAR}  ,
+                #{status, jdbcType=BIT},
+                #{attachID, jdbcType=VARCHAR},
+                #{attachName, jdbcType=VARCHAR},
+                #{attachTime, jdbcType=VARCHAR},
+                #{monthPlaneID, jdbcType=INTEGER}
+        )
+    </insert>
+
+    <delete id="deleteRiskcontrolanalyze" parameterType="cn.com.kingc.risk.model.Riskcontrolanalyze">
+        DELETE FROM riskcontrolanalyze
+        WHERE  mAnalyzeID = #{mAnalyzeID,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteRiskcontrolanalyzeByID" parameterType="java.lang.Integer">
+        DELETE FROM riskcontrolanalyze
+        WHERE  mAnalyzeID = #{mAnalyzeID,jdbcType=INTEGER}
+    </delete>
+
+    <update id="updateRiskcontrolanalyze" parameterType="cn.com.kingc.risk.model.Riskcontrolanalyze">
+        UPDATE riskcontrolanalyze
+        <set>
+            <if test="coalMineName!= null ">
+                CoalMineName = #{coalMineName, jdbcType=VARCHAR} ,
+            </if>
+            <if test="frameWorkID!= null ">
+                FrameWorkID = #{frameWorkID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="createrID!= null ">
+                CreaterID = #{createrID, jdbcType=INTEGER} ,
+            </if>
+            <if test="createrName!= null ">
+                CreaterName = #{createrName, jdbcType=VARCHAR} ,
+            </if>
+            <if test="createTime!= null ">
+                CreateTime = #{createTime, jdbcType=VARCHAR} ,
+            </if>
+            <if test="createUnitID!= null ">
+                CreateUnitID = #{createUnitID, jdbcType=INTEGER} ,
+            </if>
+            <if test="createUnitName!= null ">
+                CreateUnitName = #{createUnitName, jdbcType=VARCHAR} ,
+            </if>
+            <if test="mAnalyzeID!= null ">
+                mAnalyzeID = #{mAnalyzeID, jdbcType=INTEGER} ,
+            </if>
+            <if test="mAnalyzeUUID!= null ">
+                mAnalyzeUUID = #{mAnalyzeUUID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="majorType!= null ">
+                MajorType = #{majorType, jdbcType=VARCHAR} ,
+            </if>
+            <if test="monthPlanType!= null ">
+                MonthPlanType = #{monthPlanType, jdbcType=VARCHAR} ,
+            </if>
+            <if test="name!= null ">
+                Name = #{name, jdbcType=VARCHAR} ,
+            </if>
+            <if test="reviews!= null ">
+                Reviews = #{reviews, jdbcType=VARCHAR} ,
+            </if>
+            <if test="status!= null ">
+                Status = #{status, jdbcType=BIT},
+            </if>
+            <if test="attachID!= null ">
+                AttachID = #{attachID, jdbcType=VARCHAR},
+            </if>
+            <if test="attachName!= null ">
+                AttachName = #{attachName, jdbcType=VARCHAR},
+            </if>
+            <if test="attachTime!= null ">
+                AttachTime = #{attachTime, jdbcType=VARCHAR},
+            </if>
+            <if test="monthPlaneID!= null ">
+                MonthPlaneID = #{monthPlaneID, jdbcType=INTEGER},
+            </if>
+            <if test="description!= null ">
+                description = #{description, jdbcType=VARCHAR}
+            </if>
+        </set>
+        WHERE mAnalyzeID = #{mAnalyzeID,jdbcType=INTEGER}
+    </update>
+
+    <select id="getRiskcontrolanalyze" resultMap="RiskcontrolanalyzeMap"
+            parameterType="INTEGER">
+        select
+        <include refid="Base_Column_List1"/>,m.MonthPlanFrequency AS Frequency
+        from riskcontrolanalyze R LEFT JOIN riskcontrolplanebymonth m on R.MonthPlaneID = m.MonthPlaneID
+        WHERE R.mAnalyzeID = #{mAnalyzeID,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRiskcontrolanalyzeCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  riskcontrolanalyze
+    </select>
+
+    <select id="getRiskcontrolanalyzeByPage" resultMap="RiskcontrolanalyzeMap"
+            parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from riskcontrolanalyze
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRiskcontrolanalyzeCountByRiskcontrolanalyze" resultType="java.lang.Integer">
+        select
+        count(*)
+        from riskcontrolanalyze R LEFT JOIN riskcontrolplanebymonth m on R.MonthPlaneID = m.MonthPlaneID
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!= '' ">
+            and R.CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!='' ">
+            and R.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="createrID!= null ">
+            and R.CreaterID = #{createrID, jdbcType=INTEGER}
+        </if>
+        <if test="createrName!= null and createrName!=''">
+            and R.CreaterName = #{createrName, jdbcType=VARCHAR}
+        </if>
+        <if test="createTime!= null and createTime!='' ">
+            and R.CreateTime = #{createTime, jdbcType=VARCHAR}
+        </if>
+        <if test="createUnitID!= null ">
+            and R.CreateUnitID = #{createUnitID, jdbcType=INTEGER}
+        </if>
+        <if test="createUnitName!= null and createUnitName!=''">
+            and R.CreateUnitName = #{createUnitName, jdbcType=VARCHAR}
+        </if>
+        <if test="mAnalyzeID!= null">
+            and R.mAnalyzeID = #{mAnalyzeID, jdbcType=INTEGER}
+        </if>
+        <if test="mAnalyzeUUID!= null and mAnalyzeUUID!=''">
+            and R.mAnalyzeUUID = #{mAnalyzeUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="majorType!= null and majorType!=''">
+            and R.MajorType = #{majorType, jdbcType=VARCHAR}
+        </if>
+        <if test="monthPlanType!= null and monthPlanType!=''">
+            and R.MonthPlanType = #{monthPlanType, jdbcType=VARCHAR}
+        </if>
+        <if test="name!= null and name!= ''">
+            and R.Name = #{name, jdbcType=VARCHAR}
+        </if>
+        <if test="reviews!= null and reviews!='' ">
+            and R.Reviews = #{reviews, jdbcType=VARCHAR}
+        </if>
+        <if test="status!= null ">
+            and R.Status = #{status, jdbcType=BIT}
+        </if>
+        <if test="monthPlaneID!= null ">
+            and R.MonthPlaneID = #{monthPlaneID, jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <select id="getRiskcontrolanalyzeByPageAndRiskcontrolanalyze" resultMap="RiskcontrolanalyzeMap">
+        select
+        <include refid="Base_Column_List1"/>,m.MonthPlanFrequency AS Frequency,m.MonthPlanName AS MonthPlanName
+        from riskcontrolanalyze R LEFT JOIN riskcontrolplanebymonth m on R.MonthPlaneID = m.MonthPlaneID
+        where 1=1
+        <if test="riskcontrolanalyze.coalMineName!= null and riskcontrolanalyze.coalMineName!=''">
+            and R.CoalMineName = #{riskcontrolanalyze.coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolanalyze.frameWorkID!= null and riskcontrolanalyze.frameWorkID!=''">
+            and R.FrameWorkID = #{riskcontrolanalyze.frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolanalyze.createrID!= null ">
+            and R.CreaterID = #{riskcontrolanalyze.createrID, jdbcType=INTEGER}
+        </if>
+        <if test="riskcontrolanalyze.createrName!= null and riskcontrolanalyze.createrName!=''">
+            and R.CreaterName = #{riskcontrolanalyze.createrName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolanalyze.createTime!= null and riskcontrolanalyze.createTime!=''">
+            and R.CreateTime = #{riskcontrolanalyze.createTime, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolanalyze.createUnitID!= null ">
+            and R.CreateUnitID = #{riskcontrolanalyze.createUnitID, jdbcType=INTEGER}
+        </if>
+        <if test="riskcontrolanalyze.createUnitName!= null and riskcontrolanalyze.createUnitName!=''">
+            and R.CreateUnitName = #{riskcontrolanalyze.createUnitName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolanalyze.mAnalyzeID!= null ">
+            and R.mAnalyzeID = #{riskcontrolanalyze.mAnalyzeID, jdbcType=INTEGER}
+        </if>
+        <if test="riskcontrolanalyze.mAnalyzeUUID!= null and riskcontrolanalyze.mAnalyzeUUID!='' ">
+            and R.mAnalyzeUUID = #{riskcontrolanalyze.mAnalyzeUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolanalyze.majorType!= null and riskcontrolanalyze.majorType!=''">
+            and R.MajorType = #{riskcontrolanalyze.majorType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolanalyze.monthPlanType!= null and riskcontrolanalyze.monthPlanType!=''">
+            and R.MonthPlanType = #{riskcontrolanalyze.monthPlanType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolanalyze.name!= null and riskcontrolanalyze.name!=''">
+            and R.Name = #{riskcontrolanalyze.name, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolanalyze.reviews!= null and riskcontrolanalyze.reviews!='' ">
+            and R.Reviews = #{riskcontrolanalyze.reviews, jdbcType=VARCHAR}
+        </if>
+        <if test="riskcontrolanalyze.status!= null and riskcontrolanalyze.status!=''">
+            and R.Status = #{riskcontrolanalyze.status, jdbcType=BIT}
+        </if>
+        <if test="riskcontrolanalyze.monthPlaneID!= null ">
+            and R.MonthPlaneID = #{monthPlaneID, jdbcType=INTEGER}
+        </if>
+        ORDER BY R.CreateTime DESC
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRiskcontrolanalyzeData" resultMap="RiskcontrolanalyzeMap">
+        select
+        <include refid="Base_Column_List1"/>,m.MonthPlanFrequency AS Frequency
+        from riskcontrolanalyze R LEFT JOIN riskcontrolplanebymonth m on R.MonthPlaneID = m.MonthPlaneID
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!=''">
+            and R.CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!='' ">
+            and R.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="createrID!= null ">
+            and R.CreaterID = #{createrID, jdbcType=INTEGER}
+        </if>
+        <if test="createrName!= null and createrName!=''">
+            and R.CreaterName = #{createrName, jdbcType=VARCHAR}
+        </if>
+        <if test="createTime!= null and createTime!=''">
+            and R.CreateTime = #{createTime, jdbcType=VARCHAR}
+        </if>
+        <if test="createUnitID!= null ">
+            and R.CreateUnitID = #{createUnitID, jdbcType=INTEGER}
+        </if>
+        <if test="createUnitName!= null and createUnitName!=''">
+            and R.CreateUnitName = #{createUnitName, jdbcType=VARCHAR}
+        </if>
+        <if test="mAnalyzeID!= null ">
+            and R.mAnalyzeID = #{mAnalyzeID, jdbcType=INTEGER}
+        </if>
+        <if test="mAnalyzeUUID!= null and mAnalyzeUUID!=''">
+            and R.mAnalyzeUUID = #{mAnalyzeUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="majorType!= null and majorType!=''">
+            and R.MajorType = #{majorType, jdbcType=VARCHAR}
+        </if>
+        <if test="monthPlanType!= null and monthPlanType!=''">
+            and R.MonthPlanType = #{monthPlanType, jdbcType=VARCHAR}
+        </if>
+        <if test="name!= null and name!=''">
+            and R.Name = #{name, jdbcType=VARCHAR}
+        </if>
+        <if test="reviews!= null and reviews!=''">
+            and R.Reviews = #{reviews, jdbcType=VARCHAR}
+        </if>
+        <if test="status!= null ">
+            and R.Status = #{status, jdbcType=BIT}
+        </if>
+        <if test="monthPlaneID!= null ">
+            and R.MonthPlaneID = #{monthPlaneID, jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <select id="getAnalyzeConclusion" resultType="java.lang.String">
+        SELECT
+            CONCAT(
+            '风险点【',
+            R.`Name`,
+            '】',
+            '共检查',
+            COUNT(DISTINCT O.CheckRecordID),
+            '次 共查出',
+            COUNT(OI.ItemID),
+            '个问题'
+            ) AS TOTAL
+        FROM
+            risksiteoutofcontrol O
+            INNER JOIN risksiteoutofcontrolitem OI ON O.CheckRecordID = OI.CheckRecordID
+            AND O.FrameWorkID = OI.FrameWorkID
+            INNER JOIN risksite R ON O.RiskSiteID = R.RiskSiteID
+            AND O.FrameWorkID = R.FrameWorkID
+        WHERE
+            O.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+            AND YEAR (O.CheckTime) = #{checkYear, jdbcType=INTEGER}
+            AND MONTH (O.CheckTime) = #{checkMonth, jdbcType=INTEGER}
+            AND O.MajorType = #{MajorType, jdbcType=VARCHAR}
+
+    </select>
+
+    <select id="checkData" resultMap="RiskcontrolanalyzeMap">
+        SELECT * FROM riskcontrolanalyze WHERE  CoalMineName = #{frameWorkName, jdbcType=VARCHAR}
+         AND FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}  AND MajorType = #{MajorType, jdbcType=VARCHAR}
+         AND CreateTime BETWEEN #{startTime, jdbcType=VARCHAR} AND #{endTime, jdbcType=VARCHAR}
+    </select>
+
+    <select id="getNotAnalyzePlane" resultMap="cn.com.kingc.risk.dao.RiskcontrolplanebymonthDao.RiskcontrolplanebymonthSimpleMap">
+        SELECT
+            M.*
+        FROM
+            riskcontrolplanebymonth M
+        LEFT JOIN riskcontrolanalyze A ON M.FrameWorkID = A.FrameWorkID
+        AND M.MonthPlaneID = A.MonthPlaneID
+        LEFT JOIN risksiteoutofcontrol O ON M.FrameWorkID = O.FrameWorkID
+        AND M.MonthPlaneID = O.MonthPlaneID
+        AND O.`Status` = TRUE
+        WHERE
+            M.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        <if test="checkYear!=null and checkYear!=0">
+            AND M.FYear =  #{checkYear, jdbcType=INTEGER}
+        </if>
+        <if test="checkMonth!=null and checkMonth!=0">
+            AND M.FMonth =  #{checkMonth, jdbcType=INTEGER}
+        </if>
+        <if test="MajorType!=null and MajorType!=''">
+            AND M.MonthPlanMajorType= #{MajorType, jdbcType=VARCHAR}
+        </if>
+        <if test="monthPlanFrequency!=null and monthPlanFrequency!=''">
+            AND M.MonthPlanFrequency= #{monthPlanFrequency, jdbcType=VARCHAR}
+        </if>
+            AND IFNULL(A.MonthPlaneID, 0) = 0
+            AND IFNULL(O.MonthPlaneID, 0) > 0
+    </select>
+
+
+    <select id="getNotAnalyzePlaneWithallItem" resultMap="cn.com.kingc.risk.dao.RiskcontrolplanebymonthDao.RiskcontrolplanebymonthSimpleMap">
+        SELECT
+        M.*
+        FROM
+        riskcontrolplanebymonth M
+        LEFT JOIN riskcontrolanalyze A ON M.FrameWorkID = A.FrameWorkID
+        AND M.MonthPlaneID = A.MonthPlaneID
+        WHERE
+        M.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        <if test="checkYear!=null and checkYear!=0">
+            AND M.FYear =  #{checkYear, jdbcType=INTEGER}
+        </if>
+        <if test="checkMonth!=null and checkMonth!=0">
+            AND M.FMonth =  #{checkMonth, jdbcType=INTEGER}
+        </if>
+        <if test="MajorType!=null and MajorType!=''">
+            AND M.MonthPlanMajorType= #{MajorType, jdbcType=VARCHAR}
+        </if>
+        <if test="monthPlanFrequency!=null and monthPlanFrequency!=''">
+            AND M.MonthPlanFrequency= #{monthPlanFrequency, jdbcType=VARCHAR}
+        </if>
+        AND IFNULL(A.MonthPlaneID, 0) = 0
+    </select>
+
+    <select id="getNotAnalyzePlaneByPingMei" resultMap="cn.com.kingc.risk.dao.RiskcontrolplanebymonthDao.RiskcontrolplanebymonthSimpleMap">
+        SELECT
+        M.*
+        FROM
+        riskcontrolplanebymonth M
+        LEFT JOIN riskcontrolanalyze A ON M.FrameWorkID = A.FrameWorkID
+        AND M.MonthPlaneID = A.MonthPlaneID
+        LEFT JOIN risksiteoutofcontrol O ON M.FrameWorkID = O.FrameWorkID
+        AND M.MonthPlaneID = O.MonthPlaneID
+        AND O.`Status` = TRUE
+        WHERE
+        M.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        <if test="checkYear!=null and checkYear!=0">
+            AND M.FYear =  #{checkYear, jdbcType=INTEGER}
+        </if>
+        <if test="checkMonth!=null and checkMonth!=0">
+            AND M.FMonth =  #{checkMonth, jdbcType=INTEGER}
+        </if>
+        <if test="MajorType!=null and MajorType!=''">
+            AND M.MonthPlanMajorType= #{MajorType, jdbcType=VARCHAR}
+        </if>
+        <if test="monthPlanFrequency!=null and monthPlanFrequency!=''">
+            AND M.MonthPlanFrequency= #{monthPlanFrequency, jdbcType=VARCHAR}
+        </if>
+
+    </select>
+
+
+    <insert id="AnalyzeMonthPlane">
+      DELETE I.*
+      FROM
+            riskcontrolanalyze A
+      INNER JOIN riskcontrolanalyzeitem I ON A.FrameWorkID = I.FrameWorkID
+      AND A.mAnalyzeID = I.mAnalyzeID
+      WHERE
+          A.MonthPlaneID = #{monthPlaneID, jdbcType=INTEGER};
+
+      DELETE FROM riskcontrolanalyze WHERE MonthPlaneID=#{monthPlaneID, jdbcType=INTEGER};
+
+      INSERT INTO `riskcontrolanalyze` (
+            CoalMineName,
+            FrameWorkID,
+            CreaterID,
+            CreaterName,
+            CreateTime,
+            CreateUnitID,
+            CreateUnitName,
+            mAnalyzeUUID,
+            MajorType,
+            MonthPlanType,
+            `Name`,
+            Reviews,
+            STATUS,
+            MonthPlaneID
+        ) SELECT
+            M.CoalMineName,
+            M.FrameWorkID,
+            #{CreaterID, jdbcType=INTEGER} AS CreaterID,
+            #{CreaterName, jdbcType=VARCHAR} AS CreaterName,
+            NOW() AS CreateTime,
+            #{CreateUnitID, jdbcType=INTEGER} AS CreateUnitID,
+            #{CreateUnitName, jdbcType=VARCHAR} AS CreateUnitName,
+            UUID(),
+            M.MonthPlanMajorType,
+            M.MonthPlanType,
+            CONCAT(M.MonthPlanName,'管控情况分析'),
+            CONCAT('共检查了',COUNT(DISTINCT O.RiskSiteID),'个地点','共查出',COUNT(DISTINCT OI.ItemID),'个问题'),
+            0,
+            M.MonthPlaneID
+        FROM
+            riskcontrolplanebymonth M
+            INNER JOIN 	risksiteoutofcontrol O
+            ON M.FrameWorkID=O.FrameWorkID AND M.MonthPlaneID=O.MonthPlaneID
+            LEFT JOIN risksiteoutofcontrolitem OI
+            ON O.FrameWorkID=OI.FrameWorkID AND O.CheckRecordID=OI.CheckRecordID and OI.OutOfControlStatus = "1"
+        WHERE
+            M.MonthPlaneID = #{monthPlaneID, jdbcType=INTEGER}
+        GROUP BY O.MonthPlaneID;
+    </insert>
+
+    <insert id="AnalyzeItemByOutofControl">
+       INSERT INTO riskcontrolanalyzeitem (
+            CoalMineName,
+            FrameWorkID,
+            mAnalyzeID,
+            ItemUUID,
+            KeyContent,
+            LostControlItemID,
+            OHiddenTrouble,
+            OMeasure,
+            ORiskLevel,
+            OHiddenTroubleID
+       ) SELECT
+            O.CoalMineName,
+            O.FrameWorkID,
+            #{mAnalyzeID, jdbcType=INTEGER},
+            UUID(),
+            OI.CheckQuestion,
+            OI.ItemID,
+            0,
+            0,
+            0,
+            0
+        FROM
+            risksiteoutofcontrol O
+        INNER JOIN risksiteoutofcontrolitem OI ON O.FrameWorkID = OI.FrameWorkID
+        AND O.CheckRecordID = OI.CheckRecordID
+        WHERE
+            O.MonthPlaneID = #{monthPlaneID, jdbcType=INTEGER} AND OI.OutOfControlStatus=1
+    </insert>
+
+    <select id="getNotAnalyzePlanAllstatus" resultMap="cn.com.kingc.risk.dao.RiskcontrolplanebymonthDao.RiskcontrolplanebymonthSimpleMap">
+        SELECT
+        M.*
+        FROM
+        riskcontrolplanebymonth M
+        LEFT JOIN riskcontrolanalyze A ON M.FrameWorkID = A.FrameWorkID
+        AND M.MonthPlaneID = A.MonthPlaneID
+        LEFT JOIN risksiteoutofcontrol O ON M.FrameWorkID = O.FrameWorkID
+        AND M.MonthPlaneID = O.MonthPlaneID
+        WHERE
+        M.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        <if test="checkYear!=null and checkYear!=0">
+            AND M.FYear =  #{checkYear, jdbcType=INTEGER}
+        </if>
+        <if test="checkMonth!=null and checkMonth!=0">
+            AND M.FMonth =  #{checkMonth, jdbcType=INTEGER}
+        </if>
+        <if test="MajorType!=null and MajorType!=''">
+            AND M.MonthPlanMajorType= #{MajorType, jdbcType=VARCHAR}
+        </if>
+        <if test="monthPlanFrequency!=null and monthPlanFrequency!=''">
+            AND M.MonthPlanFrequency= #{monthPlanFrequency, jdbcType=VARCHAR}
+        </if>
+        AND IFNULL(A.MonthPlaneID, 0) = 0
+        AND IFNULL(O.MonthPlaneID, 0) > 0
+    </select>
+
+    <insert id="AnalyzeItemallStatus">
+        INSERT INTO riskcontrolanalyzeitem (
+        CoalMineName,
+        FrameWorkID,
+        mAnalyzeID,
+        ItemUUID,
+        KeyContent,
+        LostControlItemID,
+        OHiddenTrouble,
+        OMeasure,
+        ORiskLevel,
+        OHiddenTroubleID
+        ) SELECT
+        O.CoalMineName,
+        O.FrameWorkID,
+        #{mAnalyzeID, jdbcType=INTEGER},
+        UUID(),
+        OI.CheckQuestion,
+        OI.ItemID,
+        0,
+        0,
+        0,
+        0
+        FROM
+        risksiteoutofcontrol O
+        INNER JOIN risksiteoutofcontrolitem OI ON O.FrameWorkID = OI.FrameWorkID
+        AND O.CheckRecordID = OI.CheckRecordID
+        WHERE
+        O.MonthPlaneID = #{monthPlaneID, jdbcType=INTEGER}
+    </insert>
+
+
+    <select id="getNotAnalyzePlanAllstatuss" resultMap="cn.com.kingc.risk.dao.RiskcontrolplanebymonthDao.RiskcontrolplanebymonthSimpleMap">
+        SELECT
+        M.*
+        FROM
+        riskcontrolplanebymonth M
+        LEFT JOIN riskcontrolanalyze A ON M.FrameWorkID = A.FrameWorkID
+        AND M.MonthPlaneID = A.MonthPlaneID
+        LEFT JOIN risksiteoutofcontrol O ON M.FrameWorkID = O.FrameWorkID
+        AND M.MonthPlaneID = O.MonthPlaneID
+        WHERE
+        M.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        <if test="checkYear!=null and checkYear!=0">
+            AND M.FYear =  #{checkYear, jdbcType=INTEGER}
+        </if>
+        <if test="checkMonth!=null and checkMonth!=0">
+            AND M.FMonth =  #{checkMonth, jdbcType=INTEGER}
+        </if>
+        <if test="MajorType!=null and MajorType!=''">
+            AND M.MonthPlanMajorType= #{MajorType, jdbcType=VARCHAR}
+        </if>
+        <if test="monthPlanFrequency!=null and monthPlanFrequency!=''">
+            AND M.MonthPlanFrequency= #{monthPlanFrequency, jdbcType=VARCHAR}
+        </if>
+        AND IFNULL(A.MonthPlaneID, 0) = 0
+        AND IFNULL(O.MonthPlaneID, 0) > 0
+        GROUP BY M.MonthPlaneID
+    </select>
+
+    <select id="getNotAnalyzePlanes" resultMap="cn.com.kingc.risk.dao.RiskcontrolplanebymonthDao.RiskcontrolplanebymonthSimpleMap">
+        SELECT
+        M.*
+        FROM
+        riskcontrolplanebymonth M
+        LEFT JOIN riskcontrolanalyze A ON M.FrameWorkID = A.FrameWorkID
+        AND M.MonthPlaneID = A.MonthPlaneID
+        LEFT JOIN risksiteoutofcontrol O ON M.FrameWorkID = O.FrameWorkID
+        AND M.MonthPlaneID = O.MonthPlaneID
+        AND O.`Status` = TRUE
+        WHERE
+        M.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        <if test="checkYear!=null and checkYear!=0">
+            AND M.FYear =  #{checkYear, jdbcType=INTEGER}
+        </if>
+        <if test="checkMonth!=null and checkMonth!=0">
+            AND M.FMonth =  #{checkMonth, jdbcType=INTEGER}
+        </if>
+        <if test="MajorType!=null and MajorType!=''">
+            AND M.MonthPlanMajorType= #{MajorType, jdbcType=VARCHAR}
+        </if>
+        <if test="monthPlanFrequency!=null and monthPlanFrequency!=''">
+            AND M.MonthPlanFrequency= #{monthPlanFrequency, jdbcType=VARCHAR}
+        </if>
+        AND IFNULL(A.MonthPlaneID, 0) = 0
+        AND IFNULL(O.MonthPlaneID, 0) > 0
+        GROUP BY M.MonthPlaneID
+    </select>
+</mapper>

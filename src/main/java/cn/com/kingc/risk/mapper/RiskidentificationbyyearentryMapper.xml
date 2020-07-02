@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.kingc.risk.dao.RiskidentificationbyyearentryDao">
+    <resultMap id="RiskidentificationbyyearentryMap" type="cn.com.kingc.risk.model.Riskidentificationbyyearentry">
+        <result property="coalMineName" column="CoalMineName" jdbcType="VARCHAR"/>
+        <result property="frameWorkID" column="FrameWorkID" jdbcType="VARCHAR"/>
+        <result property="riskIdentificationYearID" column="RiskIdentificationYearID" jdbcType="INTEGER"/>
+        <result property="riskIdentificationYearEntryID" column="RiskIdentificationYearEntryID" jdbcType="INTEGER"/>
+        <result property="riskSiteID" column="RiskSiteID" jdbcType="INTEGER"/>
+        <association property="mRiskSite"
+                     column="{riskSiteID=RiskSiteID,frameWorkID=FrameWorkID}"
+                     javaType="cn.com.kingc.risk.model.Risksite"
+                     select="findRiskSiteByRiskSiteID"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+            CoalMineName,
+            FrameWorkID,
+            RiskIdentificationYearID,
+            RiskIdentificationYearEntryID,
+            RiskSiteID
+    </sql>
+
+    <select id="findRiskSiteByRiskSiteID" parameterType="java.util.Map" resultMap="cn.com.kingc.risk.dao.RisksiteDao.RisksiteSimpleMap">
+        select
+        <include refid="cn.com.kingc.risk.dao.RisksiteDao.Base_Column_List"/>
+        from risksite R
+        LEFT JOIN riskLeverSetting D ON R.FrameWorkID = D.FrameWorkID
+        AND R.RiskLevelSettingID = D.RiskLevelSettingID
+        where R.RiskSiteID=#{riskSiteID,jdbcType=INTEGER} AND R.FrameWorkID=#{frameWorkID}
+    </select>
+
+    <insert id="addRiskidentificationbyyearentry" parameterType="cn.com.kingc.risk.model.Riskidentificationbyyearentry"
+            useGeneratedKeys="true" keyProperty="riskIdentificationYearEntryID">
+        insert into riskidentificationbyyearentry (
+                CoalMineName,
+                FrameWorkID,
+                RiskIdentificationYearID,
+                RiskIdentificationYearEntryID,
+                RiskSiteID
+        )
+        values(
+                #{coalMineName, jdbcType=VARCHAR}  ,
+                #{frameWorkID, jdbcType=VARCHAR}  ,
+                #{riskIdentificationYearID, jdbcType=INTEGER}  ,
+                #{riskIdentificationYearEntryID, jdbcType=INTEGER}  ,
+                #{riskSiteID, jdbcType=INTEGER}  
+        )
+    </insert>
+
+    <delete id="deleteRiskidentificationbyyearentry"
+            parameterType="cn.com.kingc.risk.model.Riskidentificationbyyearentry">
+        DELETE FROM riskidentificationbyyearentry
+        WHERE  RiskIdentificationYearEntryID = #{riskIdentificationYearEntryID,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteRiskidentificationbyyearentryByID" parameterType="java.lang.Integer">
+        DELETE FROM riskidentificationbyyearentry
+        WHERE  RiskIdentificationYearEntryID = #{riskIdentificationYearEntryID,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteRiskidentificationbyyearD" parameterType="java.lang.Integer">
+        DELETE FROM riskidentificationbyyearentry
+        WHERE  RiskIdentificationYearID = #{riskIdentificationYearID,jdbcType=INTEGER}
+    </delete>
+
+    <update id="updateRiskidentificationbyyearentry"
+            parameterType="cn.com.kingc.risk.model.Riskidentificationbyyearentry">
+        UPDATE riskidentificationbyyearentry
+        <set>
+            <if test="coalMineName!= null ">
+                CoalMineName = #{coalMineName, jdbcType=VARCHAR} ,
+            </if>
+            <if test="frameWorkID!= null ">
+                FrameWorkID = #{frameWorkID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskIdentificationYearID!= null ">
+                RiskIdentificationYearID = #{riskIdentificationYearID, jdbcType=INTEGER} ,
+            </if>
+            <if test="riskIdentificationYearEntryID!= null ">
+                RiskIdentificationYearEntryID = #{riskIdentificationYearEntryID, jdbcType=INTEGER} ,
+            </if>
+            <if test="riskSiteID!= null ">
+                RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+            </if>
+        </set>
+        WHERE RiskIdentificationYearEntryID = #{riskIdentificationYearEntryID,jdbcType=INTEGER}
+    </update>
+
+    <select id="getRiskidentificationbyyearentry" resultMap="RiskidentificationbyyearentryMap"
+            parameterType="INTEGER">
+        select
+        <include refid="Base_Column_List"/>
+        from riskidentificationbyyearentry
+        WHERE RiskIdentificationYearEntryID = #{riskIdentificationYearEntryID,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRiskidentificationbyyearentryCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  riskidentificationbyyearentry
+    </select>
+
+    <select id="getRiskidentificationbyyearentryByPage" resultMap="RiskidentificationbyyearentryMap"
+            parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from riskidentificationbyyearentry
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRiskidentificationbyyearentryCountByRiskidentificationbyyearentry" resultType="java.lang.Integer">
+        select
+        count(*)
+        from riskidentificationbyyearentry
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!='' ">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!='' ">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskIdentificationYearID!= null ">
+            and RiskIdentificationYearID = #{riskIdentificationYearID, jdbcType=INTEGER}
+        </if>
+        <if test="riskIdentificationYearEntryID!= null ">
+            and RiskIdentificationYearEntryID = #{riskIdentificationYearEntryID, jdbcType=INTEGER}
+        </if>
+        <if test="riskSiteID!= null ">
+            and RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <select id="getRiskidentificationbyyearentryByPageAndRiskidentificationbyyearentry"
+            resultMap="RiskidentificationbyyearentryMap">
+        select
+        <include refid="Base_Column_List"/>
+        from riskidentificationbyyearentry
+        where 1=1
+        <if test="riskidentificationbyyearentry.coalMineName!= null and riskidentificationbyyearentry.coalMineName!='' ">
+            and CoalMineName = #{riskidentificationbyyearentry.coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskidentificationbyyearentry.frameWorkID!= null and riskidentificationbyyearentry.frameWorkID!='' ">
+            and FrameWorkID = #{riskidentificationbyyearentry.frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskidentificationbyyearentry.riskIdentificationYearID!= null ">
+            and RiskIdentificationYearID = #{riskidentificationbyyearentry.riskIdentificationYearID, jdbcType=INTEGER}
+        </if>
+        <if test="riskidentificationbyyearentry.riskIdentificationYearEntryID!= null ">
+            and RiskIdentificationYearEntryID =
+            #{riskidentificationbyyearentry.riskIdentificationYearEntryID, jdbcType=INTEGER}
+        </if>
+        <if test="riskidentificationbyyearentry.riskSiteID!= null ">
+            and RiskSiteID = #{riskidentificationbyyearentry.riskSiteID, jdbcType=INTEGER}
+        </if>
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRiskidentificationbyyearentryData" resultMap="RiskidentificationbyyearentryMap">
+        select
+        <include refid="Base_Column_List"/>
+        from riskidentificationbyyearentry
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!='' ">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!='' ">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskIdentificationYearID!= null ">
+            and RiskIdentificationYearID = #{riskIdentificationYearID, jdbcType=INTEGER}
+        </if>
+        <if test="riskIdentificationYearEntryID!= null ">
+            and RiskIdentificationYearEntryID = #{riskIdentificationYearEntryID, jdbcType=INTEGER}
+        </if>
+        <if test="riskSiteID!= null ">
+            and RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        </if>
+    </select>
+
+</mapper>

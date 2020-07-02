@@ -1,0 +1,209 @@
+/*浮动*/
+.float{
+    float: left;
+}
+
+/*清除浮动*/
+.clear{
+    clear:both; height: 0; line-height: 0; font-size: 0
+}
+
+/*隐藏*/
+.dn{
+    display: none;
+}
+
+/*占位隐藏*/
+.vh{
+    visibility: hidden;
+}
+
+/*a标签去下划线*/
+.tdn{
+    text-decoration: none;
+}
+
+/*字体居中*/
+.tac{
+    text-align: center;
+}
+
+/*16px字体*/
+.p16{
+    font-size: 16px;
+}
+
+.pred{
+    color: red;
+}
+
+/*蓝色背景*/
+.bcblue{
+    background-color: #5BD1F3;
+}
+
+.yellow{
+    background-color: #ca8;
+}
+
+/*深蓝色背景*/
+.bcdblue{
+    background-color: #219bf4;
+}
+
+/*灰色横线样式*/
+.hr-h{
+    width: 96%;
+    margin-left: 2%;
+    height: 1px;
+    background-color: #ddd;
+}
+
+/*圆形*/
+.yuan{
+    border-radius: 50%;
+}
+
+.p-h{
+    color: #aaa;
+    font-size: 12px;
+}
+
+.font-red{
+    color: red;
+}
+
+/*按钮基本样式*/
+.mbtn{
+    padding: 5px 30px;
+    border-radius: 5px;
+    font-size: 16px;
+    transition-duration: 0.5s;
+}
+
+/*较小按钮样式*/
+.mbtn-l{
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    transition-duration: 0.5s;
+}
+
+/*按钮无色背景*/
+.mbtn-none{
+    border: none;
+}
+
+.mbtn-none:hover{
+
+}
+
+/*按钮白色背景*/
+.mbtn-white{
+    background-color: #fff;
+    color: #444;
+    border: 1px solid #aaa;
+}
+
+.mbtn-white:hover{
+    background-color: #f1f1f1;
+}
+
+/*按钮蓝色背景*/
+.mbtn-blue{
+    background-color: #5BD1F3;
+    color: #fff;
+    border: 1px solid #4ce;
+}
+
+.mbtn-blue:hover{
+    background-color: #4bd;
+}
+
+/*按钮深蓝色背景*/
+.mbtn-dblue{
+    background-color: #219bf4;
+    color: #fff;
+    border: 1px solid #18e;
+}
+
+.mbtn-dblue:hover{
+    background-color: #18e;
+}
+
+.color-white{
+    color: #fff;
+}
+
+/*阴影背景*/
+.yinying{
+    background-color: #ddd;
+}
+
+/*微软雅黑*/
+.yahei{
+    font-family: "Microsoft YaHei"!important;
+}
+
+/*圆角边框5px*/
+.br5{
+    border-radius: 5px;
+}
+
+/*阴影*/
+.shadow-5{
+    box-shadow: 1px 1px 5px #666;
+}
+
+/*类似于外边框的1px阴影*/
+.shadow-1{
+    box-shadow: 1px 1px 1px #aaa,-1px -1px 1px #aaa;
+}
+
+/*边距*/
+
+.pdlr20{
+    padding: 0 20px;
+}
+
+.margin-left10{
+    margin-left: 10px;
+}
+
+.margin-left20{
+    margin-left: 20px;
+}
+
+.margin-top5{
+    margin-top: 5px;
+}
+
+.margin-top10{
+    margin-top: 10px;
+}
+
+.margin-top20{
+    margin-top: 20px;
+}
+
+.margin-right10{
+    margin-right: 10px;
+}
+
+.margin-right20{
+    margin-right: 20px;
+}
+
+.margin-bottom10{
+    margin-bottom: 10px;
+}
+
+.margin-bottom20{
+    margin-bottom: 20px;
+}
+
+/*自适应左右间距*/
+.left-right-auto{
+    margin-left: auto;
+    margin-right: auto;
+}

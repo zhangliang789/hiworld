@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.kingc.risk.dao.RiskdegreeitemDao">
+    <resultMap id="RiskdegreeitemMap" type="cn.com.kingc.risk.model.Riskdegreeitem">
+        <result property="riskDegreeID" column="RiskDegreeID" jdbcType="INTEGER"/>
+        <result property="riskDegreeItemID" column="RiskDegreeItemID" jdbcType="INTEGER"/>
+        <result property="riskLevelSettingID" column="RiskLevelSettingID" jdbcType="INTEGER"/>
+        <result property="riskRangMIX" column="RiskRangMIX" jdbcType="INTEGER"/>
+        <result property="riskRangMAX" column="RiskRangMAX" jdbcType="INTEGER"/>
+        <result property="coalMineName" column="CoalMineName" jdbcType="VARCHAR"/>
+        <result property="frameWorkID" column="FrameWorkID" jdbcType="VARCHAR"/>
+        <association property="mRiskLevelSetting"
+                     column="{riskLevelSettingID=RiskLevelSettingID,frameWorkID=FrameWorkID}"
+                     javaType="cn.com.kingc.risk.model.Riskleversetting"
+                     select="findRiskLevelSettingByID"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+            RiskDegreeID,
+            RiskDegreeItemID,
+            RiskLevelSettingID,
+            RiskRangMIX,
+            RiskRangMAX,
+            CoalMineName,
+            FrameWorkID
+    </sql>
+
+    <select id="findRiskLevelSettingByID" parameterType="java.util.Map"
+            resultMap="cn.com.kingc.risk.dao.RiskleversettingDao.RiskleversettingMap">
+        select
+        <include refid="cn.com.kingc.risk.dao.RiskleversettingDao.Base_Column_List"/>
+        from riskleversetting
+        WHERE RiskLevelSettingID = #{riskLevelSettingID,jdbcType=INTEGER} AND
+              FrameWorkID = #{frameWorkID}
+    </select>
+
+    <!--新增一条记录-->
+    <insert id="addRiskdegreeitem" parameterType="cn.com.kingc.risk.model.Riskdegreeitem"
+            useGeneratedKeys="true" keyProperty="riskDegreeItemID" flushCache="true">
+        insert into riskdegreeitem (
+                RiskDegreeID,
+                RiskDegreeItemID,
+                RiskLevelSettingID,
+                RiskRangMIX,
+                RiskRangMAX,
+                CoalMineName,
+                FrameWorkID
+        )
+        values(
+                #{riskDegreeID, jdbcType=INTEGER}  ,
+                #{riskDegreeItemID, jdbcType=INTEGER}  ,
+                #{riskLevelSettingID, jdbcType=INTEGER}  ,
+                #{riskRangMIX, jdbcType=INTEGER}  ,
+                #{riskRangMAX, jdbcType=INTEGER}  ,
+                #{coalMineName, jdbcType=VARCHAR}  ,
+                #{frameWorkID, jdbcType=VARCHAR}  
+        )
+    </insert>
+
+    <!--批量新增记录-->
+    <insert id="addRiskdegreeitemList" parameterType="java.util.List" flushCache="true">
+        insert into riskdegreeitem(
+        RiskDegreeID,
+        RiskDegreeItemID,
+        RiskLevelSettingID,
+        RiskRangMIX,
+        RiskRangMAX,
+        CoalMineName,
+        FrameWorkID
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.riskDegreeID, jdbcType=INTEGER} ,
+            #{item.riskDegreeItemID, jdbcType=INTEGER} ,
+            #{item.riskLevelSettingID, jdbcType=INTEGER} ,
+            #{item.riskRangMIX, jdbcType=INTEGER} ,
+            #{item.riskRangMAX, jdbcType=INTEGER} ,
+            #{item.coalMineName, jdbcType=VARCHAR} ,
+            #{item.frameWorkID, jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <!--删除记录-->
+    <delete id="deleteRiskdegreeitem" parameterType="cn.com.kingc.risk.model.Riskdegreeitem" flushCache="true">
+        DELETE FROM riskdegreeitem
+        where 1=1
+        <if test="riskDegreeID!= null ">
+            and RiskDegreeID = #{riskDegreeID, jdbcType=INTEGER}
+        </if>
+        <if test="riskDegreeItemID!= null ">
+            and RiskDegreeItemID = #{riskDegreeItemID, jdbcType=INTEGER}
+        </if>
+        <if test="riskLevelSettingID!= null ">
+            and RiskLevelSettingID = #{riskLevelSettingID, jdbcType=INTEGER}
+        </if>
+        <if test="riskRangMIX!= null ">
+            and RiskRangMIX = #{riskRangMIX, jdbcType=INTEGER}
+        </if>
+        <if test="riskRangMAX!= null ">
+            and RiskRangMAX = #{riskRangMAX, jdbcType=INTEGER}
+        </if>
+        <if test="coalMineName!= null and coalMineName!= ''">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!= ''">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+    </delete>
+
+    <!--删除一条记录-->
+    <delete id="deleteRiskdegreeitemByID" parameterType="Integer" flushCache="true">
+        DELETE FROM riskdegreeitem
+        WHERE  RiskDegreeItemID = #{riskDegreeItemID,jdbcType=INTEGER}
+    </delete>
+
+    <!--批量删除记录-->
+    <insert id="deleteRiskdegreeitemList" parameterType="java.util.List" flushCache="true">
+        DELETE FROM riskdegreeitem
+        WHERE RiskDegreeItemID IN
+        <foreach item="item" collection="list" separator=",">
+            (
+            #{item.riskDegreeItemID, jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+
+    <!--更新记录-->
+    <update id="updateRiskdegreeitem" parameterType="cn.com.kingc.risk.model.Riskdegreeitem" flushCache="true">
+        UPDATE riskdegreeitem
+        <set>
+            <if test="riskDegreeID!= null ">
+                RiskDegreeID = #{riskDegreeID, jdbcType=INTEGER} ,
+            </if>
+            <if test="riskDegreeItemID!= null ">
+                RiskDegreeItemID = #{riskDegreeItemID, jdbcType=INTEGER} ,
+            </if>
+            <if test="riskLevelSettingID!= null ">
+                RiskLevelSettingID = #{riskLevelSettingID, jdbcType=INTEGER} ,
+            </if>
+            <if test="riskRangMIX!= null ">
+                RiskRangMIX = #{riskRangMIX, jdbcType=INTEGER} ,
+            </if>
+            <if test="riskRangMAX!= null ">
+                RiskRangMAX = #{riskRangMAX, jdbcType=INTEGER} ,
+            </if>
+            <if test="coalMineName!= null ">
+                CoalMineName = #{coalMineName, jdbcType=VARCHAR} ,
+            </if>
+            <if test="frameWorkID!= null ">
+                FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+            </if>
+        </set>
+        WHERE RiskDegreeItemID = #{riskDegreeItemID,jdbcType=INTEGER}
+    </update>
+
+    <!--根据主键查询记录-->
+    <select id="getRiskdegreeitem" resultMap="RiskdegreeitemMap"
+            parameterType="Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from riskdegreeitem
+        WHERE RiskDegreeItemID = #{riskDegreeItemID,jdbcType=INTEGER}
+    </select>
+    <!--获取共有多少条记录-->
+    <select id="getRiskdegreeitemCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  riskdegreeitem
+    </select>
+
+    <!--分页方法-->
+    <select id="getRiskdegreeitemByPage" resultMap="RiskdegreeitemMap"
+            parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from riskdegreeitem
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <!--获取共有多少条记录，带有查询条件-->
+    <select id="getRiskdegreeitemCountByRiskdegreeitem" resultType="java.lang.Integer">
+        select
+        count(*)
+        from riskdegreeitem
+        where 1=1
+        <if test="riskDegreeID!= null ">
+            and RiskDegreeID = #{riskDegreeID, jdbcType=INTEGER}
+        </if>
+        <if test="riskDegreeItemID!= null ">
+            and RiskDegreeItemID = #{riskDegreeItemID, jdbcType=INTEGER}
+        </if>
+        <if test="riskLevelSettingID!= null ">
+            and RiskLevelSettingID = #{riskLevelSettingID, jdbcType=INTEGER}
+        </if>
+        <if test="riskRangMIX!= null ">
+            and RiskRangMIX = #{riskRangMIX, jdbcType=INTEGER}
+        </if>
+        <if test="riskRangMAX!= null ">
+            and RiskRangMAX = #{riskRangMAX, jdbcType=INTEGER}
+        </if>
+        <if test="coalMineName!= null and coalMineName!= ''">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!= ''">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <!--分页获取数据，带有查询条件-->
+    <select id="getRiskdegreeitemByPageAndRiskdegreeitem" resultMap="RiskdegreeitemMap">
+        select
+        <include refid="Base_Column_List"/>
+        from riskdegreeitem
+        where 1=1
+        <if test="riskdegreeitem.riskDegreeID!= null ">
+            and RiskDegreeID = #{riskdegreeitem.riskDegreeID, jdbcType=INTEGER}
+        </if>
+        <if test="riskdegreeitem.riskDegreeItemID!= null ">
+            and RiskDegreeItemID = #{riskdegreeitem.riskDegreeItemID, jdbcType=INTEGER}
+        </if>
+        <if test="riskdegreeitem.riskLevelSettingID!= null ">
+            and RiskLevelSettingID = #{riskdegreeitem.riskLevelSettingID, jdbcType=INTEGER}
+        </if>
+        <if test="riskdegreeitem.riskRangMIX!= null ">
+            and RiskRangMIX = #{riskdegreeitem.riskRangMIX, jdbcType=INTEGER}
+        </if>
+        <if test="riskdegreeitem.riskRangMAX!= null ">
+            and RiskRangMAX = #{riskdegreeitem.riskRangMAX, jdbcType=INTEGER}
+        </if>
+        <if test="riskdegreeitem.coalMineName!= null and riskdegreeitem.coalMineName!= ''">
+            and CoalMineName = #{riskdegreeitem.coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="riskdegreeitem.frameWorkID!= null and riskdegreeitem.frameWorkID!= ''">
+            and FrameWorkID = #{riskdegreeitem.frameWorkID, jdbcType=VARCHAR}
+        </if>
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <!--根据条件查询数据-->
+    <select id="getRiskdegreeitemList" resultMap="RiskdegreeitemMap">
+        select
+        <include refid="Base_Column_List"/>
+        from riskdegreeitem
+        where 1=1
+        <if test="riskDegreeID!= null ">
+            and RiskDegreeID = #{riskDegreeID, jdbcType=INTEGER}
+        </if>
+        <if test="riskDegreeItemID!= null ">
+            and RiskDegreeItemID = #{riskDegreeItemID, jdbcType=INTEGER}
+        </if>
+        <if test="riskLevelSettingID!= null ">
+            and RiskLevelSettingID = #{riskLevelSettingID, jdbcType=INTEGER}
+        </if>
+        <if test="riskRangMIX!= null ">
+            and RiskRangMIX = #{riskRangMIX, jdbcType=INTEGER}
+        </if>
+        <if test="riskRangMAX!= null ">
+            and RiskRangMAX = #{riskRangMAX, jdbcType=INTEGER}
+        </if>
+        <if test="coalMineName!= null and coalMineName!= ''">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!= ''">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <!--获取一个数据的不重复集合-->
+    <select id="getDistinctItemList" resultType="java.lang.String" statementType="STATEMENT">
+        select  DISTINCT ${attribute} FROM riskdegreeitem
+    </select>
+
+    <!--判断对象是否已经存在-->
+    <select id="riskdegreeitemIsExist" resultType="java.lang.Integer"
+            parameterType="cn.com.kingc.risk.model.Riskdegreeitem">
+        select count(*)
+        from riskdegreeitem
+        where 1=1
+        <if test="riskDegreeID!= null and riskDegreeID!= ''">
+            and RiskDegreeID = #{riskDegreeID, jdbcType=INTEGER}
+        </if>
+        <if test="riskDegreeItemID!= null and riskDegreeItemID!= ''">
+            and RiskDegreeItemID = #{riskDegreeItemID, jdbcType=INTEGER}
+        </if>
+        <if test="riskLevelSettingID!= null and riskLevelSettingID!= ''">
+            and RiskLevelSettingID = #{riskLevelSettingID, jdbcType=INTEGER}
+        </if>
+        <if test="riskRangMIX!= null and riskRangMIX!= ''">
+            and RiskRangMIX = #{riskRangMIX, jdbcType=INTEGER}
+        </if>
+        <if test="riskRangMAX!= null and riskRangMAX!= ''">
+            and RiskRangMAX = #{riskRangMAX, jdbcType=INTEGER}
+        </if>
+        <if test="coalMineName!= null ">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null ">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <!--根据条件查询数据-->
+    <select id="getRiskdegreeitemUnique" resultMap="RiskdegreeitemMap">
+        select
+        <include refid="Base_Column_List"/>
+        from riskdegreeitem
+        where 1=1
+        <if test="riskDegreeID!= null ">
+            and RiskDegreeID = #{riskDegreeID, jdbcType=INTEGER}
+        </if>
+        <if test="riskDegreeItemID!= null ">
+            and RiskDegreeItemID = #{riskDegreeItemID, jdbcType=INTEGER}
+        </if>
+        <if test="riskLevelSettingID!= null ">
+            and RiskLevelSettingID = #{riskLevelSettingID, jdbcType=INTEGER}
+        </if>
+        <if test="riskRangMIX!= null ">
+            and RiskRangMIX = #{riskRangMIX, jdbcType=INTEGER}
+        </if>
+        <if test="riskRangMAX!= null ">
+            and RiskRangMAX = #{riskRangMAX, jdbcType=INTEGER}
+        </if>
+        <if test="coalMineName!= null and coalMineName!= ''">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!= ''">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+    </select>
+
+</mapper>

@@ -1,0 +1,550 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.kingc.risk.dao.RiskhazardcontrolrangeDao">
+    <resultMap id="RiskhazardcontrolrangeMap" type="cn.com.kingc.risk.model.Riskhazardcontrolrange">
+            <id property="riskSiteControlRangeID" column="RiskSiteControlRangeID"  jdbcType="INTEGER"/>
+            <result property="coalMineName" column="CoalMineName"  jdbcType="VARCHAR"/>
+            <result property="hazardID" column="HazardID"  jdbcType="INTEGER"/>
+            <result property="frameWorkID" column="FrameWorkID"  jdbcType="VARCHAR"/>
+            <result property="hazardUUID" column="HazardUUID"  jdbcType="VARCHAR"/>
+            <result property="riskSiteID" column="RiskSiteID"  jdbcType="INTEGER"/>
+            <result property="riskSiteFullNumber" column="RiskSiteFullNumber"  jdbcType="VARCHAR"/>
+            <result property="controlRangeName" column="ControlRangeName"  jdbcType="VARCHAR"/>
+            <result property="controlRangeStartDay" column="ControlRangeStartDay"  jdbcType="VARCHAR"/>
+            <result property="controlRangeEndDay" column="ControlRangeEndDay"  jdbcType="VARCHAR"/>
+            <result property="controlRangePinci" column="ControlRangePinci"  jdbcType="VARCHAR"/>
+            <result property="manageUnit" column="ManageUnit"  jdbcType="VARCHAR"/>
+            <result property="manageUnitID" column="ManageUnitID"  jdbcType="VARCHAR"/>
+            <result property="manageDuty" column="ManageDuty"  jdbcType="VARCHAR"/>
+            <result property="manageDutyID" column="ManageDutyID"  jdbcType="VARCHAR"/>
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        RiskSiteControlRangeID ,
+        CoalMineName ,
+        HazardID ,
+        FrameWorkID ,
+        HazardUUID ,
+        RiskSiteID ,
+        RiskSiteFullNumber ,
+        ControlRangeName ,
+        ControlRangeStartDay ,
+        ControlRangeEndDay ,
+        ControlRangePinci ,
+        ManageUnit ,
+        ManageUnitID ,
+        ManageDuty ,
+        ManageDutyID 
+    </sql>
+
+
+    <!--新增一条记录-->
+    <insert id="addRiskhazardcontrolrange" parameterType="cn.com.kingc.risk.model.Riskhazardcontrolrange"
+            useGeneratedKeys="true" keyProperty="riskSiteControlRangeID" >
+        insert into riskhazardcontrolrange (
+            RiskSiteControlRangeID,
+            CoalMineName,
+            HazardID,
+            FrameWorkID,
+            HazardUUID,
+            RiskSiteID,
+            RiskSiteFullNumber,
+            ControlRangeName,
+            ControlRangeStartDay,
+            ControlRangeEndDay,
+            ControlRangePinci,
+            ManageUnit,
+            ManageUnitID,
+            ManageDuty,
+            ManageDutyID
+        )
+        values(
+            #{riskSiteControlRangeID, jdbcType=INTEGER}  ,
+            #{coalMineName, jdbcType=VARCHAR}  ,
+            #{hazardID, jdbcType=INTEGER}  ,
+            #{frameWorkID, jdbcType=VARCHAR}  ,
+            #{hazardUUID, jdbcType=VARCHAR}  ,
+            #{riskSiteID, jdbcType=INTEGER}  ,
+            #{riskSiteFullNumber, jdbcType=VARCHAR}  ,
+            #{controlRangeName, jdbcType=VARCHAR}  ,
+            #{controlRangeStartDay, jdbcType=VARCHAR}  ,
+            #{controlRangeEndDay, jdbcType=VARCHAR}  ,
+            #{controlRangePinci, jdbcType=VARCHAR}  ,
+            #{manageUnit, jdbcType=VARCHAR}  ,
+            #{manageUnitID, jdbcType=VARCHAR}  ,
+            #{manageDuty, jdbcType=VARCHAR}  ,
+            #{manageDutyID, jdbcType=VARCHAR}  
+        )
+    </insert>
+
+    <!--批量新增记录-->
+    <insert id="addRiskhazardcontrolrangeList"  parameterType="java.util.List" >
+        insert into riskhazardcontrolrange(
+            RiskSiteControlRangeID,
+            CoalMineName,
+            HazardID,
+            FrameWorkID,
+            HazardUUID,
+            RiskSiteID,
+            RiskSiteFullNumber,
+            ControlRangeName,
+            ControlRangeStartDay,
+            ControlRangeEndDay,
+            ControlRangePinci,
+            ManageUnit,
+            ManageUnitID,
+            ManageDuty,
+            ManageDutyID
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+        (
+            #{item.riskSiteControlRangeID, jdbcType=INTEGER}  ,
+            #{item.coalMineName, jdbcType=VARCHAR}  ,
+            #{item.hazardID, jdbcType=INTEGER}  ,
+            #{item.frameWorkID, jdbcType=VARCHAR}  ,
+            #{item.hazardUUID, jdbcType=VARCHAR}  ,
+            #{item.riskSiteID, jdbcType=INTEGER}  ,
+            #{item.riskSiteFullNumber, jdbcType=VARCHAR}  ,
+            #{item.controlRangeName, jdbcType=VARCHAR}  ,
+            #{item.controlRangeStartDay, jdbcType=VARCHAR}  ,
+            #{item.controlRangeEndDay, jdbcType=VARCHAR}  ,
+            #{item.controlRangePinci, jdbcType=VARCHAR}  ,
+            #{item.manageUnit, jdbcType=VARCHAR}  ,
+            #{item.manageUnitID, jdbcType=VARCHAR}  ,
+            #{item.manageDuty, jdbcType=VARCHAR}  ,
+            #{item.manageDutyID, jdbcType=VARCHAR}  
+        )
+        </foreach>
+    </insert>
+
+    <!--删除记录-->
+    <delete id="deleteRiskhazardcontrolrange" parameterType="cn.com.kingc.risk.model.Riskhazardcontrolrange" >
+        DELETE FROM riskhazardcontrolrange
+        where 1=1
+                <if test="riskSiteControlRangeID!= null ">
+                    and  RiskSiteControlRangeID = #{riskSiteControlRangeID, jdbcType=INTEGER}  
+                </if>
+                <if test="coalMineName!= null and coalMineName!= ''">
+                    and  CoalMineName = #{coalMineName, jdbcType=VARCHAR}  
+                </if>
+                <if test="hazardID!= null ">
+                    and  HazardID = #{hazardID, jdbcType=INTEGER}  
+                </if>
+                <if test="frameWorkID!= null and frameWorkID!= ''">
+                    and  FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}  
+                </if>
+                <if test="hazardUUID!= null and hazardUUID!= ''">
+                    and  HazardUUID = #{hazardUUID, jdbcType=VARCHAR}  
+                </if>
+                <if test="riskSiteID!= null ">
+                    and  RiskSiteID = #{riskSiteID, jdbcType=INTEGER}  
+                </if>
+                <if test="riskSiteFullNumber!= null and riskSiteFullNumber!= ''">
+                    and  RiskSiteFullNumber = #{riskSiteFullNumber, jdbcType=VARCHAR}  
+                </if>
+                <if test="controlRangeName!= null and controlRangeName!= ''">
+                    and  ControlRangeName = #{controlRangeName, jdbcType=VARCHAR}  
+                </if>
+                <if test="controlRangeStartDay!= null and controlRangeStartDay!= ''">
+                    and  ControlRangeStartDay = #{controlRangeStartDay, jdbcType=VARCHAR}  
+                </if>
+                <if test="controlRangeEndDay!= null and controlRangeEndDay!= ''">
+                    and  ControlRangeEndDay = #{controlRangeEndDay, jdbcType=VARCHAR}  
+                </if>
+                <if test="controlRangePinci!= null and controlRangePinci!= ''">
+                    and  ControlRangePinci = #{controlRangePinci, jdbcType=VARCHAR}  
+                </if>
+                <if test="manageUnit!= null and manageUnit!= ''">
+                    and  ManageUnit = #{manageUnit, jdbcType=VARCHAR}  
+                </if>
+                <if test="manageUnitID!= null and manageUnitID!= ''">
+                    and  ManageUnitID = #{manageUnitID, jdbcType=VARCHAR}  
+                </if>
+                <if test="manageDuty!= null and manageDuty!= ''">
+                    and  ManageDuty = #{manageDuty, jdbcType=VARCHAR}  
+                </if>
+                <if test="manageDutyID!= null and manageDutyID!= ''">
+                    and  ManageDutyID = #{manageDutyID, jdbcType=VARCHAR} 
+                </if>
+    </delete>
+
+    <!--删除一条记录-->
+    <delete id="deleteRiskhazardcontrolrangeByID" parameterType="Integer" >
+        DELETE FROM riskhazardcontrolrange
+        WHERE  RiskSiteControlRangeID = #{riskSiteControlRangeID,jdbcType=INTEGER}
+    </delete>
+
+    <!--批量删除记录-->
+    <insert id="deleteRiskhazardcontrolrangeList"  parameterType="java.util.List" >
+        DELETE FROM riskhazardcontrolrange
+        WHERE RiskSiteControlRangeID IN
+        <foreach item="item" collection="list" open="(" separator="," close=")">
+            #{item.riskSiteControlRangeID, jdbcType=INTEGER}
+        </foreach>
+    </insert>
+
+    <!--更新记录-->
+    <update id="updateRiskhazardcontrolrange" parameterType="cn.com.kingc.risk.model.Riskhazardcontrolrange" >
+        UPDATE  riskhazardcontrolrange
+        <set>
+                <if test="riskSiteControlRangeID!= null ">
+                RiskSiteControlRangeID = #{riskSiteControlRangeID, jdbcType=INTEGER} ,
+                </if>
+                <if test="coalMineName!= null ">
+                CoalMineName = #{coalMineName, jdbcType=VARCHAR} ,
+                </if>
+                <if test="hazardID!= null ">
+                HazardID = #{hazardID, jdbcType=INTEGER} ,
+                </if>
+                <if test="frameWorkID!= null ">
+                FrameWorkID = #{frameWorkID, jdbcType=VARCHAR} ,
+                </if>
+                <if test="hazardUUID!= null ">
+                HazardUUID = #{hazardUUID, jdbcType=VARCHAR} ,
+                </if>
+                <if test="riskSiteID!= null ">
+                RiskSiteID = #{riskSiteID, jdbcType=INTEGER} ,
+                </if>
+                <if test="riskSiteFullNumber!= null ">
+                RiskSiteFullNumber = #{riskSiteFullNumber, jdbcType=VARCHAR} ,
+                </if>
+                <if test="controlRangeName!= null ">
+                ControlRangeName = #{controlRangeName, jdbcType=VARCHAR} ,
+                </if>
+                <if test="controlRangeStartDay!= null ">
+                ControlRangeStartDay = #{controlRangeStartDay, jdbcType=VARCHAR} ,
+                </if>
+                <if test="controlRangeEndDay!= null ">
+                ControlRangeEndDay = #{controlRangeEndDay, jdbcType=VARCHAR} ,
+                </if>
+                <if test="controlRangePinci!= null ">
+                ControlRangePinci = #{controlRangePinci, jdbcType=VARCHAR} ,
+                </if>
+                <if test="manageUnit!= null ">
+                ManageUnit = #{manageUnit, jdbcType=VARCHAR} ,
+                </if>
+                <if test="manageUnitID!= null ">
+                ManageUnitID = #{manageUnitID, jdbcType=VARCHAR} ,
+                </if>
+                ManageDuty = #{manageDuty, jdbcType=VARCHAR} ,
+                <if test="manageDutyID!= null ">
+                ManageDutyID = #{manageDutyID, jdbcType=VARCHAR} 
+                </if>
+        </set>
+        WHERE  RiskSiteControlRangeID = #{riskSiteControlRangeID,jdbcType=INTEGER}
+    </update>
+
+    <!--根据主键查询记录-->
+    <select id="getRiskhazardcontrolrange" resultMap="RiskhazardcontrolrangeMap"
+            parameterType="Integer">
+        select
+        <include refid="Base_Column_List" />
+        from riskhazardcontrolrange
+        WHERE  RiskSiteControlRangeID = #{riskSiteControlRangeID,jdbcType=INTEGER}
+    </select>
+
+
+    <!--获取共有多少条记录，带有查询条件-->
+    <select id="getRiskhazardcontrolrangeCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  riskhazardcontrolrange
+        where 1=1
+            <if test="riskSiteControlRangeID!= null ">
+                and  RiskSiteControlRangeID = #{riskSiteControlRangeID, jdbcType=INTEGER}  
+            </if>
+            <if test="coalMineName!= null and coalMineName!= ''">
+                and  CoalMineName = #{coalMineName, jdbcType=VARCHAR}  
+            </if>
+            <if test="hazardID!= null ">
+                and  HazardID = #{hazardID, jdbcType=INTEGER}  
+            </if>
+            <if test="frameWorkID!= null and frameWorkID!= ''">
+                and  FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}  
+            </if>
+            <if test="hazardUUID!= null and hazardUUID!= ''">
+                and  HazardUUID = #{hazardUUID, jdbcType=VARCHAR}  
+            </if>
+            <if test="riskSiteID!= null ">
+                and  RiskSiteID = #{riskSiteID, jdbcType=INTEGER}  
+            </if>
+            <if test="riskSiteFullNumber!= null and riskSiteFullNumber!= ''">
+                and  RiskSiteFullNumber = #{riskSiteFullNumber, jdbcType=VARCHAR}  
+            </if>
+            <if test="controlRangeName!= null and controlRangeName!= ''">
+                and  ControlRangeName = #{controlRangeName, jdbcType=VARCHAR}  
+            </if>
+            <if test="controlRangeStartDay!= null and controlRangeStartDay!= ''">
+                and  ControlRangeStartDay = #{controlRangeStartDay, jdbcType=VARCHAR}  
+            </if>
+            <if test="controlRangeEndDay!= null and controlRangeEndDay!= ''">
+                and  ControlRangeEndDay = #{controlRangeEndDay, jdbcType=VARCHAR}  
+            </if>
+            <if test="controlRangePinci!= null and controlRangePinci!= ''">
+                and  ControlRangePinci = #{controlRangePinci, jdbcType=VARCHAR}  
+            </if>
+            <if test="manageUnit!= null and manageUnit!= ''">
+                and  ManageUnit = #{manageUnit, jdbcType=VARCHAR}  
+            </if>
+            <if test="manageUnitID!= null and manageUnitID!= ''">
+                and  ManageUnitID = #{manageUnitID, jdbcType=VARCHAR}  
+            </if>
+            <if test="manageDuty!= null and manageDuty!= ''">
+                and  ManageDuty = #{manageDuty, jdbcType=VARCHAR}  
+            </if>
+            <if test="manageDutyID!= null and manageDutyID!= ''">
+                and  ManageDutyID = #{manageDutyID, jdbcType=VARCHAR} 
+            </if>
+    </select>
+
+    <!--分页获取数据，带有查询条件-->
+    <select id="getRiskhazardcontrolrangeByPage" resultMap="RiskhazardcontrolrangeMap">
+        select
+        <include refid="Base_Column_List" />
+        from riskhazardcontrolrange
+        where 1=1
+            <if test="riskhazardcontrolrange.riskSiteControlRangeID!= null ">
+                and  RiskSiteControlRangeID = #{riskhazardcontrolrange.riskSiteControlRangeID, jdbcType=INTEGER}  
+            </if>
+            <if test="riskhazardcontrolrange.coalMineName!= null and riskhazardcontrolrange.coalMineName!= ''">
+                and  CoalMineName = #{riskhazardcontrolrange.coalMineName, jdbcType=VARCHAR}  
+            </if>
+            <if test="riskhazardcontrolrange.hazardID!= null ">
+                and  HazardID = #{riskhazardcontrolrange.hazardID, jdbcType=INTEGER}  
+            </if>
+            <if test="riskhazardcontrolrange.frameWorkID!= null and riskhazardcontrolrange.frameWorkID!= ''">
+                and  FrameWorkID = #{riskhazardcontrolrange.frameWorkID, jdbcType=VARCHAR}  
+            </if>
+            <if test="riskhazardcontrolrange.hazardUUID!= null and riskhazardcontrolrange.hazardUUID!= ''">
+                and  HazardUUID = #{riskhazardcontrolrange.hazardUUID, jdbcType=VARCHAR}  
+            </if>
+            <if test="riskhazardcontrolrange.riskSiteID!= null ">
+                and  RiskSiteID = #{riskhazardcontrolrange.riskSiteID, jdbcType=INTEGER}  
+            </if>
+            <if test="riskhazardcontrolrange.riskSiteFullNumber!= null and riskhazardcontrolrange.riskSiteFullNumber!= ''">
+                and  RiskSiteFullNumber = #{riskhazardcontrolrange.riskSiteFullNumber, jdbcType=VARCHAR}  
+            </if>
+            <if test="riskhazardcontrolrange.controlRangeName!= null and riskhazardcontrolrange.controlRangeName!= ''">
+                and  ControlRangeName = #{riskhazardcontrolrange.controlRangeName, jdbcType=VARCHAR}  
+            </if>
+            <if test="riskhazardcontrolrange.controlRangeStartDay!= null and riskhazardcontrolrange.controlRangeStartDay!= ''">
+                and  ControlRangeStartDay = #{riskhazardcontrolrange.controlRangeStartDay, jdbcType=VARCHAR}  
+            </if>
+            <if test="riskhazardcontrolrange.controlRangeEndDay!= null and riskhazardcontrolrange.controlRangeEndDay!= ''">
+                and  ControlRangeEndDay = #{riskhazardcontrolrange.controlRangeEndDay, jdbcType=VARCHAR}  
+            </if>
+            <if test="riskhazardcontrolrange.controlRangePinci!= null and riskhazardcontrolrange.controlRangePinci!= ''">
+                and  ControlRangePinci = #{riskhazardcontrolrange.controlRangePinci, jdbcType=VARCHAR}  
+            </if>
+            <if test="riskhazardcontrolrange.manageUnit!= null and riskhazardcontrolrange.manageUnit!= ''">
+                and  ManageUnit = #{riskhazardcontrolrange.manageUnit, jdbcType=VARCHAR}  
+            </if>
+            <if test="riskhazardcontrolrange.manageUnitID!= null and riskhazardcontrolrange.manageUnitID!= ''">
+                and  ManageUnitID = #{riskhazardcontrolrange.manageUnitID, jdbcType=VARCHAR}  
+            </if>
+            <if test="riskhazardcontrolrange.manageDuty!= null and riskhazardcontrolrange.manageDuty!= ''">
+                and  ManageDuty = #{riskhazardcontrolrange.manageDuty, jdbcType=VARCHAR}  
+            </if>
+            <if test="riskhazardcontrolrange.manageDutyID!= null and riskhazardcontrolrange.manageDutyID!= ''">
+                and  ManageDutyID = #{riskhazardcontrolrange.manageDutyID, jdbcType=VARCHAR} 
+            </if>
+        LIMIT
+    #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <!--根据条件查询数据-->
+    <select id="getRiskhazardcontrolrangeList" resultMap="RiskhazardcontrolrangeMap">
+        select
+        <include refid="Base_Column_List" />
+        from riskhazardcontrolrange
+        where 1=1
+            <if test="riskSiteControlRangeID!= null ">
+                and  RiskSiteControlRangeID = #{riskSiteControlRangeID, jdbcType=INTEGER}  
+            </if>
+            <if test="coalMineName!= null and coalMineName!= ''">
+                and  CoalMineName = #{coalMineName, jdbcType=VARCHAR}  
+            </if>
+            <if test="hazardID!= null ">
+                and  HazardID = #{hazardID, jdbcType=INTEGER}  
+            </if>
+            <if test="frameWorkID!= null and frameWorkID!= ''">
+                and  FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}  
+            </if>
+            <if test="hazardUUID!= null and hazardUUID!= ''">
+                and  HazardUUID = #{hazardUUID, jdbcType=VARCHAR}  
+            </if>
+            <if test="riskSiteID!= null ">
+                and  RiskSiteID = #{riskSiteID, jdbcType=INTEGER}  
+            </if>
+            <if test="riskSiteFullNumber!= null and riskSiteFullNumber!= ''">
+                and  RiskSiteFullNumber = #{riskSiteFullNumber, jdbcType=VARCHAR}  
+            </if>
+            <if test="controlRangeName!= null and controlRangeName!= ''">
+                and  ControlRangeName = #{controlRangeName, jdbcType=VARCHAR}  
+            </if>
+            <if test="controlRangeStartDay!= null and controlRangeStartDay!= ''">
+                and  ControlRangeStartDay = #{controlRangeStartDay, jdbcType=VARCHAR}  
+            </if>
+            <if test="controlRangeEndDay!= null and controlRangeEndDay!= ''">
+                and  ControlRangeEndDay = #{controlRangeEndDay, jdbcType=VARCHAR}  
+            </if>
+            <if test="controlRangePinci!= null and controlRangePinci!= ''">
+                and  ControlRangePinci = #{controlRangePinci, jdbcType=VARCHAR}  
+            </if>
+            <if test="manageUnit!= null and manageUnit!= ''">
+                and  ManageUnit = #{manageUnit, jdbcType=VARCHAR}  
+            </if>
+            <if test="manageUnitID!= null and manageUnitID!= ''">
+                and  ManageUnitID = #{manageUnitID, jdbcType=VARCHAR}  
+            </if>
+            <if test="manageDuty!= null and manageDuty!= ''">
+                and  ManageDuty = #{manageDuty, jdbcType=VARCHAR}  
+            </if>
+            <if test="manageDutyID!= null and manageDutyID!= ''">
+                and  ManageDutyID = #{manageDutyID, jdbcType=VARCHAR} 
+            </if>
+    </select>
+
+    <!--获取一个数据的不重复集合-->
+    <select id="getDistinctItemList" resultType="java.lang.String" statementType="STATEMENT">
+        select  DISTINCT ${attribute} FROM riskhazardcontrolrange
+    </select>
+
+    <!--判断对象是否已经存在-->
+    <select id="riskhazardcontrolrangeIsExist" resultType="java.lang.Integer" parameterType="cn.com.kingc.risk.model.Riskhazardcontrolrange">
+        select  count(*)
+        from riskhazardcontrolrange
+        where 1=1
+            <if test="riskSiteControlRangeID!= null and riskSiteControlRangeID!= ''">
+                and  RiskSiteControlRangeID = #{riskSiteControlRangeID, jdbcType=INTEGER}  
+            </if>
+            <if test="coalMineName!= null ">
+                and  CoalMineName = #{coalMineName, jdbcType=VARCHAR}  
+            </if>
+            <if test="hazardID!= null and hazardID!= ''">
+                and  HazardID = #{hazardID, jdbcType=INTEGER}  
+            </if>
+            <if test="frameWorkID!= null ">
+                and  FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}  
+            </if>
+            <if test="hazardUUID!= null ">
+                and  HazardUUID = #{hazardUUID, jdbcType=VARCHAR}  
+            </if>
+            <if test="riskSiteID!= null and riskSiteID!= ''">
+                and  RiskSiteID = #{riskSiteID, jdbcType=INTEGER}  
+            </if>
+            <if test="riskSiteFullNumber!= null ">
+                and  RiskSiteFullNumber = #{riskSiteFullNumber, jdbcType=VARCHAR}  
+            </if>
+            <if test="controlRangeName!= null ">
+                and  ControlRangeName = #{controlRangeName, jdbcType=VARCHAR}  
+            </if>
+            <if test="controlRangeStartDay!= null ">
+                and  ControlRangeStartDay = #{controlRangeStartDay, jdbcType=VARCHAR}  
+            </if>
+            <if test="controlRangeEndDay!= null ">
+                and  ControlRangeEndDay = #{controlRangeEndDay, jdbcType=VARCHAR}  
+            </if>
+            <if test="controlRangePinci!= null ">
+                and  ControlRangePinci = #{controlRangePinci, jdbcType=VARCHAR}  
+            </if>
+            <if test="manageUnit!= null ">
+                and  ManageUnit = #{manageUnit, jdbcType=VARCHAR}  
+            </if>
+            <if test="manageUnitID!= null ">
+                and  ManageUnitID = #{manageUnitID, jdbcType=VARCHAR}  
+            </if>
+            <if test="manageDuty!= null ">
+                and  ManageDuty = #{manageDuty, jdbcType=VARCHAR}  
+            </if>
+            <if test="manageDutyID!= null ">
+                and  ManageDutyID = #{manageDutyID, jdbcType=VARCHAR} 
+            </if>
+    </select>
+
+    <!--根据条件查询数据-->
+    <select id="getRiskhazardcontrolrangeUnique" resultMap="RiskhazardcontrolrangeMap">
+        select
+        <include refid="Base_Column_List" />
+        from riskhazardcontrolrange
+        where 1=1
+            <if test="riskSiteControlRangeID!= null ">
+                and  RiskSiteControlRangeID = #{riskSiteControlRangeID, jdbcType=INTEGER}  
+            </if>
+            <if test="coalMineName!= null and coalMineName!= ''">
+                and  CoalMineName = #{coalMineName, jdbcType=VARCHAR}  
+            </if>
+            <if test="hazardID!= null ">
+                and  HazardID = #{hazardID, jdbcType=INTEGER}  
+            </if>
+            <if test="frameWorkID!= null and frameWorkID!= ''">
+                and  FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}  
+            </if>
+            <if test="hazardUUID!= null and hazardUUID!= ''">
+                and  HazardUUID = #{hazardUUID, jdbcType=VARCHAR}  
+            </if>
+            <if test="riskSiteID!= null ">
+                and  RiskSiteID = #{riskSiteID, jdbcType=INTEGER}  
+            </if>
+            <if test="riskSiteFullNumber!= null and riskSiteFullNumber!= ''">
+                and  RiskSiteFullNumber = #{riskSiteFullNumber, jdbcType=VARCHAR}  
+            </if>
+            <if test="controlRangeName!= null and controlRangeName!= ''">
+                and  ControlRangeName = #{controlRangeName, jdbcType=VARCHAR}  
+            </if>
+            <if test="controlRangeStartDay!= null and controlRangeStartDay!= ''">
+                and  ControlRangeStartDay = #{controlRangeStartDay, jdbcType=VARCHAR}  
+            </if>
+            <if test="controlRangeEndDay!= null and controlRangeEndDay!= ''">
+                and  ControlRangeEndDay = #{controlRangeEndDay, jdbcType=VARCHAR}  
+            </if>
+            <if test="controlRangePinci!= null and controlRangePinci!= ''">
+                and  ControlRangePinci = #{controlRangePinci, jdbcType=VARCHAR}  
+            </if>
+            <if test="manageUnit!= null and manageUnit!= ''">
+                and  ManageUnit = #{manageUnit, jdbcType=VARCHAR}  
+            </if>
+            <if test="manageUnitID!= null and manageUnitID!= ''">
+                and  ManageUnitID = #{manageUnitID, jdbcType=VARCHAR}  
+            </if>
+            <if test="manageDuty!= null and manageDuty!= ''">
+                and  ManageDuty = #{manageDuty, jdbcType=VARCHAR}  
+            </if>
+            <if test="manageDutyID!= null and manageDutyID!= ''">
+                and  ManageDutyID = #{manageDutyID, jdbcType=VARCHAR} 
+            </if>
+    </select>
+
+    <!--更新记录-->
+    <update id="updateRiskhazardcontrolrangeByRiskId" parameterType="cn.com.kingc.risk.model.Riskhazardcontrolrange" >
+        UPDATE  riskhazardcontrolrange
+        <set>
+            <if test="controlRangeStartDay!= null ">
+                ControlRangeStartDay = #{controlRangeStartDay, jdbcType=VARCHAR} ,
+            </if>
+            <if test="controlRangeEndDay!= null ">
+                ControlRangeEndDay = #{controlRangeEndDay, jdbcType=VARCHAR} ,
+            </if>
+            <if test="controlRangePinci!= null ">
+                ControlRangePinci = #{controlRangePinci, jdbcType=VARCHAR} ,
+            </if>
+            <if test="manageUnit!= null ">
+                ManageUnit = #{manageUnit, jdbcType=VARCHAR} ,
+            </if>
+            <if test="manageUnitID!= null ">
+                ManageUnitID = #{manageUnitID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="manageDuty!= null ">
+                ManageDuty = #{manageDuty, jdbcType=VARCHAR} ,
+            </if>
+            <if test="manageDutyID!= null ">
+                ManageDutyID = #{manageDutyID, jdbcType=VARCHAR}
+            </if>
+        </set>
+        WHERE
+        ControlRangeName = #{controlRangeName, jdbcType=VARCHAR}
+        AND RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+    </update>
+</mapper>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--单元测试时由于需要引入spring-mvc.xml 如果把这个bean放在spring-mvc.xml里时会导致junit异常-->
+    <bean class="cn.com.kingc.risk.config.swagger.SwaggerConfig"/>
+</beans>

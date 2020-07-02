@@ -1,0 +1,543 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.kingc.risk.dao.SyncriskhistoryDao">
+    <cache/>
+    <resultMap id="SyncriskhistoryMap" type="cn.com.kingc.risk.model.Syncriskhistory">
+            <result property="coalMineName" column="CoalMineName"  jdbcType="VARCHAR"/>
+            <result property="frameWorkID" column="FrameWorkID"  jdbcType="VARCHAR"/>
+            <result property="fSynHistoryID" column="FSynHistoryID"  jdbcType="INTEGER"/>
+            <result property="riskSiteID" column="RiskSiteID"  jdbcType="INTEGER"/>
+            <result property="riskSiteUUID" column="RiskSiteUUID"  jdbcType="VARCHAR"/>
+            <result property="parentID" column="ParentID"  jdbcType="INTEGER"/>
+            <result property="parentNumber" column="ParentNumber"  jdbcType="VARCHAR"/>
+            <result property="fullNumber" column="FullNumber"  jdbcType="VARCHAR"/>
+            <result property="hazardUUID" column="HazardUUID"  jdbcType="VARCHAR"/>
+            <result property="hazardID" column="HazardID"  jdbcType="INTEGER"/>
+            <result property="fSynStatus" column="FSynStatus"  jdbcType="BIT"/>
+            <result property="fSynTime" column="FSynTime"  jdbcType="TIMESTAMP"/>
+            <result property="fSynEmpID" column="FSynEmpID"  jdbcType="INTEGER"/>
+            <result property="fSynEmpName" column="FSynEmpName"  jdbcType="VARCHAR"/>
+            <result property="fSynResultCode" column="FSynResultCode"  jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+            CoalMineName,
+            FrameWorkID,
+            FSynHistoryID,
+            RiskSiteID,
+            RiskSiteUUID,
+            ParentID,
+            ParentNumber,
+            FullNumber,
+            HazardUUID,
+            HazardID,
+            FSynStatus,
+            FSynTime,
+            FSynEmpID,
+            FSynEmpName,
+            FSynResultCode
+    </sql>
+
+     <!--新增一条记录-->
+    <insert id="addSyncriskhistory" parameterType="cn.com.kingc.risk.model.Syncriskhistory"
+            useGeneratedKeys="true" keyProperty="fSynHistoryID" flushCache="true">
+        DELETE from syncriskhistory
+        WHERE FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+              AND RiskSiteUUID=#{riskSiteUUID, jdbcType=VARCHAR}
+              AND HazardUUID= #{hazardUUID, jdbcType=VARCHAR};
+
+        insert into syncriskhistory (
+                CoalMineName,
+                FrameWorkID,
+                FSynHistoryID,
+                RiskSiteID,
+                RiskSiteUUID,
+                ParentID,
+                ParentNumber,
+                FullNumber,
+                HazardUUID,
+                HazardID,
+                FSynStatus,
+                FSynTime,
+                FSynEmpID,
+                FSynEmpName,
+                FSynResultCode
+        )
+        values(
+                #{coalMineName, jdbcType=VARCHAR}  ,
+                #{frameWorkID, jdbcType=VARCHAR}  ,
+                #{fSynHistoryID, jdbcType=INTEGER}  ,
+                #{riskSiteID, jdbcType=INTEGER}  ,
+                #{riskSiteUUID, jdbcType=VARCHAR}  ,
+                #{parentID, jdbcType=INTEGER}  ,
+                #{parentNumber, jdbcType=VARCHAR}  ,
+                #{fullNumber, jdbcType=VARCHAR}  ,
+                #{hazardUUID, jdbcType=VARCHAR}  ,
+                #{hazardID, jdbcType=INTEGER}  ,
+                #{fSynStatus, jdbcType=BIT}  ,
+                #{fSynTime, jdbcType=TIMESTAMP}  ,
+                #{fSynEmpID, jdbcType=INTEGER}  ,
+                #{fSynEmpName, jdbcType=VARCHAR}  ,
+                #{fSynResultCode, jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <!--批量新增记录-->
+    <insert id="addSyncriskhistoryList"  parameterType="java.util.List" flushCache="true">
+        insert into syncriskhistory(
+                CoalMineName,
+                FrameWorkID,
+                FSynHistoryID,
+                RiskSiteID,
+                RiskSiteUUID,
+                ParentID,
+                ParentNumber,
+                FullNumber,
+                HazardUUID,
+                HazardID,
+                FSynStatus,
+                FSynTime,
+                FSynEmpID,
+                FSynEmpName,
+                FSynResultCode
+        )
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+                    #{item.coalMineName, jdbcType=VARCHAR}  ,
+                    #{item.frameWorkID, jdbcType=VARCHAR}  ,
+                    #{item.fSynHistoryID, jdbcType=INTEGER}  ,
+                    #{item.riskSiteID, jdbcType=INTEGER}  ,
+                    #{item.riskSiteUUID, jdbcType=VARCHAR}  ,
+                    #{item.parentID, jdbcType=INTEGER}  ,
+                    #{item.parentNumber, jdbcType=VARCHAR}  ,
+                    #{item.fullNumber, jdbcType=VARCHAR}  ,
+                    #{item.hazardUUID, jdbcType=VARCHAR}  ,
+                    #{item.hazardID, jdbcType=INTEGER}  ,
+                    #{item.fSynStatus, jdbcType=BIT}  ,
+                    #{item.fSynTime, jdbcType=TIMESTAMP}  ,
+                    #{item.fSynEmpID, jdbcType=INTEGER}  ,
+                    #{item.fSynEmpName, jdbcType=VARCHAR}  ,
+                    #{item.fSynResultCode, jdbcType=VARCHAR}
+            )
+        </foreach>
+    </insert>
+
+    <!--删除记录-->
+    <delete id="deleteSyncriskhistory" parameterType="cn.com.kingc.risk.model.Syncriskhistory" flushCache="true">
+        DELETE FROM syncriskhistory
+        where 1=1
+                <if test="coalMineName!= null and coalMineName!= ''">
+                    and  CoalMineName = #{coalMineName, jdbcType=VARCHAR}  
+                </if>
+                <if test="frameWorkID!= null and frameWorkID!= ''">
+                    and  FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}  
+                </if>
+                <if test="fSynHistoryID!= null ">
+                    and  FSynHistoryID = #{fSynHistoryID, jdbcType=INTEGER}  
+                </if>
+                <if test="riskSiteID!= null ">
+                    and  RiskSiteID = #{riskSiteID, jdbcType=INTEGER}  
+                </if>
+                <if test="riskSiteUUID!= null and riskSiteUUID!= ''">
+                    and  RiskSiteUUID = #{riskSiteUUID, jdbcType=VARCHAR}  
+                </if>
+                <if test="parentID!= null ">
+                    and  ParentID = #{parentID, jdbcType=INTEGER}  
+                </if>
+                <if test="parentNumber!= null and parentNumber!= ''">
+                    and  ParentNumber = #{parentNumber, jdbcType=VARCHAR}  
+                </if>
+                <if test="fullNumber!= null and fullNumber!= ''">
+                    and  FullNumber = #{fullNumber, jdbcType=VARCHAR}  
+                </if>
+                <if test="hazardUUID!= null and hazardUUID!= ''">
+                    and  HazardUUID = #{hazardUUID, jdbcType=VARCHAR}  
+                </if>
+                <if test="hazardID!= null ">
+                    and  HazardID = #{hazardID, jdbcType=INTEGER}  
+                </if>
+                <if test="fSynStatus!= null ">
+                    and  FSynStatus = #{fSynStatus, jdbcType=BIT}  
+                </if>
+                <if test="fSynTime!= null ">
+                    and  FSynTime = #{fSynTime, jdbcType=TIMESTAMP}  
+                </if>
+                <if test="fSynEmpID!= null ">
+                    and  FSynEmpID = #{fSynEmpID, jdbcType=INTEGER}  
+                </if>
+                <if test="fSynEmpName!= null and fSynEmpName!= ''">
+                    and  FSynEmpName = #{fSynEmpName, jdbcType=VARCHAR}  
+                </if>
+                <if test="fSynResultCode!= null ">
+                    and  FSynResultCode = #{fSynResultCode, jdbcType=VARCHAR}
+                </if>
+    </delete>
+
+    <!--删除一条记录-->
+    <delete id="deleteSyncriskhistoryByID" parameterType="Integer" flushCache="true">
+        DELETE FROM syncriskhistory
+        WHERE  FSynHistoryID = #{fSynHistoryID,jdbcType=INTEGER}
+    </delete>
+
+    <!--批量删除记录-->
+    <insert id="deleteSyncriskhistoryList"  parameterType="java.util.List" flushCache="true">
+        DELETE FROM syncriskhistory
+        WHERE FSynHistoryID IN
+        <foreach item="item" collection="list" separator=",">
+            (
+                #{item.fSynHistoryID, jdbcType=INTEGER}
+            )
+        </foreach>
+    </insert>
+
+    <!--更新记录-->
+    <update id="updateSyncriskhistory" parameterType="cn.com.kingc.risk.model.Syncriskhistory" flushCache="true">
+        UPDATE  syncriskhistory
+        <set>
+                <if test="coalMineName!= null ">
+                    CoalMineName = #{coalMineName, jdbcType=VARCHAR} ,
+                </if>
+                <if test="frameWorkID!= null ">
+                    FrameWorkID = #{frameWorkID, jdbcType=VARCHAR} ,
+                </if>
+                <if test="fSynHistoryID!= null ">
+                    FSynHistoryID = #{fSynHistoryID, jdbcType=INTEGER} ,
+                </if>
+                <if test="riskSiteID!= null ">
+                    RiskSiteID = #{riskSiteID, jdbcType=INTEGER} ,
+                </if>
+                <if test="riskSiteUUID!= null ">
+                    RiskSiteUUID = #{riskSiteUUID, jdbcType=VARCHAR} ,
+                </if>
+                <if test="parentID!= null ">
+                    ParentID = #{parentID, jdbcType=INTEGER} ,
+                </if>
+                <if test="parentNumber!= null ">
+                    ParentNumber = #{parentNumber, jdbcType=VARCHAR} ,
+                </if>
+                <if test="fullNumber!= null ">
+                    FullNumber = #{fullNumber, jdbcType=VARCHAR} ,
+                </if>
+                <if test="hazardUUID!= null ">
+                    HazardUUID = #{hazardUUID, jdbcType=VARCHAR} ,
+                </if>
+                <if test="hazardID!= null ">
+                    HazardID = #{hazardID, jdbcType=INTEGER} ,
+                </if>
+                <if test="fSynStatus!= null ">
+                    FSynStatus = #{fSynStatus, jdbcType=BIT} ,
+                </if>
+                <if test="fSynTime!= null ">
+                    FSynTime = #{fSynTime, jdbcType=TIMESTAMP} ,
+                </if>
+                <if test="fSynEmpID!= null ">
+                    FSynEmpID = #{fSynEmpID, jdbcType=INTEGER} ,
+                </if>
+                <if test="fSynEmpName!= null ">
+                    FSynEmpName = #{fSynEmpName, jdbcType=VARCHAR} ,
+                </if>
+                <if test="fSynResultCode!= null ">
+                    FSynResultCode = #{fSynResultCode, jdbcType=VARCHAR}
+                </if>
+        </set>
+        WHERE  FSynHistoryID = #{fSynHistoryID,jdbcType=INTEGER}
+    </update>
+
+    <!--根据主键查询记录-->
+    <select id="getSyncriskhistory" resultMap="SyncriskhistoryMap"
+            parameterType="Integer">
+        select
+        <include refid="Base_Column_List" />
+        from syncriskhistory
+        WHERE  FSynHistoryID = #{fSynHistoryID,jdbcType=INTEGER}
+    </select>
+    <!--获取共有多少条记录-->
+    <select id="getSyncriskhistoryCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  syncriskhistory
+    </select>
+
+    <!--分页方法-->
+    <select id="getSyncriskhistoryByPage" resultMap="SyncriskhistoryMap"
+            parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from syncriskhistory
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <!--获取共有多少条记录，带有查询条件-->
+    <select id="getSyncriskhistoryCountBySyncriskhistory" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  syncriskhistory
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!= ''">
+            and  CoalMineName = #{coalMineName, jdbcType=VARCHAR}  
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!= ''">
+            and  FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}  
+        </if>
+        <if test="fSynHistoryID!= null ">
+            and  FSynHistoryID = #{fSynHistoryID, jdbcType=INTEGER}  
+        </if>
+        <if test="riskSiteID!= null ">
+            and  RiskSiteID = #{riskSiteID, jdbcType=INTEGER}  
+        </if>
+        <if test="riskSiteUUID!= null and riskSiteUUID!= ''">
+            and  RiskSiteUUID = #{riskSiteUUID, jdbcType=VARCHAR}  
+        </if>
+        <if test="parentID!= null ">
+            and  ParentID = #{parentID, jdbcType=INTEGER}  
+        </if>
+        <if test="parentNumber!= null and parentNumber!= ''">
+            and  ParentNumber = #{parentNumber, jdbcType=VARCHAR}  
+        </if>
+        <if test="fullNumber!= null and fullNumber!= ''">
+            and  FullNumber = #{fullNumber, jdbcType=VARCHAR}  
+        </if>
+        <if test="hazardUUID!= null and hazardUUID!= ''">
+            and  HazardUUID = #{hazardUUID, jdbcType=VARCHAR}  
+        </if>
+        <if test="hazardID!= null ">
+            and  HazardID = #{hazardID, jdbcType=INTEGER}  
+        </if>
+        <if test="fSynStatus!= null ">
+            and  FSynStatus = #{fSynStatus, jdbcType=BIT}  
+        </if>
+        <if test="fSynTime!= null ">
+            and  FSynTime = #{fSynTime, jdbcType=TIMESTAMP}  
+        </if>
+        <if test="fSynEmpID!= null ">
+            and  FSynEmpID = #{fSynEmpID, jdbcType=INTEGER}  
+        </if>
+        <if test="fSynEmpName!= null and fSynEmpName!= ''">
+            and  FSynEmpName = #{fSynEmpName, jdbcType=VARCHAR}  
+        </if>
+        <if test="fSynResultCode!= null ">
+            and  FSynResultCode = #{fSynResultCode, jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <!--分页获取数据，带有查询条件-->
+    <select id="getSyncriskhistoryByPageAndSyncriskhistory" resultMap="SyncriskhistoryMap">
+        select
+        <include refid="Base_Column_List" />
+        from syncriskhistory
+        where 1=1
+        <if test="syncriskhistory.coalMineName!= null and syncriskhistory.coalMineName!= ''">
+            and  CoalMineName = #{syncriskhistory.coalMineName, jdbcType=VARCHAR}  
+        </if>
+        <if test="syncriskhistory.frameWorkID!= null and syncriskhistory.frameWorkID!= ''">
+            and  FrameWorkID = #{syncriskhistory.frameWorkID, jdbcType=VARCHAR}  
+        </if>
+        <if test="syncriskhistory.fSynHistoryID!= null ">
+            and  FSynHistoryID = #{syncriskhistory.fSynHistoryID, jdbcType=INTEGER}  
+        </if>
+        <if test="syncriskhistory.riskSiteID!= null ">
+            and  RiskSiteID = #{syncriskhistory.riskSiteID, jdbcType=INTEGER}  
+        </if>
+        <if test="syncriskhistory.riskSiteUUID!= null and syncriskhistory.riskSiteUUID!= ''">
+            and  RiskSiteUUID = #{syncriskhistory.riskSiteUUID, jdbcType=VARCHAR}  
+        </if>
+        <if test="syncriskhistory.parentID!= null ">
+            and  ParentID = #{syncriskhistory.parentID, jdbcType=INTEGER}  
+        </if>
+        <if test="syncriskhistory.parentNumber!= null and syncriskhistory.parentNumber!= ''">
+            and  ParentNumber = #{syncriskhistory.parentNumber, jdbcType=VARCHAR}  
+        </if>
+        <if test="syncriskhistory.fullNumber!= null and syncriskhistory.fullNumber!= ''">
+            and  FullNumber = #{syncriskhistory.fullNumber, jdbcType=VARCHAR}  
+        </if>
+        <if test="syncriskhistory.hazardUUID!= null and syncriskhistory.hazardUUID!= ''">
+            and  HazardUUID = #{syncriskhistory.hazardUUID, jdbcType=VARCHAR}  
+        </if>
+        <if test="syncriskhistory.hazardID!= null ">
+            and  HazardID = #{syncriskhistory.hazardID, jdbcType=INTEGER}  
+        </if>
+        <if test="syncriskhistory.fSynStatus!= null ">
+            and  FSynStatus = #{syncriskhistory.fSynStatus, jdbcType=BIT}  
+        </if>
+        <if test="syncriskhistory.fSynTime!= null ">
+            and  FSynTime = #{syncriskhistory.fSynTime, jdbcType=TIMESTAMP}  
+        </if>
+        <if test="syncriskhistory.fSynEmpID!= null ">
+            and  FSynEmpID = #{syncriskhistory.fSynEmpID, jdbcType=INTEGER}  
+        </if>
+        <if test="syncriskhistory.fSynEmpName!= null and syncriskhistory.fSynEmpName!= ''">
+            and  FSynEmpName = #{syncriskhistory.fSynEmpName, jdbcType=VARCHAR}  
+        </if>
+        <if test="syncriskhistory.fSynResultCode!= null ">
+            and  FSynResultCode = #{syncriskhistory.fSynResultCode, jdbcType=VARCHAR}
+        </if>
+        LIMIT
+    #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <!--根据条件查询数据-->
+    <select id="getSyncriskhistoryList" resultMap="SyncriskhistoryMap">
+        select
+        <include refid="Base_Column_List" />
+        from syncriskhistory
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!= ''">
+           and  CoalMineName = #{coalMineName, jdbcType=VARCHAR}  
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!= ''">
+           and  FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}  
+        </if>
+        <if test="fSynHistoryID!= null ">
+            and  FSynHistoryID = #{fSynHistoryID, jdbcType=INTEGER}  
+        </if>
+        <if test="riskSiteID!= null ">
+            and  RiskSiteID = #{riskSiteID, jdbcType=INTEGER}  
+        </if>
+        <if test="riskSiteUUID!= null and riskSiteUUID!= ''">
+           and  RiskSiteUUID = #{riskSiteUUID, jdbcType=VARCHAR}  
+        </if>
+        <if test="parentID!= null ">
+            and  ParentID = #{parentID, jdbcType=INTEGER}  
+        </if>
+        <if test="parentNumber!= null and parentNumber!= ''">
+           and  ParentNumber = #{parentNumber, jdbcType=VARCHAR}  
+        </if>
+        <if test="fullNumber!= null and fullNumber!= ''">
+           and  FullNumber = #{fullNumber, jdbcType=VARCHAR}  
+        </if>
+        <if test="hazardUUID!= null and hazardUUID!= ''">
+           and  HazardUUID = #{hazardUUID, jdbcType=VARCHAR}  
+        </if>
+        <if test="hazardID!= null ">
+            and  HazardID = #{hazardID, jdbcType=INTEGER}  
+        </if>
+        <if test="fSynStatus!= null ">
+            and  FSynStatus = #{fSynStatus, jdbcType=BIT}  
+        </if>
+        <if test="fSynTime!= null ">
+            and  FSynTime = #{fSynTime, jdbcType=TIMESTAMP}  
+        </if>
+        <if test="fSynEmpID!= null ">
+            and  FSynEmpID = #{fSynEmpID, jdbcType=INTEGER}  
+        </if>
+        <if test="fSynEmpName!= null and fSynEmpName!= ''">
+           and  FSynEmpName = #{fSynEmpName, jdbcType=VARCHAR}  
+        </if>
+        <if test="fSynResultCode!= null ">
+            and  FSynResultCode = #{fSynResultCode, jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <!--获取一个数据的不重复集合-->
+    <select id="getDistinctItemList" resultType="java.lang.String" statementType="STATEMENT">
+        select  DISTINCT ${attribute} FROM syncriskhistory
+    </select>
+
+    <!--判断对象是否已经存在-->
+    <select id="syncriskhistoryIsExist" resultType="java.lang.Integer" parameterType="cn.com.kingc.risk.model.Syncriskhistory">
+        select  count(*)
+        from syncriskhistory
+        where 1=1
+                <if test="coalMineName!= null ">
+                    and  CoalMineName = #{coalMineName, jdbcType=VARCHAR}  
+                </if>
+                <if test="frameWorkID!= null ">
+                    and  FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}  
+                </if>
+                <if test="fSynHistoryID!= null and fSynHistoryID!= ''">
+                    and  FSynHistoryID = #{fSynHistoryID, jdbcType=INTEGER}  
+                </if>
+                <if test="riskSiteID!= null and riskSiteID!= ''">
+                    and  RiskSiteID = #{riskSiteID, jdbcType=INTEGER}  
+                </if>
+                <if test="riskSiteUUID!= null ">
+                    and  RiskSiteUUID = #{riskSiteUUID, jdbcType=VARCHAR}  
+                </if>
+                <if test="parentID!= null and parentID!= ''">
+                    and  ParentID = #{parentID, jdbcType=INTEGER}  
+                </if>
+                <if test="parentNumber!= null ">
+                    and  ParentNumber = #{parentNumber, jdbcType=VARCHAR}  
+                </if>
+                <if test="fullNumber!= null ">
+                    and  FullNumber = #{fullNumber, jdbcType=VARCHAR}  
+                </if>
+                <if test="hazardUUID!= null ">
+                    and  HazardUUID = #{hazardUUID, jdbcType=VARCHAR}  
+                </if>
+                <if test="hazardID!= null and hazardID!= ''">
+                    and  HazardID = #{hazardID, jdbcType=INTEGER}  
+                </if>
+                <if test="fSynStatus!= null and fSynStatus!= ''">
+                    and  FSynStatus = #{fSynStatus, jdbcType=BIT}  
+                </if>
+                <if test="fSynTime!= null and fSynTime!= ''">
+                    and  FSynTime = #{fSynTime, jdbcType=TIMESTAMP}  
+                </if>
+                <if test="fSynEmpID!= null and fSynEmpID!= ''">
+                    and  FSynEmpID = #{fSynEmpID, jdbcType=INTEGER}  
+                </if>
+                <if test="fSynEmpName!= null ">
+                    and  FSynEmpName = #{fSynEmpName, jdbcType=VARCHAR}  
+                </if>
+                <if test="fSynResultCode!= null and fSynResultCode!= ''">
+                    and  FSynResultCode = #{fSynResultCode, jdbcType=VARCHAR}
+                </if>
+    </select>
+
+    <!--根据条件查询数据-->
+    <select id="getSyncriskhistoryUnique" resultMap="SyncriskhistoryMap">
+        select
+        <include refid="Base_Column_List" />
+        from syncriskhistory
+        where 1=1
+            <if test="coalMineName!= null and coalMineName!= ''">
+                and  CoalMineName = #{coalMineName, jdbcType=VARCHAR}  
+            </if>
+            <if test="frameWorkID!= null and frameWorkID!= ''">
+                and  FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}  
+            </if>
+            <if test="fSynHistoryID!= null ">
+                and  FSynHistoryID = #{fSynHistoryID, jdbcType=INTEGER}  
+            </if>
+            <if test="riskSiteID!= null ">
+                and  RiskSiteID = #{riskSiteID, jdbcType=INTEGER}  
+            </if>
+            <if test="riskSiteUUID!= null and riskSiteUUID!= ''">
+                and  RiskSiteUUID = #{riskSiteUUID, jdbcType=VARCHAR}  
+            </if>
+            <if test="parentID!= null ">
+                and  ParentID = #{parentID, jdbcType=INTEGER}  
+            </if>
+            <if test="parentNumber!= null and parentNumber!= ''">
+                and  ParentNumber = #{parentNumber, jdbcType=VARCHAR}  
+            </if>
+            <if test="fullNumber!= null and fullNumber!= ''">
+                and  FullNumber = #{fullNumber, jdbcType=VARCHAR}  
+            </if>
+            <if test="hazardUUID!= null and hazardUUID!= ''">
+                and  HazardUUID = #{hazardUUID, jdbcType=VARCHAR}  
+            </if>
+            <if test="hazardID!= null ">
+                and  HazardID = #{hazardID, jdbcType=INTEGER}  
+            </if>
+            <if test="fSynStatus!= null ">
+                and  FSynStatus = #{fSynStatus, jdbcType=BIT}  
+            </if>
+            <if test="fSynTime!= null ">
+                and  FSynTime = #{fSynTime, jdbcType=TIMESTAMP}  
+            </if>
+            <if test="fSynEmpID!= null ">
+                and  FSynEmpID = #{fSynEmpID, jdbcType=INTEGER}  
+            </if>
+            <if test="fSynEmpName!= null and fSynEmpName!= ''">
+                and  FSynEmpName = #{fSynEmpName, jdbcType=VARCHAR}  
+            </if>
+            <if test="fSynResultCode!= null ">
+                and  FSynResultCode = #{fSynResultCode, jdbcType=VARCHAR}
+            </if>
+    </select>
+
+</mapper>

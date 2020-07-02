@@ -1,0 +1,2864 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.kingc.risk.dao.RisksiteDao">
+    <cache/>
+    <resultMap id="RisksiteMap" type="cn.com.kingc.risk.model.Risksite">
+        <result property="coalMineName" column="CoalMineName" jdbcType="VARCHAR"/>
+        <result property="frameWorkID" column="FrameWorkID" jdbcType="VARCHAR"/>
+        <result property="riskSiteID" column="RiskSiteID" jdbcType="INTEGER"/>
+        <result property="riskSiteUUID" column="RiskSiteUUID" jdbcType="VARCHAR"/>
+        <result property="details" column="Details" jdbcType="BIT"/>
+        <result property="extendedAttributesJsonString" column="ExtendedAttributesJsonString" jdbcType="VARCHAR"/>
+        <result property="fullNumber" column="FullNumber" jdbcType="VARCHAR"/>
+        <result property="managerID" column="ManagerID" jdbcType="INTEGER"/>
+        <result property="managerName" column="ManagerName" jdbcType="VARCHAR"/>
+        <result property="managerUnitID" column="ManagerUnitID" jdbcType="INTEGER"/>
+        <result property="managerUnitName" column="ManagerUnitName" jdbcType="VARCHAR"/>
+        <result property="name" column="Name" jdbcType="VARCHAR"/>
+        <result property="number" column="Number" jdbcType="VARCHAR"/>
+        <result property="parentID" column="ParentID" jdbcType="VARCHAR"/>
+        <result property="parentNumber" column="ParentNumber" jdbcType="VARCHAR"/>
+        <result property="riskAccident" column="RiskAccident" jdbcType="VARCHAR"/>
+        <result property="riskControlCycle" column="RiskControlCycle" jdbcType="VARCHAR"/>
+        <result property="riskControlTier" column="RiskControlTier" jdbcType="VARCHAR"/>
+        <result property="riskDamageType" column="RiskDamageType" jdbcType="VARCHAR"/>
+        <result property="riskDescription" column="RiskDescription" jdbcType="VARCHAR"/>
+        <result property="riskFrequency" column="RiskFrequency" jdbcType="VARCHAR"/>
+        <result property="riskColor" column="RiskColor" jdbcType="VARCHAR"/>
+        <result property="riskLevel" column="RiskLevel" jdbcType="VARCHAR"/>
+        <result property="riskValue" column="RiskValue" jdbcType="DECIMAL"/>
+        <result property="riskMajorType" column="RiskMajorType" jdbcType="VARCHAR"/>
+        <result property="riskSiteType" column="RiskSiteType"
+                typeHandler="cn.com.kingc.risk.dao.RiskSiteTypeEnumHandle"/>
+        <result property="riskSiteTypeContent" column="RiskSiteTypeContent" jdbcType="VARCHAR"/>
+        <result property="riskSupervisor" column="RiskSupervisor" jdbcType="VARCHAR"/>
+        <result property="riskTemplateID" column="RiskTemplateID" jdbcType="INTEGER"/>
+        <result property="limitPeopleCount" column="LimitPeopleCount" jdbcType="INTEGER"/>
+        <result property="status" column="Status" jdbcType="BIT"/>
+        <result property="checkStatus" column="CheckStatus" jdbcType="VARCHAR"/>
+        <result property="locationId" column="LocationID" jdbcType="VARCHAR"/>
+        <result property="riskLevelSettingID" column="RiskLevelSettingID" jdbcType="INTEGER"/>
+
+
+        <collection property="mRiskControlMeasure" javaType="cn.com.kingc.risk.model.Riskcontrolmeasure">
+            <result property="measureID" column="MMeasureID" jdbcType="INTEGER"/>
+            <result property="measureUUID" column="MMeasureUUID" jdbcType="VARCHAR"/>
+            <result property="riskSiteID" column="MRiskSiteID" jdbcType="INTEGER"/>
+            <result property="hazardID" column="MHazardID" jdbcType="INTEGER"/>
+            <result property="measureContent" column="MMeasureContent" jdbcType="VARCHAR"/>
+            <result property="measureName" column="MMeasureName" jdbcType="VARCHAR"/>
+            <result property="measureType" column="MMeasureType" jdbcType="VARCHAR"/>
+            <result property="measureURL" column="MMeasureURL" jdbcType="VARCHAR"/>
+            <result property="measureCreateTime" column="MeasureCreateTime" jdbcType="VARCHAR"/>
+            <result property="frameWorkID" column="MFrameWorkID" jdbcType="VARCHAR"/>
+            <result property="coalMineName" column="MCoalMineName" jdbcType="VARCHAR"/>
+            <result property="riskSiteFullNumber" column="MRiskSiteFullNumber" jdbcType="VARCHAR"/>
+        </collection>
+
+
+    </resultMap>
+
+    <resultMap id="RisksiteSimpleMap" type="cn.com.kingc.risk.model.Risksite">
+        <result property="coalMineName" column="CoalMineName" jdbcType="VARCHAR"/>
+        <result property="frameWorkID" column="FrameWorkID" jdbcType="VARCHAR"/>
+        <result property="riskSiteID" column="RiskSiteID" jdbcType="INTEGER"/>
+        <result property="riskSiteUUID" column="RiskSiteUUID" jdbcType="VARCHAR"/>
+        <result property="details" column="Details" jdbcType="BIT"/>
+        <result property="extendedAttributesJsonString" column="ExtendedAttributesJsonString" jdbcType="VARCHAR"/>
+        <result property="fullNumber" column="FullNumber" jdbcType="VARCHAR"/>
+        <result property="managerID" column="ManagerID" jdbcType="INTEGER"/>
+        <result property="managerName" column="ManagerName" jdbcType="VARCHAR"/>
+        <result property="managerUnitID" column="ManagerUnitID" jdbcType="INTEGER"/>
+        <result property="managerUnitName" column="ManagerUnitName" jdbcType="VARCHAR"/>
+        <result property="name" column="Name" jdbcType="VARCHAR"/>
+        <result property="number" column="Number" jdbcType="VARCHAR"/>
+        <result property="parentID" column="ParentID" jdbcType="VARCHAR"/>
+        <result property="parentNumber" column="ParentNumber" jdbcType="VARCHAR"/>
+        <result property="riskAccident" column="RiskAccident" jdbcType="VARCHAR"/>
+        <result property="riskControlCycle" column="RiskControlCycle" jdbcType="VARCHAR"/>
+        <result property="riskControlTier" column="RiskControlTier" jdbcType="VARCHAR"/>
+        <result property="riskDamageType" column="RiskDamageType" jdbcType="VARCHAR"/>
+        <result property="riskDescription" column="RiskDescription" jdbcType="VARCHAR"/>
+        <result property="riskFrequency" column="RiskFrequency" jdbcType="VARCHAR"/>
+        <result property="riskColor" column="RiskColor" jdbcType="VARCHAR"/>
+        <result property="riskLevel" column="RiskLevel" jdbcType="VARCHAR"/>
+        <result property="riskValue" column="RiskValue" jdbcType="DECIMAL"/>
+        <result property="riskMajorType" column="RiskMajorType" jdbcType="VARCHAR"/>
+        <result property="riskSiteType" column="RiskSiteType"
+                typeHandler="cn.com.kingc.risk.dao.RiskSiteTypeEnumHandle"/>
+        <result property="riskSiteTypeContent" column="RiskSiteTypeContent" jdbcType="VARCHAR"/>
+        <result property="riskSupervisor" column="RiskSupervisor" jdbcType="VARCHAR"/>
+        <result property="riskTemplateID" column="RiskTemplateID" jdbcType="INTEGER"/>
+        <result property="limitPeopleCount" column="LimitPeopleCount" jdbcType="INTEGER"/>
+        <result property="status" column="Status" jdbcType="BIT"/>
+        <result property="locationId" column="LocationID" jdbcType="VARCHAR"/>
+        <result property="riskLevelSettingID" column="RiskLevelSettingID" jdbcType="INTEGER"/>
+        <result property="checkStatus" column="CheckStatus" jdbcType="VARCHAR"/>
+        <result property="confirmDate" column="ConfirmDate" jdbcType="VARCHAR"/>
+        <result property="clearDate" column="ClearDate" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="RisksiteByAcctionMap" type="cn.com.kingc.risk.model.RisksiteByAcction">
+        <result property="frameWorkID" column="frameWorkID" jdbcType="VARCHAR"/>
+        <result property="coalMineName" column="coalMineName" jdbcType="VARCHAR"/>
+        <result property="t_risksiteID" column="t_risksiteID" jdbcType="INTEGER"/>
+        <result property="hazardID" column="hazardID" jdbcType="INTEGER"/>
+        <result property="hazardUUID" column="hazardUUID" jdbcType="VARCHAR"/>
+        <result property="h_risksiteID" column="h_risksiteID" jdbcType="INTEGER"/>
+        <result property="tname" column="tname" jdbcType="VARCHAR"/>
+        <result property="risksitename" column="risksitename" jdbcType="VARCHAR"/>
+        <result property="riskhardname" column="riskhardname" jdbcType="VARCHAR"/>
+        <result property="damageType" column="damageType" jdbcType="VARCHAR"/>
+        <result property="riskLevelSettingID" column="riskLevelSettingID" jdbcType="INTEGER"/>
+        <result property="riskType" column="riskType" jdbcType="VARCHAR"/>
+        <result property="majorType" column="majorType" jdbcType="VARCHAR"/>
+        <result property="hazardDesc" column="hazardDesc" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="RisksiteYSMap" type="cn.com.kingc.risk.model.Risksite">
+        <result property="coalMineName" column="CoalMineName" jdbcType="VARCHAR"/>
+        <result property="frameWorkID" column="FrameWorkID" jdbcType="VARCHAR"/>
+        <result property="riskSiteID" column="RiskSiteID" jdbcType="INTEGER"/>
+        <result property="riskSiteUUID" column="RiskSiteUUID" jdbcType="VARCHAR"/>
+        <result property="details" column="Details" jdbcType="BIT"/>
+        <result property="extendedAttributesJsonString" column="ExtendedAttributesJsonString" jdbcType="VARCHAR"/>
+        <result property="fullNumber" column="FullNumber" jdbcType="VARCHAR"/>
+        <result property="managerID" column="ManagerID" jdbcType="INTEGER"/>
+        <result property="managerName" column="ManagerName" jdbcType="VARCHAR"/>
+        <result property="managerUnitID" column="ManagerUnitID" jdbcType="INTEGER"/>
+        <result property="managerUnitName" column="ManagerUnitName" jdbcType="VARCHAR"/>
+        <result property="name" column="Name" jdbcType="VARCHAR"/>
+        <result property="number" column="Number" jdbcType="VARCHAR"/>
+        <result property="parentID" column="ParentID" jdbcType="VARCHAR"/>
+        <result property="parentNumber" column="ParentNumber" jdbcType="VARCHAR"/>
+        <result property="riskAccident" column="RiskAccident" jdbcType="VARCHAR"/>
+        <result property="riskControlCycle" column="RiskControlCycle" jdbcType="VARCHAR"/>
+        <result property="riskControlTier" column="RiskControlTier" jdbcType="VARCHAR"/>
+        <result property="riskDamageType" column="RiskDamageType" jdbcType="VARCHAR"/>
+        <result property="riskDescription" column="RiskDescription" jdbcType="VARCHAR"/>
+        <result property="riskFrequency" column="RiskFrequency" jdbcType="VARCHAR"/>
+        <result property="riskColor" column="RiskColor" jdbcType="VARCHAR"/>
+        <result property="riskLevel" column="RiskLevel" jdbcType="VARCHAR"/>
+        <result property="riskValue" column="RiskValue" jdbcType="DECIMAL"/>
+        <result property="riskMajorType" column="RiskMajorType" jdbcType="VARCHAR"/>
+        <result property="riskSiteType" column="RiskSiteType"
+                typeHandler="cn.com.kingc.risk.dao.RiskSiteTypeEnumHandle"/>
+        <result property="riskSiteTypeContent" column="RiskSiteTypeContent" jdbcType="VARCHAR"/>
+        <result property="riskSupervisor" column="RiskSupervisor" jdbcType="VARCHAR"/>
+        <result property="riskTemplateID" column="RiskTemplateID" jdbcType="INTEGER"/>
+        <result property="limitPeopleCount" column="LimitPeopleCount" jdbcType="INTEGER"/>
+        <result property="status" column="Status" jdbcType="BIT"/>
+        <result property="locationId" column="LocationID" jdbcType="VARCHAR"/>
+        <result property="riskLevelSettingID" column="RiskLevelSettingID" jdbcType="INTEGER"/>
+
+        <collection property="mChildRiskSite"
+                    ofType="cn.com.kingc.risk.model.Risksite">
+            <result property="coalMineName" column="MCoalMineName" jdbcType="VARCHAR"/>
+            <result property="frameWorkID" column="MFrameWorkID" jdbcType="VARCHAR"/>
+            <result property="riskSiteID" column="MRiskSiteID" jdbcType="INTEGER"/>
+            <result property="riskSiteUUID" column="MRiskSiteUUID" jdbcType="VARCHAR"/>
+            <result property="details" column="MDetails" jdbcType="BIT"/>
+            <result property="extendedAttributesJsonString" column="MExtendedAttributesJsonString" jdbcType="VARCHAR"/>
+            <result property="fullNumber" column="MFullNumber" jdbcType="VARCHAR"/>
+            <result property="managerID" column="MManagerID" jdbcType="INTEGER"/>
+            <result property="managerName" column="MManagerName" jdbcType="VARCHAR"/>
+            <result property="managerUnitID" column="MManagerUnitID" jdbcType="INTEGER"/>
+            <result property="managerUnitName" column="MManagerUnitName" jdbcType="VARCHAR"/>
+            <result property="name" column="MName" jdbcType="VARCHAR"/>
+            <result property="number" column="MNumber" jdbcType="VARCHAR"/>
+            <result property="parentID" column="MParentID" jdbcType="VARCHAR"/>
+            <result property="parentNumber" column="MParentNumber" jdbcType="VARCHAR"/>
+
+            <result property="riskAccident" column="MRiskAccident" jdbcType="VARCHAR"/>
+            <result property="riskControlCycle" column="MRiskControlCycle" jdbcType="VARCHAR"/>
+            <result property="riskControlTier" column="MRiskControlTier" jdbcType="VARCHAR"/>
+            <result property="riskDamageType" column="MRiskDamageType" jdbcType="VARCHAR"/>
+            <result property="riskDescription" column="MRiskDescription" jdbcType="VARCHAR"/>
+            <result property="riskFrequency" column="MRiskFrequency" jdbcType="VARCHAR"/>
+            <result property="riskColor" column="MRiskColor" jdbcType="VARCHAR"/>
+            <result property="riskLevel" column="MRiskLevel" jdbcType="VARCHAR"/>
+            <result property="riskValue" column="MRiskValue" jdbcType="DECIMAL"/>
+            <result property="riskMajorType" column="MRiskMajorType" jdbcType="VARCHAR"/>
+            <result property="riskSiteType" column="MRiskSiteType"
+                    typeHandler="cn.com.kingc.risk.dao.RiskSiteTypeEnumHandle"/>
+            <result property="riskSiteTypeContent" column="MRiskSiteTypeContent" jdbcType="VARCHAR"/>
+            <result property="riskSupervisor" column="MRiskSupervisor" jdbcType="VARCHAR"/>
+            <result property="riskTemplateID" column="MRiskTemplateID" jdbcType="INTEGER"/>
+            <result property="limitPeopleCount" column="MLimitPeopleCount" jdbcType="INTEGER"/>
+            <result property="status" column="MStatus" jdbcType="BIT"/>
+            <result property="locationId" column="MLocationID" jdbcType="VARCHAR"/>
+            <result property="riskLevelSettingID" column="MRiskLevelSettingID" jdbcType="INTEGER"/>
+        </collection>
+
+        <collection property="mHazards" ofType="cn.com.kingc.risk.model.Riskhazard">
+            <result property="hazardID" column="HHazardID" jdbcType="INTEGER"/>
+            <result property="hazardUUID" column="HHazardUUID" jdbcType="VARCHAR"/>
+            <result property="riskSiteID" column="HRiskSiteID" jdbcType="INTEGER"/>
+            <result property="coalMineName" column="HCoalMineName" jdbcType="VARBINARY"/>
+            <result property="frameWorkID" column="HFrameWorkID" jdbcType="VARCHAR"/>
+            <result property="accountabilityUnit" column="HAccountabilityUnit" jdbcType="VARCHAR"/>
+            <result property="consequence" column="HConsequence" jdbcType="VARCHAR"/>
+            <result property="damageType" column="HDamageType" jdbcType="VARCHAR"/>
+            <result property="eexpose" column="HExpose" jdbcType="INTEGER"/>
+            <result property="riskTemplateID" column="HRiskTemplateID" jdbcType="INTEGER"/>
+            <result property="exposeDegree" column="HExposeDegree" jdbcType="VARCHAR"/>
+            <result property="clossConsequence" column="HLossConsequence" jdbcType="INTEGER"/>
+            <result property="majorType" column="HMajorType" jdbcType="VARCHAR"/>
+            <result property="manageUnit" column="HManageUnit" jdbcType="VARCHAR"/>
+            <result property="name" column="HName" jdbcType="VARCHAR"/>
+            <result property="operatingPost" column="HOperatingPost" jdbcType="VARCHAR"/>
+            <result property="Lpossibility" column="HPossibility" jdbcType="INTEGER"/>
+            <result property="riskDegree" column="HRiskDegree" jdbcType="VARCHAR"/>
+            <result property="riskObject" column="HRiskObject" jdbcType="VARCHAR"/>
+            <result property="riskPlace" column="HRiskPlace" jdbcType="VARCHAR"/>
+            <result property="riskType" column="HRiskType" jdbcType="VARCHAR"/>
+            <result property="driskValue" column="HRiskValue" jdbcType="DECIMAL"/>
+            <result property="status" column="HStatus" jdbcType="BIT"/>
+
+            <result property="Sseverity" column="HSseverity" jdbcType="INTEGER"/>
+            <result property="riskSiteFullNumber" column="HRiskSiteFullNumber" jdbcType="VARCHAR"/>
+            <result property="standardFullNumber" column="HStandardFullNumber" jdbcType="VARCHAR"/>
+            <result property="standardName" column="HStandardName" jdbcType="VARCHAR"/>
+            <result property="dutyRole" column="HDutyRole" jdbcType="VARCHAR"/>
+            <result property="supervisionUnit" column="HSupervisionUnit" jdbcType="VARCHAR"/>
+            <result property="extendedAttributesJsonString" column="HExtendedAttributesJsonString" jdbcType="VARCHAR"/>
+            <result property="hazardDesc" column="HHazardDesc" jdbcType="VARCHAR"/>
+            <result property="riskLevelSettingID" column="HRiskLevelSettingID" jdbcType="INTEGER"/>
+            <result property="riskColor" column="HRiskColor" jdbcType="VARCHAR"/>
+            <result property="riskLevel" column="HRiskLevel" jdbcType="VARCHAR"/>
+            <result property="riskObjectType" column="HRiskObjectType" jdbcType="VARCHAR"/>
+            <result property="accidentType" column="HAccidentType" jdbcType="VARCHAR"/>
+            <result property="riskKind" column="HRiskKind" jdbcType="VARCHAR"/>
+            <result property="controlResult" column="HControlResult" jdbcType="VARCHAR"/>
+            <result property="identifyMethod" column="HIdentifyMethod" jdbcType="VARCHAR"/>
+            <result property="isSubmit" column="His_submit" jdbcType="VARCHAR"/>
+            <result property="riskByTypes" column="HRiskByTypes" jdbcType="VARCHAR"/>
+            <result property="riskFactors" column="HRiskFactors" jdbcType="VARCHAR"/>
+            <result property="technologyDepartment" column="HTechnologyDepartment" jdbcType="VARCHAR"/>
+            <result property="supervisionDepartment" column="HSupervisionDepartment" jdbcType="VARCHAR"/>
+
+        </collection>
+
+        <collection property="mRiskControlRange" ofType="cn.com.kingc.risk.model.Riskhazardcontrolrange">
+            <result property="riskSiteControlRangeID" column="CRiskSiteControlRangeID"  jdbcType="INTEGER"/>
+            <result property="coalMineName" column="CCoalMineName"  jdbcType="VARCHAR"/>
+            <result property="hazardID" column="CHazardID"  jdbcType="INTEGER"/>
+            <result property="frameWorkID" column="CFrameWorkID"  jdbcType="VARCHAR"/>
+            <result property="hazardUUID" column="CHazardUUID"  jdbcType="VARCHAR"/>
+            <result property="riskSiteID" column="CRiskSiteID"  jdbcType="INTEGER"/>
+            <result property="riskSiteFullNumber" column="CRiskSiteFullNumber"  jdbcType="VARCHAR"/>
+            <result property="controlRangeName" column="CControlRangeName"  jdbcType="VARCHAR"/>
+            <result property="controlRangeStartDay" column="CControlRangeStartDay"  jdbcType="VARCHAR"/>
+            <result property="controlRangeEndDay" column="CControlRangeEndDay"  jdbcType="VARCHAR"/>
+            <result property="controlRangePinci" column="CControlRangePinci"  jdbcType="VARCHAR"/>
+            <result property="manageUnit" column="CManageUnit"  jdbcType="VARCHAR"/>
+            <result property="manageUnitID" column="CManageUnitID"  jdbcType="VARCHAR"/>
+            <result property="manageDuty" column="CManageDuty"  jdbcType="VARCHAR"/>
+            <result property="manageDutyID" column="CManageDutyID"  jdbcType="VARCHAR"/>
+        </collection>
+
+    </resultMap>
+
+    <sql id="Base_Column_List_base">
+        R.CoalMineName,
+        R.FrameWorkID,
+        R.RiskSiteID,
+        R.RiskSiteUUID,
+        R.Details,
+        R.ExtendedAttributesJsonString,
+        R.FullNumber,
+        R.ManagerID,
+        R.ManagerName,
+        R.ManagerUnitID,
+        R.ManagerUnitName,
+        R. NAME,
+        R.Number,
+        R.ParentID,
+        R.ParentNumber,
+        R.RiskAccident,
+        R.RiskControlCycle,
+        R.RiskControlTier,
+        R.RiskDamageType,
+        R.RiskDescription,
+        R.RiskFrequency,
+        R.RiskValue,
+        R.RiskMajorType,
+        R.RiskSiteType,
+        R.RiskSiteTypeContent,
+        R.RiskSupervisor,
+        R.RiskTemplateID,
+        R.LimitPeopleCount,
+        R. STATUS,
+        R.LocationID,
+        R.RiskLevelSettingID
+    </sql>
+    <sql id="Base_Column_List">
+         R.CoalMineName,
+         R.FrameWorkID,
+         R.RiskSiteID,
+         R.RiskSiteUUID,
+         R.Details,
+         R.ExtendedAttributesJsonString,
+         R.FullNumber,
+         R.ManagerID,
+         R.ManagerName,
+         R.ManagerUnitID,
+         R.ManagerUnitName,
+         R. NAME,
+         R.Number,
+         R.ParentID,
+         R.ParentNumber,
+         R.RiskAccident,
+         D.RiskColor,
+         R.RiskControlCycle,
+         R.RiskControlTier,
+         R.RiskDamageType,
+         R.RiskDescription,
+         R.RiskFrequency,
+         D.RiskLevel,
+         R.RiskValue,
+         R.RiskMajorType,
+         R.RiskSiteType,
+         R.RiskSiteTypeContent,
+         R.RiskSupervisor,
+         R.RiskTemplateID,
+         R.LimitPeopleCount,
+         R.STATUS,
+         R.LocationID,
+         R.RiskLevelSettingID,
+         R.ConfirmDate,
+         R.ClearDate
+    </sql>
+
+    <sql id="riskTableJoin">
+        R.CoalMineName,
+        R.FrameWorkID,
+        R.RiskSiteID,
+        R.RiskSiteUUID,
+        R.Details,
+        R.ExtendedAttributesJsonString,
+        R.FullNumber,
+        R.ManagerID,
+        R.ManagerName,
+        R.ManagerUnitID,
+        R.ManagerUnitName,
+        R. NAME,
+        R.Number,
+        R.ParentID,
+        R.ParentNumber,
+        R.RiskAccident,
+        D.RiskColor,
+        R.RiskControlCycle,
+        R.RiskControlTier,
+        R.RiskDamageType,
+        R.RiskDescription,
+        R.RiskFrequency,
+        D.RiskLevel,
+        R.RiskValue,
+        R.RiskMajorType,
+        R.RiskSiteType,
+        R.RiskSiteTypeContent,
+        R.RiskSupervisor,
+        R.RiskTemplateID,
+        R.LimitPeopleCount,
+        R. STATUS,
+        R.LocationID,
+        R.RiskLevelSettingID,
+        M.MeasureID AS MMeasureID,
+        M.MeasureUUID AS MMeasureUUID,
+        M.RiskSiteID AS MRiskSiteID,
+        M.HazardID AS MHazardID,
+        M.MeasureContent AS MMeasureContent,
+        M.MeasureName AS MMeasureName,
+        M.MeasureType AS MMeasureType,
+        M.MeasureURL AS MMeasureURL,
+        M.MeasureCreateTime AS MeasureCreateTime,
+        M.FrameWorkID AS MFrameWorkID,
+        M.CoalMineName AS MCoalMineName,
+        M.RiskSiteFullNumber AS MRiskSiteFullNumber
+    </sql>
+
+
+    <sql id="Base_Column_List_baseYS">
+        R.CoalMineName,
+        R.FrameWorkID,
+        R.RiskSiteID,
+        R.RiskSiteUUID,
+        R.Details,
+        R.ExtendedAttributesJsonString,
+        R.FullNumber,
+        R.ManagerID,
+        R.ManagerName,
+        R.ManagerUnitID,
+        R.ManagerUnitName,
+        R. NAME,
+        R.Number,
+        R.ParentID,
+        R.ParentNumber,
+        R.RiskAccident,
+        R.RiskControlCycle,
+        R.RiskControlTier,
+        R.RiskDamageType,
+        R.RiskDescription,
+        R.RiskFrequency,
+        R.RiskValue,
+        R.RiskMajorType,
+        R.RiskSiteType,
+        R.RiskSiteTypeContent,
+        R.RiskSupervisor,
+        R.RiskTemplateID,
+        R.LimitPeopleCount,
+        R.Status,
+        R.LocationID,
+        R.RiskLevelSettingID,
+        D.RiskLevel,
+        D.RiskColor,
+        T.CoalMineName AS MCoalMineName,
+        T.FrameWorkID AS MFrameWorkID,
+        T.RiskSiteID AS MRiskSiteID,
+        T.RiskSiteUUID AS MRiskSiteUUID,
+        T.Details AS MDetails,
+        T.ExtendedAttributesJsonString AS MExtendedAttributesJsonString,
+        T.FullNumber AS MFullNumber,
+        T.ManagerID AS MManagerID,
+        T.ManagerName AS MManagerName,
+        T.ManagerUnitID AS MManagerUnitID,
+        T.ManagerUnitName AS MManagerUnitName,
+        T.NAME AS MNAME,
+        T.Number AS MNumber,
+        T.ParentID AS MParentID,
+        T.ParentNumber AS MParentNumber,
+        T.RiskAccident AS MRiskAccident,
+        T.RiskControlCycle AS MRiskControlCycle,
+        T.RiskControlTier AS MRiskControlTier,
+        T.RiskDamageType AS MRiskDamageType,
+        T.RiskDescription AS MRiskDescription,
+        T.RiskFrequency AS MRiskFrequency,
+        T.RiskValue AS MRiskValue,
+        T.RiskMajorType AS MRiskMajorType,
+        T.RiskSiteType AS MRiskSiteType,
+        T.RiskSiteTypeContent AS MRiskSiteTypeContent,
+        T.RiskSupervisor AS MRiskSupervisor,
+        T.RiskTemplateID AS MRiskTemplateID,
+        T.LimitPeopleCount AS MLimitPeopleCount,
+        T.Status AS MStatus,
+        T.LocationID AS MLocationID,
+        T.RiskLevelSettingID AS RiskLevelSettingID,
+
+        H.HazardID AS HHazardID,
+        H.HazardUUID AS HHazardUUID,
+        H.RiskSiteID AS HRiskSiteID,
+        H.CoalMineName AS HCoalMineName,
+        H.FrameWorkID AS HFrameWorkID,
+        H.AccountabilityUnit AS HAccountabilityUnit,
+        H.Consequence AS HConsequence,
+        H.DamageType AS HDamageType,
+        H.Expose AS HExpose,
+        H.RiskTemplateID AS HRiskTemplateID,
+        H.ExposeDegree AS HExposeDegree,
+        H.LossConsequence AS HLossConsequence,
+        H.MajorType AS HMajorType,
+        H.ManageUnit AS HManageUnit,
+        H.NAME AS HNAME,
+        H.OperatingPost AS HOperatingPost,
+        H.Possibility AS HPossibility,
+        H.RiskDegree AS HRiskDegree,
+        H.RiskObject AS HRiskObject,
+        H.RiskPlace AS HRiskPlace,
+        H.RiskType AS HRiskType,
+        H.RiskValue AS HRiskValue,
+        H.Status AS HStatus,
+
+        H.Sseverity AS HSseverity,
+        H.RiskSiteFullNumber AS HRiskSiteFullNumber,
+        H.StandardFullNumber AS HStandardFullNumber,
+        H.StandardName AS HStandardName,
+        H.DutyRole AS HDutyRole,
+        H.SupervisionUnit AS HSupervisionUnit,
+        H.ExtendedAttributesJsonString AS HExtendedAttributesJsonString,
+        H.HazardDesc AS HHazardDesc,
+        H.RiskLevelSettingID AS HRiskLevelSettingID,
+        H.RiskObjectType AS HRiskObjectType,
+        H.AccidentType AS HAccidentType,
+        H.RiskKind AS HRiskKind,
+        H.ControlResult AS HControlResult,
+        H.IdentifyMethod AS HIdentifyMethod,
+        H.RiskByTypes AS HRiskByTypes,
+        H.RiskFactors AS HRiskFactors,
+        H.TechnologyDepartment AS HTechnologyDepartment,
+        H.SupervisionDepartment AS HSupervisionDepartment,
+
+        C.RiskSiteControlRangeID AS CRiskSiteControlRangeID,
+        C.CoalMineName AS CCoalMineName,
+        C.HazardID AS CHazardID,
+        C.FrameWorkID AS CFrameWorkID,
+        C.HazardUUID AS CHazardUUID,
+        C.RiskSiteID AS CRiskSiteID,
+        C.RiskSiteFullNumber AS CRiskSiteFullNumber,
+        C.ControlRangeName AS CControlRangeName,
+        C.ControlRangeStartDay AS CControlRangeStartDay,
+        C.ControlRangeEndDay AS CControlRangeEndDay,
+        C.ControlRangePinci AS  CControlRangePinci,
+        C.ManageUnit AS CManageUnit,
+        C.ManageUnitID AS CManageUnitID,
+        C.ManageDuty AS CManageDuty,
+        C.ManageDutyID AS CManageDutyID
+    </sql>
+
+    <insert id="addRisksite" parameterType="cn.com.kingc.risk.model.Risksite"
+            useGeneratedKeys="true" keyProperty="riskSiteID" flushCache="true">
+        insert into risksite (
+            CoalMineName,
+            FrameWorkID,
+            RiskSiteID,
+            RiskSiteUUID,
+            Details,
+            ExtendedAttributesJsonString,
+            FullNumber,
+            ManagerID,
+            ManagerName,
+            ManagerUnitID,
+            ManagerUnitName,
+            Name,
+            Number,
+            ParentID,
+            ParentNumber,
+            RiskAccident,
+            RiskControlCycle,
+            RiskControlTier,
+            RiskDamageType,
+            RiskDescription,
+            RiskFrequency,
+            RiskValue,
+            RiskMajorType,
+            RiskSiteType,
+            RiskSiteTypeContent,
+            RiskSupervisor,
+            RiskTemplateID,
+            LimitPeopleCount,
+            Status,
+            LocationID,
+            RiskLevelSettingID
+        )
+        values(
+                #{coalMineName, jdbcType=VARCHAR}  ,
+                #{frameWorkID, jdbcType=VARCHAR}  ,
+                #{riskSiteID, jdbcType=INTEGER}  ,
+                #{riskSiteUUID, jdbcType=VARCHAR}  ,
+                #{details, jdbcType=BIT}  ,
+                #{extendedAttributesJsonString, jdbcType=VARCHAR}  ,
+                #{fullNumber, jdbcType=VARCHAR}  ,
+                #{managerID, jdbcType=INTEGER}  ,
+                #{managerName, jdbcType=VARCHAR}  ,
+                #{managerUnitID, jdbcType=INTEGER}  ,
+                #{managerUnitName, jdbcType=VARCHAR}  ,
+                #{name, jdbcType=VARCHAR}  ,
+                #{number, jdbcType=VARCHAR}  ,
+                #{parentID, jdbcType=VARCHAR}  ,
+                #{parentNumber, jdbcType=VARCHAR}  ,
+                #{riskAccident, jdbcType=VARCHAR}  ,
+                #{riskControlCycle, jdbcType=VARCHAR}  ,
+                #{riskControlTier, jdbcType=VARCHAR}  ,
+                #{riskDamageType, jdbcType=VARCHAR}  ,
+                #{riskDescription, jdbcType=VARCHAR}  ,
+                #{riskFrequency, jdbcType=VARCHAR}  ,
+                #{riskValue, jdbcType=DECIMAL}  ,
+                #{riskMajorType, jdbcType=VARCHAR}  ,
+                #{riskSiteType.code, jdbcType=VARCHAR}  ,
+                #{riskSiteTypeContent, jdbcType=VARCHAR}  ,
+                #{riskSupervisor, jdbcType=VARCHAR}  ,
+                #{riskTemplateID, jdbcType=INTEGER} ,
+                #{limitPeopleCount, jdbcType=INTEGER},
+                #{status, jdbcType=BIT},
+                #{locationId, jdbcType=VARCHAR},
+                #{riskLevelSettingID, jdbcType=INTEGER}
+        );
+
+    </insert>
+
+
+    <delete id="deleteRisksite" parameterType="cn.com.kingc.risk.model.Risksite" flushCache="true">
+        DELETE FROM risksite
+        WHERE  RiskSiteID = #{riskSiteID,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteRisksiteByID" parameterType="java.lang.Integer" flushCache="true">
+        DELETE FROM risksite
+        WHERE  RiskSiteID = #{riskSiteID,jdbcType=INTEGER}
+    </delete>
+
+    <update id="updateRisksite" parameterType="cn.com.kingc.risk.model.Risksite" flushCache="true">
+        UPDATE risksite
+        <set>
+            <if test="coalMineName!= null ">
+                CoalMineName = #{coalMineName, jdbcType=VARCHAR} ,
+            </if>
+            <if test="frameWorkID!= null ">
+                FrameWorkID = #{frameWorkID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskSiteID!= null ">
+                RiskSiteID = #{riskSiteID, jdbcType=INTEGER} ,
+            </if>
+            <if test="riskSiteUUID!= null ">
+                RiskSiteUUID = #{riskSiteUUID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="details!= null ">
+                Details = #{details, jdbcType=BIT} ,
+            </if>
+            <if test="extendedAttributesJsonString!= null ">
+                ExtendedAttributesJsonString = #{extendedAttributesJsonString, jdbcType=VARCHAR} ,
+            </if>
+            <if test="fullNumber!= null ">
+                FullNumber = #{fullNumber, jdbcType=VARCHAR} ,
+            </if>
+            <if test="managerID!= null ">
+                ManagerID = #{managerID, jdbcType=INTEGER} ,
+            </if>
+            <if test="managerName!= null ">
+                ManagerName = #{managerName, jdbcType=VARCHAR} ,
+            </if>
+            <if test="managerUnitID!= null ">
+                ManagerUnitID = #{managerUnitID, jdbcType=INTEGER} ,
+            </if>
+            <if test="managerUnitName!= null ">
+                ManagerUnitName = #{managerUnitName, jdbcType=VARCHAR} ,
+            </if>
+            <if test="name!= null ">
+                Name = #{name, jdbcType=VARCHAR} ,
+            </if>
+            <if test="number!= null ">
+                Number = #{number, jdbcType=VARCHAR} ,
+            </if>
+            <if test="parentID!= null ">
+                ParentID = #{parentID, jdbcType=VARCHAR} ,
+            </if>
+            <if test="parentNumber!= null ">
+                ParentNumber = #{parentNumber, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskAccident!= null ">
+                RiskAccident = #{riskAccident, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskControlCycle!= null ">
+                RiskControlCycle = #{riskControlCycle, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskControlTier!= null ">
+                RiskControlTier = #{riskControlTier, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskDamageType!= null ">
+                RiskDamageType = #{riskDamageType, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskDescription!= null ">
+                RiskDescription = #{riskDescription, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskFrequency!= null ">
+                RiskFrequency = #{riskFrequency, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskValue!= null and riskValue>0 ">
+                RiskValue = #{riskValue, jdbcType=DECIMAL} ,
+            </if>
+            <if test="riskMajorType!= null ">
+                RiskMajorType = #{riskMajorType, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskSiteType.code!= null ">
+                RiskSiteType = #{riskSiteType.code, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskSiteTypeContent!= null ">
+                RiskSiteTypeContent = #{riskSiteTypeContent, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskSupervisor!= null ">
+                RiskSupervisor = #{riskSupervisor, jdbcType=VARCHAR} ,
+            </if>
+            <if test="riskTemplateID!= null ">
+                RiskTemplateID = #{riskTemplateID, jdbcType=INTEGER},
+            </if>
+            <if test="limitPeopleCount!= null ">
+                LimitPeopleCount = #{limitPeopleCount, jdbcType=INTEGER},
+            </if>
+            <if test="status!= null ">
+                Status = #{status, jdbcType=BIT},
+            </if>
+            <if test="locationId!= null ">
+                LocationID = #{locationId, jdbcType=VARCHAR},
+            </if>
+            <if test="riskLevelSettingID!= null ">
+                RiskLevelSettingID=#{riskLevelSettingID, jdbcType=INTEGER},
+            </if>
+            <if test="confirmDate!= null ">
+                ConfirmDate=#{confirmDate, jdbcType=VARCHAR},
+            </if>
+            <if test="clearDate!= null ">
+                ClearDate=#{clearDate, jdbcType=VARCHAR}
+            </if>
+        </set>
+        WHERE RiskSiteID = #{riskSiteID,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="getRisksite" resultMap="RisksiteMap"
+            parameterType="INTEGER">
+        select
+        <include refid="riskTableJoin"/>
+        FROM
+        risksite R
+        LEFT JOIN riskLeverSetting D ON R.FrameWorkID = D.FrameWorkID
+        AND R.RiskLevelSettingID = D.RiskLevelSettingID
+        LEFT JOIN riskcontrolmeasure M ON R.FrameWorkID = M.FrameWorkID
+        AND R.RiskSiteID = M.RiskSiteID
+        AND M.HazardID IS NULL
+        WHERE R.RiskSiteID = #{riskSiteID,jdbcType=INTEGER}
+    </select>
+
+
+    <select id="getSimpleRisksite" resultMap="RisksiteSimpleMap"
+            parameterType="INTEGER">
+        select
+        <include refid="Base_Column_List"/>
+        from risksite R
+        LEFT JOIN riskLeverSetting D ON R.FrameWorkID = D.FrameWorkID
+        AND R.RiskLevelSettingID = D.RiskLevelSettingID
+        WHERE R.RiskSiteID = #{riskSiteID,jdbcType=INTEGER}
+    </select>
+    <select id="getRiskSiteCheckStatus" resultMap="RisksiteMap" useCache="true">
+        SELECT DISTINCT
+        R.CoalMineName,
+        R.FrameWorkID,
+        R.RiskSiteID,
+        R.RiskSiteUUID,
+        R.Details,
+        R.ExtendedAttributesJsonString,
+        R.FullNumber,
+        R.ManagerID,
+        R.ManagerName,
+        R.ManagerUnitID,
+        R.ManagerUnitName,
+        R. NAME,
+        R.Number,
+        R.ParentID,
+        R.ParentNumber,
+        R.RiskAccident,
+        D.RiskColor,
+        R.RiskControlCycle,
+        R.RiskControlTier,
+        R.RiskDamageType,
+        R.RiskDescription,
+        R.RiskFrequency,
+        D.RiskLevel,
+        R.RiskValue,
+        R.RiskMajorType,
+        R.RiskSiteType,
+        R.RiskSiteTypeContent,
+        R.RiskSupervisor,
+        R.RiskTemplateID,
+        R.LimitPeopleCount,
+        R. STATUS,
+        R.LocationID,
+        R.RiskLevelSettingID,
+        CASE WHEN IFNULL(P.ItemID, 0) = 0 THEN 0 ELSE 1
+        END AS CheckStatus
+        FROM
+        risksite R
+        LEFT JOIN riskLeverSetting D ON R.FrameWorkID = D.FrameWorkID
+        AND R.RiskLevelSettingID = D.RiskLevelSettingID
+        LEFT JOIN riskcontrolplanebymonthitem P ON R.FrameWorkID = P.FrameWorkID
+        AND P.RiskSiteID = R.RiskSiteID
+        <if test="year!= null and year!='' ">
+            AND YEAR (P.PlanStartDate) =#{year, jdbcType=VARCHAR}
+        </if>
+
+        <if test="month!= null and month!='' ">
+            AND MONTH (P.PlanStartDate) =#{month, jdbcType=VARCHAR}
+        </if>
+        WHERE
+        R.FrameWorkID = #{frameworkID, jdbcType=VARCHAR} AND R.ParentID=0
+    </select>
+
+    <select id="getRisksiteCount" resultType="java.lang.Integer">
+        select
+        count(*)
+        from  risksite
+    </select>
+
+    <select id="getRisksiteByPage" resultMap="RisksiteMap"
+            parameterType="java.lang.Integer" useCache="true">
+        select
+        <include refid="riskTableJoin"/>
+        FROM
+        risksite R
+        LEFT JOIN riskLeverSetting D ON R.FrameWorkID = D.FrameWorkID
+        AND R.RiskLevelSettingID = D.RiskLevelSettingID
+        LEFT JOIN riskcontrolmeasure M ON R.FrameWorkID = M.FrameWorkID
+        AND R.RiskSiteID = M.RiskSiteID
+        AND M.HazardID IS NULL
+        LIMIT
+        #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <select id="getRisksiteCountByRisksite" resultType="java.lang.Integer">
+        select
+        count(*)
+        from risksite
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!='' ">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!=''">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteID!= null ">
+            and RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="riskSiteUUID!= null and riskSiteUUID!=''">
+            and RiskSiteUUID = #{riskSiteUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="details!= null ">
+            and Details = #{details, jdbcType=BIT}
+        </if>
+        <if test="extendedAttributesJsonString!= null and extendedAttributesJsonString!='' ">
+            and ExtendedAttributesJsonString = #{extendedAttributesJsonString, jdbcType=VARCHAR}
+        </if>
+        <if test="fullNumber!= null and fullNumber!=''">
+            and FullNumber = #{fullNumber, jdbcType=VARCHAR}
+        </if>
+        <if test="managerID!= null ">
+            and ManagerID = #{managerID, jdbcType=INTEGER}
+        </if>
+        <if test="managerName!= null and managerName!=''">
+            and ManagerName = #{managerName, jdbcType=VARCHAR}
+        </if>
+        <if test="managerUnitID!= null ">
+            and ManagerUnitID = #{managerUnitID, jdbcType=INTEGER}
+        </if>
+        <if test="managerUnitName!= null and managerUnitName!='' ">
+            and ManagerUnitName = #{managerUnitName, jdbcType=VARCHAR}
+        </if>
+        <if test="name!= null and name!=''">
+            and Name like CONCAT(CONCAT('%', #{name}), '%')
+        </if>
+        <if test="number!= null and number!=''">
+            and Number = #{number, jdbcType=VARCHAR}
+        </if>
+        <if test="parentID!= null and parentID!=''">
+            and ParentID = #{parentID, jdbcType=VARCHAR}
+        </if>
+        <if test="parentNumber!= null and parentNumber!=''">
+            and ParentNumber = #{parentNumber, jdbcType=VARCHAR}
+        </if>
+        <if test="riskAccident!= null and riskAccident!=''">
+            and RiskAccident = #{riskAccident, jdbcType=VARCHAR}
+        </if>
+        <if test="riskControlCycle!= null and riskControlCycle!=''">
+            and RiskControlCycle = #{riskControlCycle, jdbcType=VARCHAR}
+        </if>
+        <if test="riskControlTier!= null and riskControlTier!=''">
+            and RiskControlTier = #{riskControlTier, jdbcType=VARCHAR}
+        </if>
+        <if test="riskDamageType!= null and riskDamageType!=''">
+            and RiskDamageType like CONCAT(CONCAT('%', #{riskDamageType}), '%')
+        </if>
+        <if test="riskDescription!= null and riskDescription!=''">
+            and RiskDescription like CONCAT(CONCAT('%', #{riskDescription}), '%')
+        </if>
+        <if test="riskFrequency!= null and riskFrequency!=''">
+            and RiskFrequency = #{riskFrequency, jdbcType=VARCHAR}
+        </if>
+        <if test="riskMajorType!= null and riskMajorType!=''">
+            and RiskMajorType = #{riskMajorType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteType!= null and riskSiteType.code!= null and riskSiteType.code!=''">
+            and RiskSiteType = #{riskSiteType.code, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteTypeContent!= null and riskSiteTypeContent!=''">
+            and RiskSiteTypeContent = #{riskSiteTypeContent, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSupervisor!= null and riskSupervisor!=''">
+            and RiskSupervisor = #{riskSupervisor, jdbcType=VARCHAR}
+        </if>
+        <if test="riskTemplateID!= null ">
+            and RiskTemplateID = #{riskTemplateID, jdbcType=INTEGER}
+        </if>
+        <if test="limitPeopleCount!= null ">
+            and LimitPeopleCount = #{limitPeopleCount, jdbcType=INTEGER}
+        </if>
+        <if test="status!= null ">
+            and Status = #{status, jdbcType=BIT}
+        </if>
+        <if test="locationId!= null ">
+            and LocationID = #{locationId, jdbcType=VARCHAR}
+        </if>
+        <if test="riskLevelSettingID!=null and riskLevelSettingID>0">
+            and RiskLevelSettingID=#{riskLevelSettingID, jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <select id="getRisksiteByPageAndRisksite" resultMap="RisksiteMap" useCache="true">
+        SELECT
+        <include refid="riskTableJoin"/>
+        FROM
+        (
+        SELECT
+        *
+        FROM
+        risksite
+        WHERE
+        1 = 1
+        <if test="risksite.coalMineName!= null and risksite.coalMineName!=''">
+            and CoalMineName = #{risksite.coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.frameWorkID!= null and risksite.frameWorkID!=''">
+            and FrameWorkID = #{risksite.frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.riskSiteID!= null ">
+            and RiskSiteID = #{risksite.riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="risksite.riskSiteUUID!= null and risksite.riskSiteUUID!='' ">
+            and RiskSiteUUID = #{risksite.riskSiteUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.details!= null ">
+            and Details = #{risksite.details, jdbcType=BIT}
+        </if>
+        <if test="risksite.extendedAttributesJsonString!= null and risksite.extendedAttributesJsonString!=''">
+            and ExtendedAttributesJsonString = #{risksite.extendedAttributesJsonString, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.fullNumber!= null and risksite.fullNumber!=''">
+            and FullNumber = #{risksite.fullNumber, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.managerID!= null ">
+            and ManagerID = #{risksite.managerID, jdbcType=INTEGER}
+        </if>
+        <if test="risksite.managerName!= null and risksite.managerName!=''">
+            and ManagerName = #{risksite.managerName, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.managerUnitID!= null ">
+            and ManagerUnitID = #{risksite.managerUnitID, jdbcType=INTEGER}
+        </if>
+        <if test="risksite.managerUnitName!= null and risksite.managerUnitName!=''">
+            and ManagerUnitName = #{risksite.managerUnitName, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.name!= null and risksite.name!=''">
+            and Name like CONCAT(CONCAT('%', #{risksite.name}), '%')
+        </if>
+        <if test="risksite.number!= null and risksite.number!=''">
+            and Number = #{risksite.number, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.parentID!= null and risksite.parentID!=''">
+            and ParentID = #{risksite.parentID, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.parentNumber!= null and risksite.parentNumber!=''">
+            and ParentNumber = #{risksite.parentNumber, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.riskAccident!= null and risksite.riskAccident!=''">
+            and RiskAccident = #{risksite.riskAccident, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.riskControlCycle!= null and risksite.riskControlCycle!=''">
+            and RiskControlCycle = #{risksite.riskControlCycle, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.riskControlTier!= null and risksite.riskControlTier!=''">
+            and RiskControlTier = #{risksite.riskControlTier, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.riskDamageType!= null and risksite.riskDamageType!=''">
+            and RiskDamageType like CONCAT(CONCAT('%', #{risksite.riskDamageType}), '%')
+        </if>
+        <if test="risksite.riskDescription!= null and risksite.riskDescription!=''">
+            and RiskDescription like CONCAT(CONCAT('%', #{risksite.riskDescription}),'%')
+        </if>
+        <if test="risksite.riskFrequency!= null and risksite.riskFrequency!=''">
+            and RiskFrequency = #{risksite.riskFrequency, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.riskMajorType!= null and risksite.riskMajorType!=''">
+            and RiskMajorType = #{risksite.riskMajorType, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.riskSiteType!= null and risksite.riskSiteType.code!= null and risksite.riskSiteType.code>0">
+            and RiskSiteType = #{risksite.riskSiteType.code, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.riskSiteTypeContent!= null and risksite.riskSiteTypeContent!=''">
+            and RiskSiteTypeContent = #{risksite.riskSiteTypeContent, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.riskSupervisor!= null and risksite.riskSupervisor!=''">
+            and RiskSupervisor = #{risksite.riskSupervisor, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.riskTemplateID!= null ">
+            and RiskTemplateID = #{risksite.riskTemplateID, jdbcType=INTEGER}
+        </if>
+        <if test="risksite.limitPeopleCount!= null ">
+            and LimitPeopleCount = #{risksite.limitPeopleCount, jdbcType=INTEGER}
+        </if>
+        <if test="risksite.status!= null ">
+            and Status = #{risksite.status, jdbcType=BIT}
+        </if>
+        <if test="risksite.locationId!= null ">
+            and LocationID = #{risksite.locationId, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.riskLevelSettingID!=null and risksite.riskLevelSettingID>0">
+            and RiskLevelSettingID=#{risksite.riskLevelSettingID, jdbcType=INTEGER}
+        </if>
+        LIMIT #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+        )R
+        LEFT JOIN riskLeverSetting D ON R.FrameWorkID = D.FrameWorkID
+        AND R.RiskLevelSettingID = D.RiskLevelSettingID
+        LEFT JOIN riskcontrolmeasure M ON R.FrameWorkID = M.FrameWorkID
+        AND R.RiskSiteID = M.RiskSiteID
+        AND M.HazardID IS NULL
+
+    </select>
+
+    <select id="getRisksiteCountByRisksitebyaboutme" resultType="java.lang.Integer">
+        select
+        count(*)
+        from risksite
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!='' ">
+            and CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!=''">
+            and FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteID!= null ">
+            and RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="riskSiteUUID!= null and riskSiteUUID!=''">
+            and RiskSiteUUID = #{riskSiteUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="details!= null ">
+            and Details = #{details, jdbcType=BIT}
+        </if>
+        <if test="extendedAttributesJsonString!= null and extendedAttributesJsonString!='' ">
+            and ExtendedAttributesJsonString = #{extendedAttributesJsonString, jdbcType=VARCHAR}
+        </if>
+        <if test="fullNumber!= null and fullNumber!=''">
+            and FullNumber = #{fullNumber, jdbcType=VARCHAR}
+        </if>
+        <if test="managerID!= null ">
+            and ManagerID = #{managerID, jdbcType=INTEGER}
+        </if>
+        <if test="managerName!= null and managerName!=''">
+            and ManagerName = #{managerName, jdbcType=VARCHAR}
+        </if>
+        <if test="managerUnitID!= null ">
+            and ManagerUnitID = #{managerUnitID, jdbcType=INTEGER}
+        </if>
+        <if test="managerUnitName!= null and managerUnitName!='' ">
+            and ManagerUnitName like CONCAT(CONCAT('%', #{managerUnitName}), '%')
+        </if>
+        <if test="name!= null and name!=''">
+            and Name like CONCAT(CONCAT('%', #{name}), '%')
+        </if>
+        <if test="number!= null and number!=''">
+            and Number = #{number, jdbcType=VARCHAR}
+        </if>
+        <if test="parentID!= null and parentID!=''">
+            and ParentID = #{parentID, jdbcType=VARCHAR}
+        </if>
+        <if test="parentNumber!= null and parentNumber!=''">
+            and ParentNumber = #{parentNumber, jdbcType=VARCHAR}
+        </if>
+        <if test="riskAccident!= null and riskAccident!=''">
+            and RiskAccident = #{riskAccident, jdbcType=VARCHAR}
+        </if>
+        <if test="riskControlCycle!= null and riskControlCycle!=''">
+            and RiskControlCycle = #{riskControlCycle, jdbcType=VARCHAR}
+        </if>
+        <if test="riskControlTier!= null and riskControlTier!=''">
+            and RiskControlTier = #{riskControlTier, jdbcType=VARCHAR}
+        </if>
+        <if test="riskDamageType!= null and riskDamageType!=''">
+            and RiskDamageType = #{riskDamageType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskDescription!= null and riskDescription!=''">
+            and RiskDescription = #{riskDescription, jdbcType=VARCHAR}
+        </if>
+        <if test="riskFrequency!= null and riskFrequency!=''">
+            and RiskFrequency = #{riskFrequency, jdbcType=VARCHAR}
+        </if>
+        <if test="riskMajorType!= null and riskMajorType!=''">
+            and RiskMajorType = #{riskMajorType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteType!= null and riskSiteType.code!= null and riskSiteType.code!=''">
+            and RiskSiteType = #{riskSiteType.code, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteTypeContent!= null and riskSiteTypeContent!=''">
+            and RiskSiteTypeContent = #{riskSiteTypeContent, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSupervisor!= null and riskSupervisor!=''">
+            and RiskSupervisor = #{riskSupervisor, jdbcType=VARCHAR}
+        </if>
+        <if test="riskTemplateID!= null ">
+            and RiskTemplateID = #{riskTemplateID, jdbcType=INTEGER}
+        </if>
+        <if test="limitPeopleCount!= null ">
+            and LimitPeopleCount = #{limitPeopleCount, jdbcType=INTEGER}
+        </if>
+        <if test="status!= null ">
+            and Status = #{status, jdbcType=BIT}
+        </if>
+        <if test="locationId!= null ">
+            and LocationID = #{locationId, jdbcType=VARCHAR}
+        </if>
+        <if test="riskLevelSettingID!=null and riskLevelSettingID>0">
+            and RiskLevelSettingID=#{riskLevelSettingID, jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <select id="getRisksiteByPageAndRisksitebyaboutme" resultMap="RisksiteMap" useCache="true">
+        SELECT
+        <include refid="riskTableJoin"/>
+        FROM
+        (
+        SELECT
+        *
+        FROM
+        risksite
+        WHERE
+        1 = 1
+        <if test="risksite.coalMineName!= null and risksite.coalMineName!=''">
+            and CoalMineName = #{risksite.coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.frameWorkID!= null and risksite.frameWorkID!=''">
+            and FrameWorkID = #{risksite.frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.riskSiteID!= null ">
+            and RiskSiteID = #{risksite.riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="risksite.riskSiteUUID!= null and risksite.riskSiteUUID!='' ">
+            and RiskSiteUUID = #{risksite.riskSiteUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.details!= null ">
+            and Details = #{risksite.details, jdbcType=BIT}
+        </if>
+        <if test="risksite.extendedAttributesJsonString!= null and risksite.extendedAttributesJsonString!=''">
+            and ExtendedAttributesJsonString = #{risksite.extendedAttributesJsonString, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.fullNumber!= null and risksite.fullNumber!=''">
+            and FullNumber = #{risksite.fullNumber, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.managerID!= null ">
+            and ManagerID = #{risksite.managerID, jdbcType=INTEGER}
+        </if>
+        <if test="risksite.managerName!= null and risksite.managerName!=''">
+            and ManagerName = #{risksite.managerName, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.managerUnitID!= null ">
+            and ManagerUnitID = #{risksite.managerUnitID, jdbcType=INTEGER}
+        </if>
+        <if test="risksite.managerUnitName!= null and risksite.managerUnitName!=''">
+            and ManagerUnitName like CONCAT(CONCAT('%', #{risksite.managerUnitName}), '%')
+        </if>
+        <if test="risksite.name!= null and risksite.name!=''">
+            and Name like CONCAT(CONCAT('%', #{risksite.name}), '%')
+        </if>
+        <if test="risksite.number!= null and risksite.number!=''">
+            and Number = #{risksite.number, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.parentID!= null and risksite.parentID!=''">
+            and ParentID = #{risksite.parentID, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.parentNumber!= null and risksite.parentNumber!=''">
+            and ParentNumber = #{risksite.parentNumber, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.riskAccident!= null and risksite.riskAccident!=''">
+            and RiskAccident = #{risksite.riskAccident, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.riskControlCycle!= null and risksite.riskControlCycle!=''">
+            and RiskControlCycle = #{risksite.riskControlCycle, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.riskControlTier!= null and risksite.riskControlTier!=''">
+            and RiskControlTier = #{risksite.riskControlTier, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.riskDamageType!= null and risksite.riskDamageType!=''">
+            and RiskDamageType = #{risksite.riskDamageType, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.riskDescription!= null and risksite.riskDescription!=''">
+            and RiskDescription = #{risksite.riskDescription, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.riskFrequency!= null and risksite.riskFrequency!=''">
+            and RiskFrequency = #{risksite.riskFrequency, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.riskMajorType!= null and risksite.riskMajorType!=''">
+            and RiskMajorType = #{risksite.riskMajorType, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.riskSiteType!= null and risksite.riskSiteType.code!= null and risksite.riskSiteType.code>0">
+            and RiskSiteType = #{risksite.riskSiteType.code, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.riskSiteTypeContent!= null and risksite.riskSiteTypeContent!=''">
+            and RiskSiteTypeContent = #{risksite.riskSiteTypeContent, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.riskSupervisor!= null and risksite.riskSupervisor!=''">
+            and RiskSupervisor = #{risksite.riskSupervisor, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.riskTemplateID!= null ">
+            and RiskTemplateID = #{risksite.riskTemplateID, jdbcType=INTEGER}
+        </if>
+        <if test="risksite.limitPeopleCount!= null ">
+            and LimitPeopleCount = #{risksite.limitPeopleCount, jdbcType=INTEGER}
+        </if>
+        <if test="risksite.status!= null ">
+            and Status = #{risksite.status, jdbcType=BIT}
+        </if>
+        <if test="risksite.locationId!= null ">
+            and LocationID = #{risksite.locationId, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.riskLevelSettingID!=null and risksite.riskLevelSettingID>0">
+            and RiskLevelSettingID=#{risksite.riskLevelSettingID, jdbcType=INTEGER}
+        </if>
+        LIMIT #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+        )R
+        LEFT JOIN riskLeverSetting D ON R.FrameWorkID = D.FrameWorkID
+        AND R.RiskLevelSettingID = D.RiskLevelSettingID
+        LEFT JOIN riskcontrolmeasure M ON R.FrameWorkID = M.FrameWorkID
+        AND R.RiskSiteID = M.RiskSiteID
+        AND M.HazardID IS NULL
+
+    </select>
+
+    <select id="getRisksiteDataByXinAn" resultMap="RisksiteMap" parameterType="cn.com.kingc.risk.model.Risksite"
+            useCache="false">
+        select
+        <include refid="riskTableJoin"/>
+        FROM
+        risksite R
+        LEFT JOIN riskLeverSetting D ON R.FrameWorkID = D.FrameWorkID
+        AND R.RiskLevelSettingID = D.RiskLevelSettingID
+        LEFT JOIN riskcontrolmeasure M ON R.FrameWorkID = M.FrameWorkID
+        AND R.RiskSiteID = M.RiskSiteID
+        AND M.HazardID IS NULL
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!='' ">
+            and R.CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!=''  ">
+            and R.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteID!= null ">
+            and R.RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="riskSiteUUID!= null and riskSiteUUID!='' ">
+            and R.RiskSiteUUID = #{riskSiteUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="details!= null ">
+            and R.Details = #{details, jdbcType=BIT}
+        </if>
+        <if test="extendedAttributesJsonString!= null and extendedAttributesJsonString !='' ">
+            and R.ExtendedAttributesJsonString = #{extendedAttributesJsonString, jdbcType=VARCHAR}
+        </if>
+        <if test="fullNumber!= null and fullNumber !='' ">
+            and R.FullNumber = #{fullNumber, jdbcType=VARCHAR}
+        </if>
+        <if test="managerID!= null ">
+            and R.ManagerID = #{managerID, jdbcType=INTEGER}
+        </if>
+        <if test="managerName!= null and managerName!=''  ">
+            and R.ManagerName = #{managerName, jdbcType=VARCHAR}
+        </if>
+        <if test="managerUnitID!= null ">
+            and R.ManagerUnitID = #{managerUnitID, jdbcType=INTEGER}
+        </if>
+        <if test="managerUnitName!= null and managerUnitName!='' ">
+            and R.ManagerUnitName = #{managerUnitName,jdbcType=VARCHAR}
+        </if>
+        <if test="name!= null and name!='' ">
+            and R.Name = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="number!= null and  number!='' ">
+            and R.Number = #{number, jdbcType=VARCHAR}
+        </if>
+        <if test="parentID!= null and parentID!='' ">
+            and R.ParentID = #{parentID, jdbcType=VARCHAR}
+        </if>
+        <if test="parentNumber!= null and parentNumber!='' ">
+            and R.ParentNumber = #{parentNumber, jdbcType=VARCHAR}
+        </if>
+        <if test="riskAccident!= null and riskAccident!='' ">
+            and R.RiskAccident = #{riskAccident, jdbcType=VARCHAR}
+        </if>
+        <if test="riskControlCycle!= null and riskControlCycle!='' ">
+            and R.RiskControlCycle = #{riskControlCycle, jdbcType=VARCHAR}
+        </if>
+        <if test="riskControlTier!= null and riskControlTier!=''  ">
+            and R.RiskControlTier = #{riskControlTier, jdbcType=VARCHAR}
+        </if>
+        <if test="riskDamageType!= null and riskDamageType!='' ">
+            and R.RiskDamageType = #{riskDamageType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskDescription!= null and riskDescription!='' ">
+            and R.RiskDescription = #{riskDescription, jdbcType=VARCHAR}
+        </if>
+        <if test="riskFrequency!= null and riskFrequency!='' ">
+            and R.RiskFrequency = #{riskFrequency, jdbcType=VARCHAR}
+        </if>
+        <if test="riskMajorType!= null and riskMajorType!=''  ">
+            and R.RiskMajorType = #{riskMajorType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteType!=null and riskSiteType.code!= null and  riskSiteType.code>0 ">
+            and R.RiskSiteType = #{riskSiteType.code, jdbcType=INTEGER}
+        </if>
+        <if test="riskSiteTypeContent!= null and riskSiteTypeContent!=''  ">
+            and R.RiskSiteTypeContent = #{riskSiteTypeContent, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSupervisor!= null and riskSupervisor!=''  ">
+            and R.RiskSupervisor = #{riskSupervisor, jdbcType=VARCHAR}
+        </if>
+        <if test="riskTemplateID!= null ">
+            and R.RiskTemplateID = #{riskTemplateID, jdbcType=INTEGER}
+        </if>
+        <if test="limitPeopleCount!= null ">
+            and R.LimitPeopleCount = #{limitPeopleCount, jdbcType=INTEGER}
+        </if>
+        <if test="locationId!= null and locationId!='' ">
+            and R.LocationID = #{locationId, jdbcType=VARCHAR}
+        </if>
+        <if test="riskLevelSettingID!=null and riskLevelSettingID>0">
+            and R.RiskLevelSettingID=#{riskLevelSettingID, jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <select id="getRisksiteData" resultMap="RisksiteMap" parameterType="cn.com.kingc.risk.model.Risksite"
+            useCache="false">
+        select
+        <include refid="riskTableJoin"/>
+        FROM
+        risksite R
+        LEFT JOIN riskLeverSetting D ON R.FrameWorkID = D.FrameWorkID
+        AND R.RiskLevelSettingID = D.RiskLevelSettingID
+        LEFT JOIN riskcontrolmeasure M ON R.FrameWorkID = M.FrameWorkID
+        AND R.RiskSiteID = M.RiskSiteID
+        AND M.HazardID IS NULL
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!='' ">
+            and R.CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!=''  ">
+            and R.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteID!= null ">
+            and R.RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="riskSiteUUID!= null and riskSiteUUID!='' ">
+            and R.RiskSiteUUID = #{riskSiteUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="details!= null ">
+            and R.Details = #{details, jdbcType=BIT}
+        </if>
+        <if test="extendedAttributesJsonString!= null and extendedAttributesJsonString !='' ">
+            and R.ExtendedAttributesJsonString = #{extendedAttributesJsonString, jdbcType=VARCHAR}
+        </if>
+        <if test="fullNumber!= null and fullNumber !='' ">
+            and R.FullNumber = #{fullNumber, jdbcType=VARCHAR}
+        </if>
+        <if test="managerID!= null ">
+            and R.ManagerID = #{managerID, jdbcType=INTEGER}
+        </if>
+        <if test="managerName!= null and managerName!=''  ">
+            and R.ManagerName = #{managerName, jdbcType=VARCHAR}
+        </if>
+        <if test="managerUnitID!= null ">
+            and R.ManagerUnitID = #{managerUnitID, jdbcType=INTEGER}
+        </if>
+        <if test="managerUnitName!= null and managerUnitName!='' ">
+            and R.ManagerUnitName like CONCAT(CONCAT('%', #{managerUnitName}), '%')
+        </if>
+        <if test="name!= null and name!='' ">
+            and R.Name like CONCAT(CONCAT('%', #{name}), '%')
+        </if>
+        <if test="number!= null and  number!='' ">
+            and R.Number = #{number, jdbcType=VARCHAR}
+        </if>
+        <if test="parentID!= null and parentID!='' ">
+            and R.ParentID = #{parentID, jdbcType=VARCHAR}
+        </if>
+        <if test="parentNumber!= null and parentNumber!='' ">
+            and R.ParentNumber = #{parentNumber, jdbcType=VARCHAR}
+        </if>
+        <if test="riskAccident!= null and riskAccident!='' ">
+            and R.RiskAccident = #{riskAccident, jdbcType=VARCHAR}
+        </if>
+        <if test="riskControlCycle!= null and riskControlCycle!='' ">
+            and R.RiskControlCycle = #{riskControlCycle, jdbcType=VARCHAR}
+        </if>
+        <if test="riskControlTier!= null and riskControlTier!=''  ">
+            and R.RiskControlTier = #{riskControlTier, jdbcType=VARCHAR}
+        </if>
+        <if test="riskDamageType!= null and riskDamageType!='' ">
+            and R.RiskDamageType like CONCAT(CONCAT('%', #{riskDamageType}), '%')
+        </if>
+        <if test="riskDescription!= null and riskDescription!='' ">
+            and R.RiskDescription = #{riskDescription, jdbcType=VARCHAR}
+        </if>
+        <if test="riskFrequency!= null and riskFrequency!='' ">
+            and R.RiskFrequency = #{riskFrequency, jdbcType=VARCHAR}
+        </if>
+        <if test="riskMajorType!= null and riskMajorType!=''  ">
+            and R.RiskMajorType = #{riskMajorType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteType!=null and riskSiteType.code!= null and  riskSiteType.code>0 ">
+            and R.RiskSiteType = #{riskSiteType.code, jdbcType=INTEGER}
+        </if>
+        <if test="riskSiteTypeContent!= null and riskSiteTypeContent!=''  ">
+            and R.RiskSiteTypeContent = #{riskSiteTypeContent, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSupervisor!= null and riskSupervisor!=''  ">
+            and R.RiskSupervisor = #{riskSupervisor, jdbcType=VARCHAR}
+        </if>
+        <if test="riskTemplateID!= null ">
+            and R.RiskTemplateID = #{riskTemplateID, jdbcType=INTEGER}
+        </if>
+        <if test="limitPeopleCount!= null ">
+            and R.LimitPeopleCount = #{limitPeopleCount, jdbcType=INTEGER}
+        </if>
+        <if test="locationId!= null and locationId!='' ">
+            and R.LocationID = #{locationId, jdbcType=VARCHAR}
+        </if>
+        <if test="riskLevelSettingID!=null and riskLevelSettingID>0">
+            and R.RiskLevelSettingID=#{riskLevelSettingID, jdbcType=INTEGER}
+        </if>
+        ORDER BY R.RiskSiteID ASC
+    </select>
+
+    <select id="getRisksiteDataExactly" resultMap="RisksiteMap" parameterType="cn.com.kingc.risk.model.Risksite"
+            useCache="false">
+        select
+        <include refid="riskTableJoin"/>
+        FROM
+        risksite R
+        LEFT JOIN riskLeverSetting D ON R.FrameWorkID = D.FrameWorkID
+        AND R.RiskLevelSettingID = D.RiskLevelSettingID
+        LEFT JOIN riskcontrolmeasure M ON R.FrameWorkID = M.FrameWorkID
+        AND R.RiskSiteID = M.RiskSiteID
+        AND M.HazardID IS NULL
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!='' ">
+            and R.CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!=''  ">
+            and R.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteID!= null ">
+            and R.RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="riskSiteUUID!= null and riskSiteUUID!='' ">
+            and R.RiskSiteUUID = #{riskSiteUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="details!= null ">
+            and R.Details = #{details, jdbcType=BIT}
+        </if>
+        <if test="extendedAttributesJsonString!= null and extendedAttributesJsonString !='' ">
+            and R.ExtendedAttributesJsonString = #{extendedAttributesJsonString, jdbcType=VARCHAR}
+        </if>
+        <if test="fullNumber!= null and fullNumber !='' ">
+            and R.FullNumber = #{fullNumber, jdbcType=VARCHAR}
+        </if>
+        <if test="managerID!= null ">
+            and R.ManagerID = #{managerID, jdbcType=INTEGER}
+        </if>
+        <if test="managerName!= null and managerName!=''  ">
+            and R.ManagerName = #{managerName, jdbcType=VARCHAR}
+        </if>
+        <if test="managerUnitID!= null ">
+            and R.ManagerUnitID = #{managerUnitID, jdbcType=INTEGER}
+        </if>
+        <if test="managerUnitName!= null and managerUnitName!='' ">
+            and R.ManagerUnitName = #{managerUnitName, jdbcType=VARCHAR}
+        </if>
+        <if test="name!= null and name!='' ">
+            and R.Name = #{name, jdbcType=VARCHAR}
+        </if>
+        <if test="number!= null and  number!='' ">
+            and R.Number = #{number, jdbcType=VARCHAR}
+        </if>
+        <if test="parentID!= null and parentID!='' ">
+            and R.ParentID = #{parentID, jdbcType=VARCHAR}
+        </if>
+        <if test="parentNumber!= null and parentNumber!='' ">
+            and R.ParentNumber = #{parentNumber, jdbcType=VARCHAR}
+        </if>
+        <if test="riskAccident!= null and riskAccident!='' ">
+            and R.RiskAccident = #{riskAccident, jdbcType=VARCHAR}
+        </if>
+        <if test="riskControlCycle!= null and riskControlCycle!='' ">
+            and R.RiskControlCycle = #{riskControlCycle, jdbcType=VARCHAR}
+        </if>
+        <if test="riskControlTier!= null and riskControlTier!=''  ">
+            and R.RiskControlTier = #{riskControlTier, jdbcType=VARCHAR}
+        </if>
+        <if test="riskDescription!= null and riskDescription!='' ">
+            and R.RiskDescription = #{riskDescription, jdbcType=VARCHAR}
+        </if>
+        <if test="riskFrequency!= null and riskFrequency!='' ">
+            and R.RiskFrequency = #{riskFrequency, jdbcType=VARCHAR}
+        </if>
+        <if test="riskMajorType!= null and riskMajorType!=''  ">
+            and R.RiskMajorType = #{riskMajorType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteType!=null and riskSiteType.code!= null and  riskSiteType.code>0 ">
+            and R.RiskSiteType = #{riskSiteType.code, jdbcType=INTEGER}
+        </if>
+        <if test="riskSiteTypeContent!= null and riskSiteTypeContent!=''  ">
+            and R.RiskSiteTypeContent = #{riskSiteTypeContent, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSupervisor!= null and riskSupervisor!=''  ">
+            and R.RiskSupervisor = #{riskSupervisor, jdbcType=VARCHAR}
+        </if>
+        <if test="riskTemplateID!= null ">
+            and R.RiskTemplateID = #{riskTemplateID, jdbcType=INTEGER}
+        </if>
+        <if test="limitPeopleCount!= null ">
+            and R.LimitPeopleCount = #{limitPeopleCount, jdbcType=INTEGER}
+        </if>
+        <if test="locationId!= null ">
+            and R.LocationID = #{locationId, jdbcType=VARCHAR}
+        </if>
+        <if test="riskLevelSettingID!=null and riskLevelSettingID>0">
+            and R.RiskLevelSettingID=#{riskLevelSettingID, jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <select id="getTopRisksite" resultMap="RisksiteSimpleMap">
+        select
+        <include refid="Base_Column_List"/>
+        from risksite R
+        LEFT JOIN riskLeverSetting D ON R.FrameWorkID = D.FrameWorkID
+        AND R.RiskLevelSettingID = D.RiskLevelSettingID
+        where
+        R.FrameWorkID=#{frameWorkID} AND
+        R.CoalMineName=#{coalMineName} AND
+        R.ParentID=0
+    </select>
+
+    <select id="getTopRisksiteByCount" resultType="java.lang.Integer">
+        select
+        COUNT(*)
+        from risksite R
+        LEFT JOIN riskLeverSetting D ON R.FrameWorkID = D.FrameWorkID
+        AND R.RiskLevelSettingID = D.RiskLevelSettingID
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!='' ">
+            and R.CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!=''">
+            and R.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteID!= null ">
+            and R.RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="riskSiteUUID!= null and riskSiteUUID!=''">
+            and R.RiskSiteUUID = #{riskSiteUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="name!= null and name!=''">
+            and R.Name like CONCAT(CONCAT('%', #{name}), '%')
+        </if>
+        <if test="number!= null and number!=''">
+            and R.Number = #{number, jdbcType=VARCHAR}
+        </if>
+        AND R.ParentID=0
+    </select>
+    <select id="getTopRisksiteByPage" resultMap="RisksiteSimpleMap">
+        select
+        <include refid="Base_Column_List"/>
+        from risksite R
+        LEFT JOIN riskLeverSetting D ON R.FrameWorkID = D.FrameWorkID
+        AND R.RiskLevelSettingID = D.RiskLevelSettingID
+        where 1=1
+        <if test="Risksite.coalMineName!= null and Risksite.coalMineName!='' ">
+            and R.CoalMineName = #{Risksite.coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="Risksite.frameWorkID!= null and Risksite.frameWorkID!=''">
+            and R.FrameWorkID = #{Risksite.frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="Risksite.riskSiteID!= null ">
+            and R.RiskSiteID = #{Risksite.riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="Risksite.riskSiteUUID!= null and Risksite.riskSiteUUID!=''">
+            and R.RiskSiteUUID = #{Risksite.riskSiteUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="Risksite.name!= null and Risksite.name!=''">
+            and R.Name like CONCAT(CONCAT('%', #{Risksite.name}), '%')
+        </if>
+        <if test="Risksite.number!= null and Risksite.number!=''">
+            and R.Number = #{Risksite.number, jdbcType=VARCHAR}
+        </if>
+        AND R.ParentID=0
+        LIMIT #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+    <select id="getTopRisksiteByname" resultMap="RisksiteSimpleMap">
+        select
+        <include refid="Base_Column_List"/>
+        from risksite R
+        LEFT JOIN riskLeverSetting D ON R.FrameWorkID = D.FrameWorkID
+        AND R.RiskLevelSettingID = D.RiskLevelSettingID
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!='' ">
+            and R.CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!=''">
+            and R.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteID!= null ">
+            and R.RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="riskSiteUUID!= null and riskSiteUUID!=''">
+            and R.RiskSiteUUID = #{riskSiteUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="name!= null and name!=''">
+            and R.Name like CONCAT(CONCAT('%', #{name}), '%')
+        </if>
+        <if test="number!= null and number!=''">
+            and R.Number = #{number, jdbcType=VARCHAR}
+        </if>
+        AND R.ParentID=0
+    </select>
+    <select id="getByRisksiteFullNumber" resultMap="RisksiteSimpleMap">
+        select
+        <include refid="Base_Column_List"/>
+        from risksite R
+        LEFT JOIN riskLeverSetting D ON R.FrameWorkID = D.FrameWorkID
+        AND R.RiskLevelSettingID = D.RiskLevelSettingID
+        where R.FrameWorkID=#{frameWorkID}
+        AND R.CoalMineName=#{coalMineName}
+        AND R.FullNumber LIKE CONCAT(#{fullNumber},'%')
+    </select>
+
+    <select id="getRisksiteDataOnly" resultMap="RisksiteSimpleMap" parameterType="cn.com.kingc.risk.model.Risksite"
+            useCache="false">
+        select
+        <include refid="Base_Column_List"/>
+        from risksite R
+        LEFT JOIN riskLeverSetting D ON R.FrameWorkID = D.FrameWorkID
+        AND R.RiskLevelSettingID = D.RiskLevelSettingID
+
+        where 1=1
+        <if test="coalMineName!= null and coalMineName!='' ">
+            and R.CoalMineName = #{coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="frameWorkID!= null and frameWorkID!=''  ">
+            and R.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteID!= null ">
+            and R.RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        </if>
+        <if test="riskSiteUUID!= null and riskSiteUUID!='' ">
+            and R.RiskSiteUUID = #{riskSiteUUID, jdbcType=VARCHAR}
+        </if>
+        <if test="details!= null ">
+            and R.Details = #{details, jdbcType=BIT}
+        </if>
+        <if test="extendedAttributesJsonString!= null and extendedAttributesJsonString !='' ">
+            and R.ExtendedAttributesJsonString = #{extendedAttributesJsonString, jdbcType=VARCHAR}
+        </if>
+        <if test="fullNumber!= null and fullNumber !='' ">
+            and R.FullNumber LIKE CONCAT(#{fullNumber, jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="managerID!= null ">
+            and R.ManagerID = #{managerID, jdbcType=INTEGER}
+        </if>
+        <if test="managerName!= null and managerName!=''  ">
+            and R.ManagerName = #{managerName, jdbcType=VARCHAR}
+        </if>
+        <if test="managerUnitID!= null ">
+            and R.ManagerUnitID = #{managerUnitID, jdbcType=INTEGER}
+        </if>
+        <if test="managerUnitName!= null and managerUnitName!='' ">
+            and R.ManagerUnitName = #{managerUnitName, jdbcType=VARCHAR}
+        </if>
+        <if test="name!= null and name!='' ">
+            and R.Name = #{name, jdbcType=VARCHAR}
+        </if>
+        <if test="number!= null and  number!='' ">
+            and R.Number = #{number, jdbcType=VARCHAR}
+        </if>
+        <if test="parentID!= null and parentID!='' ">
+            and R.ParentID = #{parentID, jdbcType=VARCHAR}
+        </if>
+        <if test="parentNumber!= null and parentNumber!='' ">
+            and R.ParentNumber = #{parentNumber, jdbcType=VARCHAR}
+        </if>
+        <if test="riskAccident!= null and riskAccident!='' ">
+            and R.RiskAccident = #{riskAccident, jdbcType=VARCHAR}
+        </if>
+        <if test="riskControlCycle!= null and riskControlCycle!='' ">
+            and R.RiskControlCycle = #{riskControlCycle, jdbcType=VARCHAR}
+        </if>
+        <if test="riskControlTier!= null and riskControlTier!=''  ">
+            and R.RiskControlTier = #{riskControlTier, jdbcType=VARCHAR}
+        </if>
+        <if test="riskDamageType!= null and riskDamageType!='' ">
+            and R.RiskDamageType = #{riskDamageType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskDescription!= null and riskDescription!='' ">
+            and R.RiskDescription = #{riskDescription, jdbcType=VARCHAR}
+        </if>
+        <if test="riskFrequency!= null and riskFrequency!='' ">
+            and R.RiskFrequency = #{riskFrequency, jdbcType=VARCHAR}
+        </if>
+        <if test="riskMajorType!= null and riskMajorType!=''  ">
+            and R.RiskMajorType = #{riskMajorType, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSiteType!=null and riskSiteType.code!= null and  riskSiteType.code>0 ">
+            and R.RiskSiteType = #{riskSiteType.code, jdbcType=INTEGER}
+        </if>
+        <if test="riskSiteTypeContent!= null and riskSiteTypeContent!=''  ">
+            and R.RiskSiteTypeContent = #{riskSiteTypeContent, jdbcType=VARCHAR}
+        </if>
+        <if test="riskSupervisor!= null and riskSupervisor!=''  ">
+            and R.RiskSupervisor = #{riskSupervisor, jdbcType=VARCHAR}
+        </if>
+        <if test="riskTemplateID!= null ">
+            and R.RiskTemplateID = #{riskTemplateID, jdbcType=INTEGER}
+        </if>
+        <if test="limitPeopleCount!= null ">
+            and R.LimitPeopleCount = #{limitPeopleCount, jdbcType=INTEGER}
+        </if>
+        <if test="riskLevelSettingID!=null and riskLevelSettingID>0">
+            and R.RiskLevelSettingID=#{riskLevelSettingID, jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <select id="getHazardCount" resultType="java.lang.Integer" flushCache="true">
+        SELECT COUNT(*) FROM riskhazard
+        WHERE FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        AND RiskSiteFullNumber
+        LIKE CONCAT(#{riskSiteFullNumber, jdbcType=VARCHAR}, '%')
+    </select>
+
+    <select id="getControlMeasureCount" resultType="java.lang.Integer" flushCache="true">
+        SELECT COUNT(*) FROM riskcontrolmeasure
+        WHERE FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        AND RiskSiteFullNumber
+        LIKE CONCAT(CONCAT('%', #{riskSiteFullNumber, jdbcType=VARCHAR}), '%')
+    </select>
+
+    <select id="getRSCRMaxFullNum" resultType="java.lang.String" flushCache="true">
+        SELECT FullNumber FROM risksite
+        WHERE FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        AND FullNumber
+        LIKE CONCAT(#{riskSiteFullNumber, jdbcType=VARCHAR}, '%')
+		ORDER BY FullNumber DESC
+    </select>
+
+    <delete id="deleteRelationshipByRiskSite">
+        DELETE  FROM riskidentificationbyyearentry
+        WHERE RiskSiteID =#{riskSiteID, jdbcType=INTEGER}
+        AND FrameWorkID = #{frameWorkID};
+
+        DELETE  FROM riskidentificationbyspecially
+        WHERE RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        AND FrameWorkID = #{frameWorkID, jdbcType=VARCHAR} ;
+
+        DELETE A.*
+        FROM
+            risksiteoutofcontrolitem O INNER JOIN
+            riskcontrolanalyzeitem A ON  O.ItemID = A.LostControlItemID
+            INNER JOIN riskhazard H ON O.HazardID = H.HazardID
+        WHERE
+            O.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        AND H.RiskSiteFullNumber LIKE CONCAT(#{riskSiteFullNumber, jdbcType=VARCHAR}, '%');
+
+        DELETE o.*
+            FROM
+                risksiteoutofcontrolitem O INNER JOIN
+                riskhazard H ON O.HazardID = H.HazardID
+        WHERE
+        O.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+                AND H.RiskSiteFullNumber LIKE CONCAT(#{riskSiteFullNumber, jdbcType=VARCHAR}, '%');
+
+        DELETE FROM riskcontrolplanebymonthitem
+        WHERE RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        AND FrameWorkID = #{frameWorkID, jdbcType=VARCHAR} ;
+
+        DELETE FROM risksiteoutofcontrol
+        WHERE RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        AND FrameWorkID = #{frameWorkID, jdbcType=VARCHAR} ;
+
+
+
+     </delete>
+
+    <delete id="deleteRiskhazardByFullNumber" parameterType="java.lang.String" flushCache="true">
+        DELETE FROM risksiteplace
+        WHERE RiskSiteID IN
+        (SELECT rs.RiskSiteID FROM risksite rs WHERE rs.FullNumber LIKE CONCAT(#{riskSiteFullNumber, jdbcType=VARCHAR}, '%'));
+
+        DELETE FROM risksite
+        WHERE  FullNumber LIKE CONCAT(#{riskSiteFullNumber, jdbcType=VARCHAR}, '%');
+    </delete>
+
+    <select id="getRelationshipByRiskSite" resultType="java.lang.String">
+        SELECT
+          CONCAT(
+                MYear,
+                '【年度辨识】'
+            )  as WhoUsed
+        FROM
+            riskidentificationbyyear Y
+        INNER JOIN riskidentificationbyyearentry E ON Y.FrameWorkID = E.FrameWorkID
+        AND Y.RiskIdentificationYearID = E.RiskIdentificationYearID
+        WHERE
+            RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        AND Y.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT
+            CONCAT(
+                IdentityType,
+                '【专项辨识】'
+            )  as WhoUsed
+        FROM
+            riskidentificationbyspecially
+        WHERE
+            RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        AND FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT
+             CONCAT(
+                M.MonthPlanName,
+                '【月度管控计划】'
+            )  as WhoUsed
+        FROM
+            riskcontrolplanebymonth M
+        INNER JOIN riskcontrolplanebymonthitem I ON M.FrameWorkID = I.FrameWorkID
+        AND M.MonthPlaneID = I.MonthPlaneID
+        WHERE
+            I.RiskSiteID = #{riskSiteID, jdbcType=INTEGER}
+        AND I.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        UNION ALL
+        SELECT
+             CONCAT(
+                A.KeyContent,
+                '【管控分析】'
+            )  as WhoUsed
+        FROM
+            risksiteoutofcontrolitem O
+        INNER JOIN riskcontrolanalyzeitem A ON O.ItemID = A.LostControlItemID
+        INNER JOIN riskhazard H ON O.HazardID = H.HazardID
+        WHERE
+            O.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        AND H.RiskSiteFullNumber LIKE CONCAT(#{riskSiteFullNumber, jdbcType=VARCHAR}, '%')
+        UNION ALL
+        SELECT
+             CONCAT(
+                o.CheckQuestion,
+                '【现场检查结果】'
+            )  as WhoUsed
+        FROM
+            risksiteoutofcontrolitem O
+        INNER JOIN riskhazard H ON O.HazardID = H.HazardID
+        WHERE
+            O.FrameWorkID = #{frameWorkID, jdbcType=VARCHAR}
+        AND H.RiskSiteFullNumber LIKE CONCAT(#{riskSiteFullNumber, jdbcType=VARCHAR}, '%')
+    </select>
+
+    <update id="updateStatusToWpgAfterAdd">
+        UPDATE risksite
+        SET STATUS = 0,
+            RiskLevelSettingID=0
+        WHERE
+            FrameWorkID = #{frameWorkID, jdbcType=VARCHAR} AND
+            FullNumber = #{riskSiteFullNumber, jdbcType=VARCHAR}
+    </update>
+
+    <select id="getChildRiskDamtype" resultType="java.lang.String">
+        SELECT GROUP_CONCAT(DISTINCT DamageType) AS DamageType
+        FROM riskhazard
+        WHERE  FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        AND RiskSiteFullNumber= #{riskSiteFullNumber, jdbcType=VARCHAR}
+    </select>
+
+    <update id="updateChildRiskDamtype" flushCache="true">
+        UPDATE risksite R
+        INNER JOIN
+        (
+        SELECT FrameWorkID,RiskSiteFullNumber,
+        GROUP_CONCAT(DISTINCT DamageType) AS DamageType
+        FROM riskhazard
+        WHERE RiskSiteFullNumber= #{riskSiteFullNumber, jdbcType=VARCHAR} ) H
+        ON H.FrameWorkID=R.FrameWorkID AND R.FullNumber=#{riskSiteFullNumber, jdbcType=VARCHAR}
+        SET R.RiskDamageType=#{damageType, jdbcType=VARCHAR}
+        WHERE R.FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+    </update>
+
+    <select id="getTopRiskDamtype" resultType="java.lang.String">
+        SELECT GROUP_CONCAT(DISTINCT RiskDamageType) AS DamageType
+        FROM risksite
+        WHERE FullNumber LIKE CONCAT( #{riskSiteFullNumber, jdbcType=VARCHAR},'%')
+        AND ParentID>0 AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+    </select>
+    <update id="updateTopRiskDamtype" flushCache="true">
+        UPDATE risksite R
+        INNER JOIN
+        (
+        SELECT FrameWorkID,GROUP_CONCAT(DISTINCT RiskDamageType) AS DamageType
+        FROM risksite
+        WHERE FullNumber LIKE CONCAT( #{riskSiteFullNumber, jdbcType=VARCHAR},'%') AND ParentID>0 AND FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+        ) RChild
+        ON RChild.FrameWorkID=R.FrameWorkID AND R.FullNumber= #{riskSiteFullNumber, jdbcType=VARCHAR}
+        SET R.RiskDamageType=#{damageType, jdbcType=VARCHAR}
+        WHERE R.FrameWorkID=#{frameWorkID, jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateRiskDamageTypeByRiskSiteID" parameterType="java.lang.Integer" flushCache="true">
+        UPDATE risksite R INNER JOIN
+        (
+        SELECT group_concat(distinct damagetype)AS MergeValue,RiskSiteID
+        FROM riskhazard
+        WHERE riskhazard.RiskSiteID=#{riskSiteID,jdbcType=INTEGER}
+        GROUP BY RiskSiteID
+        ) T ON R.RiskSiteID=T.RiskSiteID
+        SET R.RiskDamageType=T.MergeValue
+    </update>
+
+    <update id="updateRiskSiteDamageTypeByRiskSiteID" parameterType="java.lang.Integer" flushCache="true">
+        UPDATE risksite R INNER JOIN
+        (
+        SELECT group_concat(distinct RiskDamageType)AS MergeValue,ParentID
+        FROM risksite
+        WHERE ParentID= #{riskParentID,jdbcType=INTEGER}
+        GROUP BY RiskSiteID
+        ) T ON R.RiskSiteID=T.ParentID
+        SET R.RiskDamageType=T.MergeValue
+    </update>
+
+
+    <select id="risksiteListByAccidentCount" resultMap="RisksiteByAcctionMap" >
+        SELECT
+        COUNT(h.HazardID)
+        FROM
+        risksite r
+        LEFT JOIN risksite t ON LEFT (r.FullNumber, 6) = t.FullNumber
+        LEFT JOIN riskhazard h ON r.RiskSiteID = h.RiskSiteID
+        LEFT JOIN riskhazardcontrolrange c ON h.hazardid = c.hazardid
+        WHERE 1=1
+        <if test="RisksiteByAcction.frameWorkID!=null and RisksiteByAcction.frameWorkID!='' ">
+            and  h.FrameWorkID =#{RisksiteByAcction.frameWorkID,jdbcType=VARCHAR}
+        </if>
+        <if test="RisksiteByAcction.coalMineName!=null and RisksiteByAcction.coalMineName!='' ">
+            and  h.CoalMineName =#{RisksiteByAcction.coalMineName,jdbcType=VARCHAR}
+        </if>
+        <if test="RisksiteByAcction.tname!=null and RisksiteByAcction.tname!='' ">
+            and  t. NAME =#{RisksiteByAcction.tname,jdbcType=VARCHAR}
+        </if>
+        <if test="RisksiteByAcction.risksitename!=null and RisksiteByAcction.risksitename!='' ">
+            and  r. NAME =#{RisksiteByAcction.risksitename,jdbcType=VARCHAR}
+        </if>
+        <if test="RisksiteByAcction.riskhardname!=null and RisksiteByAcction.riskhardname!='' ">
+            and  h. NAME LIKE CONCAT('%',#{RisksiteByAcction.riskhardname,jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="RisksiteByAcction.damageType!=null and RisksiteByAcction.damageType!='' ">
+            and h.DamageType like CONCAT(CONCAT('%', #{RisksiteByAcction.damageType}), '%')
+        </if>
+        <if test="RisksiteByAcction.riskLevelSettingID!=null  ">
+            and  h.RiskLevelSettingID =#{RisksiteByAcction.riskLevelSettingID,jdbcType=INTEGER}
+        </if>
+        <if test="RisksiteByAcction.RiskType!=null and RisksiteByAcction.RiskType!='' ">
+            and  h.RiskType =#{RisksiteByAcction.riskType,jdbcType=VARCHAR}
+        </if>
+        <if test="RisksiteByAcction.majorType!=null and RisksiteByAcction.majorType!='' ">
+            and  h.MajorType =#{RisksiteByAcction.majorType,jdbcType=VARCHAR}
+        </if>
+        <if test="RisksiteByAcction.hazardDesc!=null and RisksiteByAcction.hazardDesc!='' ">
+            and h.HazardDesc like CONCAT(CONCAT('%', #{RisksiteByAcction.hazardDesc}), '%')
+        </if>
+        <if test="RisksiteByAcction.stadate!=null and RisksiteByAcction.stadate!='' ">
+            and   c.ControlRangeStartDay <![CDATA[ >= ]]> #{RisksiteByAcction.stadate,jdbcType=VARCHAR}
+        </if>
+        <if test="RisksiteByAcction.enddate!=null and RisksiteByAcction.enddate!='' ">
+            and  c.ControlRangeEndDay <![CDATA[ <= ]]> #{RisksiteByAcction.enddate,jdbcType=VARCHAR}
+        </if>
+
+
+        <!--<if test="RisksiteByAcction.stadate!=null and RisksiteByAcction.stadate!='' ">
+            and   LEFT (h.LastModifyVersion,10)  >= #{RisksiteByAcction.stadate,jdbcType=VARCHAR}
+        </if>
+        <if test="RisksiteByAcction.enddate!=null and RisksiteByAcction.enddate!='' ">
+            and   LEFT (h.LastModifyVersion,10)  &lt;= #{RisksiteByAcction.enddate,jdbcType=VARCHAR}
+        </if>-->
+        GROUP BY
+        h.HazardID
+
+    </select>
+
+    <select id="risksiteListByAccidentPage" resultMap="RisksiteByAcctionMap" >
+                SELECT
+            h.FrameWorkID AS frameWorkID,
+            h.CoalMineName AS coalMineName,
+            t.RiskSiteID AS t_risksiteID,
+            h.HazardID AS hazardID,
+            h.hazardUUID AS hazardUUID,
+            h.RiskSiteID AS h_risksiteID,
+            t. NAME AS tname,
+            r. NAME AS risksitename,
+            h. NAME AS riskhardname,
+            h.DamageType AS damageType,
+            h.RiskLevelSettingID AS riskLevelSettingID,
+            h.RiskType AS riskType,
+            h.MajorType AS majorType,
+            h.HazardDesc AS hazardDesc,
+            h.LastModifyVersion AS lastModifyVersion
+        FROM
+            risksite r
+        LEFT JOIN risksite t ON LEFT (r.FullNumber, 6) = t.FullNumber
+        LEFT JOIN riskhazard h ON r.RiskSiteID = h.RiskSiteID
+        LEFT JOIN riskhazardcontrolrange c ON h.hazardid = c.hazardid
+        WHERE 1=1
+        <if test="RisksiteByAcction.frameWorkID!=null and RisksiteByAcction.frameWorkID!='' ">
+            and  h.FrameWorkID =#{RisksiteByAcction.frameWorkID,jdbcType=VARCHAR}
+        </if>
+        <if test="RisksiteByAcction.coalMineName!=null and RisksiteByAcction.coalMineName!='' ">
+            and  h.CoalMineName =#{RisksiteByAcction.coalMineName,jdbcType=VARCHAR}
+        </if>
+        <if test="RisksiteByAcction.tname!=null and RisksiteByAcction.tname!='' ">
+            and  t. NAME =#{RisksiteByAcction.tname,jdbcType=VARCHAR}
+        </if>
+        <if test="RisksiteByAcction.risksitename!=null and RisksiteByAcction.risksitename!='' ">
+            and  r. NAME =#{RisksiteByAcction.risksitename,jdbcType=VARCHAR}
+        </if>
+        <if test="RisksiteByAcction.riskhardname!=null and RisksiteByAcction.riskhardname!='' ">
+            and  h. NAME like CONCAT('%',#{RisksiteByAcction.riskhardname,jdbcType=VARCHAR}, '%')
+        </if>
+        <if test="RisksiteByAcction.damageType!=null and RisksiteByAcction.damageType!='' ">
+            and h.DamageType like CONCAT(CONCAT('%', #{RisksiteByAcction.damageType}), '%')
+        </if>
+        <if test="RisksiteByAcction.riskLevelSettingID!=null  ">
+            and  h.RiskLevelSettingID =#{RisksiteByAcction.riskLevelSettingID,jdbcType=INTEGER}
+        </if>
+
+        <if test="RisksiteByAcction.RiskType!=null and RisksiteByAcction.RiskType!='' ">
+            and  h.RiskType =#{RisksiteByAcction.riskType,jdbcType=VARCHAR}
+        </if>
+        <if test="RisksiteByAcction.majorType!=null and RisksiteByAcction.majorType!='' ">
+            and  h.MajorType =#{RisksiteByAcction.majorType,jdbcType=VARCHAR}
+        </if>
+        <if test="RisksiteByAcction.hazardDesc!=null and RisksiteByAcction.hazardDesc!='' ">
+            and h.HazardDesc like CONCAT(CONCAT('%', #{RisksiteByAcction.hazardDesc}), '%')
+        </if>
+
+        <if test="RisksiteByAcction.stadate!=null and RisksiteByAcction.stadate!='' ">
+            and   c.ControlRangeStartDay <![CDATA[ >= ]]> #{RisksiteByAcction.stadate,jdbcType=VARCHAR}
+        </if>
+        <if test="RisksiteByAcction.enddate!=null and RisksiteByAcction.enddate!='' ">
+            and  c.ControlRangeEndDay <![CDATA[ <= ]]> #{RisksiteByAcction.enddate,jdbcType=VARCHAR}
+        </if>
+
+
+        GROUP BY
+            h.HazardID
+        LIMIT #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+
+    </select>
+
+    <select id="getRiskSiteByYS" resultMap="RisksiteYSMap" parameterType="cn.com.kingc.risk.model.Risksite"
+            useCache="false">
+        select
+        <include refid="Base_Column_List_baseYS"/>
+        FROM
+        risksite R
+        LEFT JOIN risksite T ON  R.FrameWorkID = T.FrameWorkID
+        and R.RiskSiteID = T.ParentID
+        LEFT JOIN riskhazard H ON H.FrameWorkID = T.FrameWorkID
+        and  T.RiskSiteID = H.RiskSiteID
+        LEFT JOIN riskhazardcontrolrange C ON C.FrameWorkID = H.FrameWorkID
+        AND C.HazardID = H.HazardID
+        LEFT JOIN riskLeverSetting D ON R.FrameWorkID = D.FrameWorkID
+        AND R.RiskLevelSettingID = D.RiskLevelSettingID
+        where 1=1
+        and R.ParentID = '0'
+
+        <if test="risksite.coalMineName!= null and risksite.coalMineName!='' ">
+            and R.CoalMineName = #{risksite.coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.frameWorkID!= null and risksite.frameWorkID!=''  ">
+            and R.FrameWorkID = #{risksite.frameWorkID, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.name!= null and risksite.name!=''">
+            and R.Name like CONCAT(CONCAT('%', #{risksite.name}), '%')
+        </if>
+        <if test="risksite.managerUnitName!= null and risksite.managerUnitName!=''">
+            AND C.ManageUnit = #{risksite.managerUnitName, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.riskDamageType!= null and risksite.riskDamageType!=''">
+            and R.RiskDamageType like CONCAT(CONCAT('%', #{risksite.riskDamageType}), '%')
+        </if>
+        <if test="risksite.riskLevelSettingID!=null and risksite.riskLevelSettingID>0">
+            and R.RiskLevelSettingID=#{risksite.riskLevelSettingID, jdbcType=INTEGER}
+        </if>
+        LIMIT #{pageBegin,jdbcType=INTEGER},#{pageEnd,jdbcType=INTEGER}
+    </select>
+
+    <select id="getPlaceList" resultType="java.lang.String">
+        SELECT DISTINCT Name FROM risksite WHERE FrameWorkID= #{frameworkID,jdbcType=VARCHAR} AND ParentID=0
+    </select>
+
+    <!--<resultMap id="RisksiteYSMap" type="cn.com.kingc.risk.model.Risksite">-->
+    <!--<result property="coalMineName" column="CoalMineName" jdbcType="VARCHAR"/>-->
+    <!--<result property="frameWorkID" column="FrameWorkID" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskSiteID" column="RiskSiteID" jdbcType="INTEGER"/>-->
+    <!--<result property="riskSiteUUID" column="RiskSiteUUID" jdbcType="VARCHAR"/>-->
+    <!--<result property="details" column="Details" jdbcType="BIT"/>-->
+    <!--<result property="extendedAttributesJsonString" column="ExtendedAttributesJsonString" jdbcType="VARCHAR"/>-->
+    <!--<result property="fullNumber" column="FullNumber" jdbcType="VARCHAR"/>-->
+    <!--<result property="managerID" column="ManagerID" jdbcType="INTEGER"/>-->
+    <!--<result property="managerName" column="ManagerName" jdbcType="VARCHAR"/>-->
+    <!--<result property="managerUnitID" column="ManagerUnitID" jdbcType="INTEGER"/>-->
+    <!--<result property="managerUnitName" column="ManagerUnitName" jdbcType="VARCHAR"/>-->
+    <!--<result property="name" column="Name" jdbcType="VARCHAR"/>-->
+    <!--<result property="number" column="Number" jdbcType="VARCHAR"/>-->
+    <!--<result property="parentID" column="ParentID" jdbcType="VARCHAR"/>-->
+    <!--<result property="parentNumber" column="ParentNumber" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskAccident" column="RiskAccident" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskControlCycle" column="RiskControlCycle" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskControlTier" column="RiskControlTier" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskDamageType" column="RiskDamageType" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskDescription" column="RiskDescription" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskFrequency" column="RiskFrequency" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskColor" column="RiskColor" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskLevel" column="RiskLevel" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskValue" column="RiskValue" jdbcType="DECIMAL"/>-->
+    <!--<result property="riskMajorType" column="RiskMajorType" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskSiteType" column="RiskSiteType"-->
+    <!--typeHandler="cn.com.kingc.risk.dao.RiskSiteTypeEnumHandle"/>-->
+    <!--<result property="riskSiteTypeContent" column="RiskSiteTypeContent" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskSupervisor" column="RiskSupervisor" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskTemplateID" column="RiskTemplateID" jdbcType="INTEGER"/>-->
+    <!--<result property="limitPeopleCount" column="LimitPeopleCount" jdbcType="INTEGER"/>-->
+    <!--<result property="status" column="Status" jdbcType="BIT"/>-->
+    <!--<result property="locationId" column="LocationID" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskLevelSettingID" column="RiskLevelSettingID" jdbcType="INTEGER"/>-->
+    <!--<collection property="mChildRiskSite" column="{riskSiteID=RiskSiteID,frameWorkID=FrameWorkID}"-->
+    <!--ofType="cn.com.kingc.risk.model.Risksite" select="getriskm">-->
+    <!--</collection>-->
+    <!--</resultMap>-->
+
+    <!--<resultMap id="RisksiteYSMaps" type="cn.com.kingc.risk.model.Risksite">-->
+    <!--<result property="coalMineName" column="MCoalMineName" jdbcType="VARCHAR"/>-->
+    <!--<result property="frameWorkID" column="MFrameWorkID" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskSiteID" column="MRiskSiteID" jdbcType="INTEGER"/>-->
+    <!--<result property="riskSiteUUID" column="MRiskSiteUUID" jdbcType="VARCHAR"/>-->
+    <!--<result property="details" column="MDetails" jdbcType="BIT"/>-->
+    <!--<result property="extendedAttributesJsonString" column="MExtendedAttributesJsonString" jdbcType="VARCHAR"/>-->
+    <!--<result property="fullNumber" column="MFullNumber" jdbcType="VARCHAR"/>-->
+    <!--<result property="managerID" column="MManagerID" jdbcType="INTEGER"/>-->
+    <!--<result property="managerName" column="MManagerName" jdbcType="VARCHAR"/>-->
+    <!--<result property="managerUnitID" column="MManagerUnitID" jdbcType="INTEGER"/>-->
+    <!--<result property="managerUnitName" column="MManagerUnitName" jdbcType="VARCHAR"/>-->
+    <!--<result property="name" column="MName" jdbcType="VARCHAR"/>-->
+    <!--<result property="number" column="MNumber" jdbcType="VARCHAR"/>-->
+    <!--<result property="parentID" column="MParentID" jdbcType="VARCHAR"/>-->
+    <!--<result property="parentNumber" column="MParentNumber" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskAccident" column="MRiskAccident" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskControlCycle" column="MRiskControlCycle" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskControlTier" column="MRiskControlTier" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskDamageType" column="MRiskDamageType" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskDescription" column="MRiskDescription" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskFrequency" column="MRiskFrequency" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskColor" column="MRiskColor" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskLevel" column="MRiskLevel" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskValue" column="MRiskValue" jdbcType="DECIMAL"/>-->
+    <!--<result property="riskMajorType" column="MRiskMajorType" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskSiteType" column="MRiskSiteType" typeHandler="cn.com.kingc.risk.dao.RiskSiteTypeEnumHandle"/>-->
+    <!--<result property="riskSiteTypeContent" column="MRiskSiteTypeContent" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskSupervisor" column="MRiskSupervisor" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskTemplateID" column="MRiskTemplateID" jdbcType="INTEGER"/>-->
+    <!--<result property="limitPeopleCount" column="MLimitPeopleCount" jdbcType="INTEGER"/>-->
+    <!--<result property="status" column="MStatus" jdbcType="BIT"/>-->
+    <!--<result property="locationId" column="MLocationID" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskLevelSettingID" column="MRiskLevelSettingID" jdbcType="INTEGER"/>-->
+    <!--</resultMap>-->
+
+
+    <!--<sql id="Base_Column_List_baseYS">-->
+    <!--R.CoalMineName,-->
+    <!--R.FrameWorkID,-->
+    <!--R.RiskSiteID,-->
+    <!--R.RiskSiteUUID,-->
+    <!--R.Details,-->
+    <!--R.ExtendedAttributesJsonString,-->
+    <!--R.FullNumber,-->
+    <!--R.ManagerID,-->
+    <!--R.ManagerName,-->
+    <!--R.ManagerUnitID,-->
+    <!--R.ManagerUnitName,-->
+    <!--R. NAME,-->
+    <!--R.Number,-->
+    <!--R.ParentID,-->
+    <!--R.ParentNumber,-->
+    <!--R.RiskAccident,-->
+    <!--R.RiskControlCycle,-->
+    <!--R.RiskControlTier,-->
+    <!--R.RiskDamageType,-->
+    <!--R.RiskDescription,-->
+    <!--R.RiskFrequency,-->
+    <!--R.RiskValue,-->
+    <!--R.RiskMajorType,-->
+    <!--R.RiskSiteType,-->
+    <!--R.RiskSiteTypeContent,-->
+    <!--R.RiskSupervisor,-->
+    <!--R.RiskTemplateID,-->
+    <!--R.LimitPeopleCount,-->
+    <!--R.Status,-->
+    <!--R.LocationID,-->
+    <!--R.RiskLevelSettingID-->
+    <!--</sql>-->
+
+    <!--<sql id="Base_Column_List_baseYSm">-->
+    <!--T.CoalMineName AS MCoalMineName,-->
+    <!--T.FrameWorkID AS MFrameWorkID,-->
+    <!--T.RiskSiteID AS MRiskSiteID,-->
+    <!--T.RiskSiteUUID AS MRiskSiteUUID,-->
+    <!--T.Details AS MDetails,-->
+    <!--T.ExtendedAttributesJsonString AS MExtendedAttributesJsonString,-->
+    <!--T.FullNumber AS MFullNumber,-->
+    <!--T.ManagerID AS MManagerID,-->
+    <!--T.ManagerName AS MManagerName,-->
+    <!--T.ManagerUnitID AS MManagerUnitID,-->
+    <!--T.ManagerUnitName AS MManagerUnitName,-->
+    <!--T.NAME AS MNAME,-->
+    <!--T.Number AS MNumber,-->
+    <!--T.ParentID AS MParentID,-->
+    <!--T.ParentNumber AS MParentNumber,-->
+    <!--T.RiskAccident AS MRiskAccident,-->
+    <!--T.RiskControlCycle AS MRiskControlCycle,-->
+    <!--T.RiskControlTier AS MRiskControlTier,-->
+    <!--T.RiskDamageType AS MRiskDamageType,-->
+    <!--T.RiskDescription AS MRiskDescription,-->
+    <!--T.RiskFrequency AS MRiskFrequency,-->
+    <!--T.RiskValue AS MRiskValue,-->
+    <!--T.RiskMajorType AS MRiskMajorType,-->
+    <!--T.RiskSiteType AS MRiskSiteType,-->
+    <!--T.RiskSiteTypeContent AS MRiskSiteTypeContent,-->
+    <!--T.RiskSupervisor AS MRiskSupervisor,-->
+    <!--T.RiskTemplateID AS MRiskTemplateID,-->
+    <!--T.LimitPeopleCount AS MLimitPeopleCount,-->
+    <!--T.Status AS MStatus,-->
+    <!--T.LocationID AS MLocationID,-->
+    <!--T.RiskLevelSettingID AS RiskLevelSettingID-->
+
+    <!--</sql>-->
+
+
+    <!--<select id="getRiskSiteByYS" resultMap="RisksiteYSMap" parameterType="cn.com.kingc.risk.model.Risksite" >-->
+    <!--select-->
+    <!--<include refid="Base_Column_List_baseYS"/>-->
+    <!--FROM-->
+    <!--risksite R-->
+    <!--where 1=1-->
+    <!--and R.ParentID = '0'-->
+    <!--<if test="risksite.coalMineName!= null and risksite.coalMineName!='' ">-->
+    <!--and R.CoalMineName = #{risksite.coalMineName, jdbcType=VARCHAR}-->
+    <!--</if>-->
+    <!--<if test="risksite.frameWorkID!= null and risksite.frameWorkID!=''  ">-->
+    <!--and R.FrameWorkID = #{risksite.frameWorkID, jdbcType=VARCHAR}-->
+    <!--</if>-->
+    <!--</select>-->
+
+    <!--<select id="getriskm" parameterType="java.util.Map" resultMap="RisksiteYSMaps" >-->
+    <!--select-->
+    <!--<include refid="Base_Column_List_baseYSm"/>-->
+    <!--FROM-->
+    <!--risksite T-->
+    <!--where parentID=#{riskSiteID,jdbcType=INTEGER} AND FrameWorkID=#{frameWorkID}-->
+    <!--</select>-->
+
+
+    <!--12 333333333333333333333333333333          -->
+
+
+    <resultMap id="RisksiteYSMap11" type="cn.com.kingc.risk.model.Risksite">
+        <result property="coalMineName" column="CoalMineName" jdbcType="VARCHAR"/>
+        <result property="frameWorkID" column="FrameWorkID" jdbcType="VARCHAR"/>
+        <result property="riskSiteID" column="RiskSiteID" jdbcType="INTEGER"/>
+        <result property="riskSiteUUID" column="RiskSiteUUID" jdbcType="VARCHAR"/>
+        <result property="details" column="Details" jdbcType="BIT"/>
+        <result property="extendedAttributesJsonString" column="ExtendedAttributesJsonString" jdbcType="VARCHAR"/>
+        <result property="fullNumber" column="FullNumber" jdbcType="VARCHAR"/>
+        <result property="managerID" column="ManagerID" jdbcType="INTEGER"/>
+        <result property="managerName" column="ManagerName" jdbcType="VARCHAR"/>
+        <result property="managerUnitID" column="ManagerUnitID" jdbcType="INTEGER"/>
+        <result property="managerUnitName" column="ManagerUnitName" jdbcType="VARCHAR"/>
+        <result property="name" column="Name" jdbcType="VARCHAR"/>
+        <result property="number" column="Number" jdbcType="VARCHAR"/>
+        <result property="parentID" column="ParentID" jdbcType="VARCHAR"/>
+        <result property="parentNumber" column="ParentNumber" jdbcType="VARCHAR"/>
+        <result property="riskAccident" column="RiskAccident" jdbcType="VARCHAR"/>
+        <result property="riskControlCycle" column="RiskControlCycle" jdbcType="VARCHAR"/>
+        <result property="riskControlTier" column="RiskControlTier" jdbcType="VARCHAR"/>
+        <result property="riskDamageType" column="RiskDamageType" jdbcType="VARCHAR"/>
+        <result property="riskDescription" column="RiskDescription" jdbcType="VARCHAR"/>
+        <result property="riskFrequency" column="RiskFrequency" jdbcType="VARCHAR"/>
+        <result property="riskColor" column="RiskColor" jdbcType="VARCHAR"/>
+        <result property="riskLevel" column="RiskLevel" jdbcType="VARCHAR"/>
+        <result property="riskValue" column="RiskValue" jdbcType="DECIMAL"/>
+        <result property="riskMajorType" column="RiskMajorType" jdbcType="VARCHAR"/>
+        <result property="riskSiteType" column="RiskSiteType"
+                typeHandler="cn.com.kingc.risk.dao.RiskSiteTypeEnumHandle"/>
+        <result property="riskSiteTypeContent" column="RiskSiteTypeContent" jdbcType="VARCHAR"/>
+        <result property="riskSupervisor" column="RiskSupervisor" jdbcType="VARCHAR"/>
+        <result property="riskTemplateID" column="RiskTemplateID" jdbcType="INTEGER"/>
+        <result property="limitPeopleCount" column="LimitPeopleCount" jdbcType="INTEGER"/>
+        <result property="status" column="Status" jdbcType="BIT"/>
+        <result property="locationId" column="LocationID" jdbcType="VARCHAR"/>
+        <result property="riskLevelSettingID" column="RiskLevelSettingID" jdbcType="INTEGER"/>
+
+        <collection property="mChildRiskSite"
+                    ofType="cn.com.kingc.risk.model.Risksite">
+            <result property="coalMineName" column="MCoalMineName" jdbcType="VARCHAR"/>
+            <result property="frameWorkID" column="MFrameWorkID" jdbcType="VARCHAR"/>
+            <result property="riskSiteID" column="MRiskSiteID" jdbcType="INTEGER"/>
+            <result property="riskSiteUUID" column="MRiskSiteUUID" jdbcType="VARCHAR"/>
+            <result property="details" column="MDetails" jdbcType="BIT"/>
+            <result property="extendedAttributesJsonString" column="MExtendedAttributesJsonString" jdbcType="VARCHAR"/>
+            <result property="fullNumber" column="MFullNumber" jdbcType="VARCHAR"/>
+            <result property="managerID" column="MManagerID" jdbcType="INTEGER"/>
+            <result property="managerName" column="MManagerName" jdbcType="VARCHAR"/>
+            <result property="managerUnitID" column="MManagerUnitID" jdbcType="INTEGER"/>
+            <result property="managerUnitName" column="MManagerUnitName" jdbcType="VARCHAR"/>
+            <result property="name" column="MName" jdbcType="VARCHAR"/>
+            <result property="number" column="MNumber" jdbcType="VARCHAR"/>
+            <result property="parentID" column="MParentID" jdbcType="VARCHAR"/>
+            <result property="parentNumber" column="MParentNumber" jdbcType="VARCHAR"/>
+
+            <result property="riskAccident" column="MRiskAccident" jdbcType="VARCHAR"/>
+            <result property="riskControlCycle" column="MRiskControlCycle" jdbcType="VARCHAR"/>
+            <result property="riskControlTier" column="MRiskControlTier" jdbcType="VARCHAR"/>
+            <result property="riskDamageType" column="MRiskDamageType" jdbcType="VARCHAR"/>
+            <result property="riskDescription" column="MRiskDescription" jdbcType="VARCHAR"/>
+            <result property="riskFrequency" column="MRiskFrequency" jdbcType="VARCHAR"/>
+            <result property="riskColor" column="MRiskColor" jdbcType="VARCHAR"/>
+            <result property="riskLevel" column="MRiskLevel" jdbcType="VARCHAR"/>
+            <result property="riskValue" column="MRiskValue" jdbcType="DECIMAL"/>
+            <result property="riskMajorType" column="MRiskMajorType" jdbcType="VARCHAR"/>
+            <result property="riskSiteType" column="MRiskSiteType"
+                    typeHandler="cn.com.kingc.risk.dao.RiskSiteTypeEnumHandle"/>
+            <result property="riskSiteTypeContent" column="MRiskSiteTypeContent" jdbcType="VARCHAR"/>
+            <result property="riskSupervisor" column="MRiskSupervisor" jdbcType="VARCHAR"/>
+            <result property="riskTemplateID" column="MRiskTemplateID" jdbcType="INTEGER"/>
+            <result property="limitPeopleCount" column="MLimitPeopleCount" jdbcType="INTEGER"/>
+            <result property="status" column="MStatus" jdbcType="BIT"/>
+            <result property="locationId" column="MLocationID" jdbcType="VARCHAR"/>
+            <result property="riskLevelSettingID" column="MRiskLevelSettingID" jdbcType="INTEGER"/>
+        </collection>
+
+        <collection property="mHazards" ofType="cn.com.kingc.risk.model.Riskhazard">
+            <result property="hazardID" column="HHazardID" jdbcType="INTEGER"/>
+            <result property="hazardUUID" column="HHazardUUID" jdbcType="VARCHAR"/>
+            <result property="riskSiteID" column="HRiskSiteID" jdbcType="INTEGER"/>
+            <result property="coalMineName" column="HCoalMineName" jdbcType="VARBINARY"/>
+            <result property="frameWorkID" column="HFrameWorkID" jdbcType="VARCHAR"/>
+            <result property="accountabilityUnit" column="HAccountabilityUnit" jdbcType="VARCHAR"/>
+            <result property="consequence" column="HConsequence" jdbcType="VARCHAR"/>
+            <result property="damageType" column="HDamageType" jdbcType="VARCHAR"/>
+            <result property="eexpose" column="HExpose" jdbcType="INTEGER"/>
+            <result property="riskTemplateID" column="HRiskTemplateID" jdbcType="INTEGER"/>
+            <result property="exposeDegree" column="HExposeDegree" jdbcType="VARCHAR"/>
+            <result property="clossConsequence" column="HLossConsequence" jdbcType="INTEGER"/>
+            <result property="majorType" column="HMajorType" jdbcType="VARCHAR"/>
+            <result property="manageUnit" column="HManageUnit" jdbcType="VARCHAR"/>
+            <result property="name" column="HName" jdbcType="VARCHAR"/>
+            <result property="operatingPost" column="HOperatingPost" jdbcType="VARCHAR"/>
+            <result property="Lpossibility" column="HPossibility" jdbcType="INTEGER"/>
+            <result property="riskDegree" column="HRiskDegree" jdbcType="VARCHAR"/>
+            <result property="riskObject" column="HRiskObject" jdbcType="VARCHAR"/>
+            <result property="riskPlace" column="HRiskPlace" jdbcType="VARCHAR"/>
+            <result property="riskType" column="HRiskType" jdbcType="VARCHAR"/>
+            <result property="driskValue" column="HRiskValue" jdbcType="DECIMAL"/>
+            <result property="status" column="HStatus" jdbcType="BIT"/>
+
+            <result property="Sseverity" column="HSseverity" jdbcType="INTEGER"/>
+            <result property="riskSiteFullNumber" column="HRiskSiteFullNumber" jdbcType="VARCHAR"/>
+            <result property="standardFullNumber" column="HStandardFullNumber" jdbcType="VARCHAR"/>
+            <result property="standardName" column="HStandardName" jdbcType="VARCHAR"/>
+            <result property="dutyRole" column="HDutyRole" jdbcType="VARCHAR"/>
+            <result property="supervisionUnit" column="HSupervisionUnit" jdbcType="VARCHAR"/>
+            <result property="extendedAttributesJsonString" column="HExtendedAttributesJsonString" jdbcType="VARCHAR"/>
+            <result property="hazardDesc" column="HHazardDesc" jdbcType="VARCHAR"/>
+            <result property="riskLevelSettingID" column="HRiskLevelSettingID" jdbcType="INTEGER"/>
+            <result property="riskColor" column="HRiskColor" jdbcType="VARCHAR"/>
+            <result property="riskLevel" column="HRiskLevel" jdbcType="VARCHAR"/>
+            <result property="riskObjectType" column="HRiskObjectType" jdbcType="VARCHAR"/>
+            <result property="accidentType" column="HAccidentType" jdbcType="VARCHAR"/>
+            <result property="riskKind" column="HRiskKind" jdbcType="VARCHAR"/>
+            <result property="controlResult" column="HControlResult" jdbcType="VARCHAR"/>
+            <result property="identifyMethod" column="HIdentifyMethod" jdbcType="VARCHAR"/>
+            <result property="isSubmit" column="His_submit" jdbcType="VARCHAR"/>
+            <result property="riskByTypes" column="HRiskByTypes" jdbcType="VARCHAR"/>
+            <result property="riskFactors" column="HRiskFactors" jdbcType="VARCHAR"/>
+            <result property="technologyDepartment" column="HTechnologyDepartment" jdbcType="VARCHAR"/>
+            <result property="supervisionDepartment" column="HSupervisionDepartment" jdbcType="VARCHAR"/>
+
+        </collection>
+
+        <collection property="mRiskControlMeasure" ofType="cn.com.kingc.risk.model.Riskcontrolmeasure"
+                    select="getriskm" column="{hID=RiskSiteID,fID=FrameWorkID}">
+        </collection>
+
+    </resultMap>
+
+    <resultMap id="RisksiteYSMapm11" type="cn.com.kingc.risk.model.Riskcontrolmeasure">
+        <result property="measureID" column="MMeasureID" jdbcType="INTEGER"/>
+        <result property="measureUUID" column="MMeasureUUID" jdbcType="VARCHAR"/>
+        <result property="riskSiteID" column="MRiskSiteID" jdbcType="INTEGER"/>
+        <result property="hazardID" column="MHazardID" jdbcType="INTEGER"/>
+        <result property="measureContent" column="MMeasureContent" jdbcType="VARCHAR"/>
+        <result property="measureName" column="MMeasureName" jdbcType="VARCHAR"/>
+        <result property="measureType" column="MMeasureType" jdbcType="VARCHAR"/>
+        <result property="measureURL" column="MMeasureURL" jdbcType="VARCHAR"/>
+        <result property="measureCreateTime" column="MeasureCreateTime" jdbcType="VARCHAR"/>
+        <result property="frameWorkID" column="MFrameWorkID" jdbcType="VARCHAR"/>
+        <result property="coalMineName" column="MCoalMineName" jdbcType="VARCHAR"/>
+        <result property="riskSiteFullNumber" column="MRiskSiteFullNumber" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List_baseYS11">
+        R.CoalMineName,
+        R.FrameWorkID,
+        R.RiskSiteID,
+        R.RiskSiteUUID,
+        R.Details,
+        R.ExtendedAttributesJsonString,
+        R.FullNumber,
+        R.ManagerID,
+        R.ManagerName,
+        R.ManagerUnitID,
+        R.ManagerUnitName,
+        R. NAME,
+        R.Number,
+        R.ParentID,
+        R.ParentNumber,
+        R.RiskAccident,
+        R.RiskControlCycle,
+        R.RiskControlTier,
+        R.RiskDamageType,
+        R.RiskDescription,
+        R.RiskFrequency,
+        R.RiskValue,
+        R.RiskMajorType,
+        R.RiskSiteType,
+        R.RiskSiteTypeContent,
+        R.RiskSupervisor,
+        R.RiskTemplateID,
+        R.LimitPeopleCount,
+        R.Status,
+        R.LocationID,
+        R.RiskLevelSettingID,
+
+        T.CoalMineName AS MCoalMineName,
+        T.FrameWorkID AS MFrameWorkID,
+        T.RiskSiteID AS MRiskSiteID,
+        T.RiskSiteUUID AS MRiskSiteUUID,
+        T.Details AS MDetails,
+        T.ExtendedAttributesJsonString AS MExtendedAttributesJsonString,
+        T.FullNumber AS MFullNumber,
+        T.ManagerID AS MManagerID,
+        T.ManagerName AS MManagerName,
+        T.ManagerUnitID AS MManagerUnitID,
+        T.ManagerUnitName AS MManagerUnitName,
+        T.NAME AS MNAME,
+        T.Number AS MNumber,
+        T.ParentID AS MParentID,
+        T.ParentNumber AS MParentNumber,
+        T.RiskAccident AS MRiskAccident,
+        T.RiskControlCycle AS MRiskControlCycle,
+        T.RiskControlTier AS MRiskControlTier,
+        T.RiskDamageType AS MRiskDamageType,
+        T.RiskDescription AS MRiskDescription,
+        T.RiskFrequency AS MRiskFrequency,
+        T.RiskValue AS MRiskValue,
+        T.RiskMajorType AS MRiskMajorType,
+        T.RiskSiteType AS MRiskSiteType,
+        T.RiskSiteTypeContent AS MRiskSiteTypeContent,
+        T.RiskSupervisor AS MRiskSupervisor,
+        T.RiskTemplateID AS MRiskTemplateID,
+        T.LimitPeopleCount AS MLimitPeopleCount,
+        T.Status AS MStatus,
+        T.LocationID AS MLocationID,
+        T.RiskLevelSettingID AS RiskLevelSettingID,
+
+        H.HazardID AS HHazardID,
+        H.HazardUUID AS HHazardUUID,
+        H.RiskSiteID AS HRiskSiteID,
+        H.CoalMineName AS HCoalMineName,
+        H.FrameWorkID AS HFrameWorkID,
+        H.AccountabilityUnit AS HAccountabilityUnit,
+        H.Consequence AS HConsequence,
+        H.DamageType AS HDamageType,
+        H.Expose AS HExpose,
+        H.RiskTemplateID AS HRiskTemplateID,
+        H.ExposeDegree AS HExposeDegree,
+        H.LossConsequence AS HLossConsequence,
+        H.MajorType AS HMajorType,
+        H.ManageUnit AS HManageUnit,
+        H.NAME AS HNAME,
+        H.OperatingPost AS HOperatingPost,
+        H.Possibility AS HPossibility,
+        H.RiskDegree AS HRiskDegree,
+        H.RiskObject AS HRiskObject,
+        H.RiskPlace AS HRiskPlace,
+        H.RiskType AS HRiskType,
+        H.RiskValue AS HRiskValue,
+        H.Status AS HStatus,
+
+        H.Sseverity AS HSseverity,
+        H.RiskSiteFullNumber AS HRiskSiteFullNumber,
+        H.StandardFullNumber AS HStandardFullNumber,
+        H.StandardName AS HStandardName,
+        H.DutyRole AS HDutyRole,
+        H.SupervisionUnit AS HSupervisionUnit,
+        H.ExtendedAttributesJsonString AS HExtendedAttributesJsonString,
+        H.HazardDesc AS HHazardDesc,
+        H.RiskLevelSettingID AS HRiskLevelSettingID,
+        H.RiskObjectType AS HRiskObjectType,
+        H.AccidentType AS HAccidentType,
+        H.RiskKind AS HRiskKind,
+        H.ControlResult AS HControlResult,
+        H.IdentifyMethod AS HIdentifyMethod,
+        H.RiskByTypes AS HRiskByTypes,
+        H.RiskFactors AS HRiskFactors,
+        H.TechnologyDepartment AS HTechnologyDepartment,
+        H.SupervisionDepartment AS HSupervisionDepartment
+
+    </sql>
+    <sql id="Base_Column_List_baseYSm11">
+        M.MeasureID AS MMeasureID,
+        M.MeasureUUID AS MMeasureUUID,
+        M.RiskSiteID AS MRiskSiteID,
+        M.HazardID AS MHazardID,
+        M.MeasureContent AS MMeasureContent,
+        M.MeasureName AS MMeasureName,
+        M.MeasureType AS MMeasureType,
+        M.MeasureURL AS MMeasureURL,
+        M.MeasureCreateTime AS MeasureCreateTime,
+        M.FrameWorkID AS MFrameWorkID,
+        M.CoalMineName AS MCoalMineName,
+        M.RiskSiteFullNumber AS MRiskSiteFullNumber
+
+    </sql>
+
+    <select id="getRiskSiteByYS11" resultMap="RisksiteYSMap11" parameterType="cn.com.kingc.risk.model.Risksite"
+            useCache="false">
+        select
+        <include refid="Base_Column_List_baseYS11"/>
+        FROM
+        risksite R
+        LEFT JOIN risksite T ON R.RiskSiteID = T.ParentID
+        and R.FrameWorkID = T.FrameWorkID
+        LEFT JOIN riskhazard H ON T.RiskSiteID = H.RiskSiteID
+        and H.FrameWorkID = T.FrameWorkID
+        where 1=1
+        and R.ParentID = '0'
+
+        <if test="risksite.coalMineName!= null and risksite.coalMineName!='' ">
+            and R.CoalMineName = #{risksite.coalMineName, jdbcType=VARCHAR}
+        </if>
+        <if test="risksite.frameWorkID!= null and risksite.frameWorkID!=''  ">
+            and R.FrameWorkID = #{risksite.frameWorkID, jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <select id="getriskm11" parameterType="java.util.Map" resultMap="RisksiteYSMapm11">
+        select
+        <include refid="Base_Column_List_baseYSm11"/>
+        FROM
+        Riskcontrolmeasure M
+        where
+        1=1
+
+        and  SUBSTRING_INDEX( SUBSTRING_INDEX(M.RiskSiteFullNumber,'.',1),
+
+        SUBSTRING_INDEX( SUBSTRING_INDEX(M.RiskSiteFullNumber,'.',1),CONCAT('',#{hID}),1)
+
+        ,-1) = #{hID}
+
+        AND FrameWorkID = #{fID}
+    </select>
+    <!--AND RiskSiteFullNumber like CONCAT(CONCAT('%', #{hID}),'', '%') -->
+
+    <!--and SUBSTRING(M.RiskSiteFullNumber, 2, 6) = #{hID}-->
+
+    <!--AND RiskSiteFullNumber like CONCAT(CONCAT('%', '0',#{hID}),'', '%')-->
+
+
+
+
+    <!--<resultMap id="RisksiteYSMap" type="cn.com.kingc.risk.model.Risksite">-->
+    <!--<result property="coalMineName" column="CoalMineName" jdbcType="VARCHAR"/>-->
+    <!--<result property="frameWorkID" column="FrameWorkID" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskSiteID" column="RiskSiteID" jdbcType="INTEGER"/>-->
+    <!--<result property="riskSiteUUID" column="RiskSiteUUID" jdbcType="VARCHAR"/>-->
+    <!--<result property="details" column="Details" jdbcType="BIT"/>-->
+    <!--<result property="extendedAttributesJsonString" column="ExtendedAttributesJsonString" jdbcType="VARCHAR"/>-->
+    <!--<result property="fullNumber" column="FullNumber" jdbcType="VARCHAR"/>-->
+    <!--<result property="managerID" column="ManagerID" jdbcType="INTEGER"/>-->
+    <!--<result property="managerName" column="ManagerName" jdbcType="VARCHAR"/>-->
+    <!--<result property="managerUnitID" column="ManagerUnitID" jdbcType="INTEGER"/>-->
+    <!--<result property="managerUnitName" column="ManagerUnitName" jdbcType="VARCHAR"/>-->
+    <!--<result property="name" column="Name" jdbcType="VARCHAR"/>-->
+    <!--<result property="number" column="Number" jdbcType="VARCHAR"/>-->
+    <!--<result property="parentID" column="ParentID" jdbcType="VARCHAR"/>-->
+    <!--<result property="parentNumber" column="ParentNumber" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskAccident" column="RiskAccident" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskControlCycle" column="RiskControlCycle" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskControlTier" column="RiskControlTier" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskDamageType" column="RiskDamageType" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskDescription" column="RiskDescription" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskFrequency" column="RiskFrequency" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskColor" column="RiskColor" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskLevel" column="RiskLevel" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskValue" column="RiskValue" jdbcType="DECIMAL"/>-->
+    <!--<result property="riskMajorType" column="RiskMajorType" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskSiteType" column="RiskSiteType"-->
+    <!--typeHandler="cn.com.kingc.risk.dao.RiskSiteTypeEnumHandle"/>-->
+    <!--<result property="riskSiteTypeContent" column="RiskSiteTypeContent" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskSupervisor" column="RiskSupervisor" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskTemplateID" column="RiskTemplateID" jdbcType="INTEGER"/>-->
+    <!--<result property="limitPeopleCount" column="LimitPeopleCount" jdbcType="INTEGER"/>-->
+    <!--<result property="status" column="Status" jdbcType="BIT"/>-->
+    <!--<result property="locationId" column="LocationID" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskLevelSettingID" column="RiskLevelSettingID" jdbcType="INTEGER"/>-->
+
+    <!--<collection property="mChildRiskSite"-->
+    <!--ofType="cn.com.kingc.risk.model.Risksite">-->
+    <!--<result property="coalMineName" column="MCoalMineName" jdbcType="VARCHAR"/>-->
+    <!--<result property="frameWorkID" column="MFrameWorkID" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskSiteID" column="MRiskSiteID" jdbcType="INTEGER"/>-->
+    <!--<result property="riskSiteUUID" column="MRiskSiteUUID" jdbcType="VARCHAR"/>-->
+    <!--<result property="details" column="MDetails" jdbcType="BIT"/>-->
+    <!--<result property="extendedAttributesJsonString" column="MExtendedAttributesJsonString" jdbcType="VARCHAR"/>-->
+    <!--<result property="fullNumber" column="MFullNumber" jdbcType="VARCHAR"/>-->
+    <!--<result property="managerID" column="MManagerID" jdbcType="INTEGER"/>-->
+    <!--<result property="managerName" column="MManagerName" jdbcType="VARCHAR"/>-->
+    <!--<result property="managerUnitID" column="MManagerUnitID" jdbcType="INTEGER"/>-->
+    <!--<result property="managerUnitName" column="MManagerUnitName" jdbcType="VARCHAR"/>-->
+    <!--<result property="name" column="MName" jdbcType="VARCHAR"/>-->
+    <!--<result property="number" column="MNumber" jdbcType="VARCHAR"/>-->
+    <!--<result property="parentID" column="MParentID" jdbcType="VARCHAR"/>-->
+    <!--<result property="parentNumber" column="MParentNumber" jdbcType="VARCHAR"/>-->
+
+    <!--<result property="riskAccident" column="MRiskAccident" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskControlCycle" column="MRiskControlCycle" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskControlTier" column="MRiskControlTier" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskDamageType" column="MRiskDamageType" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskDescription" column="MRiskDescription" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskFrequency" column="MRiskFrequency" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskColor" column="MRiskColor" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskLevel" column="MRiskLevel" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskValue" column="MRiskValue" jdbcType="DECIMAL"/>-->
+    <!--<result property="riskMajorType" column="MRiskMajorType" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskSiteType" column="MRiskSiteType" typeHandler="cn.com.kingc.risk.dao.RiskSiteTypeEnumHandle"/>-->
+    <!--<result property="riskSiteTypeContent" column="MRiskSiteTypeContent" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskSupervisor" column="MRiskSupervisor" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskTemplateID" column="MRiskTemplateID" jdbcType="INTEGER"/>-->
+    <!--<result property="limitPeopleCount" column="MLimitPeopleCount" jdbcType="INTEGER"/>-->
+    <!--<result property="status" column="MStatus" jdbcType="BIT"/>-->
+    <!--<result property="locationId" column="MLocationID" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskLevelSettingID" column="MRiskLevelSettingID" jdbcType="INTEGER"/>-->
+    <!--</collection>-->
+
+    <!--<collection property="mHazards" ofType="cn.com.kingc.risk.model.Riskhazard">-->
+    <!--<result property="hazardID" column="HHazardID" jdbcType="INTEGER"/>-->
+    <!--<result property="hazardUUID" column="HHazardUUID" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskSiteID" column="HRiskSiteID" jdbcType="INTEGER"/>-->
+    <!--<result property="coalMineName" column="HCoalMineName" jdbcType="VARBINARY"/>-->
+    <!--<result property="frameWorkID" column="HFrameWorkID" jdbcType="VARCHAR"/>-->
+    <!--<result property="accountabilityUnit" column="HAccountabilityUnit" jdbcType="VARCHAR"/>-->
+    <!--<result property="consequence" column="HConsequence" jdbcType="VARCHAR"/>-->
+    <!--<result property="damageType" column="HDamageType" jdbcType="VARCHAR"/>-->
+    <!--<result property="eexpose" column="HExpose" jdbcType="INTEGER"/>-->
+    <!--<result property="riskTemplateID" column="HRiskTemplateID" jdbcType="INTEGER"/>-->
+    <!--<result property="exposeDegree" column="HExposeDegree" jdbcType="VARCHAR"/>-->
+    <!--<result property="clossConsequence" column="HLossConsequence" jdbcType="INTEGER"/>-->
+    <!--<result property="majorType" column="HMajorType" jdbcType="VARCHAR"/>-->
+    <!--<result property="manageUnit" column="HManageUnit" jdbcType="VARCHAR"/>-->
+    <!--<result property="name" column="HName" jdbcType="VARCHAR"/>-->
+    <!--<result property="operatingPost" column="HOperatingPost" jdbcType="VARCHAR"/>-->
+    <!--<result property="Lpossibility" column="HPossibility" jdbcType="INTEGER"/>-->
+    <!--<result property="riskDegree" column="HRiskDegree" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskObject" column="HRiskObject" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskPlace" column="HRiskPlace" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskType" column="HRiskType" jdbcType="VARCHAR"/>-->
+    <!--<result property="driskValue" column="HRiskValue" jdbcType="DECIMAL"/>-->
+    <!--<result property="status" column="HStatus" jdbcType="BIT"/>-->
+
+    <!--<result property="Sseverity" column="HSseverity" jdbcType="INTEGER"/>-->
+    <!--<result property="riskSiteFullNumber" column="HRiskSiteFullNumber" jdbcType="VARCHAR"/>-->
+    <!--<result property="standardFullNumber" column="HStandardFullNumber" jdbcType="VARCHAR"/>-->
+    <!--<result property="standardName" column="HStandardName" jdbcType="VARCHAR"/>-->
+    <!--<result property="dutyRole" column="HDutyRole" jdbcType="VARCHAR"/>-->
+    <!--<result property="supervisionUnit" column="HSupervisionUnit" jdbcType="VARCHAR"/>-->
+    <!--<result property="extendedAttributesJsonString" column="HExtendedAttributesJsonString" jdbcType="VARCHAR"/>-->
+    <!--<result property="hazardDesc" column="HHazardDesc" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskLevelSettingID" column="HRiskLevelSettingID" jdbcType="INTEGER"/>-->
+    <!--<result property="riskColor" column="HRiskColor" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskLevel" column="HRiskLevel" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskObjectType" column="HRiskObjectType" jdbcType="VARCHAR"/>-->
+    <!--<result property="accidentType" column="HAccidentType" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskKind" column="HRiskKind" jdbcType="VARCHAR"/>-->
+    <!--<result property="controlResult" column="HControlResult" jdbcType="VARCHAR"/>-->
+    <!--<result property="identifyMethod" column="HIdentifyMethod" jdbcType="VARCHAR"/>-->
+    <!--<result property="isSubmit" column="His_submit" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskByTypes" column="HRiskByTypes" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskFactors" column="HRiskFactors" jdbcType="VARCHAR"/>-->
+    <!--<result property="technologyDepartment" column="HTechnologyDepartment" jdbcType="VARCHAR"/>-->
+    <!--<result property="supervisionDepartment" column="HSupervisionDepartment" jdbcType="VARCHAR"/>-->
+
+    <!--</collection>-->
+
+    <!--<collection property="mRiskControlMeasure" ofType="cn.com.kingc.risk.model.Riskcontrolmeasure">-->
+    <!--<result property="measureID" column="MMeasureID" jdbcType="INTEGER"/>-->
+    <!--<result property="measureUUID" column="MMeasureUUID" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskSiteID" column="MRiskSiteID" jdbcType="INTEGER"/>-->
+    <!--<result property="hazardID" column="MHazardID" jdbcType="INTEGER"/>-->
+    <!--<result property="measureContent" column="MMeasureContent" jdbcType="VARCHAR"/>-->
+    <!--<result property="measureName" column="MMeasureName" jdbcType="VARCHAR"/>-->
+    <!--<result property="measureType" column="MMeasureType" jdbcType="VARCHAR"/>-->
+    <!--<result property="measureURL" column="MMeasureURL" jdbcType="VARCHAR"/>-->
+    <!--<result property="measureCreateTime" column="MeasureCreateTime" jdbcType="VARCHAR"/>-->
+    <!--<result property="frameWorkID" column="MFrameWorkID" jdbcType="VARCHAR"/>-->
+    <!--<result property="coalMineName" column="MCoalMineName" jdbcType="VARCHAR"/>-->
+    <!--<result property="riskSiteFullNumber" column="MRiskSiteFullNumber" jdbcType="VARCHAR"/>-->
+    <!--</collection>-->
+
+    <!--</resultMap>-->
+
+    <!--<sql id="Base_Column_List_baseYS">-->
+    <!--R.CoalMineName,-->
+    <!--R.FrameWorkID,-->
+    <!--R.RiskSiteID,-->
+    <!--R.RiskSiteUUID,-->
+    <!--R.Details,-->
+    <!--R.ExtendedAttributesJsonString,-->
+    <!--R.FullNumber,-->
+    <!--R.ManagerID,-->
+    <!--R.ManagerName,-->
+    <!--R.ManagerUnitID,-->
+    <!--R.ManagerUnitName,-->
+    <!--R. NAME,-->
+    <!--R.Number,-->
+    <!--R.ParentID,-->
+    <!--R.ParentNumber,-->
+    <!--R.RiskAccident,-->
+    <!--R.RiskControlCycle,-->
+    <!--R.RiskControlTier,-->
+    <!--R.RiskDamageType,-->
+    <!--R.RiskDescription,-->
+    <!--R.RiskFrequency,-->
+    <!--R.RiskValue,-->
+    <!--R.RiskMajorType,-->
+    <!--R.RiskSiteType,-->
+    <!--R.RiskSiteTypeContent,-->
+    <!--R.RiskSupervisor,-->
+    <!--R.RiskTemplateID,-->
+    <!--R.LimitPeopleCount,-->
+    <!--R.Status,-->
+    <!--R.LocationID,-->
+    <!--R.RiskLevelSettingID,-->
+
+    <!--T.CoalMineName AS MCoalMineName,-->
+    <!--T.FrameWorkID AS MFrameWorkID,-->
+    <!--T.RiskSiteID AS MRiskSiteID,-->
+    <!--T.RiskSiteUUID AS MRiskSiteUUID,-->
+    <!--T.Details AS MDetails,-->
+    <!--T.ExtendedAttributesJsonString AS MExtendedAttributesJsonString,-->
+    <!--T.FullNumber AS MFullNumber,-->
+    <!--T.ManagerID AS MManagerID,-->
+    <!--T.ManagerName AS MManagerName,-->
+    <!--T.ManagerUnitID AS MManagerUnitID,-->
+    <!--T.ManagerUnitName AS MManagerUnitName,-->
+    <!--T.NAME AS MNAME,-->
+    <!--T.Number AS MNumber,-->
+    <!--T.ParentID AS MParentID,-->
+    <!--T.ParentNumber AS MParentNumber,-->
+    <!--T.RiskAccident AS MRiskAccident,-->
+    <!--T.RiskControlCycle AS MRiskControlCycle,-->
+    <!--T.RiskControlTier AS MRiskControlTier,-->
+    <!--T.RiskDamageType AS MRiskDamageType,-->
+    <!--T.RiskDescription AS MRiskDescription,-->
+    <!--T.RiskFrequency AS MRiskFrequency,-->
+    <!--T.RiskValue AS MRiskValue,-->
+    <!--T.RiskMajorType AS MRiskMajorType,-->
+    <!--T.RiskSiteType AS MRiskSiteType,-->
+    <!--T.RiskSiteTypeContent AS MRiskSiteTypeContent,-->
+    <!--T.RiskSupervisor AS MRiskSupervisor,-->
+    <!--T.RiskTemplateID AS MRiskTemplateID,-->
+    <!--T.LimitPeopleCount AS MLimitPeopleCount,-->
+    <!--T.Status AS MStatus,-->
+    <!--T.LocationID AS MLocationID,-->
+    <!--T.RiskLevelSettingID AS RiskLevelSettingID,-->
+
+    <!--H.HazardID AS HHazardID,-->
+    <!--H.HazardUUID AS HHazardUUID,-->
+    <!--H.RiskSiteID AS HRiskSiteID,-->
+    <!--H.CoalMineName AS HCoalMineName,-->
+    <!--H.FrameWorkID AS HFrameWorkID,-->
+    <!--H.AccountabilityUnit AS HAccountabilityUnit,-->
+    <!--H.Consequence AS HConsequence,-->
+    <!--H.DamageType AS HDamageType,-->
+    <!--H.Expose AS HExpose,-->
+    <!--H.RiskTemplateID AS HRiskTemplateID,-->
+    <!--H.ExposeDegree AS HExposeDegree,-->
+    <!--H.LossConsequence AS HLossConsequence,-->
+    <!--H.MajorType AS HMajorType,-->
+    <!--H.ManageUnit AS HManageUnit,-->
+    <!--H.NAME AS HNAME,-->
+    <!--H.OperatingPost AS HOperatingPost,-->
+    <!--H.Possibility AS HPossibility,-->
+    <!--H.RiskDegree AS HRiskDegree,-->
+    <!--H.RiskObject AS HRiskObject,-->
+    <!--H.RiskPlace AS HRiskPlace,-->
+    <!--H.RiskType AS HRiskType,-->
+    <!--H.RiskValue AS HRiskValue,-->
+    <!--H.Status AS HStatus,-->
+
+    <!--H.Sseverity AS HSseverity,-->
+    <!--H.RiskSiteFullNumber AS HRiskSiteFullNumber,-->
+    <!--H.StandardFullNumber AS HStandardFullNumber,-->
+    <!--H.StandardName AS HStandardName,-->
+    <!--H.DutyRole AS HDutyRole,-->
+    <!--H.SupervisionUnit AS HSupervisionUnit,-->
+    <!--H.ExtendedAttributesJsonString AS HExtendedAttributesJsonString,-->
+    <!--H.HazardDesc AS HHazardDesc,-->
+    <!--H.RiskLevelSettingID AS HRiskLevelSettingID,-->
+    <!--H.RiskObjectType AS HRiskObjectType,-->
+    <!--H.AccidentType AS HAccidentType,-->
+    <!--H.RiskKind AS HRiskKind,-->
+    <!--H.ControlResult AS HControlResult,-->
+    <!--H.IdentifyMethod AS HIdentifyMethod,-->
+    <!--H.RiskByTypes AS HRiskByTypes,-->
+    <!--H.RiskFactors AS HRiskFactors,-->
+    <!--H.TechnologyDepartment AS HTechnologyDepartment,-->
+    <!--H.SupervisionDepartment AS HSupervisionDepartment,-->
+
+    <!--M.MeasureID AS MMeasureID,-->
+    <!--M.MeasureUUID AS MMeasureUUID,-->
+    <!--M.RiskSiteID AS MRiskSiteID,-->
+    <!--M.HazardID AS MHazardID,-->
+    <!--M.MeasureContent AS MMeasureContent,-->
+    <!--M.MeasureName AS MMeasureName,-->
+    <!--M.MeasureType AS MMeasureType,-->
+    <!--M.MeasureURL AS MMeasureURL,-->
+    <!--M.MeasureCreateTime AS MeasureCreateTime,-->
+    <!--M.FrameWorkID AS MFrameWorkID,-->
+    <!--M.CoalMineName AS MCoalMineName,-->
+    <!--M.RiskSiteFullNumber AS MRiskSiteFullNumber-->
+
+    <!--</sql>-->
+
+    <!--<select id="getRiskSiteByYS" resultMap="RisksiteYSMap" parameterType="cn.com.kingc.risk.model.Risksite"-->
+    <!--useCache="false">-->
+    <!--select-->
+    <!--<include refid="Base_Column_List_baseYS"/>-->
+    <!--FROM-->
+    <!--risksite R-->
+    <!--LEFT JOIN risksite T ON  R.RiskSiteID = T.ParentID-->
+    <!--and R.FrameWorkID = T.FrameWorkID-->
+    <!--LEFT JOIN riskhazard H ON T.RiskSiteID = H.RiskSiteID-->
+    <!--and H.FrameWorkID = T.FrameWorkID-->
+
+    <!--LEFT JOIN riskcontrolmeasure M ON M.FrameWorkID = R.FrameWorkID-->
+    <!--and R.RiskSiteID =  SUBSTRING(M.RiskSiteFullNumber, 2, 6)-->
+
+    <!--where 1=1-->
+    <!--and R.ParentID = '0'-->
+
+    <!--<if test="risksite.coalMineName!= null and risksite.coalMineName!='' ">-->
+    <!--and R.CoalMineName = #{risksite.coalMineName, jdbcType=VARCHAR}-->
+    <!--</if>-->
+    <!--<if test="risksite.frameWorkID!= null and risksite.frameWorkID!=''  ">-->
+    <!--and R.FrameWorkID = #{risksite.frameWorkID, jdbcType=VARCHAR}-->
+    <!--</if>-->
+    <!--</select>-->
+
+</mapper>
